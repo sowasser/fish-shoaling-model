@@ -1,7 +1,13 @@
-"""This is the tutorial from Mesa: a simple agent-based economic model with the following rules:
-1. There are some number of agents.
-2. All agents begin with 1 unit of money
-3. At every step of the model, an agent gives 1 unit of money (if they have it) to some other agent."""
+"""
+This is the tutorial from Mesa: a simple agent-based economic model with the
+following rules:
+
+    1. There are some number of agents.
+    2. All agents begin with 1 unit of money
+    3. At every step of the model, an agent gives 1 unit of money (if they have
+    it) to some other agent.
+
+"""
 
 from mesa import Agent, Model
 from mesa.time import RandomActivation
@@ -76,8 +82,10 @@ class MoneyModel(Model):
         self.schedule.step()
 
 
-""" Set up and run the BatchRunner, which runs the model multiple times with fixed parameters to determine the overall
-distributions of the model - automated by Mesa """
+"""
+Set up and run the BatchRunner, which runs the model multiple times with fixed
+parameters to determine the overall distributions of the model - automated by Mesa
+"""
 parameters = {"width": 10,  # Width of the cell
               "height": 10,  # Height of the cell
               "N": range(10, 500, 10)}  # Vary the number of agents from 10 to 500 in units of 10
