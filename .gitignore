@@ -1,6 +1,9 @@
 # Ignore PyCharm IDE settings files
 .ide/
 
+# Don't submit macOS Finder setting files to the Git repository
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
