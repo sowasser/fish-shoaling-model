@@ -1,5 +1,5 @@
 # Ignore PyCharm IDE settings files
-.ide/
+.idea/
 
 # Don't submit macOS Finder setting files to the Git repository
 .DS_Store
