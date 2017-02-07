@@ -151,7 +151,7 @@ class SimpleCanvas(VisualizationElement):
 
 
 def boid_draw(agent):
-    return {"Shape": "circle", "r": 2, "Filled": "true", "Color": "Blue"}
+    return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
 
 boid_canvas = SimpleCanvas(boid_draw, 500, 500)
 server = ModularServer(BoidsModel, [boid_canvas], "Boids",
