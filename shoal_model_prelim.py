@@ -1,14 +1,16 @@
 """
 Model of shoaling behavior based on the Boids model by Craig Reynolds in 1986,
 using the basic code provided in the Flocker example of the Mesa framework for
-agent-based modelling in Python. This model is based on 3 parameters that each
+agent-based modelling in Python. This model is based on 2 parameters that each
 agent follows:
     1. Attraction to other agents,
-    2. Separation from other agents,
-    3. Alignment between agents (polarization).
-The model is based on a bounded, 3D area. Later additions will include
-obstacles, environmental gradients, and agents with a goal - food-seeking, or
-safety-seeking.
+    2. Avoidance of other agents,
+Heading, though recorded for each agent, is not included in the parameters that
+determine an agents' movement. Therefore, polarization becomes an emergent
+behaviour and can be analyzed as a measure of cohesion, along with the nearest
+neighbour distance. The model is based on a bounded, 3D area. Later additions
+will include obstacles, environmental gradients, and agents with a goal -
+food-seeking, or safety-seeking.
 """
 
 import numpy as np
@@ -16,28 +18,34 @@ import random
 from mesa import Agent
 from mesa import Model
 from mesa.time import RandomActivation
-# from mesa.datacollection import DataCollector
+from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
-# from mesa.visualization.modules import ChartModule
+from mesa.visualization.modules import ChartModule
 
 
-# def cohesion(model):  # How cohesion is computed, collected as the model runs
+# def polar(model):
+#   """ Computes the standard deviation of vectors to determine degree of
+#   polarization, used in the data collector. """
+#   polarization = [agent.heading for agent in model.schedule.agents]
+#   mean_heading = np.array([0, 0])
+#   N = model.num_agents
+#   stdev_heading = standard deviation of headings
 
-
-# def nnd(model):  # Nearest neighbor distance, collected as the model runs
+# def nnd(model):
+#   """ Nearest neighbor distance, collected as the model runs. """
 
 
 class Fish(Agent):
     """
     A Boid-style agent. Boids have a vision that defines the radius in which
     they look for their neighbors to flock with. Their speed (a scalar) and
-    heading (a unit vector) define their movement. Separation is their desired
+    heading (a unit vector) define their movement. Avoidance is their desired
     minimum distance from any other Boid.
     """
     def __init__(self, unique_id, model, pos, speed=5, heading=None,
-                 vision=5, separation=1):
+                 vision=5, avoidance=1):
         """
         Create a new Boid agent. Args:
             unique_id: Unique agent identifier.
@@ -45,7 +53,7 @@ class Fish(Agent):
             speed: Distance to move per step.
             heading: numpy vector for the Boid's direction of movement.
             vision: Radius to look around for nearby Boids.
-            separation: Minimum distance to maintain from other Boids.
+            avoidance: Minimum distance to maintain from other Boids.
         """
         super().__init__(unique_id, model)
         self.pos = pos
@@ -56,7 +64,7 @@ class Fish(Agent):
             self.heading = np.random.random(2)
             self.heading /= np.linalg.norm(self.heading)
         self.vision = vision
-        self.separation = separation
+        self.avoidance = avoidance
 
     def cohere(self, neighbors):
         """ Return the vector toward the center of mass of the local neighbors. """
@@ -66,56 +74,51 @@ class Fish(Agent):
         return center / len(neighbors)
 
     def separate(self, neighbors):
-        """ Return a vector away from any neighbors closer than separation dist. """
+        """ Return a vector away from any neighbors closer than avoidance dist. """
         my_pos = np.array(self.pos)
         sep_vector = np.array([0, 0])
         for neighbor in neighbors:
             their_pos = np.array(neighbor.pos)
             dist = np.linalg.norm(my_pos - their_pos)
-            if dist < self.separation:
+            if dist < self.avoidance:
                 sep_vector -= np.int64(their_pos - my_pos)
         return sep_vector
 
-    def match_heading(self, neighbors):
-        """ Return a vector of the neighbors' average heading. """
-        mean_heading = np.array([0, 0])
-        for neighbor in neighbors:
-            mean_heading += np.int64(neighbor.heading)
-        return mean_heading / len(neighbors)
-
     def step(self):
-        """ Get the Boid's neighbors, compute the new vector, and move accordingly."""
+        """
+        Get the Boid's neighbors, compute the new vector, and move accordingly,
+        but the agents no longer attempt to match their heading to others.
+        Their new heading is dependent on their desire ot cohere & to separate.
+        """
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
             separate_vector = self.separate(neighbors)
-            match_heading_vector = self.match_heading(neighbors)
             self.heading += (cohere_vector +
-                             separate_vector +
-                             match_heading_vector)
+                             separate_vector)
             self.heading /= np.linalg.norm(self.heading)
         new_pos = np.array(self.pos) + self.heading * self.speed
-        new_x, new_y = new_pos
+        new_x, new_y= new_pos
         self.model.space.move_agent(self, (new_x, new_y))
 
 
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, N, width, height, speed, vision, separation):
+    def __init__(self, N, width, height, speed, vision, avoidance):
         """
         Create a new Flockers model. Args:
             N: Number of Boids
             width, height: Size of the space.
             speed: How fast should the Boids move.
             vision: How far around should each Boid look for its neighbors
-            separation: What's the minimum distance each Boid will attempt to
+            avoidance: What's the minimum distance each Boid will attempt to
                        keep from any other
         """
-        self.N = N
+        self.num_agents = N
         self.vision = vision
         self.speed = speed
-        self.separation = separation
+        self.avoidance = avoidance
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, True,
                                      grid_width=10, grid_height=10)
@@ -124,14 +127,14 @@ class ShoalModel(Model):
 
     def make_agents(self):
         """ Create N agents, with random positions and starting headings. """
-        for i in range(self.N):
+        for i in range(self.num_agents):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = (x, y)
             heading = np.random.random(2) * 2 - np.array((1, 1))
             heading /= np.linalg.norm(heading)
             fish = Fish(i, self, pos, self.speed, heading, self.vision,
-                        self.separation)
+                        self.avoidance)
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
