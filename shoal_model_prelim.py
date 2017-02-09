@@ -18,20 +18,20 @@ import random
 from mesa import Agent
 from mesa import Model
 from mesa.time import RandomActivation
-from mesa.datacollection import DataCollector
+# from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
-from mesa.visualization.modules import ChartModule
+# from mesa.visualization.modules import ChartModule
 
 
-# def polar(model):
-#   """ Computes the standard deviation of vectors to determine degree of
-#   polarization, used in the data collector. """
-#   polarization = [agent.heading for agent in model.schedule.agents]
-#   mean_heading = np.array([0, 0])
-#   N = model.num_agents
-#   stdev_heading = standard deviation of headings
+def polar(agent):
+    """ Computes polarization of the agents by averaging their headings,
+    from 0 to 1. As the value approaches 1, the cohesion of the shoal increases.
+    """
+    headings = [agent.heading for agent in agent.schedule]
+    num_fish = agent.num_agents
+    return abs(sum(headings))/num_fish
 
 # def nnd(model):
 #   """ Nearest neighbor distance, collected as the model runs. """
@@ -98,14 +98,14 @@ class Fish(Agent):
                              separate_vector)
             self.heading /= np.linalg.norm(self.heading)
         new_pos = np.array(self.pos) + self.heading * self.speed
-        new_x, new_y= new_pos
+        new_x, new_y = new_pos
         self.model.space.move_agent(self, (new_x, new_y))
 
 
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, N, width, height, speed, vision, avoidance):
+    def __init__(self, n, width, height, speed, vision, avoidance):
         """
         Create a new Flockers model. Args:
             N: Number of Boids
@@ -115,7 +115,7 @@ class ShoalModel(Model):
             avoidance: What's the minimum distance each Boid will attempt to
                        keep from any other
         """
-        self.num_agents = N
+        self.num_agents = n
         self.vision = vision
         self.speed = speed
         self.avoidance = avoidance
@@ -138,34 +138,14 @@ class ShoalModel(Model):
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
-        # self.datacollector = DataCollector(
-            # model_reporters={"Cohesion": cohesion},  # Measure of cohesion
-            # agent_reporters={"NND": nnd})  # Nearest neighbor distance
-
     def step(self):
-        # self.datacollector.collect(self)  # Collect data at each step
         self.schedule.step()
 
 
-def agent_portrayal(agent):
-    """
-    Canvas grid loops over every cell and generates a portrayal (dictionary) of
-    each agent it finds, then tells the JavaScript side how to draw each
-    portrayal. In this case, one way if agents have money and different look if
-    agents are broke.
-    """
-    portrayal = {"Shape": "circle",
-                 "Filled": "true",
-                 "r": 3,
-                 "Color": "Blue"}  # radius of circle
-    return portrayal
+###############################################################################
 
 
-# chart = ChartModule([{"Label": "(data to be collected",
-                      # "Color": "Black"}],
-                    # data_collector_name="datacollector")
-
-
+# Create canvas for visualization
 class SimpleCanvas(VisualizationElement):
     local_includes = ["simple_continuous_canvas.js"]
     portrayal_method = None
@@ -201,8 +181,18 @@ class SimpleCanvas(VisualizationElement):
 def fish_draw(agent):
     return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
 
+
+# Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
-server = ModularServer(ShoalModel, [shoal_canvas],  # [chart]
-                       "Boid Model of Shoaling Behavior",
-                       100, 100, 100, 5, 10, 2)
+
+# Create chart of polarization
+# chart = ChartModule([{"Label": "Polarization",
+#                    "Color": "Black"}],
+#                    data_collector_name="datacollector")
+
+# Launch server
+server = ModularServer(ShoalModel,  # Model class to be visualized
+                       [shoal_canvas],  # List of module objects to include
+                       "Boid Model of Shoaling Behavior",  # Title of the model
+                       100, 100, 100, 5, 10, 2)  # Inputs for the model
 server.launch()
