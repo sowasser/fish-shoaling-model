@@ -28,10 +28,12 @@ from mesa.visualization.modules import ChartModule
 def polar(model):
     """ Computes polarization of the agents by averaging their headings,
     from 0 to 1. As the value approaches 1, the cohesion of the shoal increases.
+    Heading is recorded as a set of coordinates
     """
-    headings = [agent.heading[0] for agent in model.schedule.agents]
+    headings = [agent.heading for agent in model.schedule.agents]
+    h = headings[0]
     num_fish = model.num_agents
-    avg_heading = abs(sum(headings))/num_fish
+    avg_heading = abs(sum(h))/num_fish
 
     return avg_heading
 
