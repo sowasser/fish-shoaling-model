@@ -4,7 +4,7 @@ using the basic code provided in the Flocker example of the Mesa framework for
 agent-based modelling in Python. This model is based on 2 parameters that each
 agent follows:
     1. Attraction to other agents,
-    2. Avoidance of other agents,
+    2. Avoidance of other agents.
 Heading, though recorded for each agent, is not included in the parameters that
 determine an agents' movement. Therefore, polarization becomes an emergent
 behaviour and can be analyzed as a measure of cohesion, along with the nearest
@@ -26,19 +26,29 @@ from mesa.visualization.modules import ChartModule
 
 
 def polar(model):
-    """ Computes polarization of the agents by averaging their headings,
-    from 0 to 1. As the value approaches 1, the cohesion of the shoal increases.
-    Heading is recorded as a set of coordinates
     """
-    headings = [agent.heading for agent in model.schedule.agents]
-    h = headings[0]
+    Computes polarization of the agents by averaging their headings,
+    from 0 to 1. As the value approaches 1, the cohesion of the shoal increases.
+    Heading is a unit vector, meaning the magnitude is 1 and the direction is
+    given as x,y coordinates. The average is taken first of the x-coordinate,
+    then of the y-coordinate and then those averages are averaged to find a
+    single number to represent on the graph. This might not be mathematically
+    accurate!
+    """
+    heading_x = [agent.heading[0] for agent in model.schedule.agents]
+    heading_y = [agent.heading[1] for agent in model.schedule.agents]
     num_fish = model.num_agents
-    avg_heading = abs(sum(h))/num_fish
+    avg_h_x = abs(sum(heading_x))/num_fish
+    avg_h_y = abs(sum(heading_y))/num_fish
+    avg_heading = (avg_h_x + avg_h_y)/2
 
     return avg_heading
 
 # def nnd(model):
-#   """ Nearest neighbor distance, collected as the model runs. """
+    # """
+    # Computes the average nearest neighbor distance for each agent as another
+    # measure of cohesion.
+    # """
 
 
 class Fish(Agent):
