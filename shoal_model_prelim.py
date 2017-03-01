@@ -5,12 +5,16 @@ agent-based modelling in Python. This model is based on 2 parameters that each
 agent follows:
     1. Attraction to other agents,
     2. Avoidance of other agents.
+
 Heading, though recorded for each agent, is not included in the parameters that
 determine an agents' movement. Therefore, polarization becomes an emergent
 behaviour and can be analyzed as a measure of cohesion, along with the nearest
 neighbour distance. The model is based on a bounded, 3D area. Later additions
-will include obstacles, environmental gradients, and agents with a goal -
-food-seeking, or safety-seeking.
+will include obstacles, environmental gradients, and agents with goal-, food-,
+or safety-seeking behaviour.
+
+This script also includes the code for visualizing the model using an HTML5
+object. The parameters for the visualization rely on a JavaScript canvas.
 """
 
 import numpy as np
@@ -30,10 +34,10 @@ def polar(model):
     Computes polarization of the agents by averaging their headings,
     from 0 to 1. As the value approaches 1, the cohesion of the shoal increases.
     Heading is a unit vector, meaning the magnitude is 1 and the direction is
-    given as x,y coordinates. The average is taken first of the x-coordinate,
-    then of the y-coordinate and then those averages are averaged to find a
-    single number to represent on the graph. This might not be mathematically
-    accurate!
+    given as x,y coordinates. The average is taken first of the absolute value
+    of the x-coordinate, then of the y-coordinate and then those averages are
+    averaged to find a single number to represent on the graph. This might not
+    be mathematically accurate!
     """
     heading_x = [agent.heading[0] for agent in model.schedule.agents]
     heading_y = [agent.heading[1] for agent in model.schedule.agents]
@@ -54,9 +58,9 @@ def polar(model):
 class Fish(Agent):
     """
     A Boid-style agent. Boids have a vision that defines the radius in which
-    they look for their neighbors to flock with. Their speed (a scalar) and
-    heading (a unit vector) define their movement. Avoidance is their desired
-    minimum distance from any other Boid.
+    they look for their neighbors to flock with. The units of this vision are
+    unclear, however. Their speed (a scalar) and heading (a unit vector) define
+    their movement. Avoidance is their desired minimum distance from any other agent.
     """
     def __init__(self, unique_id, model, pos, speed=5, heading=None,
                  vision=5, avoidance=1):
@@ -122,12 +126,15 @@ class ShoalModel(Model):
     def __init__(self, n, width, height, speed, vision, avoidance):
         """
         Create a new Flockers model. Args:
-            N: Number of Boids
+            N: Number of agents
             width, height: Size of the space.
-            speed: How fast should the Boids move.
-            vision: How far around should each Boid look for its neighbors
-            avoidance: What's the minimum distance each Boid will attempt to
+            speed: How fast should the agents move.
+            vision: How far around should each agent should look for its
+                    neighbors
+            avoidance: What's the minimum distance each agent will attempt to
                        keep from any other
+
+        Also includes data collection for analysis of the model.
         """
         self.num_agents = n
         self.vision = vision
@@ -149,6 +156,9 @@ class ShoalModel(Model):
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
+        # Creating the data collector, which reports the output of a function
+        # (polar, the average agent heading) for each step of the model. This
+        # is a "model-level" reporter, but agent-level is also available.
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar})
 
@@ -162,15 +172,14 @@ class ShoalModel(Model):
 
 # Create canvas for visualization
 class SimpleCanvas(VisualizationElement):
+    """ Uses JavaScript file for a simple, continuous canvas. """
     local_includes = ["simple_continuous_canvas.js"]
     portrayal_method = None
     canvas_height = 500
     canvas_width = 500
 
     def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
-        """
-        Instantiate a new SimpleCanvas
-        """
+        """ Instantiate a new SimpleCanvas """
         self.portrayal_method = portrayal_method
         self.canvas_height = canvas_height
         self.canvas_width = canvas_width
@@ -179,6 +188,7 @@ class SimpleCanvas(VisualizationElement):
         self.js_code = "elements.push(" + new_element + ");"
 
     def render(self, model):
+        """ Creates the space in which the agents exist. """
         space_state = []
         for obj in model.schedule.agents:
             portrayal = self.portrayal_method(obj)
@@ -194,6 +204,13 @@ class SimpleCanvas(VisualizationElement):
 
 
 def fish_draw(agent):
+    """
+    Right now, the only option for shape is circle or rectangle (rect).
+    Working on creating a triangle or arrow option so the agents' heading
+    is explicit in the visualization. Future improvements will hopefully also
+    include changes in color with degrees of cohesion and a dot for the
+    centroid/center of mass.
+    """
     return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
 
 
@@ -201,9 +218,8 @@ def fish_draw(agent):
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
 # Create chart of polarization
-polarization_chart = ChartModule([{"Label": "Polarization",
-                    "Color": "Black"}],
-                    data_collector_name="datacollector")
+polarization_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+                                 data_collector_name="datacollector")
 
 # Launch server
 server = ModularServer(ShoalModel,  # Model class to be visualized
