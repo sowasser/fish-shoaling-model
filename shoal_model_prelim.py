@@ -18,6 +18,7 @@ object. The parameters for the visualization rely on a JavaScript canvas.
 """
 
 import numpy as np
+from math import atan2
 import random
 from mesa import Agent
 from mesa import Model
@@ -31,22 +32,26 @@ from mesa.visualization.modules import ChartModule
 
 def polar(model):
     """
-    Computes polarization of the agents by averaging their headings,
-    from 0 to 1. As the value approaches 1, the cohesion of the shoal increases.
+    Computes standard deviation from the mean heading of the group. As the
+    value approaches 0, polarization increases.
+
     Heading is a unit vector, meaning the magnitude is 1 and the direction is
-    given as x,y coordinates. The average is taken first of the absolute value
-    of the x-coordinate, then of the y-coordinate and then those averages are
-    averaged to find a single number to represent on the graph. This might not
-    be mathematically accurate!
+    given as x,y coordinates. In order to find the mean & stdev, the x,y
+    (Cartesian) coordinates are converted to angle degrees in radians by
+    finding the arc tangent of y/x. The function used to do this is arctan2
+    from the math package, which pays attention to the sign of the input to
+    make sure that the correct quadrant for the angle is determined. Then, the
+    standard deviation is calculated from these values.
     """
     heading_x = [agent.heading[0] for agent in model.schedule.agents]
     heading_y = [agent.heading[1] for agent in model.schedule.agents]
-    num_fish = model.num_agents
-    avg_h_x = abs(sum(heading_x))/num_fish
-    avg_h_y = abs(sum(heading_y))/num_fish
-    avg_heading = (avg_h_x + avg_h_y)/2
+    angle = []
+    for (y, x) in zip(heading_y, heading_x):
+        a = atan2(y, x)
+        angle.append(a)
+    stdev_h = np.std(angle, axis=None)
 
-    return avg_heading
+    return stdev_h
 
 # def nnd(model):
     # """
