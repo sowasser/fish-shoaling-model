@@ -77,7 +77,11 @@ target/
 .ipynb_checkpoints
 
 # pyenv
-.python-version
+# 2017.03.04: In the default Python .gitignore template we used the file
+# .python-version is ignored. It's kinda surprising it it since I guess we'd
+# want to keep track of that in the history of the project. This file specifies
+# for PyEnv (https://github.com/yyuu/pyenv) what version we want. Commenting.
+#.python-version
 
 # celery beat schedule file
 celerybeat-schedule
