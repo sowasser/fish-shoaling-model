@@ -216,7 +216,9 @@ def fish_draw(agent):
     include changes in color with degrees of cohesion and a dot for the
     centroid/center of mass.
     """
-    return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
+    #return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
+    #return {"Shape": "rect", "w": 0.02, "h": 0.02, "Filled": "true", "Color": "Blue"}
+    return {"Shape": "triangle", "w": 4, "h": 4, "Filled": False, "Color": "Blue", "heading": (135*3.14159/180)}
 
 
 # Create canvas, 500x500 pixels
