@@ -85,6 +85,8 @@ class Fish(Agent):
             self.heading = heading
         else:
             self.heading = np.random.random(2)
+            # Heading is then divided by the 2-, or Euclidean, norm, the
+            # straight-line distance between two points. As far as I understand
             self.heading /= np.linalg.norm(self.heading)
         self.vision = vision
         self.avoidance = avoidance
@@ -216,9 +218,9 @@ def fish_draw(agent):
     include changes in color with degrees of cohesion and a dot for the
     centroid/center of mass.
     """
-    #return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
-    #return {"Shape": "rect", "w": 0.02, "h": 0.02, "Filled": "true", "Color": "Blue"}
-    return {"Shape": "triangle", "w": 4, "h": 4, "Filled": False, "Color": "Blue", "heading": (135*3.14159/180)}
+    return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
+    # return {"Shape": "rect", "w": 0.02, "h": 0.02, "Filled": "true", "Color": "Blue"}
+    # return {"Shape": "triangle", "w": 4, "h": 4, "Filled": False, "Color": "Blue", "heading": }
 
 
 # Create canvas, 500x500 pixels
@@ -230,7 +232,8 @@ polarization_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
 
 # Launch server
 server = ModularServer(ShoalModel,  # Model class to be visualized
-                       [shoal_canvas, polarization_chart],  # List of module objects to include
+                       [shoal_canvas, polarization_chart],  # List of objects to include
                        "Boid Model of Shoaling Behavior",  # Title of the model
-                       100, 100, 100, 5, 5, 2)  # Inputs for the model
+                       # Input agent #, width, height, vision, speed, avoidance
+                       100, 100, 100, 5, 5, 2)
 server.launch()
