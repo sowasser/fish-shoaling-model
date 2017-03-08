@@ -92,11 +92,22 @@ class Fish(Agent):
         self.avoidance = avoidance
 
     def cohere(self, neighbors):
-        """ Return the vector toward the center of mass of the local neighbors. """
-        center = np.array([0.0, 0.0])
+        """ Return the vector for each individual agent toward the center of
+        mass of the local neighbors. This is done by finding the center of the
+        neighbors and then creating a vector towards it. To calculate the
+        vector needed to add to the heading of the agent to find the coherence
+        vector, the "head-minus-tail" rule is applied: vSourcetoDestination =
+        vSource - VDestination.
+        """
+        my_pos = np.array(self.pos)
+        coh_vector = np.array([0, 0])
+        dist = np.array([0.0, 0.0])
         for neighbor in neighbors:
-            center += np.array(neighbor.pos)
-        return center / len(neighbors)
+            center = np.array(neighbor.pos) / len(neighbors)
+            dist = np.linalg.norm(my_pos - center)
+            return dist
+        coh_vector += np.int64(dist - self.heading)
+        return coh_vector
 
     def separate(self, neighbors):
         """ Return a vector away from any neighbors closer than avoidance dist. """
