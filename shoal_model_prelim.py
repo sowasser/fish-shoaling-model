@@ -92,32 +92,32 @@ class Fish(Agent):
         self.avoidance = avoidance
 
     def cohere(self, neighbors):
-        """ Return the vector for each individual agent toward the center of
-        mass of the local neighbors. This is done by finding the center of the
-        neighbors and then creating a vector towards it. To calculate the
-        vector needed to add to the heading of the agent to find the coherence
-        vector, the "head-minus-tail" rule is applied: vSourcetoDestination =
-        vSource - VDestination.
+        """
+        Add the vector toward the center of mass of the local neighbors to the
+        position of each agent.
         """
         my_pos = np.array(self.pos)
-        coh_vector = np.array([0, 0])
-        dist = np.array([0.0, 0.0])
+        coh_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
             center = np.array(neighbor.pos) / len(neighbors)
-            dist = np.linalg.norm(my_pos - center)
-            return dist
-        coh_vector += np.int64(dist - self.heading)
+            coh_vector += [my_pos[0] - center[0],
+                           my_pos[1] - center[1]]
         return coh_vector
 
     def separate(self, neighbors):
-        """ Return a vector away from any neighbors closer than avoidance dist. """
-        my_pos = np.array(self.pos)
-        sep_vector = np.array([0, 0])
+        """
+        Subtract the position of neighboring agents from the position of each
+        agent.
+        """
+        my_pos = np.array(self.heading)
+        sep_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
             their_pos = np.array(neighbor.pos)
+            opposite = -their_pos
             dist = np.linalg.norm(my_pos - their_pos)
             if dist < self.avoidance:
-                sep_vector -= np.int64(their_pos - my_pos)
+                sep_vector += [my_pos[0] - opposite[0],
+                               my_pos[1] - opposite[1]]
         return sep_vector
 
     def step(self):
@@ -130,8 +130,8 @@ class Fish(Agent):
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
             separate_vector = self.separate(neighbors)
-            self.heading += (cohere_vector +
-                             separate_vector)
+            self.heading = [(cohere_vector[0] + separate_vector[0]),
+                            (cohere_vector[1] + separate_vector[1])]
             self.heading /= np.linalg.norm(self.heading)
         new_pos = np.array(self.pos) + self.heading * self.speed
         new_x, new_y = new_pos
@@ -246,5 +246,5 @@ server = ModularServer(ShoalModel,  # Model class to be visualized
                        [shoal_canvas, polarization_chart],  # List of objects to include
                        "Boid Model of Shoaling Behavior",  # Title of the model
                        # Input agent #, width, height, vision, speed, avoidance
-                       100, 100, 100, 5, 5, 2)
+                       100, 100, 100, 100, 5, 2)
 server.launch()
