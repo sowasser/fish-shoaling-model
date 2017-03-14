@@ -26,6 +26,7 @@ class Boid(Agent):
             vision: Radius to look around for nearby Boids.
             separation: Minimum distance to maintain from other Boids.
         """
+        # TODO: Fix 'speed': + value causes boids to always go to bottom right
         super().__init__(unique_id, model)
         self.pos = pos
         self.speed = speed
@@ -33,19 +34,21 @@ class Boid(Agent):
             self.heading = heading
         else:
             self.heading = np.random.random(2)
-            self.heading /= np.linalg.norm(self.heading)
+            self.heading /= np.linalg.norm(self.heading)  # creates unit vector
         self.vision = vision
         self.separation = separation
 
     def cohere(self, neighbors):
         """
         Add the vector toward the center of mass of the local neighbors to the
-        position of each agent.
+        position of each agent to return a new vector towards neighbors.
         """
         my_pos = np.array(self.pos)
-        coh_vector = np.array([0.0, 0.0])
+        coh_vector = np.array([0.0, 0.0])  # create empty list for new vector
         for neighbor in neighbors:
+            # Calculate center of neighbors
             center = np.array(neighbor.pos) / len(neighbors)
+            # Find the new vector towards the center using Head-Minus-Tail rule
             coh_vector += [my_pos[0] - center[0],
                            my_pos[1] - center[1]]
         return coh_vector
