@@ -15,33 +15,37 @@ class Boid(Agent):
     heading (a unit vector) define their movement. Separation is their desired
     minimum distance from any other Boid.
     """
-    def __init__(self, unique_id, model, pos, speed=5, heading=None,
-                 vision=5, separation=1):
+    def __init__(self, unique_id, model, pos, h=None, heading=None, velocity=None,
+                 vision=5, separation=2):
         """
-        Create a new Boid flocker agent. Args:
-            unique_id: Unique agent identifyer.
+        Create a new Boid (bird, fish) agent. Args:
+            unique_id: Unique agent identifier.
             pos: Starting position
-            speed: Distance to move per step.
-            heading: numpy vector for the Boid's direction of movement.
+            h: numpy vector for the Boid's direction of movement.
+            heading: unit vector of Boid's movement - no magnitude.
+            velocity: Speed of the Boid, calculated as the Euclidean distance
+                      of the Boid's heading.
             vision: Radius to look around for nearby Boids.
             separation: Minimum distance to maintain from other Boids.
         """
-        # TODO: Fix 'speed': + value causes boids to always go to bottom right
         super().__init__(unique_id, model)
         self.pos = pos
-        self.speed = speed
         if heading is not None:
+            self.h = h
             self.heading = heading
+            self.velocity = velocity
         else:
-            self.heading = np.random.random(2)
-            self.heading /= np.linalg.norm(self.heading)  # creates unit vector
+            self.h = np.random.random(2)
+            self.heading = self.h / np.linalg.norm(self.h)
+            self.velocity = np.linalg.norm(self.h)
         self.vision = vision
         self.separation = separation
 
     def cohere(self, neighbors):
         """
-        Add the vector toward the center of mass of the local neighbors to the
-        position of each agent to return a new vector towards neighbors.
+        Add the vector (direction, not speed) toward the center of mass of the
+        local neighbors to the position of each agent to return a new vector
+        towards neighbors.
         """
         my_pos = np.array(self.pos)
         coh_vector = np.array([0.0, 0.0])  # create empty list for new vector
@@ -62,19 +66,28 @@ class Boid(Agent):
         sep_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
             their_pos = np.array(neighbor.pos)
-            opposite = -their_pos
+            away = -their_pos
             dist = np.linalg.norm(my_pos - their_pos)
             if dist < self.separation:
-                sep_vector += [my_pos[0] - opposite[0],
-                               my_pos[1] - opposite[1]]
+                sep_vector += [my_pos[0] - away[0],
+                               my_pos[1] - away[1]]
         return sep_vector
 
-    def match_heading(self, neighbors):
-        """ Return a vector of the neighbors' average heading. """
-        mean_heading = np.array([0.0, 0.0])
+    def match_velocity(self, neighbors):
+        """
+        Have Boids match the velocity (magnitude/Euclidean distance of heading)
+        of neighbors.
+        """
+        my_velocity = self.velocity
+        mean_velocity = 0
         for neighbor in neighbors:
-            mean_heading += np.int64(neighbor.heading)
-        return mean_heading / len(neighbors)
+            mean_velocity += np.int64(neighbor.velocity)
+            mean_velocity /= len(neighbors)
+            if my_velocity < mean_velocity:
+                my_velocity += mean_velocity - my_velocity
+            elif my_velocity > mean_velocity:
+                my_velocity -= mean_velocity - my_velocity
+        return mean_velocity
 
     def step(self):
         """ Get the Boid's neighbors, compute the new vector, and move accordingly."""
@@ -82,15 +95,10 @@ class Boid(Agent):
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
             separate_vector = self.separate(neighbors)
-            match_heading_vector = self.match_heading(neighbors)
-            self.heading = [(cohere_vector[0] +
-                             separate_vector[0] +
-                             match_heading_vector[0]),
-                            (cohere_vector[1] +
-                             separate_vector[1] +
-                             match_heading_vector[1])]
+            self.heading = [(cohere_vector[0] + separate_vector[0]),
+                            (cohere_vector[1] + separate_vector[1])]
             self.heading /= np.linalg.norm(self.heading)
-        new_pos = np.array(self.pos) + self.heading * self.speed
+        new_pos = np.array(self.pos) + self.heading * self.velocity
         new_x, new_y = new_pos
         self.model.space.move_agent(self, (new_x, new_y))
 
@@ -98,7 +106,7 @@ class Boid(Agent):
 class BoidsModel(Model):
     """ Flocker model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, N, width, height, speed, vision, separation):
+    def __init__(self, N, width, height, vision, separation):
         """
         Create a new Flockers model. Args:
             N: Number of Boids
@@ -110,7 +118,6 @@ class BoidsModel(Model):
         """
         self.N = N
         self.vision = vision
-        self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, True,
@@ -126,7 +133,7 @@ class BoidsModel(Model):
             pos = (x, y)
             heading = np.random.random(2) * 2 - np.array((1, 1))
             heading /= np.linalg.norm(heading)
-            boid = Boid(i, self, pos, self.speed, heading, self.vision,
+            boid = Boid(i, self, pos, heading, self.vision,
                         self.separation)
             self.space.place_agent(boid, pos)
             self.schedule.add(boid)
@@ -172,5 +179,5 @@ def boid_draw(agent):
 
 boid_canvas = SimpleCanvas(boid_draw, 500, 500)
 server = ModularServer(BoidsModel, [boid_canvas], "Boids",
-                       100, 100, 100, 5, 10, 2)
+                       100, 100, 100, 10, 2)
 server.launch()
