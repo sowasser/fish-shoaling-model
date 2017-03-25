@@ -7,37 +7,42 @@ from mesa.time import RandomActivation
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.ModularVisualization import ModularServer
 
+# Todo: Constrain the space so that behaviors are more immediately recognizable.
+
 
 class Boid(Agent):
     """
     A Boid-style flocker agent. Boids have a vision that defines the radius in
-    which they look for their neighbors to flock with. Their speed (a scalar) and
-    heading (a unit vector) define their movement. Separation is their desired
-    minimum distance from any other Boid.
+    which they look for their neighbors to flock with. Their heading (a unit
+    vector) and their interactions with their neighbors - cohering and avoiding -
+    define their movement. Separation is their desired minimum distance from
+    any other Boid.
     """
-    def __init__(self, unique_id, model, pos, h=None, heading=None, velocity=None,
+    def __init__(self, unique_id, model, pos, heading,
                  vision=5, separation=2):
         """
         Create a new Boid (bird, fish) agent. Args:
             unique_id: Unique agent identifier.
             pos: Starting position
-            h: numpy vector for the Boid's direction of movement.
-            heading: unit vector of Boid's movement - no magnitude.
+            heading: randomly generated then transformed into the unit vector
+                     of Boid's movement - no magnitude.
             velocity: Speed of the Boid, calculated as the Euclidean distance
-                      of the Boid's heading.
+                      (vector norm) of the Boid's heading.
             vision: Radius to look around for nearby Boids.
             separation: Minimum distance to maintain from other Boids.
         """
         super().__init__(unique_id, model)
         self.pos = pos
         if heading is not None:
-            self.h = h
+            # Heading is defined within the model. Here, a unit vector is
+            # created by dividing it by its magnitude so velocity can be
+            #  defined as the magnitude of the heading.
             self.heading = heading
-            self.velocity = velocity
+            self.velocity = np.linalg.norm(heading)
+            self.heading /= self.velocity
         else:
-            self.h = np.random.random(2)
-            self.heading = self.h / np.linalg.norm(self.h)
-            self.velocity = np.linalg.norm(self.h)
+            self.heading = np.random.random(2)
+            self.heading /= np.linalg.norm(self.heading)
         self.vision = vision
         self.separation = separation
 
@@ -95,8 +100,8 @@ class Boid(Agent):
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
             separate_vector = self.separate(neighbors)
-            self.heading = [(cohere_vector[0] + separate_vector[0]),
-                            (cohere_vector[1] + separate_vector[1])]
+            self.heading += (cohere_vector +
+                             separate_vector)
             self.heading /= np.linalg.norm(self.heading)
         new_pos = np.array(self.pos) + self.heading * self.velocity
         new_x, new_y = new_pos
@@ -131,10 +136,11 @@ class BoidsModel(Model):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = (x, y)
+            # Generates an array of 2 random numbers between -1 and 1.
             heading = np.random.random(2) * 2 - np.array((1, 1))
-            heading /= np.linalg.norm(heading)
-            boid = Boid(i, self, pos, heading, self.vision,
-                        self.separation)
+            # heading /= np.linalg.norm(heading)
+            boid = Boid(unique_id=i, model=self, pos=pos, heading=heading, vision=self.vision,
+                        separation=self.separation)
             self.space.place_agent(boid, pos)
             self.schedule.add(boid)
 
@@ -179,5 +185,5 @@ def boid_draw(agent):
 
 boid_canvas = SimpleCanvas(boid_draw, 500, 500)
 server = ModularServer(BoidsModel, [boid_canvas], "Boids",
-                       100, 100, 100, 10, 2)
+                       N=100, width=100, height=100, vision=5, separation=2)
 server.launch()
