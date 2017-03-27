@@ -2,12 +2,14 @@ import numpy as np
 from mesa import Agent
 import random
 from mesa import Model
+import math
 from mesa.space import ContinuousSpace
 from mesa.time import RandomActivation
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.ModularVisualization import ModularServer
 
 # Todo: Constrain the space so that behaviors are more immediately recognizable.
+# Todo: Radius is a positive number - constraining movement to the bottom-right
 
 
 class Boid(Agent):
@@ -19,7 +21,7 @@ class Boid(Agent):
     any other Boid.
     """
     def __init__(self, unique_id, model, pos, heading,
-                 vision=5, avoidance=2):
+                 vision=10, avoidance=2):
         """
         Create a new Boid (bird, fish) agent. Args:
             unique_id: Unique agent identifier.
@@ -44,6 +46,7 @@ class Boid(Agent):
             # Does not include the upper number, returns array of 2 values
             self.heading = np.random.uniform(-1, 1, 2)
             self.heading /= np.linalg.norm(self.heading)
+        vision *= 2 * math.pi
         self.vision = vision
         self.avoidance = avoidance
 
@@ -142,8 +145,8 @@ class BoidsModel(Model):
 class SimpleCanvas(VisualizationElement):
     local_includes = ["simple_continuous_canvas.js"]
     portrayal_method = None
-    canvas_height = 500
-    canvas_width = 500
+    canvas_height = 700
+    canvas_width = 700
 
     def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
         """
@@ -176,5 +179,5 @@ def boid_draw(agent):
 
 boid_canvas = SimpleCanvas(boid_draw, 700, 700)
 server = ModularServer(BoidsModel, [boid_canvas], "Boids",
-                       N=100, width=100, height=100, vision=5, avoidance=2)
+                       N=100, width=100, height=100, vision=10, avoidance=2)
 server.launch()
