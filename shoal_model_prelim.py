@@ -18,7 +18,7 @@ object. The parameters for the visualization rely on a JavaScript canvas.
 """
 
 import numpy as np
-from math import atan2
+import math
 import random
 from mesa import Agent
 from mesa import Model
@@ -28,6 +28,10 @@ from mesa.space import ContinuousSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
+
+# Todo: Constrain space to the canvas so behaviors can be more easily understood.
+# Todo: Build an arrow-shaped avatar for the agents.
+# Todo: Manipulate agent color in visualization to match degree of cohesion.
 
 
 def polar(model):
@@ -47,7 +51,7 @@ def polar(model):
     heading_y = [agent.heading[1] for agent in model.schedule.agents]
     angle = []
     for (y, x) in zip(heading_y, heading_x):
-        a = atan2(y, x)
+        a = math.atan2(y, x)
         angle.append(a)
     stdev_h = np.std(angle, axis=None)
 
@@ -60,80 +64,91 @@ def polar(model):
     # """
 
 
-class Fish(Agent):
+class Boid(Agent):
     """
-    A Boid-style agent. Boids have a vision that defines the radius in which
-    they look for their neighbors to flock with. The units of this vision are
-    unclear, however. Their speed (a scalar) and heading (a unit vector) define
-    their movement. Avoidance is their desired minimum distance from any other agent.
+    A Boid-style flocker agent. Boids have a vision that defines the radius in
+    which they look for their neighbors to flock with. Their heading (a unit
+    vector) and their interactions with their neighbors - cohering and avoiding -
+    define their movement. Avoidance is their desired minimum distance from
+    any other Boid.
     """
-    def __init__(self, unique_id, model, pos, speed=5, heading=None,
-                 vision=5, avoidance=1):
+    def __init__(self, unique_id, model, pos, heading,
+                 vision=10, avoidance=2):
         """
-        Create a new Boid agent. Args:
+        Create a new Boid (bird, fish) agent. Args:
             unique_id: Unique agent identifier.
             pos: Starting position
-            speed: Distance to move per step.
-            heading: numpy vector for the Boid's direction of movement.
+            heading: randomly generated then transformed into the unit vector
+                     of Boid's movement - no magnitude.
+            velocity: Speed of the Boid, calculated as the Euclidean distance
+                      (vector norm) of the Boid's heading.
             vision: Radius to look around for nearby Boids.
             avoidance: Minimum distance to maintain from other Boids.
         """
         super().__init__(unique_id, model)
         self.pos = pos
-        self.speed = speed
         if heading is not None:
+            # Heading is defined within the model. Here, a unit vector is
+            # created by dividing it by its magnitude so velocity can be
+            #  defined as the magnitude of the heading.
             self.heading = heading
+            self.velocity = np.linalg.norm(heading)
+            self.heading /= self.velocity
         else:
-            self.heading = np.random.random(2)
-            # Heading is then divided by the 2-, or Euclidean, norm, the
-            # straight-line distance between two points. As far as I understand
+            # Does not include the upper number, returns array of 2 values
+            self.heading = np.random.uniform(-1, 1, 2)
             self.heading /= np.linalg.norm(self.heading)
         self.vision = vision
         self.avoidance = avoidance
 
     def cohere(self, neighbors):
         """
-        Add the vector toward the center of mass of the local neighbors to the
-        position of each agent.
+        Add the vector (direction, not speed) toward the center of mass of the
+        local neighbors to the position of each agent to return a new vector
+        towards neighbors.
         """
         my_pos = np.array(self.pos)
         coh_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
             center = np.array(neighbor.pos) / len(neighbors)
-            coh_vector += [my_pos[0] - center[0],
-                           my_pos[1] - center[1]]
+            # Vector calculation uses the Head-Minus-Tail rule
+            coh_vector += (my_pos - center)
         return coh_vector
 
-    def separate(self, neighbors):
-        """
-        Subtract the position of neighboring agents from the position of each
-        agent.
-        """
-        my_pos = np.array(self.heading)
-        sep_vector = np.array([0.0, 0.0])
+    def avoid(self, neighbors):
+        my_pos = np.array(self.pos)
+        avoid_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
-            their_pos = np.array(neighbor.pos)
-            opposite = -their_pos
-            dist = np.linalg.norm(my_pos - their_pos)
-            if dist < self.avoidance:
-                sep_vector += [my_pos[0] - opposite[0],
-                               my_pos[1] - opposite[1]]
-        return sep_vector
+            if abs(np.linalg.norm(my_pos - neighbor.pos)) > self.avoidance:
+                avoid_vector -= (my_pos - neighbor.pos)
+            return avoid_vector
+
+    def match_velocity(self, neighbors):
+        """
+        Have Boids match the velocity (magnitude/Euclidean distance of heading)
+        of neighbors.
+        """
+        my_velocity = self.velocity
+        mean_velocity = 0
+        for neighbor in neighbors:
+            mean_velocity += np.int64(neighbor.velocity)
+            mean_velocity /= len(neighbors)
+            if my_velocity < mean_velocity:
+                my_velocity += mean_velocity - my_velocity
+            elif my_velocity > mean_velocity:
+                my_velocity -= mean_velocity - my_velocity
+        return mean_velocity
 
     def step(self):
-        """
-        Get the Boid's neighbors, compute the new vector, and move accordingly,
-        but the agents no longer attempt to match their heading to others.
-        Their new heading is dependent on their desire ot cohere & to separate.
-        """
+        """ Get the Boid's neighbors, compute the new vector, and move accordingly."""
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
-            separate_vector = self.separate(neighbors)
-            self.heading = [(cohere_vector[0] + separate_vector[0]),
-                            (cohere_vector[1] + separate_vector[1])]
+            avoid_vector = self.avoid(neighbors)
+            self.heading += (cohere_vector +
+                             avoid_vector)
             self.heading /= np.linalg.norm(self.heading)
-        new_pos = np.array(self.pos) + self.heading * self.speed
+        new_pos = np.array(self.pos) + self.heading * self.velocity
         new_x, new_y = new_pos
         self.model.space.move_agent(self, (new_x, new_y))
 
@@ -141,42 +156,43 @@ class Fish(Agent):
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, n, width, height, speed, vision, avoidance):
+    def __init__(self, n, width, height, vision, avoidance):
         """
-        Create a new Flockers model. Args:
+        Create a new Boids model. Args:
             N: Number of agents
             width, height: Size of the space.
-            speed: How fast should the agents move.
-            vision: How far around should each agent should look for its
-                    neighbors
-            avoidance: What's the minimum distance each agent will attempt to
-                       keep from any other
+            vision: Radius for how far agents look for their neighbors.
+            avoidance: The minimum distance each agent will attempt to keep
+                       from others.
 
         Also includes data collection for analysis of the model.
         """
-        self.num_agents = n
+        self.n = n
         self.vision = vision
-        self.speed = speed
         self.avoidance = avoidance
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, True,
-                                     grid_width=10, grid_height=10)
+        self.space = ContinuousSpace(width, height, torus=True,
+                                     grid_width=100, grid_height=100)
+        self.make_agents()
         self.running = True
 
-        for i in range(self.num_agents):
+    def make_agents(self):
+        """ Create N agents, with random positions and starting headings. """
+        for i in range(self.n):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = (x, y)
-            heading = np.random.random(2) * 2 - np.array((1, 1))
-            heading /= np.linalg.norm(heading)
-            fish = Fish(i, self, pos, self.speed, heading, self.vision,
-                        self.avoidance)
-            self.space.place_agent(fish, pos)
-            self.schedule.add(fish)
+            # Does not include the upper number, returns array of 2 values
+            heading = np.random.uniform(-1, 1, 2)
+            # heading /= np.linalg.norm(heading)
+            boid = Boid(unique_id=i, model=self, pos=pos, heading=heading, vision=self.vision,
+                        avoidance=self.avoidance)
+            self.space.place_agent(boid, pos)
+            self.schedule.add(boid)
 
         # Creating the data collector, which reports the output of a function
-        # (polar, the average agent heading) for each step of the model. This
-        # is a "model-level" reporter, but agent-level is also available.
+        # (polar, the average agent heading) for each step. This is a "model-
+        # level" reporter, but agent-level is also available.
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar})
 
@@ -193,8 +209,8 @@ class SimpleCanvas(VisualizationElement):
     """ Uses JavaScript file for a simple, continuous canvas. """
     local_includes = ["simple_continuous_canvas.js"]
     portrayal_method = None
-    canvas_height = 500
-    canvas_width = 500
+    canvas_height = 700
+    canvas_width = 700
 
     def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
         """ Instantiate a new SimpleCanvas """
@@ -222,13 +238,6 @@ class SimpleCanvas(VisualizationElement):
 
 
 def fish_draw(agent):
-    """
-    Right now, the only option for shape is circle or rectangle (rect).
-    Working on creating a triangle or arrow option so the agents' heading
-    is explicit in the visualization. Future improvements will hopefully also
-    include changes in color with degrees of cohesion and a dot for the
-    centroid/center of mass.
-    """
     return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
     # return {"Shape": "rect", "w": 0.02, "h": 0.02, "Filled": "true", "Color": "Blue"}
     # return {"Shape": "triangle", "w": 4, "h": 4, "Filled": False, "Color": "Blue", "heading": }
@@ -242,9 +251,7 @@ polarization_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                                  data_collector_name="datacollector")
 
 # Launch server
-server = ModularServer(ShoalModel,  # Model class to be visualized
-                       [shoal_canvas, polarization_chart],  # List of objects to include
-                       "Boid Model of Shoaling Behavior",  # Title of the model
-                       # Input agent #, width, height, vision, speed, avoidance
-                       100, 100, 100, 100, 5, 2)
+server = ModularServer(ShoalModel, [shoal_canvas, polarization_chart],
+                       "Boid Model of Shoaling Behavior",
+                       n=100, width=100, height=100, vision=10, avoidance=2)
 server.launch()
