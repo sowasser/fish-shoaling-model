@@ -15,11 +15,11 @@ class Boid(Agent):
     A Boid-style flocker agent. Boids have a vision that defines the radius in
     which they look for their neighbors to flock with. Their heading (a unit
     vector) and their interactions with their neighbors - cohering and avoiding -
-    define their movement. Separation is their desired minimum distance from
+    define their movement. Avoidance is their desired minimum distance from
     any other Boid.
     """
     def __init__(self, unique_id, model, pos, heading,
-                 vision=5, separation=2):
+                 vision=5, avoidance=2):
         """
         Create a new Boid (bird, fish) agent. Args:
             unique_id: Unique agent identifier.
@@ -29,7 +29,7 @@ class Boid(Agent):
             velocity: Speed of the Boid, calculated as the Euclidean distance
                       (vector norm) of the Boid's heading.
             vision: Radius to look around for nearby Boids.
-            separation: Minimum distance to maintain from other Boids.
+            avoidance: Minimum distance to maintain from other Boids.
         """
         super().__init__(unique_id, model)
         self.pos = pos
@@ -41,10 +41,11 @@ class Boid(Agent):
             self.velocity = np.linalg.norm(heading)
             self.heading /= self.velocity
         else:
-            self.heading = np.random.random(2)
+            # Does not include the upper number, returns array of 2 values
+            self.heading = np.random.uniform(-1, 1, 2)
             self.heading /= np.linalg.norm(self.heading)
         self.vision = vision
-        self.separation = separation
+        self.avoidance = avoidance
 
     def cohere(self, neighbors):
         """
@@ -53,30 +54,20 @@ class Boid(Agent):
         towards neighbors.
         """
         my_pos = np.array(self.pos)
-        coh_vector = np.array([0.0, 0.0])  # create empty list for new vector
+        coh_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
-            # Calculate center of neighbors
             center = np.array(neighbor.pos) / len(neighbors)
-            # Find the new vector towards the center using Head-Minus-Tail rule
-            coh_vector += [my_pos[0] - center[0],
-                           my_pos[1] - center[1]]
+            # Vector calculation uses the Head-Minus-Tail rule
+            coh_vector += (my_pos - center)
         return coh_vector
 
-    def separate(self, neighbors):
-        """
-        Subtract the position of neighboring agents from the position of each
-        agent.
-        """
-        my_pos = np.array(self.heading)
-        sep_vector = np.array([0.0, 0.0])
+    def avoid(self, neighbors):
+        my_pos = np.array(self.pos)
+        avoid_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
-            their_pos = np.array(neighbor.pos)
-            away = -their_pos
-            dist = np.linalg.norm(my_pos - their_pos)
-            if dist < self.separation:
-                sep_vector += [my_pos[0] - away[0],
-                               my_pos[1] - away[1]]
-        return sep_vector
+            if abs(np.linalg.norm(my_pos - neighbor.pos)) > self.avoidance:
+                avoid_vector -= (my_pos - neighbor.pos)
+            return avoid_vector
 
     def match_velocity(self, neighbors):
         """
@@ -99,9 +90,9 @@ class Boid(Agent):
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
-            separate_vector = self.separate(neighbors)
+            avoid_vector = self.avoid(neighbors)
             self.heading += (cohere_vector +
-                             separate_vector)
+                             avoid_vector)
             self.heading /= np.linalg.norm(self.heading)
         new_pos = np.array(self.pos) + self.heading * self.velocity
         new_x, new_y = new_pos
@@ -111,22 +102,22 @@ class Boid(Agent):
 class BoidsModel(Model):
     """ Flocker model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, N, width, height, vision, separation):
+    def __init__(self, N, width, height, vision, avoidance):
         """
         Create a new Flockers model. Args:
             N: Number of Boids
             width, height: Size of the space.
             speed: How fast should the Boids move.
             vision: How far around should each Boid look for its neighbors
-            separation: What's the minimum distance each Boid will attempt to
+            avoidance: What's the minimum distance each Boid will attempt to
                        keep from any other
         """
         self.N = N
         self.vision = vision
-        self.separation = separation
+        self.avoidance = avoidance
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, True,
-                                     grid_width=10, grid_height=10)
+        self.space = ContinuousSpace(width, height, torus=True,
+                                     grid_width=100, grid_height=100)
         self.make_agents()
         self.running = True
 
@@ -136,11 +127,11 @@ class BoidsModel(Model):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = (x, y)
-            # Generates an array of 2 random numbers between -1 and 1.
-            heading = np.random.random(2) * 2 - np.array((1, 1))
+            # Does not include the upper number, returns array of 2 values
+            heading = np.random.uniform(-1, 1, 2)
             # heading /= np.linalg.norm(heading)
             boid = Boid(unique_id=i, model=self, pos=pos, heading=heading, vision=self.vision,
-                        separation=self.separation)
+                        avoidance=self.avoidance)
             self.space.place_agent(boid, pos)
             self.schedule.add(boid)
 
@@ -183,7 +174,7 @@ class SimpleCanvas(VisualizationElement):
 def boid_draw(agent):
     return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
 
-boid_canvas = SimpleCanvas(boid_draw, 500, 500)
+boid_canvas = SimpleCanvas(boid_draw, 700, 700)
 server = ModularServer(BoidsModel, [boid_canvas], "Boids",
-                       N=100, width=100, height=100, vision=5, separation=2)
+                       N=100, width=100, height=100, vision=5, avoidance=2)
 server.launch()
