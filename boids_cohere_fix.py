@@ -67,7 +67,7 @@ class Boid(Agent):
         my_pos = np.array(self.pos)
         avoid_vector = np.array([0.0, 0.0])
         for neighbor in neighbors:
-            if abs(np.linalg.norm(my_pos - neighbor.pos)) > self.avoidance:
+            if self.vision >= abs(np.linalg.norm(my_pos - neighbor.pos)) > self.avoidance:
                 avoid_vector -= (my_pos - neighbor.pos)
         return avoid_vector
 
