@@ -10,15 +10,21 @@ from mesa.visualization.ModularVisualization import ModularServer
 
 class Boid(Agent):
     """
-    A Boid-style flocker agent. Boids have a vision that defines the radius in
-    which they look for their neighbors to flock with. Their speed (a scalar) and
-    heading (a unit vector) define their movement. Separation is their desired
-    minimum distance from any other Boid.
+    A Boid-style flocker agent.
+    The agent follows three behaviors to flock:
+        - Cohesion: steering towards neighboring agents.
+        - Separation: avoiding getting too close to any other agent.
+        - Alignment: try to fly in the same direction as the neighbors.
+    Boids have a vision that defines the radius in which they look for their
+    neighbors to flock with. Their speed (a scalar) and heading (a unit vector)
+    define their movement. Separation is their desired minimum distance from
+    any other Boid.
     """
     def __init__(self, unique_id, model, pos, speed=5, heading=None,
                  vision=5, separation=1):
         """
-        Create a new Boid flocker agent. Args:
+        Create a new Boid flocker agent.
+        Args:
             unique_id: Unique agent identifyer.
             pos: Starting position
             speed: Distance to move per step.
@@ -32,20 +38,30 @@ class Boid(Agent):
         if heading is not None:
             self.heading = heading
         else:
-            self.heading = np.random.random(2)
+            self.heading = np.random.random(2) - 0.5
             self.heading /= np.linalg.norm(self.heading)
         self.vision = vision
         self.separation = separation
 
     def cohere(self, neighbors):
-        """ Return the vector toward the center of mass of the local neighbors. """
+        """
+        Return the vector toward the center of mass of the local neighbors.
+        """
         center = np.array([0.0, 0.0])
         for neighbor in neighbors:
             center += np.array(neighbor.pos)
-        return center / len(neighbors)
+        center /= len(neighbors)
+        vec = center - self.pos
+        #vec = self.pos - center
+        if np.linalg.norm(vec) > 0:
+            return vec / np.linalg.norm(vec)
+        else:
+            return vec
 
     def separate(self, neighbors):
-        """ Return a vector away from any neighbors closer than separation dist. """
+        """
+        Return a vector away from any neighbors closer than separation dist.
+        """
         my_pos = np.array(self.pos)
         sep_vector = np.array([0, 0])
         for neighbor in neighbors:
@@ -53,17 +69,29 @@ class Boid(Agent):
             dist = np.linalg.norm(my_pos - their_pos)
             if dist < self.separation:
                 sep_vector -= np.int64(their_pos - my_pos)
-        return sep_vector
+        if np.linalg.norm(sep_vector) > 0:
+            return sep_vector / np.linalg.norm(sep_vector)
+        else:
+            return sep_vector
 
     def match_heading(self, neighbors):
-        """ Return a vector of the neighbors' average heading. """
+        """
+        Return a vector of the neighbors' average heading.
+        """
         mean_heading = np.array([0, 0])
         for neighbor in neighbors:
             mean_heading += np.int64(neighbor.heading)
-        return mean_heading / len(neighbors)
+        vec =  mean_heading / len(neighbors)
+        if np.linalg.norm(vec) > 0:
+            return vec / np.linalg.norm(vec)
+        else:
+            return vec
 
     def step(self):
-        """ Get the Boid's neighbors, compute the new vector, and move accordingly."""
+        """
+        Get the Boid's neighbors, compute the new vector, and move accordingly.
+        """
+
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
