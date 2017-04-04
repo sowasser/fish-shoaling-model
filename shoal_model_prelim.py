@@ -11,6 +11,9 @@ and can be either positive (towards the upper, left corner) or negative
 (towards the lower, right corner). Therefore, the overall direction of the
 group is not random, but their starting position and heading is.
 
+Data is collected on the standard deviation of heading and the nearest neighbor
+distance as measures of cohesion.
+
 The model is based on a bounded, 3D area. Later additions
 will include obstacles, environmental gradients, and agents with goal-, food-,
 or safety-seeking behaviour.
@@ -57,22 +60,35 @@ def polar(model):
     for (y, x) in zip(heading_y, heading_x):
         a = math.atan2(y, x)
         angle.append(a)
-    stdev_h = np.std(angle, axis=None)
+    stddev_h = np.std(angle, axis=None)
 
-    return stdev_h
+    return stddev_h
 
-# def nnd(model):
-    # """
-    # Computes the average nearest neighbor distance for each agent as another
-    # measure of cohesion.
-    # """
+
+def nnd(model, neighbors):
+    """
+    Computes the average nearest neighbor distance for each agent as another
+    measure of cohesion.
+    """
+    their_pos = np.asarray([neighbor.pos for neighbor in neighbors])
+    my_pos = np.asarray([agent.pos for agent in model.schedule.agents])
+    if len(their_pos) == 1:  # if there is only 1 neighbor
+        dist = abs(np.subtract(their_pos, my_pos))
+        return dist
+    if len(their_pos) == 0:  # if there are no neighbors
+        return 0
+    elif len(their_pos) > 1:  # if there are multiple neighbors
+        for pos in their_pos:
+            d = abs(np.subtract(pos, my_pos))
+            dist = sum(d) / len(d)
+        return dist
 
 
 class Fish(Agent):
     """
-    A Boid-style flocker agent. Boids have a vision that defines the radius in
-    which they look for their neighbors to flock with. Their heading (a unit
-    vector) and their interactions with their neighbors - cohering and avoiding -
+    A Boid-style agent. Boids have a vision that defines the radius in which
+    they look for their neighbors to flock with. Their heading (a unit vector)
+    and their interactions with their neighbors - cohering and avoiding -
     define their movement. Avoidance is their desired minimum distance from
     any other Boid.
     """
