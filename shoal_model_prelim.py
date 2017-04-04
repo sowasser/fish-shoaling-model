@@ -68,7 +68,7 @@ def polar(model):
     # """
 
 
-class Boid(Agent):
+class Fish(Agent):
     """
     A Boid-style flocker agent. Boids have a vision that defines the radius in
     which they look for their neighbors to flock with. Their heading (a unit
@@ -195,10 +195,10 @@ class ShoalModel(Model):
             y = random.random() * self.space.y_max
             pos = (x, y)
             velocity = np.random.random(2) * 2 - np.array((1, 1))  # Doesn't include upper #, 2d array
-            boid = Boid(unique_id=i, model=self, pos=pos, speed=self.speed, velocity=velocity,
+            fish = Fish(unique_id=i, model=self, pos=pos, speed=self.speed, velocity=velocity,
                         vision=self.vision, avoidance=self.avoidance)
-            self.space.place_agent(boid, pos)
-            self.schedule.add(boid)
+            self.space.place_agent(fish, pos)
+            self.schedule.add(fish)
 
         # Creating the data collector, which reports the output of a function
         # (polar, the average agent heading) for each step. This is a "model-
