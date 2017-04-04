@@ -1,15 +1,17 @@
 """
 Model of shoaling behavior based on the Boids model by Craig Reynolds in 1986,
 using the basic code provided in the Flocker example of the Mesa framework for
-agent-based modelling in Python. This model is based on 2 parameters that each
+agent-based modelling in Python. This model is based on 3 parameters that each
 agent follows:
-    1. Attraction to other agents,
-    2. Avoidance of other agents.
+    1. Attraction to (coherence with) other agents,
+    2. Avoidance of other agents,
+    3. Alignment with other agents.
+The direction in which the agents swim is determined by the "speed" parameter
+and can be either positive (towards the upper, left corner) or negative
+(towards the lower, right corner). Therefore, the overall direction of the
+group is not random, but their starting position and heading is.
 
-Heading, though recorded for each agent, is not included in the parameters that
-determine an agents' movement. Therefore, polarization becomes an emergent
-behaviour and can be analyzed as a measure of cohesion, along with the nearest
-neighbour distance. The model is based on a bounded, 3D area. Later additions
+The model is based on a bounded, 3D area. Later additions
 will include obstacles, environmental gradients, and agents with goal-, food-,
 or safety-seeking behaviour.
 
@@ -20,6 +22,7 @@ object. The parameters for the visualization rely on a JavaScript canvas.
 import numpy as np
 import math
 import random
+from scipy import ndimage
 from mesa import Agent
 from mesa import Model
 from mesa.time import RandomActivation
@@ -30,6 +33,7 @@ from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
 
 # Todo: Constrain space to the canvas so behaviors can be more easily understood.
+# Todo: Build data collector for shape of the shoal - spatial statistics
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
 
@@ -72,83 +76,89 @@ class Boid(Agent):
     define their movement. Avoidance is their desired minimum distance from
     any other Boid.
     """
-    def __init__(self, unique_id, model, pos, heading,
-                 vision=10, avoidance=2):
+    def __init__(self, unique_id, model, pos, speed=3, velocity=None,
+                 vision=5, avoidance=1):
         """
         Create a new Boid (bird, fish) agent. Args:
-            unique_id: Unique agent identifier.
-            pos: Starting position
-            heading: randomly generated then transformed into the unit vector
-                     of Boid's movement - no magnitude.
-            velocity: Speed of the Boid, calculated as the Euclidean distance
-                      (vector norm) of the Boid's heading.
+            unique_id: unique agent identifier.
+            pos: starting position
+            speed: distance to move per step. Since it's positive, boids move
+                in a positive direction.
+            velocity: randomly generated. Velocity can then be normalized to
+                create the heading - the scalar version w/ no magnitude.
             vision: Radius to look around for nearby Boids.
             avoidance: Minimum distance to maintain from other Boids.
         """
         super().__init__(unique_id, model)
         self.pos = pos
-        if heading is not None:
-            # Heading is defined within the model. Here, a unit vector is
-            # created by dividing it by its magnitude so velocity can be
-            #  defined as the magnitude of the heading.
-            self.heading = heading
-            self.velocity = np.linalg.norm(heading)
-            self.heading /= self.velocity
+        self.speed = speed
+        if velocity is not None:
+            self.velocity = velocity
+            self.heading = self.velocity / np.linalg.norm(self.velocity)
         else:
-            # Does not include the upper number, returns array of 2 values
-            self.heading = np.random.uniform(-1, 1, 2)
-            self.heading /= np.linalg.norm(self.heading)
+            self.velocity = np.random.uniform(2) - 0.5
+            self.heading /= np.linalg.norm(self.velocity)
         self.vision = vision
         self.avoidance = avoidance
 
     def cohere(self, neighbors):
         """
-        Add the vector (direction, not speed) toward the center of mass of the
-        local neighbors to the position of each agent to return a new vector
-        towards neighbors.
+        Return the vector toward the center of mass of the local neighbors.
         """
-        my_pos = np.array(self.pos)
         coh_vector = np.array([0.0, 0.0])
-        for neighbor in neighbors:
-            center = np.array(neighbor.pos) / len(neighbors)
-            # Vector calculation uses the Head-Minus-Tail rule
-            coh_vector += (my_pos - center)
-        return coh_vector
+        their_pos = [neighbor.pos for neighbor in neighbors]
+        their_pos = np.asarray(their_pos)
+        center = ndimage.measurements.center_of_mass(their_pos)
+        coh_vector += np.subtract(center, self.pos)  # both are tuples
+        if np.linalg.norm(coh_vector) > 0:  # when there is already a magnitude
+            return coh_vector / np.linalg.norm(coh_vector)
+        else:
+            return coh_vector
 
     def avoid(self, neighbors):
+        """
+        Return a vector away rom any neighbors closer than avoidance distance.
+        """
         my_pos = np.array(self.pos)
-        avoid_vector = np.array([0.0, 0.0])
+        avoid_vector = np.array([0, 0])
         for neighbor in neighbors:
-            if abs(np.linalg.norm(my_pos - neighbor.pos)) > self.avoidance:
-                avoid_vector -= (my_pos - neighbor.pos)
+            their_pos = np.array(neighbor.pos)
+            dist = np.linalg.norm(my_pos - their_pos)
+            if dist <= self.avoidance:
+                avoid_vector -= np.int64(their_pos - my_pos)  # tuples
+        if np.linalg.norm(avoid_vector) > 0:
+            return avoid_vector / np.linalg.norm(avoid_vector)
+        else:
             return avoid_vector
 
     def match_velocity(self, neighbors):
         """
-        Have Boids match the velocity (magnitude/Euclidean distance of heading)
-        of neighbors.
+        Have Boids match the velocity of neighbors.
         """
-        my_velocity = self.velocity
-        mean_velocity = 0
+        mean_velocity = np.array([0.0, 0.0])
         for neighbor in neighbors:
-            mean_velocity += np.int64(neighbor.velocity)
-            mean_velocity /= len(neighbors)
-            if my_velocity < mean_velocity:
-                my_velocity += mean_velocity - my_velocity
-            elif my_velocity > mean_velocity:
-                my_velocity -= mean_velocity - my_velocity
+            mean_velocity += neighbor.velocity / len(neighbors)
         return mean_velocity
+        # Not checking for an normalizing this function because we want to
+        # retain the magnitude.
 
     def step(self):
-        """ Get the Boid's neighbors, compute the new vector, and move accordingly."""
+        """ 
+        Get the Boid's neighbors, compute the new vector, normalize that
+        vector, and move accordingly.
+        """
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
             avoid_vector = self.avoid(neighbors)
+            velocity = self.match_velocity(neighbors)
+            match_heading = velocity / np.linalg.norm(velocity)
             self.heading += (cohere_vector +
-                             avoid_vector)
-            self.heading /= np.linalg.norm(self.heading)
-        new_pos = np.array(self.pos) + self.heading * self.velocity
+                             avoid_vector +
+                             match_heading)
+        rate = np.linalg.norm(self.heading)
+        self.heading /= rate
+        new_pos = np.array(self.pos) + self.heading * self.speed
         new_x, new_y = new_pos
         self.model.space.move_agent(self, (new_x, new_y))
 
@@ -156,18 +166,18 @@ class Boid(Agent):
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, n, width, height, vision, avoidance):
+    def __init__(self, n, width, height, speed, vision, avoidance):
         """
-        Create a new Boids model. Args:
-            N: Number of agents
+        Create a new Flockers model. Args:
+            N: Number of Boids
             width, height: Size of the space.
-            vision: Radius for how far agents look for their neighbors.
-            avoidance: The minimum distance each agent will attempt to keep
-                       from others.
-
-        Also includes data collection for analysis of the model.
+            speed: how fast the boids should move.
+            vision: how far around should each Boid look for its neighbors
+            avoidance: what's the minimum distance each Boid will attempt to
+                keep from any other
         """
         self.n = n
+        self.speed = speed
         self.vision = vision
         self.avoidance = avoidance
         self.schedule = RandomActivation(self)
@@ -177,16 +187,16 @@ class ShoalModel(Model):
         self.running = True
 
     def make_agents(self):
-        """ Create N agents, with random positions and starting headings. """
+        """ 
+        Create N agents, with random positions and starting velocities. 
+        """
         for i in range(self.n):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = (x, y)
-            # Does not include the upper number, returns array of 2 values
-            heading = np.random.uniform(-1, 1, 2)
-            # heading /= np.linalg.norm(heading)
-            boid = Boid(unique_id=i, model=self, pos=pos, heading=heading, vision=self.vision,
-                        avoidance=self.avoidance)
+            velocity = np.random.random(2) * 2 - np.array((1, 1))  # Doesn't include upper #, 2d array
+            boid = Boid(unique_id=i, model=self, pos=pos, speed=self.speed, velocity=velocity,
+                        vision=self.vision, avoidance=self.avoidance)
             self.space.place_agent(boid, pos)
             self.schedule.add(boid)
 
@@ -253,5 +263,5 @@ polarization_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
 # Launch server
 server = ModularServer(ShoalModel, [shoal_canvas, polarization_chart],
                        "Boid Model of Shoaling Behavior",
-                       n=100, width=100, height=100, vision=10, avoidance=2)
+                       n=100, width=100, height=100, speed=3, vision=5, avoidance=2)
 server.launch()
