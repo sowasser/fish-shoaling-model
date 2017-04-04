@@ -4,7 +4,7 @@ Practice on agent-based modelling using the Mesa framework for Python. There are
 1. MoneyModelMoney: the completed introductory tutorial from [mesa](mesa), a model of a simple agent-based economy. There is a Jupyter notebook with the entire tutorial and a Python file with all of the code documented for future reference.
 
 2. The Flocking example of collective behaviour from [mesa](mesa). The code for this example is included as both a Jupyter notebook and Python code. Also includes a JavaScript file that sets up a HTML5 canvas for visualization of a simple, continuous canvas.
-3. Attemt to fix an issue in the original Flocker model. All of the boids always headed to the lower-right corner. Various attempts to rectify this followed, and no solution has been reached. However, small improvements have been made, such as having the boids cohere towards the center of mass of local agents. More about this topic can be found in the [mesa Issues](mesa Issues) on Github.
+3. Attemt to fix an issue in the original Flocker model. All of the boids always headed to the lower-right corner. Various attempts to rectify this followed, and no solution has been reached. However, small improvements have been made, such as having the boids cohere towards the center of mass of local agents. More about this topic can be found in the [mesa Issues] on Github.
 4.  Preliminary attempts to adapt the boids model for a model of fish shoaling behaviour. So far, this version adds a data collector for spatial statistics. The Jupyter version of this file is useful for running the model under various conditions (number of agents, vision radius, swimming speed, etc.).
 
 
