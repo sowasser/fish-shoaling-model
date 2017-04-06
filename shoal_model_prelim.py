@@ -36,7 +36,7 @@ from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
 
 # Todo: Constrain space to the canvas so behaviors can be more easily understood.
-# Todo: Build data collector for shape of the shoal - spatial statistics
+# Todo: Fix NND function to collect data on nearest neighbor distance.
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
 
@@ -65,12 +65,12 @@ def polar(model):
     return stddev_h
 
 
-def nnd(model, neighbors):
+def nnd(model, neighbor):
     """
     Computes the average nearest neighbor distance for each agent as another
     measure of cohesion.
     """
-    their_pos = np.asarray([neighbor.pos for neighbor in neighbors])
+    their_pos = np.asarray([neighbor.pos for neighbor in model.space.get_neighbors.neighbors])
     my_pos = np.asarray([agent.pos for agent in model.schedule.agents])
     if len(their_pos) == 1:  # if there is only 1 neighbor
         dist = abs(np.subtract(their_pos, my_pos))
@@ -220,7 +220,7 @@ class ShoalModel(Model):
         # (polar, the average agent heading) for each step. This is a "model-
         # level" reporter, but agent-level is also available.
         self.datacollector = DataCollector(
-            model_reporters={"Polarization": polar})
+            model_reporters={"Nearest Neighbor Distance": nnd})
 
     def step(self):
         self.datacollector.collect(self)
@@ -273,7 +273,7 @@ def fish_draw(agent):
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
 # Create chart of polarization
-polarization_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+polarization_chart = ChartModule([{"Label": "Nearest Neighbor Distance", "Color": "Black"}],
                                  data_collector_name="datacollector")
 
 # Launch server
