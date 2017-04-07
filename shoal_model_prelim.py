@@ -65,21 +65,28 @@ def polar(model):
     return stddev_h
 
 
-def nnd(model, neighbor):
+def nnd(agent):
     """
     Computes the average nearest neighbor distance for each agent as another
     measure of cohesion.
     """
-    their_pos = np.asarray([neighbor.pos for neighbor in model.space.get_neighbors.neighbors])
-    my_pos = np.asarray([agent.pos for agent in model.schedule.agents])
-    if len(their_pos) == 1:  # if there is only 1 neighbor
-        dist = abs(np.subtract(their_pos, my_pos))
+    my_pos = np.asarray([agent.pos for agent in agent.model.schedule.agents])
+    neighbors = np.array([])
+    for me in my_pos:
+        for neighbor in my_pos:
+            dist = abs(np.linalg.norm(np.subtract(neighbor, me)))
+            if dist < agent.model.vision:
+                return neighbors + neighbor
+            else:
+                return neighbors
+    if len(neighbors) == 1:  # if there is only 1 neighbor
+        dist = abs(np.linalg.norm(np.subtract(neighbors, my_pos)))
         return dist
-    if len(their_pos) == 0:  # if there are no neighbors
+    if len(neighbors) == 0:  # if there are no neighbors
         return 0
-    elif len(their_pos) > 1:  # if there are multiple neighbors
-        for pos in their_pos:
-            d = abs(np.subtract(pos, my_pos))
+    elif len(neighbors) > 1:  # if there are multiple neighbors
+        for pos in neighbors:
+            d = abs(np.linalg.norm(np.subtract(pos, my_pos)))
             dist = sum(d) / len(d)
         return dist
 
@@ -220,7 +227,7 @@ class ShoalModel(Model):
         # (polar, the average agent heading) for each step. This is a "model-
         # level" reporter, but agent-level is also available.
         self.datacollector = DataCollector(
-            model_reporters={"Nearest Neighbor Distance": nnd})
+            agent_reporters={"Nearest Neighbor Distance": nnd})
 
     def step(self):
         self.datacollector.collect(self)
