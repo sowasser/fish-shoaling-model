@@ -26,6 +26,7 @@ import numpy as np
 import math
 import random
 from scipy import ndimage
+from statsmodels.robust.scale import mad
 from mesa import Agent
 from mesa import Model
 from mesa.time import RandomActivation
@@ -43,26 +44,23 @@ from mesa.visualization.modules import ChartModule
 
 def polar(model):
     """
-    Computes standard deviation from the mean heading of the group. As the
-    value approaches 0, polarization increases.
+    Computes median absolute deviation (MAD) from the mean heading of the
+    group. As the value approaches 0, polarization increases.
 
-    Heading is a unit vector, meaning the magnitude is 1 and the direction is
-    given as x,y coordinates. In order to find the mean & stdev, the x,y
-    (Cartesian) coordinates are converted to angle degrees in radians by
-    finding the arc tangent of y/x. The function used to do this is arctan2
-    from the math package, which pays attention to the sign of the input to
-    make sure that the correct quadrant for the angle is determined. Then, the
-    standard deviation is calculated from these values.
+    In order to find the MAD, the x,y coordinates are converted to radians by
+    finding the arc tangent of y/x. The function used pays attention to the
+    sign of the input to make sure that the correct quadrant for the angle is
+    determined.
     """
-    heading_x = [agent.heading[0] for agent in model.schedule.agents]
-    heading_y = [agent.heading[1] for agent in model.schedule.agents]
+    velocity = [agent.velocity for agent in model.schedule.agents]
+    heading = velocity / np.linalg.norm(velocity)
     angle = []
-    for (y, x) in zip(heading_y, heading_x):
-        a = math.atan2(y, x)
+    for h in heading:
+        a = math.atan2(h[1], h[0])  # y, x
         angle.append(a)
-    stddev_h = np.std(angle, axis=None)
+    dev_angle = mad(np.asarray(angle), center=np.median)
 
-    return stddev_h
+    return dev_angle
 
 
 def nnd(model):
@@ -70,23 +68,24 @@ def nnd(model):
     Computes the average nearest neighbor distance for each agent as another
     measure of cohesion.
     """
-    my_pos = np.asarray([agent.pos for agent in model.schedule.agents])
+
+    fish = np.asarray([agent.pos for agent in model.schedule.agents])
+    me = fish[[np.random.randint(low=0, high=(model.n + 1)), ]]  # select row by random index
     neighbors = np.array([])
-    for me in my_pos:
-        for neighbor in my_pos:
-            dist = abs(np.linalg.norm(np.subtract(neighbor, me)))
-            if 0 < dist < model.vision:
-                return neighbors + neighbor
-            else:
-                return neighbors
+    for neighbor in fish:
+        dist = abs(np.linalg.norm(np.subtract(neighbor, me)))
+        if 0 < dist < model.vision:  # If 0, that is the target agent
+            return neighbors + neighbor
+        else:
+            return neighbors
     if len(neighbors) == 1:  # if there is only 1 neighbor
-        dist = abs(np.linalg.norm(np.subtract(neighbors, my_pos)))
+        dist = abs(np.linalg.norm(np.subtract(neighbors, me)))
         return dist
     if len(neighbors) == 0:  # if there are no neighbors
         return 0
     elif len(neighbors) > 1:  # if there are multiple neighbors
         for pos in neighbors:
-            d = abs(np.linalg.norm(np.subtract(pos, my_pos)))
+            d = abs(np.linalg.norm(np.subtract(pos, me)))
             dist = sum(d) / len(d)
         return dist
 
@@ -223,11 +222,9 @@ class ShoalModel(Model):
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
-        # Creating the data collector, which reports the output of a function
-        # (polar, the average agent heading) for each step. This is a "model-
-        # level" reporter, but agent-level is also available.
         self.datacollector = DataCollector(
-            model_reporters={"Nearest Neighbor Distance": nnd})
+            model_reporters={"Polarization": polar,
+                             "Nearest Neighbour Distance": nnd})
 
     def step(self):
         self.datacollector.collect(self)
@@ -242,8 +239,8 @@ class SimpleCanvas(VisualizationElement):
     """ Uses JavaScript file for a simple, continuous canvas. """
     local_includes = ["simple_continuous_canvas.js"]
     portrayal_method = None
-    canvas_height = 700
-    canvas_width = 700
+    canvas_height = 500
+    canvas_width = 500
 
     def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
         """ Instantiate a new SimpleCanvas """
@@ -280,15 +277,15 @@ def fish_draw(agent):
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
 # Create chart of polarization
-# polarization_chart = ChartModule([{"Label": "Standard Deviation of Heading", "Color": "Black"}],
-#                                 data_collector_name="datacollector")
-
-# Create chart of Nearest Neighbour Distance
-nnd_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+polarization_chart = ChartModule([{"Label": "Standard Deviation of Heading", "Color": "Black"}],
                                  data_collector_name="datacollector")
 
+# Create chart of Nearest Neighbour Distance
+neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+                             data_collector_name="datacollector")
+
 # Launch server
-server = ModularServer(ShoalModel, [shoal_canvas, nnd_chart],
+server = ModularServer(ShoalModel, [shoal_canvas, polarization_chart, neighbor_chart],
                        "Boid Model of Shoaling Behavior",
                        n=100, width=100, height=100, speed=3, vision=5, avoidance=2)
 server.launch()
