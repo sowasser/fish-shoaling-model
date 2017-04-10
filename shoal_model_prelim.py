@@ -65,17 +65,17 @@ def polar(model):
     return stddev_h
 
 
-def nnd(agent):
+def nnd(model):
     """
     Computes the average nearest neighbor distance for each agent as another
     measure of cohesion.
     """
-    my_pos = np.asarray([agent.pos for agent in agent.model.schedule.agents])
+    my_pos = np.asarray([agent.pos for agent in model.schedule.agents])
     neighbors = np.array([])
     for me in my_pos:
         for neighbor in my_pos:
             dist = abs(np.linalg.norm(np.subtract(neighbor, me)))
-            if dist < agent.model.vision:
+            if 0 < dist < model.vision:
                 return neighbors + neighbor
             else:
                 return neighbors
@@ -227,7 +227,7 @@ class ShoalModel(Model):
         # (polar, the average agent heading) for each step. This is a "model-
         # level" reporter, but agent-level is also available.
         self.datacollector = DataCollector(
-            agent_reporters={"Nearest Neighbor Distance": nnd})
+            model_reporters={"Nearest Neighbor Distance": nnd})
 
     def step(self):
         self.datacollector.collect(self)
@@ -280,11 +280,15 @@ def fish_draw(agent):
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
 # Create chart of polarization
-polarization_chart = ChartModule([{"Label": "Nearest Neighbor Distance", "Color": "Black"}],
+# polarization_chart = ChartModule([{"Label": "Standard Deviation of Heading", "Color": "Black"}],
+#                                 data_collector_name="datacollector")
+
+# Create chart of Nearest Neighbour Distance
+nnd_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
                                  data_collector_name="datacollector")
 
 # Launch server
-server = ModularServer(ShoalModel, [shoal_canvas, polarization_chart],
+server = ModularServer(ShoalModel, [shoal_canvas, nnd_chart],
                        "Boid Model of Shoaling Behavior",
                        n=100, width=100, height=100, speed=3, vision=5, avoidance=2)
 server.launch()
