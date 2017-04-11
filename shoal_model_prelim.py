@@ -26,6 +26,7 @@ import numpy as np
 import math
 import random
 from scipy import ndimage
+from scipy.spatial import KDTree
 from statsmodels.robust.scale import mad
 from mesa import Agent
 from mesa import Model
@@ -36,58 +37,48 @@ from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
 
-# Todo: Constrain space to the canvas so behaviors can be more easily understood.
-# Todo: Fix NND function to collect data on nearest neighbor distance.
+# Todo: Make chart titles show up
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
 
 
-def polar(model):
+def polar(model):  # WORKS
     """
     Computes median absolute deviation (MAD) from the mean heading of the
     group. As the value approaches 0, polarization increases.
-
     In order to find the MAD, the x,y coordinates are converted to radians by
     finding the arc tangent of y/x. The function used pays attention to the
     sign of the input to make sure that the correct quadrant for the angle is
     determined.
     """
-    velocity = [agent.velocity for agent in model.schedule.agents]
-    heading = velocity / np.linalg.norm(velocity)
+    heading_x = [agent.heading[0] for agent in model.schedule.agents]
+    heading_y = [agent.heading[1] for agent in model.schedule.agents]
     angle = []
-    for h in heading:
-        a = math.atan2(h[1], h[0])  # y, x
+    for (y, x) in zip(heading_y, heading_x):
+        a = math.atan2(y, x)
         angle.append(a)
-    dev_angle = mad(np.asarray(angle), center=np.median)
-
-    return dev_angle
+    return mad(np.asarray(angle), center=np.median)
 
 
-def nnd(model):
+def nnd(model):  # NOT SURE!
     """
     Computes the average nearest neighbor distance for each agent as another
-    measure of cohesion.
+    measure of cohesion. Method finds & averages the nearest neighbours
+    using a KDTree, a machine learning concept for clustering or
+    compartmentalizing data. Right now, the 5 nearest neighbors are considered.
     """
-
+    # Todo: figure out how to find neighbors within vision radius
     fish = np.asarray([agent.pos for agent in model.schedule.agents])
-    me = fish[[np.random.randint(low=0, high=(model.n + 1)), ]]  # select row by random index
-    neighbors = np.array([])
-    for neighbor in fish:
-        dist = abs(np.linalg.norm(np.subtract(neighbor, me)))
-        if 0 < dist < model.vision:  # If 0, that is the target agent
-            return neighbors + neighbor
-        else:
-            return neighbors
-    if len(neighbors) == 1:  # if there is only 1 neighbor
-        dist = abs(np.linalg.norm(np.subtract(neighbors, me)))
-        return dist
-    if len(neighbors) == 0:  # if there are no neighbors
-        return 0
-    elif len(neighbors) > 1:  # if there are multiple neighbors
-        for pos in neighbors:
-            d = abs(np.linalg.norm(np.subtract(pos, me)))
-            dist = sum(d) / len(d)
-        return dist
+    fish_tree = KDTree(fish)
+    means = []
+    for me in fish:
+        neighbors = fish_tree.query(x=me, k=5)
+        dist = neighbors[0]
+        mean_dist = np.mean(dist)
+        means.append(mean_dist)
+        return means
+    return sum(means) / len(means)
+
 
 
 class Fish(Agent):
@@ -277,15 +268,15 @@ def fish_draw(agent):
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
 # Create chart of polarization
-polarization_chart = ChartModule([{"Label": "Standard Deviation of Heading", "Color": "Black"}],
-                                 data_collector_name="datacollector")
+polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+                          data_collector_name="datacollector")
 
 # Create chart of Nearest Neighbour Distance
 neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
                              data_collector_name="datacollector")
 
 # Launch server
-server = ModularServer(ShoalModel, [shoal_canvas, polarization_chart, neighbor_chart],
+server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
                        "Boid Model of Shoaling Behavior",
                        n=100, width=100, height=100, speed=3, vision=5, avoidance=2)
 server.launch()
