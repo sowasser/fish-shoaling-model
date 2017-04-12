@@ -11,8 +11,8 @@ and can be either positive (towards the upper, left corner) or negative
 (towards the lower, right corner). Therefore, the overall direction of the
 group is not random, but their starting position and heading is.
 
-Data is collected on the standard deviation of heading and the nearest neighbor
-distance as measures of cohesion.
+Data is collected on the median absolute deviation of heading and the nearest
+neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
 The model is based on a bounded, 3D area. Later additions
 will include obstacles, environmental gradients, and agents with goal-, food-,
@@ -28,8 +28,7 @@ import random
 from scipy import ndimage
 from scipy.spatial import KDTree
 from statsmodels.robust.scale import mad
-from mesa import Agent
-from mesa import Model
+from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
@@ -60,7 +59,7 @@ def polar(model):  # WORKS
     return mad(np.asarray(angle), center=np.median)
 
 
-def nnd(model):  # NOT SURE!
+def nnd(model):  # NOT SURE! not working in the Jupyter notebook
     """
     Computes the average nearest neighbor distance for each agent as another
     measure of cohesion. Method finds & averages the nearest neighbours
@@ -78,7 +77,6 @@ def nnd(model):  # NOT SURE!
         means.append(mean_dist)
         return means
     return sum(means) / len(means)
-
 
 
 class Fish(Agent):
@@ -267,11 +265,9 @@ def fish_draw(agent):
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
-# Create chart of polarization
+# Create charts for the data collectors
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                           data_collector_name="datacollector")
-
-# Create chart of Nearest Neighbour Distance
 neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
                              data_collector_name="datacollector")
 
