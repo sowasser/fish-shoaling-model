@@ -1,3 +1,16 @@
+"""
+This file is for creating dataframes containing the results from the data
+collectors in the model. These are currently polarization: a function returning
+the median absolute deviation of agent heading from the mean heading of the
+group, and nearest neighbour distance: the mean distance of the 5 nearest
+agents determined using a k-distance tree.
+
+Two dataframes are created in this file:
+    1. The model run for X number of steps with set variables
+    2. The model run for X times with X number of steps with set variables.
+These dataframes can then be exported as .csv files, or graphed using matplotlib.
+"""
+
 import numpy as np
 import math
 import random
@@ -8,10 +21,11 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
+import os
 from mesa.batchrunner import BatchRunner
 
 
-def polar(model):  # WORKS
+def polar(model):
     """
     Computes median absolute deviation (MAD) from the mean heading of the
     group. As the value approaches 0, polarization increases.
@@ -29,7 +43,7 @@ def polar(model):  # WORKS
     return mad(np.asarray(angle), center=np.median)
 
 
-def nnd(model):  # NOT SURE!
+def nnd(model):
     """
     Computes the average nearest neighbor distance for each agent as another
     measure of cohesion. Method finds & averages the nearest neighbours
@@ -41,11 +55,11 @@ def nnd(model):  # NOT SURE!
     fish_tree = KDTree(fish)
     means = []
     for me in fish:
-        neighbors = fish_tree.query(x=me, k=5)
-        dist = neighbors[0]
-        mean_dist = np.mean(dist)
+        neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
+        dist = list(neighbors[0])
+        dist.pop(0)  # removes closest agent - itself @ dist = 0
+        mean_dist = sum(dist) / len(dist)
         means.append(mean_dist)
-        return means
     return sum(means) / len(means)
 
 
@@ -190,10 +204,19 @@ class ShoalModel(Model):
         self.schedule.step()
 
 
+# Collect the data from a single run with x number of steps into a dataframe
+model = ShoalModel(n=100, width=100, height=100, speed=5, vision=5, avoidance=2)
+for i in range(100):
+    model.step()
+data = model.datacollector.get_model_vars_dataframe()
+
+data.to_csv("shoal_data.csv", index=",")
+# Todo: figure out how to export to a different folder.
+
+
 # Set up and run the BatchRunner, which runs the model multiple times with
 # fixed parameters to determine the overall distributions of the model -
 # automated by Mesa
-
 parameters = {"n": 100,
               "width": 100,
               "height": 100,
@@ -201,21 +224,19 @@ parameters = {"n": 100,
               "vision": 5,
               "avoidance": 2}
 
-
 batch_run = BatchRunner(ShoalModel,
                         parameters,
-                        iterations=5,
+                        iterations=1,
                         # 5 instantiations of the model
                         max_steps=100,  # Run each for 100 steps
                         model_reporters={"Polarization": polar,
                                          "NND": nnd})
-
 batch_run.run_all()
 
 
 # Data collection methods
 # Extract data as a DataFrame
-run_data = batch_run.get_model_vars_dataframe()
-run_data.head()
+batch_data = batch_run.get_model_vars_dataframe()
+batch_data.head()
 
 # Todo: figure out how to export data as .csv
