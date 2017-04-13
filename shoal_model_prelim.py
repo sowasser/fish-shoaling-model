@@ -59,7 +59,7 @@ def polar(model):  # WORKS
     return mad(np.asarray(angle), center=np.median)
 
 
-def nnd(model):  # NOT SURE! not working in the Jupyter notebook
+def nnd(model):  # WORKS
     """
     Computes the average nearest neighbor distance for each agent as another
     measure of cohesion. Method finds & averages the nearest neighbours
@@ -71,11 +71,11 @@ def nnd(model):  # NOT SURE! not working in the Jupyter notebook
     fish_tree = KDTree(fish)
     means = []
     for me in fish:
-        neighbors = fish_tree.query(x=me, k=5)
-        dist = neighbors[0]
-        mean_dist = np.mean(dist)
+        neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
+        dist = list(neighbors[0])  # select dist not neighbor # from .query output
+        dist.pop(0)  # removes closest agent - itself @ dist = 0
+        mean_dist = sum(dist) / len(dist)
         means.append(mean_dist)
-        return means
     return sum(means) / len(means)
 
 
