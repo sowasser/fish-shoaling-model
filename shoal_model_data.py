@@ -71,8 +71,8 @@ class Fish(Agent):
     define their movement. Avoidance is their desired minimum distance from
     any other Boid.
     """
-    def __init__(self, unique_id, model, pos, speed=3, velocity=None,
-                 vision=5, avoidance=1):
+    def __init__(self, unique_id, model, pos, speed=1, velocity=None,
+                 vision=5, avoidance=2):
         """
         Create a new Boid (bird, fish) agent. Args:
             unique_id: unique agent identifier.
@@ -205,7 +205,7 @@ class ShoalModel(Model):
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(n=100, width=100, height=100, speed=5, vision=5, avoidance=2)
+model = ShoalModel(n=100, width=100, height=100, speed=1, vision=5, avoidance=2)
 for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
@@ -220,7 +220,7 @@ data.to_csv("shoal_data.csv", index=",")
 parameters = {"n": 100,
               "width": 100,
               "height": 100,
-              "speed": 3,
+              "speed": 1,
               "vision": 5,
               "avoidance": 2}
 
