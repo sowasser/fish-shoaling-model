@@ -273,6 +273,6 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
 
 # Launch server
 server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
-                       "Boid Model of Shoaling Behavior",
+                       "Boids Model of Shoaling Behavior",
                        n=100, width=100, height=100, speed=3, vision=5, avoidance=2)
 server.launch()
