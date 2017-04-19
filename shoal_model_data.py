@@ -210,8 +210,8 @@ for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
-data.to_csv("shoal_data.csv", index=",")
-# Todo: figure out how to export to a different folder.
+path = "/Users/user/Desktop/Dropbox/NUIG/Mackerel/Mackerel_Data"
+data.to_csv(os.path.join(path, r"shoal_data.csv"), index=",")
 
 
 # Set up and run the BatchRunner, which runs the model multiple times with
@@ -238,5 +238,3 @@ batch_run.run_all()
 # Extract data as a DataFrame
 batch_data = batch_run.get_model_vars_dataframe()
 batch_data.head()
-
-# Todo: figure out how to export data as .csv
