@@ -5,7 +5,7 @@ Practice on agent-based modelling using the Mesa framework for Python. There are
 
 2. The Flocking example of collective behaviour from [mesa](mesa). The code for this example is included as both a Jupyter notebook and Python code. Also includes a JavaScript file that sets up a HTML5 canvas for visualization of a simple, continuous canvas.
 3. Attemt to fix an issue in the original Flocker model. All of the boids always headed to the lower-right corner. Various attempts to rectify this followed, and no solution has been reached. However, small improvements have been made, such as having the boids cohere towards the center of mass of local agents. More about this topic can be found in the [mesa Issues] on Github.
-4.  Preliminary attempts to adapt the boids model for a model of fish shoaling behaviour. So far, this version adds a data collector for spatial statistics. The Jupyter version of this file is useful for running the model under various conditions (number of agents, vision radius, swimming speed, etc.).
+4.  Preliminary attempts to adapt the boids model for a model of fish shoaling behaviour. So far, this version adds a data collector for spatial statistics with two functions: mean nearest neighbour distance as a measure of cohesion, and the median absolute deviation of each agent's heading from the mean heading of the group as a measure of polarization. The outputs of the data collector are added to pandas dataframes and then exported as .csv files in a separate Python file. The Jupyter notebook version of this file is useful for running the model under various conditions (number of agents, vision radius, swimming speed, etc.).
 
 
 ## Installation
