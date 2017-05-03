@@ -14,7 +14,7 @@ group is not random, but their starting position and heading is.
 Data is collected on the median absolute deviation of heading and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
-The model is based on a bounded, 3D area. Later additions
+The model is based on a bounded, 2D area. Later additions
 will include obstacles, environmental gradients, and agents with goal-, food-,
 or safety-seeking behaviour.
 
