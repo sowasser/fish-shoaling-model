@@ -14,7 +14,7 @@ group is not random, but their starting position and heading is.
 Data is collected on the median absolute deviation of heading and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
-The model is based on a bounded, 3D area. Later additions
+The model is based on a bounded, 2D area. Later additions
 will include obstacles, environmental gradients, and agents with goal-, food-,
 or safety-seeking behaviour.
 
@@ -39,6 +39,24 @@ from mesa.visualization.modules import ChartModule
 # Todo: Make chart titles show up
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
+# Todo: Change neighbours from defined by radius to simply nearest x number
+# Todo: Find a way to select # of neighbours at visualization stage.
+
+
+def neighbours(model):
+    """
+    Finds 6 nearest neighbours to the target agent, used instead of vision
+    to circumvent the polarity issue and follow newer research suggesting
+    that a topological, rather than geometric, approach to neighbour selection
+    is more accurate (Mann 2011).
+    """
+    fish = np.asarray([agent.pos for agent in model.schedule.agents])
+    fish_tree = KDTree(fish)
+    for target in fish:
+        nb = fish_tree.query(x=target, k=6)  # includes target agent @ dist = 0
+        dist = list(nb[0])  # select dist not neighbor # from .query output
+        dist.pop(0)  # removes closest - target agent @ dist = 0
+    return nb
 
 
 def polar(model):  # WORKS
@@ -66,7 +84,7 @@ def nnd(model):  # WORKS
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
     """
-    # Todo: figure out how to find neighbors within vision radius
+    # Todo: figure out how to not repeat neighbours calculation.
     fish = np.asarray([agent.pos for agent in model.schedule.agents])
     fish_tree = KDTree(fish)
     means = []
@@ -87,21 +105,23 @@ class Fish(Agent):
     define their movement. Avoidance is their desired minimum distance from
     any other Boid.
     """
-    def __init__(self, unique_id, model, pos, speed=1, velocity=None,
-                 vision=5, avoidance=2):
+    def __init__(self, unique_id, model, pos, nb, speed=1, velocity=None,
+                 avoidance=2):
         """
         Create a new Boid (bird, fish) agent. Args:
             unique_id: unique agent identifier.
             pos: starting position
+            nb: local neighbours - defined in neighbours function
             speed: distance to move per step. Since it's positive, boids move
                 in a positive direction.
             velocity: randomly generated. Velocity can then be normalized to
                 create the heading - the scalar version w/ no magnitude.
-            vision: Radius to look around for nearby Boids.
             avoidance: Minimum distance to maintain from other Boids.
         """
+        # Todo: figure out how to integrate neighbours function into Fish class
         super().__init__(unique_id, model)
         self.pos = pos
+        self.neighbourhood = nb
         self.speed = speed
         if velocity is not None:
             self.velocity = velocity
@@ -109,13 +129,13 @@ class Fish(Agent):
         else:
             self.velocity = np.random.uniform(2) - 0.5
             self.heading /= np.linalg.norm(self.velocity)
-        self.vision = vision
         self.avoidance = avoidance
 
     def cohere(self, neighbors):
         """
         Return the vector toward the center of mass of the local neighbors.
         """
+        # Todo: change to draw from neighbours function
         coh_vector = np.array([0.0, 0.0])
         their_pos = [neighbor.pos for neighbor in neighbors]
         their_pos = np.asarray(their_pos)
@@ -130,6 +150,7 @@ class Fish(Agent):
         """
         Return a vector away rom any neighbors closer than avoidance distance.
         """
+        # Todo: change to draw from neighbours function
         my_pos = np.array(self.pos)
         avoid_vector = np.array([0, 0])
         for neighbor in neighbors:
@@ -146,6 +167,7 @@ class Fish(Agent):
         """
         Have Boids match the velocity of neighbors.
         """
+        # Todo: change to draw from neighbours function
         mean_velocity = np.array([0.0, 0.0])
         for neighbor in neighbors:
             mean_velocity += neighbor.velocity / len(neighbors)
@@ -158,7 +180,8 @@ class Fish(Agent):
         Get the Boid's neighbors, compute the new vector, normalize that
         vector, and move accordingly.
         """
-        neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
+        # Todo: change to draw from neighbours function
+        neighbors = self.model.space.get_neighbors(self.pos, False)
         if len(neighbors) > 0:
             cohere_vector = self.cohere(neighbors)
             avoid_vector = self.avoid(neighbors)
@@ -177,19 +200,18 @@ class Fish(Agent):
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, n, width, height, speed, vision, avoidance):
+    # Todo: removed vision....do neighbours need to be included here too?
+    def __init__(self, n, width, height, speed, avoidance):
         """
         Create a new Flockers model. Args:
             N: Number of Boids
             width, height: Size of the space.
             speed: how fast the boids should move.
-            vision: how far around should each Boid look for its neighbors
             avoidance: what's the minimum distance each Boid will attempt to
                 keep from any other
         """
         self.n = n
         self.speed = speed
-        self.vision = vision
         self.avoidance = avoidance
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, torus=True,
@@ -207,7 +229,7 @@ class ShoalModel(Model):
             pos = (x, y)
             velocity = np.random.random(2) * 2 - np.array((1, 1))  # Doesn't include upper #, 2d array
             fish = Fish(unique_id=i, model=self, pos=pos, speed=self.speed, velocity=velocity,
-                        vision=self.vision, avoidance=self.avoidance)
+                        avoidance=self.avoidance)  # NEIGHBOURS????? - REMOVED VISION
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
@@ -274,5 +296,5 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
 # Launch server
 server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
                        "Boids Model of Shoaling Behavior",
-                       n=100, width=100, height=100, speed=1, vision=5, avoidance=2)
+                       n=100, width=100, height=100, speed=1, avoidance=2)
 server.launch()
