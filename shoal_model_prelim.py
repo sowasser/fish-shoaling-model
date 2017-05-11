@@ -39,6 +39,23 @@ from mesa.visualization.modules import ChartModule
 # Todo: Make chart titles show up
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
+# Todo: Change neighbours from defined by radius to simply nearest x number
+
+
+def neighbours(model):
+    """
+    Finds 6 nearest neighbours to the target agent, used instead of vision
+    to circumvent the polarity issue and follow newer research suggesting
+    that a topological, rather than geometric, approach to neighbour selection
+    is more accurate (Mann 2011).
+    """
+    fish = np.asarray([agent.pos for agent in model.schedule.agents])
+    fish_tree = KDTree(fish)
+    for target in fish:
+        nb = fish_tree.query(x=target, k=6)  # includes target agent @ dist = 0
+        dist = list(nb[0])  # select dist not neighbor # from .query output
+        dist.pop(0)  # removes closest - target agent @ dist = 0
+    return nb
 
 
 def polar(model):  # WORKS
@@ -66,7 +83,7 @@ def nnd(model):  # WORKS
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
     """
-    # Todo: figure out how to find neighbors within vision radius
+    # Todo: figure out how to not repeat neighbours calculation.
     fish = np.asarray([agent.pos for agent in model.schedule.agents])
     fish_tree = KDTree(fish)
     means = []
@@ -87,8 +104,8 @@ class Fish(Agent):
     define their movement. Avoidance is their desired minimum distance from
     any other Boid.
     """
-    def __init__(self, unique_id, model, pos, speed=1, velocity=None,
-                 vision=5, avoidance=2):
+    def __init__(self, unique_id, model, pos, neighbours, speed=1,
+                 velocity=None, avoidance=2):
         """
         Create a new Boid (bird, fish) agent. Args:
             unique_id: unique agent identifier.
@@ -102,6 +119,7 @@ class Fish(Agent):
         """
         super().__init__(unique_id, model)
         self.pos = pos
+        self.neighbours = neighbours
         self.speed = speed
         if velocity is not None:
             self.velocity = velocity
@@ -109,7 +127,6 @@ class Fish(Agent):
         else:
             self.velocity = np.random.uniform(2) - 0.5
             self.heading /= np.linalg.norm(self.velocity)
-        self.vision = vision
         self.avoidance = avoidance
 
     def cohere(self, neighbors):
