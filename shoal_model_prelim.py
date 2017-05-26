@@ -21,7 +21,6 @@ object. The parameters for the visualization rely on a JavaScript canvas.
 import numpy as np
 import math
 import random
-from scipy import ndimage
 from scipy.spatial import KDTree
 from statsmodels.robust.scale import mad
 from mesa import Agent, Model
