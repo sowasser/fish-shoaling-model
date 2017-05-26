@@ -17,13 +17,13 @@ These installation instructions assume you are using macOS (because that's all I
 4. Since I'm using pyenv, I use the [pyenv-virtualenv](virtualenv) plug-in to create a virtual environment, which requires changing the bash-profile (need to see invisible files) to the lines provied in the virtualenv instructions.
 5. Within your virtual environment, you can then use [pip](pip) to install the requirements.txt file to install mesa and its dependencies.
 
-In order to use the updated version of the Flocker example, you will need to update your space.py file within the mesa library. In order to do this safely, I made a duplicate the mesa folder to save as a backup before changing the file to match the changes made in the pull request, found [here](space). The mesa files are located on my computer at: `/Users/user/.pyenv/versions/python-project-virtualenv-3.6.0/lib/python3.6/site-packages/mesa`
+In order to use the updated version of the Flocker example, you will need to update your space.py file within the mesa library. In order to do this safely, I made a duplicate the mesa folder to save as a backup before changing the file to match the changes made in the pull request, found [here]. The mesa files are located on my computer at: `/Users/user/.pyenv/versions/python-project-virtualenv-3.6.0/lib/python3.6/site-packages/mesa`
 
 
 [mesa]: https://github.com/projectmesa/mesa
 [mesa Issues]: https://github.com/projectmesa/mesa/issues/358
 [#378]: https://github.com/projectmesa/mesa/pull/378
-[space]: https://github.com/projectmesa/mesa/blob/600c62b35dbac6de9300da471377b0e200b60da8/mesa/space.py
+[here]: https://github.com/projectmesa/mesa/blob/600c62b35dbac6de9300da471377b0e200b60da8/mesa/space.py
 [Homebrew]: https://brew.sh/
 [pyenv]: https://github.com/pyenv/pyenv
 [virtualenv]: https://github.com/pyenv/pyenv-virtualenv
