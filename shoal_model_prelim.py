@@ -6,17 +6,13 @@ agent follows:
     1. Attraction to (coherence with) other agents,
     2. Avoidance of other agents,
     3. Alignment with other agents.
-The direction in which the agents swim is determined by the "speed" parameter
-and can be either positive (towards the upper, left corner) or negative
-(towards the lower, right corner). Therefore, the overall direction of the
-group is not random, but their starting position and heading is.
 
-Data is collected on the median absolute deviation of heading and the nearest
+Data is collected on the median absolute deviation of velocity and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
-The model is based on a bounded, 3D area. Later additions
-will include obstacles, environmental gradients, and agents with goal-, food-,
-or safety-seeking behaviour.
+The model is based on a bounded, 3D area. Later additions will include 
+obstacles, environmental gradients, and agents with goal-, food-, or 
+safety-seeking behaviour.
 
 This script also includes the code for visualizing the model using an HTML5
 object. The parameters for the visualization rely on a JavaScript canvas.
@@ -25,6 +21,7 @@ object. The parameters for the visualization rely on a JavaScript canvas.
 import numpy as np
 import math
 import random
+from scipy import ndimage
 from scipy.spatial import KDTree
 from statsmodels.robust.scale import mad
 from mesa import Agent, Model
@@ -42,7 +39,7 @@ from mesa.visualization.modules import ChartModule
 
 def polar(model):  # WORKS
     """
-    Computes median absolute deviation (MAD) from the mean heading of the
+    Computes median absolute deviation (MAD) from the mean velocity of the
     group. As the value approaches 0, polarization increases.
     In order to find the MAD, the x,y coordinates are converted to radians by
     finding the arc tangent of y/x. The function used pays attention to the
@@ -83,7 +80,7 @@ class Fish(Agent):
     A Boid-style agent. Boids have a vision that defines the radius in which
     they look for their neighbors to flock with. Their heading (a unit vector)
     and their interactions with their neighbors - cohering and avoiding -
-    define their movement. Avoidance is their desired minimum distance from
+    define their movement. Separation is their desired minimum distance from
     any other Boid.
     """
     def __init__(self, unique_id, model, pos, speed, velocity, vision,
@@ -113,10 +110,9 @@ class Fish(Agent):
 
     def cohere(self, neighbors):
         """
-        Return the vector toward the center of mass of the local neighbors.
+        Return the vector toward the centroid of the local neighbors.
         """
         cohere = np.zeros(2)
-
         if neighbors:
             for neighbor in neighbors:
                 cohere += self.model.space.get_heading(self.pos, neighbor.pos)
