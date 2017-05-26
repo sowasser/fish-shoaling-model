@@ -9,7 +9,7 @@ from mesa.visualization.ModularVisualization import ModularServer
 
 
 class Boid(Agent):
-    '''
+    """
     A Boid-style flocker agent.
     The agent follows three behaviors to flock:
         - Cohesion: steering towards neighboring agents.
@@ -19,22 +19,22 @@ class Boid(Agent):
     neighbors to flock with. Their speed (a scalar) and velocity (a vector)
     define their movement. Separation is their desired minimum distance from
     any other Boid.
-    '''
+    """
     def __init__(self, unique_id, model, pos, speed, velocity, vision,
-            separation, cohere=0.025, separate=0.25, match=0.04):
-        '''
+                 separation, cohere=0.025, separate=0.25, match=0.04):
+        """
         Create a new Boid flocker agent.
         Args:
-            unique_id: Unique agent identifyer.
+            unique_id: Unique agent identifier.
             pos: Starting position
             speed: Distance to move per step.
-            heading: numpy vector for the Boid's direction of movement.
+            velocity: numpy vector for the Boid's direction of movement.
             vision: Radius to look around for nearby Boids.
             separation: Minimum distance to maintain from other Boids.
             cohere: the relative importance of matching neighbors' positions
             separate: the relative importance of avoiding close neighbors
             match: the relative importance of matching neighbors' headings
-        '''
+        """
         super().__init__(unique_id, model)
         self.pos = np.array(pos)
         self.speed = speed
@@ -46,9 +46,9 @@ class Boid(Agent):
         self.match_factor = match
 
     def cohere(self, neighbors):
-        '''
+        """
         Return the vector toward the center of mass of the local neighbors.
-        '''
+        """
         cohere = np.zeros(2)
         if neighbors:
             for neighbor in neighbors:
@@ -57,9 +57,9 @@ class Boid(Agent):
         return cohere
 
     def separate(self, neighbors):
-        '''
+        """
         Return a vector away from any neighbors closer than separation dist.
-        '''
+        """
         me = self.pos
         them = (n.pos for n in neighbors)
         separation_vector = np.zeros(2)
@@ -68,10 +68,10 @@ class Boid(Agent):
                 separation_vector -= self.model.space.get_heading(me, other)
         return separation_vector
 
-    def match_heading(self, neighbors):
-        '''
+    def match_velocity(self, neighbors):
+        """
         Return a vector of the neighbors' average heading.
-        '''
+        """
         match_vector = np.zeros(2)
         if neighbors:
             for neighbor in neighbors:
@@ -80,23 +80,23 @@ class Boid(Agent):
         return match_vector
 
     def step(self):
-        '''
+        """
         Get the Boid's neighbors, compute the new vector, and move accordingly.
-        '''
+        """
 
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
                           self.separate(neighbors) * self.separate_factor +
-                          self.match_heading(neighbors) * self.match_factor) / 2
+                          self.match_velocity(neighbors) * self.match_factor) / 2
         self.velocity /= np.linalg.norm(self.velocity)
         new_pos = self.pos + self.velocity * self.speed
         self.model.space.move_agent(self, new_pos)
 
 
 class BoidModel(Model):
-    '''
+    """
     Flocker model class. Handles agent creation, placement and scheduling.
-    '''
+    """
 
     def __init__(self,
                  population=100,
@@ -108,17 +108,18 @@ class BoidModel(Model):
                  cohere=0.025,
                  separate=0.25,
                  match=0.04):
-        '''
-        Create a new Flockers model.
+        """
+        Create a new Boids model.
         Args:
             population: Number of Boids
             width, height: Size of the space.
             speed: How fast should the Boids move.
             vision: How far around should each Boid look for its neighbors
             separation: What's the minimum distance each Boid will attempt to
-                    keep from any other
+                        keep from any other 
             cohere, separate, match: factors for the relative importance of
-                    the three drives.        '''
+                                     the three drives.
+        """
         self.population = population
         self.vision = vision
         self.speed = speed
@@ -131,9 +132,9 @@ class BoidModel(Model):
         self.running = True
 
     def make_agents(self):
-        '''
+        """
         Create self.population agents, with random positions and starting headings.
-        '''
+        """
         for i in range(self.population):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
