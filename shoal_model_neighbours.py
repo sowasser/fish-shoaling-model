@@ -99,13 +99,11 @@ def nnd(model):  # WORKS
 
 class Fish(Agent):
     """
-    A Boid-style agent. Boids have a vision that defines the radius in which
-    they look for their neighbors to flock with. Their heading (a unit vector)
-    and their interactions with their neighbors - cohering and avoiding -
-    define their movement. Separation is their desired minimum distance from
-    any other Boid.
+    A Boid-style agent. Their heading (a unit vector) and their interactions
+    with their neighbors - cohering and avoiding - define their movement.
+    Separation is their desired minimum distance from any other Boid.
     """
-    def __init__(self, unique_id, model, pos, speed, velocity, vision,
+    def __init__(self, unique_id, model, pos, speed, velocity, neighborhood,
                  separation, cohere=0.025, separate=0.25, match=0.04):
         """
         Create a new Boid (bird, fish) agent.
@@ -114,18 +112,18 @@ class Fish(Agent):
             pos: Starting position
             speed: Distance to move per step.
             velocity: numpy vector for the Boid's direction of movement.
-            vision: Radius to look around for nearby Boids.
+            neighborhood: how many neighbours too look for.
             separation: Minimum distance to maintain from other Boids.
             cohere: the relative importance of matching neighbors' positions
             separate: the relative importance of avoiding close neighbors
             match: the relative importance of matching neighbors' headings
         """
-        # Todo: figure out how to integrate neighbours function into Fish class
+        # Todo: figure out how to integrate neighbours instead of vision
         super().__init__(unique_id, model)
         self.pos = np.array(pos)
         self.speed = speed
         self.velocity = velocity
-        self.vision = vision
+        self.neighborhood = neighborhood
         self.separation = separation
         self.cohere_factor = cohere
         self.separate_factor = separate
@@ -135,7 +133,6 @@ class Fish(Agent):
         """
         Return the vector toward the center of mass of the local neighbors.
         """
-        # Todo: change to draw from neighbours function
         cohere = np.zeros(2)
         if neighbors:
             for neighbor in neighbors:
@@ -143,21 +140,10 @@ class Fish(Agent):
             cohere /= len(neighbors)
         return cohere
 
-        coh_vector = np.array([0.0, 0.0])
-        their_pos = [neighbor.pos for neighbor in neighbors]
-        their_pos = np.asarray(their_pos)
-        center = ndimage.measurements.center_of_mass(their_pos)
-        coh_vector += np.subtract(center, self.pos)  # both are tuples
-        if np.linalg.norm(coh_vector) > 0:  # when there is already a magnitude
-            return coh_vector / np.linalg.norm(coh_vector)
-        else:
-            return coh_vector
-
     def separate(self, neighbors):
         """
         Return a vector away rom any neighbors closer than avoidance distance.
         """
-        # Todo: change to draw from neighbours function
         me = self.pos
         them = (n.pos for n in neighbors)
         separate_vector = np.zeros(2)
@@ -166,12 +152,10 @@ class Fish(Agent):
                 separate_vector -= self.model.space.get_heading(me, other)
         return separate_vector
 
-
     def match_velocity(self, neighbors):
         """
         Have Boids match the velocity of neighbors.
         """
-        # Todo: change to draw from neighbours function
         match_vector = np.zeros(2)
         if neighbors:
             for neighbor in neighbors:
@@ -184,7 +168,7 @@ class Fish(Agent):
         Get the Boid's neighbors, compute the new vector, and move accordingly.
         """
         # Todo: change to draw from neighbours function
-        neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
+        neighbors = self.model.space.get_neighbors(self.pos, False)
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
                           self.separate(neighbors) * self.separate_factor +
                           self.match_velocity(neighbors) * self.match_factor) / 2
@@ -211,7 +195,6 @@ class ShoalModel(Model):
             N: Number of Boids
             width, height: Size of the space.
             speed: how fast the boids should move.
-            vision: how far around should each Boid look for its neighbors
             separation: what's the minimum distance each Boid will attempt to
                         keep from any other
             cohere, separate, match: factors for the relative importance of
@@ -306,5 +289,5 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
 # Launch server
 server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
                        "Boids Model of Shoaling Behavior",
-                       population=100, width=100, height=100, speed=1, vision=10, separation=2)
+                       population=100, width=100, height=100, speed=1, separation=2)
 server.launch()
