@@ -214,13 +214,13 @@ class ShoalModel(Model):
         """
         Create N agents, with random positions and starting velocities.
         """
+        # Todo: fix issue with "1 missing required positional argument: 'separation'
         for i in range(self.population):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1
-            fish = Fish(i, self, pos, self.speed, velocity,
-                        self.separation, **self.factors)
+            fish = Fish(i, self, pos, self.speed, velocity, self.separation, **self.factors)
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
