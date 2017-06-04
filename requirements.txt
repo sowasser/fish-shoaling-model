@@ -1,5 +1,5 @@
 mesa==0.8.0
 matplotlib==2.0.0
 numpy==1.12.1
-statsmodels
+statsmodels==0.8.0
 pandas==0.19.2
