@@ -100,11 +100,11 @@ var Simple_Continuous_Module = function (canvas_width, canvas_height) {
 
     // Create the tag:
     var canvas_tag = "<canvas width='" + canvas_width + "' height='" + canvas_height + "' ";
-    canvas_tag += "style='border:1px dotted'></canvas>";
+    canvas_tag += "style='grid-row: 1 / span 2;border:1px dotted'></canvas>";
 
     // Append it to body:
     var canvas = $(canvas_tag)[0];
-    $("body").append(canvas);
+    $("#gridwrapper").append(canvas);
 
     // Create the context and the drawing controller:
     var context = canvas.getContext("2d");
