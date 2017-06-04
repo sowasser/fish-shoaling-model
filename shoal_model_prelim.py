@@ -259,10 +259,12 @@ shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
 # Create charts for the data collectors
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-                          data_collector_name="datacollector")
+                          data_collector_name="datacollector",
+                          chart_title="Polarization")
 
 neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
-                             data_collector_name="datacollector")
+                             data_collector_name="datacollector",
+                             chart_title="Nearest Neighbour Distance")
 
 
 # Launch server
