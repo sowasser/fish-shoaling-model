@@ -31,7 +31,6 @@ from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
 
-# Todo: Make chart titles show up
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
 
@@ -61,7 +60,6 @@ def nnd(model):  # WORKS
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
     """
-    # Todo: figure out how to find neighbors within vision radius
     fish = np.asarray([agent.pos for agent in model.schedule.agents])
     fish_tree = KDTree(fish)
     means = []
