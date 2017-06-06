@@ -210,7 +210,7 @@ for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
-path = "/Users/user/Desktop/Dropbox/NUIG/Mackerel/Mackerel_Data"
+path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
 data.to_csv(os.path.join(path, r"shoal_data.csv"), index=",")
 
 
