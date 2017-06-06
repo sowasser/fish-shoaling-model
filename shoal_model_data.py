@@ -68,130 +68,127 @@ class Fish(Agent):
     A Boid-style agent. Boids have a vision that defines the radius in which
     they look for their neighbors to flock with. Their heading (a unit vector)
     and their interactions with their neighbors - cohering and avoiding -
-    define their movement. Avoidance is their desired minimum distance from
+    define their movement. Separation is their desired minimum distance from
     any other Boid.
     """
-    def __init__(self, unique_id, model, pos, speed=1, velocity=None,
-                 vision=5, avoidance=2):
+    def __init__(self, unique_id, model, pos, speed, velocity, vision,
+                 separation, cohere=0.025, separate=0.25, match=0.04):
         """
-        Create a new Boid (bird, fish) agent. Args:
-            unique_id: unique agent identifier.
-            pos: starting position
-            speed: distance to move per step. Since it's positive, boids move
-                in a positive direction.
-            velocity: randomly generated. Velocity can then be normalized to
-                create the heading - the scalar version w/ no magnitude.
+        Create a new Boid (bird, fish) agent.
+        Args:
+            unique_id: Unique agent identifier.
+            pos: Starting position
+            speed: Distance to move per step.
+            velocity: numpy vector for the Boid's direction of movement.
             vision: Radius to look around for nearby Boids.
-            avoidance: Minimum distance to maintain from other Boids.
+            separation: Minimum distance to maintain from other Boids.
+            cohere: the relative importance of matching neighbors' positions
+            separate: the relative importance of avoiding close neighbors
+            match: the relative importance of matching neighbors' headings
         """
         super().__init__(unique_id, model)
-        self.pos = pos
+        self.pos = np.array(pos)
         self.speed = speed
-        if velocity is not None:
-            self.velocity = velocity
-            self.heading = self.velocity / np.linalg.norm(self.velocity)
-        else:
-            self.velocity = np.random.uniform(2) - 0.5
-            self.heading /= np.linalg.norm(self.velocity)
+        self.velocity = velocity
         self.vision = vision
-        self.avoidance = avoidance
+        self.separation = separation
+        self.cohere_factor = cohere
+        self.separate_factor = separate
+        self.match_factor = match
 
     def cohere(self, neighbors):
         """
-        Return the vector toward the center of mass of the local neighbors.
+        Return the vector toward the centroid of the local neighbors.
         """
-        coh_vector = np.array([0.0, 0.0])
-        their_pos = [neighbor.pos for neighbor in neighbors]
-        their_pos = np.asarray(their_pos)
-        center = ndimage.measurements.center_of_mass(their_pos)
-        coh_vector += np.subtract(center, self.pos)  # both are tuples
-        if np.linalg.norm(coh_vector) > 0:  # when there is already a magnitude
-            return coh_vector / np.linalg.norm(coh_vector)
-        else:
-            return coh_vector
+        cohere = np.zeros(2)
+        if neighbors:
+            for neighbor in neighbors:
+                cohere += self.model.space.get_heading(self.pos, neighbor.pos)
+            cohere /= len(neighbors)
+        return cohere
 
-    def avoid(self, neighbors):
+    def separate(self, neighbors):
         """
         Return a vector away rom any neighbors closer than avoidance distance.
         """
-        my_pos = np.array(self.pos)
-        avoid_vector = np.array([0, 0])
-        for neighbor in neighbors:
-            their_pos = np.array(neighbor.pos)
-            dist = np.linalg.norm(my_pos - their_pos)
-            if dist <= self.avoidance:
-                avoid_vector -= np.int64(their_pos - my_pos)  # tuples
-        if np.linalg.norm(avoid_vector) > 0:
-            return avoid_vector / np.linalg.norm(avoid_vector)
-        else:
-            return avoid_vector
+        me = self.pos
+        them = (n.pos for n in neighbors)
+        separate_vector = np.zeros(2)
+        for other in them:
+            if self.model.space.get_distance(me, other) < self.separation:
+                separate_vector -= self.model.space.get_heading(me, other)
+        return separate_vector
 
     def match_velocity(self, neighbors):
         """
         Have Boids match the velocity of neighbors.
         """
-        mean_velocity = np.array([0.0, 0.0])
-        for neighbor in neighbors:
-            mean_velocity += neighbor.velocity / len(neighbors)
-        return mean_velocity
-        # Not checking for an normalizing this function because we want to
-        # retain the magnitude.
+        match_vector = np.zeros(2)
+        if neighbors:
+            for neighbor in neighbors:
+                match_vector += neighbor.velocity
+            match_vector /= len(neighbors)
+        return match_vector
 
     def step(self):
-        """ 
-        Get the Boid's neighbors, compute the new vector, normalize that
-        vector, and move accordingly.
+        """
+        Get the Boid's neighbors, compute the new vector, and move accordingly.
         """
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
-        if len(neighbors) > 0:
-            cohere_vector = self.cohere(neighbors)
-            avoid_vector = self.avoid(neighbors)
-            velocity = self.match_velocity(neighbors)
-            match_heading = velocity / np.linalg.norm(velocity)
-            self.heading += (cohere_vector +
-                             avoid_vector +
-                             match_heading)
-        rate = np.linalg.norm(self.heading)
-        self.heading /= rate
-        new_pos = np.array(self.pos) + self.heading * self.speed
-        new_x, new_y = new_pos
-        self.model.space.move_agent(self, (new_x, new_y))
+        self.velocity += (self.cohere(neighbors) * self.cohere_factor +
+                          self.separate(neighbors) * self.separate_factor +
+                          self.match_velocity(neighbors) * self.match_factor) / 2
+        self.velocity /= np.linalg.norm(self.velocity)
+        new_pos = self.pos + self.velocity * self.speed
+        self.model.space.move_agent(self, new_pos)
 
 
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
-    def __init__(self, n, width, height, speed, vision, avoidance):
+    def __init__(self,
+                 population=100,
+                 width=100,
+                 height=100,
+                 speed=1,
+                 vision=10,
+                 separation=2,
+                 cohere=0.025,
+                 separate=0.25,
+                 match=0.04):
         """
-        Create a new Flockers model. Args:
+        Create a new Boids model. Args:
             N: Number of Boids
             width, height: Size of the space.
             speed: how fast the boids should move.
             vision: how far around should each Boid look for its neighbors
-            avoidance: what's the minimum distance each Boid will attempt to
-                keep from any other
+            separation: what's the minimum distance each Boid will attempt to
+                        keep from any other
+            cohere, separate, match: factors for the relative importance of
+                                     the three drives.
         """
-        self.n = n
-        self.speed = speed
+        self.population = population
         self.vision = vision
-        self.avoidance = avoidance
+        self.speed = speed
+        self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, torus=True,
-                                     grid_width=100, grid_height=100)
+        self.space = ContinuousSpace(width, height, True,
+                                     grid_width=10, grid_height=10)
+        self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
         self.running = True
 
     def make_agents(self):
-        """ 
-        Create N agents, with random positions and starting velocities. 
         """
-        for i in range(self.n):
+        Create N agents, with random positions and starting velocities.
+        """
+        for i in range(self.population):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
-            pos = (x, y)
-            velocity = np.random.random(2) * 2 - np.array((1, 1))  # Doesn't include upper #, 2d array
-            fish = Fish(unique_id=i, model=self, pos=pos, speed=self.speed, velocity=velocity,
-                        vision=self.vision, avoidance=self.avoidance)
+            pos = np.array((x, y))
+            velocity = np.random.random(2) * 2 - 1
+            fish = Fish(i, self, pos, self.speed, velocity, self.vision,
+                        self.separation, **self.factors)
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
@@ -205,7 +202,7 @@ class ShoalModel(Model):
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(n=100, width=100, height=100, speed=1, vision=5, avoidance=2)
+model = ShoalModel(population=100, width=100, height=100, speed=1, vision=10, separation=2)
 for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
