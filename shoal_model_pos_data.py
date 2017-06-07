@@ -5,24 +5,21 @@ each step, using the data collector. The dataframe can then be exported as a
 """
 
 import numpy as np
+import pandas as pd
 import random
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
+import os
 
 
-def pos_x(agent):
+def position(model):
     """Extracts the x-coordinate position of each agent"""
     pos = np.asarray([agent.pos for agent in model.schedule.agents])
-    x = pos[:, 0]
-    return x
-
-
-def pos_y(agent):
-    pos = np.asarray([agent.pos for agent in model.schedule.agents])
-    y = pos[:, 1]
-    return y
+    positions = np.hstack(pos)
+    positions = pd.Series(data=positions)
+    return positions
 
 
 class Fish(Agent):
@@ -155,7 +152,7 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            agent_reporters={"Position (X)": pos_x, "Position (Y)": pos_y})
+            model_reporters={"Position": position})
 
     def step(self):
         self.datacollector.collect(self)
@@ -163,7 +160,11 @@ class ShoalModel(Model):
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(population=100, width=100, height=100, speed=1, vision=10, separation=2)
-for i in range(1):
+model = ShoalModel(population=10, width=100, height=100, speed=1, vision=10, separation=2)
+for i in range(10):
     model.step()
-data = model.datacollector.get_agent_vars_dataframe()
+data = model.datacollector.get_model_vars_dataframe()
+print(data)
+
+path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+data.to_csv(os.path.join(path, r"position_data.csv"), index=" ")
