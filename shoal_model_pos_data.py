@@ -14,9 +14,17 @@ from mesa.space import ContinuousSpace
 import os
 
 
-def position(model):
+def pos_x(model):
     """Extracts the x-coordinate position of each agent"""
-    pos = np.asarray([agent.pos for agent in model.schedule.agents])
+    pos = np.asarray([agent.pos[0] for agent in model.schedule.agents])
+    positions = np.hstack(pos)
+    positions = pd.Series(data=positions)
+    return positions
+
+
+def pos_y(model):
+    """Extracts the y-coordinate position of each agent"""
+    pos = np.asarray([agent.pos[1] for agent in model.schedule.agents])
     positions = np.hstack(pos)
     positions = pd.Series(data=positions)
     return positions
@@ -152,7 +160,7 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            model_reporters={"Position": position})
+            model_reporters={"Position (X)": pos_x, "Position (Y)": pos_y})
 
     def step(self):
         self.datacollector.collect(self)
