@@ -16,10 +16,10 @@ import os
 
 def positions(model):
     """
-    Extracts xy coordinates for each agent to be used in the data collector
+    Extracts xy coordinates for each agent to be used in the data collector,
+    creates lists of tuples (for each agent) per step.
     """
-    # Create tuple of agent position (x, y)
-    pos = [(agent.pos[0], agent.pos[1])for agent in model.schedule.agents]
+    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
     return pos
 
 
@@ -165,7 +165,11 @@ model = ShoalModel(population=10, width=100, height=100, speed=1, vision=10, sep
 for i in range(10):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
+# Todo: flatten lists of tuples into a pandas dataframe
+
 print(data)
 
-path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
-data.to_csv(os.path.join(path, r"position_data.csv"), index=" ")
+
+# Export data as .csv
+# path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+# data.to_csv(os.path.join(path, r"position_data.csv"), index=" ")
