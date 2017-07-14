@@ -17,17 +17,17 @@ import os
 def pos_x(model):
     """Extracts the x-coordinate position of each agent"""
     pos = np.asarray([agent.pos[0] for agent in model.schedule.agents])
-    positions = np.hstack(pos)
-    positions = pd.Series(data=positions)
-    return positions
+    x_positions = np.hstack(pos)
+    x_positions = pd.Series(data=x_positions)
+    return x_positions
 
 
 def pos_y(model):
     """Extracts the y-coordinate position of each agent"""
     pos = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    positions = np.hstack(pos)
-    positions = pd.Series(data=positions)
-    return positions
+    y_positions = np.hstack(pos)
+    y_positions = pd.Series(data=y_positions)
+    return y_positions
 
 
 class Fish(Agent):
