@@ -171,13 +171,10 @@ data = model.datacollector.get_model_vars_dataframe()
 
 # Todo: create exportable dataframe - right now pandas dataframe of lists
 
-# Create list of eventual column names (x and y for each agent)
+# Create empty dataframe to read into
 colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5', 'x6',
             'y6', 'x7', 'y7', 'x8', 'y8', 'x9', 'y9', 'x10', 'y10']
-
-df = pd.DataFrame(data, columns=colnames)
-
-print(type(data.iloc[0]))
+df = pd.DataFrame(index=range(10), columns=colnames)
 print(df)
 
 # Export data as .csv
