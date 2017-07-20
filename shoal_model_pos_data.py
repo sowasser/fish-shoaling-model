@@ -19,10 +19,11 @@ def positions(model):
     """
     Extracts xy coordinates for each agent to be used in the data collector,
     creates lists of tuples (for each agent) per step, which is then flattened
-    into a simple list.
+    into a simple list and made into a pandas series.
     """
     pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
     pos = list(itertools.chain(*pos))
+    pos = pd.Series(pos)
     return pos
 
 
@@ -169,13 +170,12 @@ for i in range(10):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
-# Todo: create exportable dataframe - right now pandas dataframe of lists
+# Todo: create exportable dataframe
 
-# Create empty dataframe to read into
-colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5', 'x6',
-            'y6', 'x7', 'y7', 'x8', 'y8', 'x9', 'y9', 'x10', 'y10']
-df = pd.DataFrame(index=range(10), columns=colnames)
-print(df)
+# Create list of column names for each agent
+colnames = ['run', 'x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5',
+            'x6', 'y6', 'x7', 'y7', 'x8', 'y8', 'x9', 'y9', 'x10', 'y10']
+
 
 # Export data as .csv
 # path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
