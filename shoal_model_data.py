@@ -27,17 +27,17 @@ from mesa.batchrunner import BatchRunner
 
 def polar(model):
     """
-    Computes median absolute deviation (MAD) from the mean heading of the
+    Computes median absolute deviation (MAD) from the mean velocity of the
     group. As the value approaches 0, polarization increases.
     In order to find the MAD, the x,y coordinates are converted to radians by
     finding the arc tangent of y/x. The function used pays attention to the
     sign of the input to make sure that the correct quadrant for the angle is
     determined.
     """
-    heading_x = [agent.heading[0] for agent in model.schedule.agents]
-    heading_y = [agent.heading[1] for agent in model.schedule.agents]
+    velocity_x = [agent.velocity[0] for agent in model.schedule.agents]
+    velocity_y = [agent.velocity[1] for agent in model.schedule.agents]
     angle = []
-    for (y, x) in zip(heading_y, heading_x):
+    for (y, x) in zip(velocity_y, velocity_x):
         a = math.atan2(y, x)
         angle.append(a)
     return mad(np.asarray(angle), center=np.median)
@@ -50,13 +50,12 @@ def nnd(model):
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
     """
-    # Todo: figure out how to find neighbors within vision radius
     fish = np.asarray([agent.pos for agent in model.schedule.agents])
     fish_tree = KDTree(fish)
     means = []
     for me in fish:
         neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
-        dist = list(neighbors[0])
+        dist = list(neighbors[0])  # select dist not neighbor # from .query output
         dist.pop(0)  # removes closest agent - itself @ dist = 0
         mean_dist = sum(dist) / len(dist)
         means.append(mean_dist)
@@ -214,12 +213,12 @@ data.to_csv(os.path.join(path, r"shoal_data.csv"), index=",")
 # Set up and run the BatchRunner, which runs the model multiple times with
 # fixed parameters to determine the overall distributions of the model -
 # automated by Mesa
-parameters = {"n": 100,
+parameters = {"population": 100,
               "width": 100,
               "height": 100,
               "speed": 1,
-              "vision": 5,
-              "avoidance": 2}
+              "vision": 10,
+              "separation": 2}
 
 batch_run = BatchRunner(ShoalModel,
                         parameters,
