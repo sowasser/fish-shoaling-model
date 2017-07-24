@@ -23,7 +23,6 @@ def positions(model):
     """
     pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
     pos = list(itertools.chain(*pos))
-    pos = pd.Series(pos)
     return pos
 
 
@@ -169,7 +168,11 @@ model = ShoalModel(population=10, width=100, height=100, speed=1, vision=10, sep
 for i in range(10):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
+data = np.asarray(data)
+data = data.flatten()  # one set of brackets removed....
+df = pd.DataFrame(data)  # now a series of lists
 
+print(df)
 # Todo: create exportable dataframe
 
 # Create list of column names for each agent
