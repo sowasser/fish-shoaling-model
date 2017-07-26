@@ -164,7 +164,7 @@ class ShoalModel(Model):
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(population=10, width=100, height=100, speed=1, vision=10, separation=2)
+model = ShoalModel(population=100, width=100, height=100, speed=1, vision=10, separation=2)
 for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
@@ -176,9 +176,9 @@ df = pd.DataFrame(data)
 output = df[0].apply(pd.Series)  # removed another set of brackets
 output[0].apply(pd.Series)  # removed last brackets
 
-colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5',
-            'x6', 'y6', 'x7', 'y7', 'x8', 'y8', 'x9', 'y9', 'x10', 'y10']
-output.columns = colnames
+# colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5',
+#             'x6', 'y6', 'x7', 'y7', 'x8', 'y8', 'x9', 'y9', 'x10', 'y10']
+# output.columns = colnames
 print(output)
 
 # Todo: figure out output into actual columns
