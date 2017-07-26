@@ -30,7 +30,7 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
-import os
+# import os
 
 
 def positions(model):
@@ -200,5 +200,5 @@ output[0].apply(pd.Series)  # removed last brackets
 # output.columns = colnames
 
 # Export data as .csv
-path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
-output.to_csv(os.path.join(path, r"position_data.csv"))
+# path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+# output.to_csv(os.path.join(path, r"position_data.csv"))
