@@ -1,4 +1,22 @@
 """
+Model of shoaling behavior based on the Boids model by Craig Reynolds in 1986,
+using the basic code provided in the Flocker example of the Mesa framework for
+agent-based modelling in Python. This model is based on 3 parameters that each
+agent follows:
+    1. Attraction to (coherence with) other agents,
+    2. Avoidance of other agents,
+    3. Alignment with other agents.
+
+Data is collected on the median absolute deviation of velocity and the nearest
+neighbor distance, calculated using a k-d tree, as measures of cohesion.
+
+The model is based on a bounded, 3D area. Later additions will include
+obstacles, environmental gradients, and agents with goal-, food-, or
+safety-seeking behaviour.
+
+This script also includes the code for visualizing the model using an HTML5
+object. The parameters for the visualization rely on a JavaScript canvas.
+
 This file is for creating a dataframe containing the position of each agent at
 each step, using the data collector. The dataframe can then be exported as a
 .csv file, or graphed using matplotlib.
@@ -176,12 +194,11 @@ df = pd.DataFrame(data)
 output = df[0].apply(pd.Series)  # removed another set of brackets
 output[0].apply(pd.Series)  # removed last brackets
 
+# Use the following code for column names - harder as population increases
 # colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5',
 #             'x6', 'y6', 'x7', 'y7', 'x8', 'y8', 'x9', 'y9', 'x10', 'y10']
 # output.columns = colnames
-print(output)
 
-# Todo: figure out output into actual columns
 # Export data as .csv
 path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
 output.to_csv(os.path.join(path, r"position_data.csv"))
