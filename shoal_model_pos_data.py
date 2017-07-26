@@ -184,4 +184,4 @@ print(output)
 # Todo: figure out output into actual columns
 # Export data as .csv
 path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
-output.to_csv(os.path.join(path, r"position_data.csv"), sep=" ")
+output.to_csv(os.path.join(path, r"position_data.csv"))
