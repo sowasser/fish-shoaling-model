@@ -6,20 +6,20 @@ agent follows:
     1. Attraction to (coherence with) other agents,
     2. Avoidance of other agents,
     3. Alignment with other agents.
-The direction in which the agents swim is determined by the "speed" parameter
-and can be either positive (towards the upper, left corner) or negative
-(towards the lower, right corner). Therefore, the overall direction of the
-group is not random, but their starting position and heading is.
 
-Data is collected on the median absolute deviation of heading and the nearest
+Data is collected on the median absolute deviation of velocity and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
-The model is based on a bounded, 2D area. Later additions
-will include obstacles, environmental gradients, and agents with goal-, food-,
-or safety-seeking behaviour.
+The model is based on a bounded, 3D area. Later additions will include
+obstacles, environmental gradients, and agents with goal-, food-, or
+safety-seeking behaviour.
 
 This script also includes the code for visualizing the model using an HTML5
 object. The parameters for the visualization rely on a JavaScript canvas.
+
+Whereas in the original shoaling model bases agent movement off of all
+neighbours within a radius (vision), this version of the model selects a set
+number of neighbours to inform movements.
 """
 
 import numpy as np
@@ -36,11 +36,7 @@ from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
 
-# Todo: Make chart titles show up
-# Todo: Build an arrow-shaped avatar for the agents.
-# Todo: Manipulate agent color in visualization to match degree of cohesion.
 # Todo: Change neighbours from defined by radius to simply nearest x number
-# Todo: Find a way to select # of neighbours at visualization stage.
 
 
 def neighbours(model):
@@ -237,57 +233,57 @@ class ShoalModel(Model):
 
 
 # Create canvas for visualization
-class SimpleCanvas(VisualizationElement):
-    """ Uses JavaScript file for a simple, continuous canvas. """
-    local_includes = ["simple_continuous_canvas.js"]
-    portrayal_method = None
-    canvas_height = 500
-    canvas_width = 500
-
-    def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
-        """ Instantiate a new SimpleCanvas """
-        self.portrayal_method = portrayal_method
-        self.canvas_height = canvas_height
-        self.canvas_width = canvas_width
-        new_element = ("new Simple_Continuous_Module({}, {})".
-                       format(self.canvas_width, self.canvas_height))
-        self.js_code = "elements.push(" + new_element + ");"
-
-    def render(self, model):
-        """ Creates the space in which the agents exist. """
-        space_state = []
-        for obj in model.schedule.agents:
-            portrayal = self.portrayal_method(obj)
-            x, y = obj.pos
-            x = ((x - model.space.x_min) /
-                 (model.space.x_max - model.space.x_min))
-            y = ((y - model.space.y_min) /
-                 (model.space.y_max - model.space.y_min))
-            portrayal["x"] = x
-            portrayal["y"] = y
-            space_state.append(portrayal)
-        return space_state
-
-
-def fish_draw(agent):
-    return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
-    # return {"Shape": "rect", "w": 0.02, "h": 0.02, "Filled": "true", "Color": "Blue"}
-    # return {"Shape": "triangle", "w": 4, "h": 4, "Filled": False, "Color": "Blue", "heading": }
-
-
-# Create canvas, 500x500 pixels
-shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
-
-# Create charts for the data collectors
-polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-                          data_collector_name="datacollector")
-
-neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
-                             data_collector_name="datacollector")
-
-
-# Launch server
-server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
-                       "Boids Model of Shoaling Behavior",
-                       population=100, width=100, height=100, speed=1, separation=2)
-server.launch()
+# class SimpleCanvas(VisualizationElement):
+#     """ Uses JavaScript file for a simple, continuous canvas. """
+#     local_includes = ["simple_continuous_canvas.js"]
+#     portrayal_method = None
+#     canvas_height = 500
+#     canvas_width = 500
+#
+#     def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
+#         """ Instantiate a new SimpleCanvas """
+#         self.portrayal_method = portrayal_method
+#         self.canvas_height = canvas_height
+#         self.canvas_width = canvas_width
+#         new_element = ("new Simple_Continuous_Module({}, {})".
+#                        format(self.canvas_width, self.canvas_height))
+#         self.js_code = "elements.push(" + new_element + ");"
+#
+#     def render(self, model):
+#         """ Creates the space in which the agents exist. """
+#         space_state = []
+#         for obj in model.schedule.agents:
+#             portrayal = self.portrayal_method(obj)
+#             x, y = obj.pos
+#             x = ((x - model.space.x_min) /
+#                  (model.space.x_max - model.space.x_min))
+#             y = ((y - model.space.y_min) /
+#                  (model.space.y_max - model.space.y_min))
+#             portrayal["x"] = x
+#             portrayal["y"] = y
+#             space_state.append(portrayal)
+#         return space_state
+#
+#
+# def fish_draw(agent):
+#     return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
+#     # return {"Shape": "rect", "w": 0.02, "h": 0.02, "Filled": "true", "Color": "Blue"}
+#     # return {"Shape": "triangle", "w": 4, "h": 4, "Filled": False, "Color": "Blue", "heading": }
+#
+#
+# # Create canvas, 500x500 pixels
+# shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
+#
+# # Create charts for the data collectors
+# polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+#                           data_collector_name="datacollector")
+#
+# neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+#                              data_collector_name="datacollector")
+#
+#
+# # Launch server
+# server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
+#                        "Boids Model of Shoaling Behavior",
+#                        population=100, width=100, height=100, speed=1, separation=2)
+# server.launch()

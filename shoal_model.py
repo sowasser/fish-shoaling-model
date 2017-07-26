@@ -1,4 +1,6 @@
 """
+Original, basic shoaling model
+
 Model of shoaling behavior based on the Boids model by Craig Reynolds in 1986,
 using the basic code provided in the Flocker example of the Mesa framework for
 agent-based modelling in Python. This model is based on 3 parameters that each
