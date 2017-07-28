@@ -31,6 +31,8 @@ from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
 # import os
+import matplotlib.pyplot as plt
+from matplotlib import animation
 
 
 def positions(model):
@@ -194,7 +196,6 @@ df = pd.DataFrame(data)
 output = df[0].apply(pd.Series)  # removed another set of brackets
 output[0].apply(pd.Series)  # removed last brackets
 np_output = np.asarray(output)
-print(np_output)
 
 # Use the following code for column names - harder as population increases
 # colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5',
@@ -204,3 +205,35 @@ print(np_output)
 # Export data as .csv
 # path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
 # output.to_csv(os.path.join(path, r"position_data.csv"))
+
+
+# Visualization in matplotlib
+plt.style.use('dark_background')
+
+# Set up figure, axes, and plot element
+fig = plt.figure()
+ax = plt.axes(xlim=(0, 100), ylim=(0, 100))
+scatter,  = ax.plot([], [], markersize=2)
+
+
+# Initialization function - background of frames
+def init():
+    scatter.set_data([], [])
+    return scatter,
+
+
+# Animation function - called sequentially
+def animate(i):
+    x = output[i, ::2]
+    y = output[i, 1::2]
+    scatter.set_data(x, y)
+    return scatter,
+
+# Call the animator
+anim = animation.FuncAnimation(fig, animate, init_func=init,
+                               frames=100, interval=20)
+plt.show()
+
+# Save the animation - need FFmpeg to save as mp4
+# anim.save('basic_animation.mp4', fps=30)
+
