@@ -193,6 +193,8 @@ data = data.flatten()  # one set of brackets removed....
 df = pd.DataFrame(data)
 output = df[0].apply(pd.Series)  # removed another set of brackets
 output[0].apply(pd.Series)  # removed last brackets
+np_output = np.asarray(output)
+print(np_output)
 
 # Use the following code for column names - harder as population increases
 # colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5',
