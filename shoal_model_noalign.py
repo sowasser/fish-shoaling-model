@@ -5,6 +5,10 @@ agent-based modelling in Python. This model is based on 2 parameters that each
 agent follows:
     1. Attraction to (coherence with) other agents,
     2. Avoidance of other agents,
+Alignment is excluded due to new research that suggests that it is a secondary
+behavioural characteristic for fish schooling and therefore shouldn't be
+included in the most parsimonious models of fish behaviour. In this case, with
+no other constraints (walls, obstructions) no real "shoal" emerges.
 
 Data is collected on the median absolute deviation of velocity and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
@@ -29,10 +33,6 @@ from mesa.space import ContinuousSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
-
-# Todo: Make chart titles show up
-# Todo: Build an arrow-shaped avatar for the agents.
-# Todo: Manipulate agent color in visualization to match degree of cohesion.
 
 
 def polar(model):  # WORKS
