@@ -14,7 +14,6 @@ These dataframes can then be exported as .csv files, or graphed using matplotlib
 import numpy as np
 import math
 import random
-from scipy import ndimage
 from scipy.spatial import KDTree
 from statsmodels.robust.scale import mad
 from mesa import Agent, Model
@@ -192,8 +191,8 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            model_reporters={"Polarization": polar,
-                             "Nearest Neighbour Distance": nnd})
+            model_reporters={"Polar": polar,
+                             "NND": nnd})
 
     def step(self):
         self.datacollector.collect(self)
@@ -201,36 +200,58 @@ class ShoalModel(Model):
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(population=100, width=100, height=100, speed=1, vision=10, separation=2)
-for i in range(100):
-    model.step()
-data = model.datacollector.get_model_vars_dataframe()
+# 100 agents
+model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
+for i in range(600):
+    model100.step()
+data100 = model100.datacollector.get_model_vars_dataframe()
 
 path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
-data.to_csv(os.path.join(path, r"shoal_data.csv"), index=",")
+data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
+
+
+# 50 agents
+model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
+for j in range(600):
+    model50.step()
+data50 = model50.datacollector.get_model_vars_dataframe()
+
+path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
+
+
+# 200 agents
+model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
+for k in range(600):
+    model200.step()
+data200 = model200.datacollector.get_model_vars_dataframe()
+
+path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
+
 
 
 # Set up and run the BatchRunner, which runs the model multiple times with
 # fixed parameters to determine the overall distributions of the model -
 # automated by Mesa
-parameters = {"population": 100,
-              "width": 100,
-              "height": 100,
-              "speed": 1,
-              "vision": 10,
-              "separation": 2}
-
-batch_run = BatchRunner(ShoalModel,
-                        parameters,
-                        iterations=1,
-                        # 5 instantiations of the model
-                        max_steps=100,  # Run each for 100 steps
-                        model_reporters={"Polarization": polar,
-                                         "NND": nnd})
-batch_run.run_all()
-
-
-# Data collection methods
-# Extract data as a DataFrame
-batch_data = batch_run.get_model_vars_dataframe()
-batch_data.head()
+# parameters = {"population": 100,
+#               "width": 100,
+#               "height": 100,
+#               "speed": 1,
+#               "vision": 10,
+#               "separation": 2}
+#
+# batch_run = BatchRunner(ShoalModel,
+#                         parameters,
+#                         iterations=1,
+#                         # 5 instantiations of the model
+#                         max_steps=100,  # Run each for 100 steps
+#                         model_reporters={"Polarization": polar,
+#                                          "NND": nnd})
+# batch_run.run_all()
+#
+#
+# # Data collection methods
+# # Extract data as a DataFrame
+# batch_data = batch_run.get_model_vars_dataframe()
+# print(batch_data)
