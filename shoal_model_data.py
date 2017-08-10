@@ -206,7 +206,7 @@ for i in range(600):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
 
-path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
 data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 
@@ -216,7 +216,7 @@ for j in range(600):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
 
-path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
 data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
 
 
@@ -226,9 +226,8 @@ for k in range(600):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
 
-path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
+path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
 data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
-
 
 
 # Set up and run the BatchRunner, which runs the model multiple times with
