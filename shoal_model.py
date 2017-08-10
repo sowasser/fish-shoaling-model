@@ -204,8 +204,8 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            model_reporters={"Polarization": polar,
-                             "Nearest Neighbour Distance": nnd})
+            model_reporters={"Polar": polar,
+                             "NND": nnd})
 
     def step(self):
         self.datacollector.collect(self)
