@@ -204,8 +204,8 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            model_reporters={"Polar": polar,
-                             "NND": nnd})
+            model_reporters={"Polarization": polar,
+                             "Nearest Neighbour Distance": nnd})
 
     def step(self):
         self.datacollector.collect(self)
@@ -258,11 +258,11 @@ def fish_draw(agent):
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
 # Create charts for the data collectors
-polar_chart = ChartModule([{"Label": "Polar", "Color": "Black"}],
+polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                           data_collector_name="datacollector",
                           chart_title="Polarization")
 
-neighbor_chart = ChartModule([{"Label": "NND", "Color": "Black"}],
+neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
                              data_collector_name="datacollector",
                              chart_title="Nearest Neighbour Distance")
 
