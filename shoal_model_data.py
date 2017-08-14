@@ -201,34 +201,53 @@ class ShoalModel(Model):
 
 # Collect the data from a single run with x number of steps into a dataframe
 # 100 agents
-model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
+# model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
+# for i in range(600):
+#     model100.step()
+# data100 = model100.datacollector.get_model_vars_dataframe()
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
+# data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
+#
+# # 50 agents
+# model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
+# for j in range(600):
+#     model50.step()
+# data50 = model50.datacollector.get_model_vars_dataframe()
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
+# data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
+#
+# # 200 agents
+# model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
+# for k in range(600):
+#     model200.step()
+# data200 = model200.datacollector.get_model_vars_dataframe()
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
+# data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
+
+
+# speed = 1
+speed1 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
 for i in range(600):
-    model100.step()
-data100 = model100.datacollector.get_model_vars_dataframe()
-
+    speed1.step()
+data_speed1 = speed1.datacollector.get_model_vars_dataframe()
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
-data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
+data_speed1.to_csv(os.path.join(path, r"shoal_data_speed1.csv"), index=",")
 
-
-# 50 agents
-model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
-for j in range(600):
-    model50.step()
-data50 = model50.datacollector.get_model_vars_dataframe()
-
+# speed = 5
+speed5 = ShoalModel(population=100, width=50, height=50, speed=5, vision=10, separation=2)
+for i in range(600):
+    speed5.step()
+data_speed5 = speed1.datacollector.get_model_vars_dataframe()
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
-data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
+data_speed5.to_csv(os.path.join(path, r"shoal_data_speed5.csv"), index=",")
 
-
-# 200 agents
-model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
-for k in range(600):
-    model200.step()
-data200 = model200.datacollector.get_model_vars_dataframe()
-
+# speed = 10
+speed10 = ShoalModel(population=100, width=50, height=50, speed=10, vision=10, separation=2)
+for i in range(600):
+    speed10.step()
+data_speed10 = speed10.datacollector.get_model_vars_dataframe()
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
-data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
-
+data_speed10.to_csv(os.path.join(path, r"shoal_data_speed10.csv"), index=",")
 
 # Set up and run the BatchRunner, which runs the model multiple times with
 # fixed parameters to determine the overall distributions of the model -
