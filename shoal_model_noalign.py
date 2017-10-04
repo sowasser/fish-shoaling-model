@@ -7,8 +7,9 @@ agent follows:
     2. Avoidance of other agents,
 Alignment is excluded due to new research that suggests that it is a secondary
 behavioural characteristic for fish schooling and therefore shouldn't be
-included in the most parsimonious models of fish behaviour. In this case, with
-no other constraints (walls, obstructions) no real "shoal" emerges.
+included in the most parsimonious models of fish behaviour (Quera et al. 2016;
+Mann et al. 2011). In this case, with no other constraints (walls, obstructions)
+no real "shoal" emerges.
 
 Data is collected on the median absolute deviation of velocity and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
