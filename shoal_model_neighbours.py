@@ -284,6 +284,6 @@ class ShoalModel(Model):
 #
 # # Launch server
 # server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
-#                        "Boids Model of Shoaling Behavior",
+#                        "Shoaling Behavior Model - Topological Neighbour Selection",
 #                        population=100, width=100, height=100, speed=1, separation=2)
 # server.launch()
