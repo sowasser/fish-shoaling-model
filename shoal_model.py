@@ -9,6 +9,11 @@ agent follows:
     2. Avoidance of other agents,
     3. Alignment with other agents.
 
+These rules are based on the neighbours each agent perceives within their
+'vision' radius. This is a geometrical distance, rather than topological
+(Mann et al. 2011). Another version of this model is being constructed
+for the topological (set number of neighbours at any distance).
+
 Data is collected on the median absolute deviation of velocity and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
