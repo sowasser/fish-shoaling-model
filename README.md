@@ -1,5 +1,5 @@
-# Python_Practice
-Practice on agent-based modelling using the Mesa framework for Python. There are five seperate exersises included.
+# fish-shoaling-model
+An agent-based modelling using the Mesa framework for Python. There are five seperate exersises included.
 
 
 1. The Flocking example of collective behaviour from [mesa][mesa]. The code for this example is included as both a Jupyter notebook and Python code. Also includes a JavaScript file that sets up a HTML5 canvas for visualization of a simple, continuous canvas.
