@@ -17,8 +17,8 @@ for the topological (set number of neighbours at any distance).
 Data is collected on the median absolute deviation of velocity and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
-The model is based on an toroidal (unbounded & wrapping), 3D area. Later
-versions will be bounded and include obstacles, environmental gradients,
+The model is based on an toroidal (unbounded & wrapping), 2D area. Later
+versions will be 3D, bounded and include obstacles, environmental gradients,
 and agents with goal-, food-, or safety-seeking behaviour.
 
 This script also includes the code for visualizing the model using an HTML5
