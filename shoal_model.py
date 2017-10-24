@@ -255,8 +255,6 @@ class SimpleCanvas(VisualizationElement):
 
 def fish_draw(agent):
     return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
-    # return {"Shape": "rect", "w": 0.02, "h": 0.02, "Filled": "true", "Color": "Blue"}
-    # return {"Shape": "triangle", "w": 4, "h": 4, "Filled": False, "Color": "Blue", "heading": }
 
 
 # Create canvas, 500x500 pixels
