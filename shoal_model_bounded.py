@@ -161,7 +161,7 @@ class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
     def __init__(self,
-                 population=100,
+                 population=10,
                  width=100,
                  height=100,
                  speed=1,
@@ -186,8 +186,8 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, torus=False,
-                                     grid_width=10, grid_height=10)
+        self.space = ContinuousSpace(x_max=width, y_max=height, torus=False,
+                                     grid_width=100, grid_height=100)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
         self.running = True
@@ -273,9 +273,9 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
 # Launch server
 server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
                        "Boids Model of Shoaling Behavior",
-                       population=100,
-                       width=50,
-                       height=50,
+                       population=10,
+                       width=100,
+                       height=100,
                        speed=1,
                        vision=10,
                        separation=2)
