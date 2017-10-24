@@ -188,7 +188,7 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, torus=False,
+        self.space = ContinuousSpace(width, height, torus=True,
                                      grid_width=10, grid_height=10)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
