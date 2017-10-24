@@ -114,12 +114,16 @@ class Fish(Agent):
 
     def turn(self):
         """
-        When agent reaches the edge of the space, it rebounds in random angle.
+        When an agent reaches the border, it rebounds at a random angle.
         """
+        rebound_vector_x = np.zeros(2)
+        rebound_vector_y = np.zeros(2)
         if self.pos[0] >= self.x_max or self.pos[0] <= 0:
-            return
+            rebound_vector_x -= self.model.space.get_heading(self.pos, self.x_max) + random.uniform(-1, 1)
+            return rebound_vector_x
         if self.pos[1] >= self.y_max or self.pos[1]:
-            return
+            rebound_vector_y -= self.model.space.get_heading(self.pos, self.x_max) + random.uniform(-1, 1)
+            return rebound_vector_y
 
     def cohere(self, neighbors):
         """
