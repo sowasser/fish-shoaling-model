@@ -109,6 +109,17 @@ class Fish(Agent):
         self.cohere_factor = cohere
         self.separate_factor = separate
         self.match_factor = match
+        self.x_max = model.space.x_max
+        self.y_max = model.space.y_max
+
+    def turn(self):
+        """
+        When agent reaches the edge of the space, it rebounds in random angle.
+        """
+        if self.pos[0] >= self.x_max or self.pos[0] <= 0:
+            return
+        if self.pos[1] >= self.y_max or self.pos[1]:
+            return
 
     def cohere(self, neighbors):
         """
@@ -186,7 +197,9 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(x_max=width, y_max=height, torus=False,
+        self.space = ContinuousSpace(x_max=width, y_max=height,
+                                     torus=False,
+                                     x_min=0, y_min=0,
                                      grid_width=100, grid_height=100)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
