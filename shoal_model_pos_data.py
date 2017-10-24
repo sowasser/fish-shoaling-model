@@ -10,12 +10,7 @@ agent follows:
 Data is collected on the median absolute deviation of velocity and the nearest
 neighbor distance, calculated using a k-d tree, as measures of cohesion.
 
-The model is based on a bounded, 3D area. Later additions will include
-obstacles, environmental gradients, and agents with goal-, food-, or
-safety-seeking behaviour.
-
-This script also includes the code for visualizing the model using an HTML5
-object. The parameters for the visualization rely on a JavaScript canvas.
+The model is based on a toroidal, 2D area.
 
 This file is for creating a dataframe containing the position of each agent at
 each step, using the data collector. The dataframe can then be exported as a
