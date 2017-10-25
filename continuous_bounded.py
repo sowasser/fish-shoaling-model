@@ -528,13 +528,21 @@ class ContinuousSpace:
         Args:
             pos: Coordinate tuple to convert.
         """
-
-        x = self.x_min + ((pos[0] - self.x_min) % self.width)
-        y = self.y_min + ((pos[1] - self.y_min) % self.height)
-        if isinstance(pos, tuple):
+        if not self.out_of_bounds(pos):
+            return pos
+        elif not self.torus:
+            # This needs to be changed for non-toroidal, bounded areas. What
+            # behaviour should be returned?
+            x = pos[0]
+            y = pos[1]
             return x, y
         else:
-            return np.array((x, y))
+            x = self.x_min + ((pos[0] - self.x_min) % self.width)
+            y = self.y_min + ((pos[1] - self.y_min) % self.height)
+            if isinstance(pos, tuple):
+                return x, y
+            else:
+                return np.array((x, y))
 
     def _point_to_cell(self, pos):
         """ Get the cell coordinates that a given x,y point falls in. """
@@ -546,8 +554,8 @@ class ContinuousSpace:
         cell_y = math.floor((y - self.y_min) / self.cell_height)
         return cell_x, cell_y
 
-    # def out_of_bounds(self, pos):
-    #     """ Check if a point is out of bounds. """
-    #     x, y = pos
-    #     return (x < self.x_min or x >= self.x_max or
-    #             y < self.y_min or y >= self.y_max)
+    def out_of_bounds(self, pos):
+        """ Check if a point is out of bounds. """
+        x, y = pos
+        return (x < self.x_min or x >= self.x_max or
+                y < self.y_min or y >= self.y_max)
