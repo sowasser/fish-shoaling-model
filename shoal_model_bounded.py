@@ -31,7 +31,8 @@ from statsmodels.robust.scale import mad
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
-from mesa.space import ContinuousSpace
+# from mesa.space import ContinuousSpace
+from continuous_bounded import ContinuousSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
