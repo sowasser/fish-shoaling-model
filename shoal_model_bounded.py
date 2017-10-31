@@ -32,7 +32,7 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 # from mesa.space import ContinuousSpace
-from continuous_bounded import ContinuousSpace
+from continuous_bounded import BoundedSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
@@ -202,7 +202,7 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(x_max=width, y_max=height,
+        self.space = BoundedSpace(x_max=width, y_max=height,
                                      torus=False,
                                      x_min=0, y_min=0,
                                      grid_width=100, grid_height=100)
