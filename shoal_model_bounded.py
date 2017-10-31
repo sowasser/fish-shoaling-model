@@ -31,7 +31,6 @@ from statsmodels.robust.scale import mad
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
-# from mesa.space import ContinuousSpace
 from continuous_bounded import BoundedSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
@@ -117,13 +116,18 @@ class Fish(Agent):
         """
         When an agent reaches the border, it rebounds at a random angle.
         """
+        # Todo: fix this function so that agents turn around at edges
         rebound_vector_x = np.zeros(2)
         rebound_vector_y = np.zeros(2)
         if self.pos[0] >= self.x_max or self.pos[0] <= 0:
-            rebound_vector_x -= self.model.space.get_heading(self.pos, self.x_max) + random.uniform(-1, 1)
+            rebound_vector_x -= self.model.space.get_heading(self.pos,
+                                                             self.x_max) \
+                                + random.uniform(-1, 1)
             return rebound_vector_x
         if self.pos[1] >= self.y_max or self.pos[1] <= 0:
-            rebound_vector_y -= self.model.space.get_heading(self.pos, self.x_max) + random.uniform(-1, 1)
+            rebound_vector_y -= self.model.space.get_heading(self.pos,
+                                                             self.x_max) \
+                                + random.uniform(-1, 1)
             return rebound_vector_y
 
     def cohere(self, neighbors):
@@ -175,6 +179,7 @@ class Fish(Agent):
 
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
+    # Todo: determine if there's anything that needs to be changed here for bounded space
 
     def __init__(self,
                  population=10,
@@ -203,9 +208,9 @@ class ShoalModel(Model):
         self.separation = separation
         self.schedule = RandomActivation(self)
         self.space = BoundedSpace(x_max=width, y_max=height,
-                                     torus=False,
-                                     x_min=0, y_min=0,
-                                     grid_width=100, grid_height=100)
+                                  torus=False,
+                                  x_min=0, y_min=0,
+                                  grid_width=100, grid_height=100)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
         self.running = True
@@ -283,7 +288,8 @@ polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                           data_collector_name="datacollector",
                           chart_title="Polarization")
 
-neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance",
+                               "Color": "Black"}],
                              data_collector_name="datacollector",
                              chart_title="Nearest Neighbour Distance")
 
