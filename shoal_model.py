@@ -37,6 +37,7 @@ from mesa.space import ContinuousSpace
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
+from mesa.visualization.UserParam import UserSettableParameter
 
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
@@ -260,6 +261,15 @@ def fish_draw(agent):
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
+# Todo: Add a slider bar for agent number - from mesa advanced tutorial
+# Todo: Any other interactive parameters I should add?
+
+# Visualization now includes an interactive parameter - requires visualization
+# file: UserParam.py
+# Specification
+n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
+                                 value=100, min_value=2, max_value=200, step=1)
+
 # Create charts for the data collectors
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                           data_collector_name="datacollector",
@@ -272,7 +282,9 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
 
 # Launch server
 server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
+                       # Todo: incorporate agent # slider here
                        "Boids Model of Shoaling Behavior",
+                       # {"N": n_slider, "width": 10, "height": 10},
                        population=100,
                        width=50,
                        height=50,
