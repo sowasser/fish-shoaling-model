@@ -150,15 +150,13 @@ class BoidModel(Model):
 
 # Visualization
 class SimpleCanvas(VisualizationElement):
-    local_includes = ["flockers/simple_continuous_canvas.js"]
+    local_includes = ["simple_continuous_canvas.js"]
     portrayal_method = None
     canvas_height = 500
     canvas_width = 500
 
     def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
-        """
-        Instantiate a new SimpleCanvas
-        """
+        """ Instantiate a new SimpleCanvas """
         self.portrayal_method = portrayal_method
         self.canvas_height = canvas_height
         self.canvas_width = canvas_width
@@ -167,6 +165,7 @@ class SimpleCanvas(VisualizationElement):
         self.js_code = "elements.push(" + new_element + ");"
 
     def render(self, model):
+        """ Creates space in which the agents exist. """
         space_state = []
         for obj in model.schedule.agents:
             portrayal = self.portrayal_method(obj)
@@ -183,6 +182,7 @@ class SimpleCanvas(VisualizationElement):
 
 def boid_draw(agent):
     return {"Shape": "circle", "r": 2, "Filled": "true", "Color": "Red"}
+
 
 boid_canvas = SimpleCanvas(boid_draw, 500, 500)
 model_params = {

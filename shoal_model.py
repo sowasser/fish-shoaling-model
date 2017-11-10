@@ -255,17 +255,28 @@ class SimpleCanvas(VisualizationElement):
 
 
 def fish_draw(agent):
-    return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
+    portrayal = {"Shape": "circle",
+                 "Color": "Blue",
+                 "Filled": "true",
+                 "r": 3}
+    return portrayal
 
+
+# Create slider for interactive parameter
+# Todo: make other model parameters interactive
+n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
+                                 value=100, min_value=2, max_value=200, step=1)
 
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
-
-# Todo: Any other interactive parameters I should add?
-
-# Create slider for interactive parameter
-n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
-                                 value=100, min_value=2, max_value=200, step=1)
+model_params = {
+    "population": n_slider,
+    "width": 50,
+    "height": 50,
+    "speed": 1,
+    "vision": 10,
+    "separation": 2
+}
 
 # Create charts for the data collectors
 # Todo: include chart titles & improve charts
@@ -277,15 +288,9 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
                              data_collector_name="datacollector")
 #                            chart_title="Nearest Neighbour Distance")
 
-
 # Launch server
 server = ModularServer(ShoalModel,
                        [shoal_canvas, polar_chart, neighbor_chart],
                        "Boids Model of Shoaling Behavior",
-                       {"population": n_slider,
-                        "width": 50,
-                        "height": 50,
-                        "speed": 1,
-                        "vision": 10,
-                        "separation": 2})
+                       model_params)
 server.launch()
