@@ -1,17 +1,21 @@
 """
 Code for just the visualization element of a Boids model of fish collective
-behaviour using code (in shoal_model_prelim.py) based on the Flocker example
-from the Mesa agent based modelling framework for Python.
+behaviour using code (in shoal_model.py) based on the Flocker example from the
+Mesa agent based modelling framework for Python.
+
+This version is built using a customized version of Mesa - allows for chart
+titles and at this point actually works.
 
 The visualization uses a JavaScript canvas to create an HTML5 object. It
 includes an animation of the agents and a chart that shows a metric for overall
 cohesion - also described in the model code.
 
-Can change the inputs for the model (line 75) to match the parameters used
-during experimentation in the Jupyter notebook version.
+Can change the model parameters to match the parameters used during
+experimentation in the Jupyter notebook version.
 """
 
-from shoal_model_prelim import *
+from shoal_model import *
+
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
@@ -51,26 +55,29 @@ class SimpleCanvas(VisualizationElement):
 
 
 def fish_draw(agent):
-    """
-    Right now, the only option for shape is circle or rectangle (rect).
-    Working on creating a triangle or arrow option so the agents' heading
-    is explicit in the visualization. Future improvements will hopefully also
-    include changes in color with degrees of cohesion and a dot for the
-    centroid/center of mass.
-    """
     return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
 
 
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
-# Create chart of polarization
-polarization_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-                                 data_collector_name="datacollector")
+# Create charts for the data collectors
+polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+                          data_collector_name="datacollector",
+                          chart_title="Polarization")
+
+neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+                             data_collector_name="datacollector",
+                             chart_title="Nearest Neighbour Distance")
+
 
 # Launch server
-server = ModularServer(ShoalModel,  # Model class to be visualized
-                       [shoal_canvas, polarization_chart],  # List of module objects to include
-                       "Boid Model of Shoaling Behavior",  # Title of the model
-                       100, 100, 100, 5, 5, 2)  # Inputs for the model
+server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
+                       "Boids Model of Shoaling Behavior",
+                       population=100,
+                       width=50,
+                       height=50,
+                       speed=1,
+                       vision=10,
+                       separation=2)
 server.launch()
