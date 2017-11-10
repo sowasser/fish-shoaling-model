@@ -261,34 +261,31 @@ def fish_draw(agent):
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
 
-# Todo: Add a slider bar for agent number - from mesa advanced tutorial
 # Todo: Any other interactive parameters I should add?
 
-# Visualization now includes an interactive parameter - requires visualization
-# file: UserParam.py
-# Specification
+# Create slider for interactive parameter
 n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
                                  value=100, min_value=2, max_value=200, step=1)
 
 # Create charts for the data collectors
+# Todo: include chart titles & improve charts
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-                          data_collector_name="datacollector",
-                          chart_title="Polarization")
+                          data_collector_name="datacollector")
+#                         chart_title="Polarization")
 
 neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
-                             data_collector_name="datacollector",
-                             chart_title="Nearest Neighbour Distance")
+                             data_collector_name="datacollector")
+#                            chart_title="Nearest Neighbour Distance")
 
 
 # Launch server
-server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
-                       # Todo: incorporate agent # slider here
+server = ModularServer(ShoalModel,
+                       [shoal_canvas, polar_chart, neighbor_chart],
                        "Boids Model of Shoaling Behavior",
-                       # {"N": n_slider, "width": 10, "height": 10},
-                       population=100,
-                       width=50,
-                       height=50,
-                       speed=1,
-                       vision=10,
-                       separation=2)
+                       {"population": n_slider,
+                        "width": 50,
+                        "height": 50,
+                        "speed": 1,
+                        "vision": 10,
+                        "separation": 2})
 server.launch()
