@@ -1,7 +1,7 @@
+
 import numpy as np
-from mesa import Agent
 import random
-from mesa import Model
+from mesa import Agent, Model
 from mesa.space import ContinuousSpace
 from mesa.time import RandomActivation
 from mesa.visualization.ModularVisualization import VisualizationElement
@@ -25,10 +25,9 @@ class Boid(Agent):
         """
         Create a new Boid flocker agent.
         Args:
-            unique_id: Unique agent identifier.
+            unique_id: Unique agent identifyer.
             pos: Starting position
             speed: Distance to move per step.
-            velocity: numpy vector for the Boid's direction of movement.
             vision: Radius to look around for nearby Boids.
             separation: Minimum distance to maintain from other Boids.
             cohere: the relative importance of matching neighbors' positions
@@ -68,7 +67,7 @@ class Boid(Agent):
                 separation_vector -= self.model.space.get_heading(me, other)
         return separation_vector
 
-    def match_velocity(self, neighbors):
+    def match_heading(self, neighbors):
         """
         Return a vector of the neighbors' average heading.
         """
@@ -87,7 +86,7 @@ class Boid(Agent):
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
                           self.separate(neighbors) * self.separate_factor +
-                          self.match_velocity(neighbors) * self.match_factor) / 2
+                          self.match_heading(neighbors) * self.match_factor) / 2
         self.velocity /= np.linalg.norm(self.velocity)
         new_pos = self.pos + self.velocity * self.speed
         self.model.space.move_agent(self, new_pos)
@@ -109,16 +108,16 @@ class BoidModel(Model):
                  separate=0.25,
                  match=0.04):
         """
-        Create a new Boids model.
+        Create a new Flockers model.
         Args:
             population: Number of Boids
             width, height: Size of the space.
             speed: How fast should the Boids move.
             vision: How far around should each Boid look for its neighbors
             separation: What's the minimum distance each Boid will attempt to
-                        keep from any other 
+                    keep from any other
             cohere, separate, match: factors for the relative importance of
-                                     the three drives.
+                    the three drives.
         """
         self.population = population
         self.vision = vision
@@ -149,8 +148,9 @@ class BoidModel(Model):
         self.schedule.step()
 
 
+# Visualization
 class SimpleCanvas(VisualizationElement):
-    local_includes = ["simple_continuous_canvas.js"]
+    local_includes = ["flockers/simple_continuous_canvas.js"]
     portrayal_method = None
     canvas_height = 500
     canvas_width = 500
@@ -185,6 +185,14 @@ def boid_draw(agent):
     return {"Shape": "circle", "r": 2, "Filled": "true", "Color": "Red"}
 
 boid_canvas = SimpleCanvas(boid_draw, 500, 500)
-server = ModularServer(BoidModel, [boid_canvas], "Boids",
-                       100, 100, 100, 1, 10, 2)
+model_params = {
+    "population": 100,
+    "width": 100,
+    "height": 100,
+    "speed": 5,
+    "vision": 10,
+    "separation": 2
+}
+
+server = ModularServer(BoidModel, [boid_canvas], "Boids", model_params)
 server.launch()
