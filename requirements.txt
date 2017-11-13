@@ -1,4 +1,4 @@
-mesa==0.8.0
+mesa==0.8.2
 matplotlib==2.0.0
 numpy==1.12.1
 statsmodels==0.8.0

@@ -31,14 +31,14 @@ import math
 import random
 from scipy.spatial import KDTree
 from statsmodels.robust.scale import mad
-from mesaNEW import Agent, Model
-from mesaNEW.time import RandomActivation
-from mesaNEW.datacollection import DataCollector
-from mesaNEW.space import ContinuousSpace
-from mesaNEW.visualization.ModularVisualization import ModularServer
-from mesaNEW.visualization.ModularVisualization import VisualizationElement
-from mesaNEW.visualization.modules import ChartModule
-from mesaNEW.visualization.UserParam import UserSettableParameter
+from mesa import Agent, Model
+from mesa.time import RandomActivation
+from mesa.datacollection import DataCollector
+from mesa.space import ContinuousSpace
+from mesa.visualization.ModularVisualization import ModularServer
+from mesa.visualization.ModularVisualization import VisualizationElement
+from mesa.visualization.modules import ChartModule
+from mesa.visualization.UserParam import UserSettableParameter
 
 # Todo: Build an arrow-shaped avatar for the agents.
 # Todo: Manipulate agent color in visualization to match degree of cohesion.
