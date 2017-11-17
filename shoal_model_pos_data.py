@@ -184,7 +184,7 @@ for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
-# Get DataFrame into a form that can be exported as .csv
+# Get DataFrame into a form that can be exported as .csv - remove nesting
 data = np.asarray(data)
 data = data.flatten()  # one set of brackets removed....
 df = pd.DataFrame(data)
@@ -192,11 +192,7 @@ output = df[0].apply(pd.Series)  # removed another set of brackets
 output[0].apply(pd.Series)  # removed last brackets
 np_output = np.asarray(output)
 
-# Use the following code for column names - harder as population increases
-# colnames = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3', 'x4', 'y4', 'x5', 'y5',
-#             'x6', 'y6', 'x7', 'y7', 'x8', 'y8', 'x9', 'y9', 'x10', 'y10']
-# output.columns = colnames
-
+# Todo: neaten up the file. Now the positions are no longer nested, but still messy.
 # Export data as .csv
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data"
 output.to_csv(os.path.join(path, r"position_data.csv"))
