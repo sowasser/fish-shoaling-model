@@ -125,9 +125,9 @@ class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
     def __init__(self,
-                 population=100,
-                 width=100,
-                 height=100,
+                 population=7,
+                 width=30,
+                 height=30,
                  speed=1,
                  vision=10,
                  separation=2,
