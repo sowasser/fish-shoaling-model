@@ -25,9 +25,9 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
-# import os
-import matplotlib.pyplot as plt
-from matplotlib import animation
+import os
+# import matplotlib.pyplot as plt
+# from matplotlib import animation
 
 
 def positions(model):
@@ -198,37 +198,38 @@ np_output = np.asarray(output)
 # output.columns = colnames
 
 # Export data as .csv
-# path = "/Users/user/Desktop/Dropbox/Mackerel/Mackerel_Data"
-# output.to_csv(os.path.join(path, r"position_data.csv"))
+path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data"
+output.to_csv(os.path.join(path, r"position_data.csv"))
 
 
-# Visualization in matplotlib
-plt.style.use('dark_background')
-
-# Set up figure, axes, and plot element
-fig = plt.figure()
-ax = plt.axes(xlim=(0, 100), ylim=(0, 100))
-scatter,  = ax.plot([], [], markersize=2)
-
-
-# Initialization function - background of frames
-def init():
-    scatter.set_data([], [])
-    return scatter,
-
-
-# Animation function - called sequentially
-def animate(i):
-    x = output[i, ::2]
-    y = output[i, 1::2]
-    scatter.set_data(x, y)
-    return scatter,
-
-# Call the animator
-anim = animation.FuncAnimation(fig, animate, init_func=init,
-                               frames=100, interval=20)
-plt.show()
-
-# Save the animation - need FFmpeg to save as mp4
-# anim.save('basic_animation.mp4', fps=30)
+# # Visualization in matplotlib
+# plt.style.use('dark_background')
+#
+# # Set up figure, axes, and plot element
+# fig = plt.figure()
+# ax = plt.axes(xlim=(0, 100), ylim=(0, 100))
+# scatter,  = ax.plot([], [], markersize=2)
+#
+#
+# # Initialization function - background of frames
+# def init():
+#     scatter.set_data([], [])
+#     return scatter,
+#
+#
+# # Animation function - called sequentially
+# def animate(i):
+#     x = output[i, ::2]
+#     y = output[i, 1::2]
+#     scatter.set_data(x, y)
+#     return scatter,
+#
+#
+# # Call the animator
+# anim = animation.FuncAnimation(fig, animate, init_func=init,
+#                                frames=100, interval=20)
+# plt.show()
+#
+# # Save the animation - need FFmpeg to save as mp4
+# # anim.save('basic_animation.mp4', fps=30)
 
