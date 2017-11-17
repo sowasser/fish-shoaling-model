@@ -179,7 +179,7 @@ class ShoalModel(Model):
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(population=100, width=100, height=100, speed=1, vision=10, separation=2)
+model = ShoalModel(population=7, width=30, height=30, speed=1, vision=10, separation=2)
 for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
