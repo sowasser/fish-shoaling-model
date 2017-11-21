@@ -197,9 +197,7 @@ nums = range(1, 8)  # list same length as # of agents (end value is num + 1)
 list_x = ["x" + str(i) for i in nums]  # creates x1, x2, etc.
 list_y = ["y" + str(j) for j in nums]  # same for y
 colnames = [item for sublist in zip(list_x, list_y) for item in sublist]  # alternate between
-
 output.columns = colnames
-print(output)
 
 # Export data as .csv
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data"
