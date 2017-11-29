@@ -1,4 +1,7 @@
-mesa==0.8.2
+# Use the default Mesa:
+#mesa==0.8.2
+# Use my fork of Mesa:
+git+https://github.com/sowasser/mesa.git#egg=mesa
 matplotlib==2.0.0
 numpy==1.12.1
 statsmodels==0.8.0
