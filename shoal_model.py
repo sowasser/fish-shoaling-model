@@ -27,7 +27,7 @@ This script uses the NEW version of Mesa and is currently not fully working.
 """
 
 import numpy as np
-import math
+import math  # why can't this module be found (5Dec17)?
 import random
 from scipy.spatial import KDTree
 from statsmodels.robust.scale import mad
