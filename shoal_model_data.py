@@ -201,7 +201,7 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, True,
+        self.space = ContinuousSpace(width, height, torus=True,
                                      grid_width=10, grid_height=10)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
@@ -256,29 +256,29 @@ class ShoalModel(Model):
 # data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
 
 
-# speed = 1
-speed1 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
-for i in range(600):
-    speed1.step()
-data_speed1 = speed1.datacollector.get_model_vars_dataframe()
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
-data_speed1.to_csv(os.path.join(path, r"shoal_data_speed1.csv"), index=",")
-
-# speed = 5
-speed5 = ShoalModel(population=100, width=50, height=50, speed=5, vision=10, separation=2)
-for i in range(600):
-    speed5.step()
-data_speed5 = speed1.datacollector.get_model_vars_dataframe()
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
-data_speed5.to_csv(os.path.join(path, r"shoal_data_speed5.csv"), index=",")
-
-# speed = 10
-speed10 = ShoalModel(population=100, width=50, height=50, speed=10, vision=10, separation=2)
-for i in range(600):
-    speed10.step()
-data_speed10 = speed10.datacollector.get_model_vars_dataframe()
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
-data_speed10.to_csv(os.path.join(path, r"shoal_data_speed10.csv"), index=",")
+# # speed = 1
+# speed1 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
+# for i in range(600):
+#     speed1.step()
+# data_speed1 = speed1.datacollector.get_model_vars_dataframe()
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
+# data_speed1.to_csv(os.path.join(path, r"shoal_data_speed1.csv"), index=",")
+#
+# # speed = 5
+# speed5 = ShoalModel(population=100, width=50, height=50, speed=5, vision=10, separation=2)
+# for i in range(600):
+#     speed5.step()
+# data_speed5 = speed1.datacollector.get_model_vars_dataframe()
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
+# data_speed5.to_csv(os.path.join(path, r"shoal_data_speed5.csv"), index=",")
+#
+# # speed = 10
+# speed10 = ShoalModel(population=100, width=50, height=50, speed=10, vision=10, separation=2)
+# for i in range(600):
+#     speed10.step()
+# data_speed10 = speed10.datacollector.get_model_vars_dataframe()
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
+# data_speed10.to_csv(os.path.join(path, r"shoal_data_speed10.csv"), index=",")
 
 # Set up and run the BatchRunner, which runs the model multiple times with
 # fixed parameters to determine the overall distributions of the model -
