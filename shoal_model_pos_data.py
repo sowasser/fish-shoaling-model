@@ -7,9 +7,6 @@ agent follows:
     2. Avoidance of other agents,
     3. Alignment with other agents.
 
-Data is collected on the median absolute deviation of velocity and the nearest
-neighbor distance, calculated using a k-d tree, as measures of cohesion.
-
 The model is based on a toroidal, 2D area.
 
 This file is for creating a dataframe containing the position of each agent at
