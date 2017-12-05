@@ -125,9 +125,9 @@ class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
     def __init__(self,
-                 population=7,
-                 width=30,
-                 height=30,
+                 population=100,
+                 width=100,
+                 height=100,
                  speed=1,
                  vision=10,
                  separation=2,
@@ -150,7 +150,7 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, True,
+        self.space = ContinuousSpace(width, height, torus=True,
                                      grid_width=10, grid_height=10)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
