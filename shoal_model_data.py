@@ -1,20 +1,29 @@
 """
 This file is for creating dataframes containing the results from the data
-collectors in the model. These are currently polarization: a function returning
-the median absolute deviation of agent heading from the mean heading of the
-group, and nearest neighbour distance: the mean distance of the 5 nearest
-agents determined using a k-distance tree.
+collectors in the model. These are:
+    1. Polarization: a function returning the median absolute deviation of
+       agent heading from the mean heading of the group
+    2. Nearest neighbour distance: the mean distance of the 5 nearest agents,
+       determined using a k-distance tree.
+    3. Shoal area: convex hull
+    4. Distance between two farthest fish
 
-Two dataframes are created in this file:
+These parameters all produce a single value per step in the model. The
+dataframes created in this file are:
     1. The model run for X number of steps with set variables
     2. The model run for X times with X number of steps with set variables.
-These dataframes can then be exported as .csv files, or graphed using matplotlib.
+These dataframes can then be exported as .csv files to be further examined in R
+or graphed with matplotlib.
 """
 
+# Todo: Write function & add data collector for shoal area
+# Todo: Write function & add data collector for distance between farthest fish
+
 import numpy as np
-import math
 import random
-from scipy.spatial import KDTree
+import math  # why can't this module be found (5Dec17)?
+import itertools
+from scipy.spatial import KDTree, ConvexHull
 from statsmodels.robust.scale import mad
 from mesa import Agent, Model
 from mesa.time import RandomActivation
@@ -59,6 +68,28 @@ def nnd(model):
         mean_dist = sum(dist) / len(dist)
         means.append(mean_dist)
     return sum(means) / len(means)
+
+
+def area(model):
+    """
+    Computes convex hull (smallest convex set that contains all points) as
+    measure of shoal area.
+    """
+    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
+    pos = list(itertools.chain(*pos))
+
+    return pos
+
+
+def farthest_fish(model):
+    """
+    Extracts xy coordinates for each agent and then calculates the distance
+    between the two furthest-removed agents - distance between two farthest
+    fish.
+    """
+    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
+    pos = list(itertools.chain(*pos))
+    return pos
 
 
 class Fish(Agent):
