@@ -1,4 +1,14 @@
 """
+Model of shoaling behavior based on the Boids model by Craig Reynolds in 1986,
+using the basic code provided in the Flocker example of the Mesa framework for
+agent-based modelling in Python. This model is based on 3 parameters that each
+agent follows:
+    1. Attraction to (coherence with) other agents,
+    2. Avoidance of other agents,
+    3. Alignment with other agents.
+
+The model is based on a toroidal, 2D area.
+
 This file is for creating dataframes containing the results from the data
 collectors in the model. These are:
     1. Polarization: a function returning the median absolute deviation of
@@ -75,10 +85,12 @@ def area(model):
     Computes convex hull (smallest convex set that contains all points) as
     measure of shoal area.
     """
-    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
-    pos = list(itertools.chain(*pos))
-
-    return pos
+    # Data needs to be an ndarray of floats - two columns (x,y)
+    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
+    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
+    hull = ConvexHull(np.column_stack((pos_x, pos_y)))
+    shoal_area = hull.area
+    return shoal_area
 
 
 def farthest_fish(model):
@@ -223,12 +235,19 @@ class ShoalModel(Model):
 
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar,
-                             "Nearest Neighbour Distance": nnd})
+                             "Nearest Neighbour Distance": nnd,
+                             "Shoal Area": area})
 
     def step(self):
         self.datacollector.collect(self)
         self.schedule.step()
 
+
+# Data collection for debugging purposes
+model = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
+for i in range(100):
+    model.step()
+data1 = model.datacollector.get_model_vars_dataframe()
 
 # Collect the data from a single run with x number of steps into a dataframe
 # 100 agents
