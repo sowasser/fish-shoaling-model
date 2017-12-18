@@ -264,6 +264,12 @@ def fish_draw(agent):
 # Todo: make other model parameters interactive
 n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
                                  value=100, min_value=2, max_value=200, step=1)
+speed_slider = UserSettableParameter(param_type='slider', name='Speed',
+                                     value=2, min_value=0, max_value=10, step=1)
+vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
+                                      value=10, min_value=0, max_value=20, step=1)
+sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
+                                   value=2, min_value=0, max_value=10, step=1)
 
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
@@ -271,9 +277,9 @@ model_params = {
     "population": n_slider,
     "width": 50,
     "height": 50,
-    "speed": 1,
-    "vision": 10,
-    "separation": 2
+    "speed": speed_slider,
+    "vision": vision_slider,
+    "separation": sep_slider
 }
 
 # Create charts for the data collectors
