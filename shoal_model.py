@@ -29,7 +29,7 @@ This script uses the NEW version of Mesa and is currently not fully working.
 import numpy as np
 import math  # why can't this module be found (5Dec17)?
 import random
-from scipy.spatial import KDTree
+from scipy.spatial import KDTree, ConvexHull
 from statsmodels.robust.scale import mad
 from mesa import Agent, Model
 from mesa.time import RandomActivation
@@ -79,6 +79,19 @@ def nnd(model):  # WORKS
         mean_dist = sum(dist) / len(dist)
         means.append(mean_dist)
     return sum(means) / len(means)
+
+
+def area(model):
+    """
+    Computes convex hull (smallest convex set that contains all points) as
+    measure of shoal area.
+    """
+    # Data needs to be a numpy array of floats - two columns (x,y)
+    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
+    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
+    # save area variable from convex hull calculation
+    shoal_area = ConvexHull(np.column_stack((pos_x, pos_y))).area
+    return shoal_area
 
 
 class Fish(Agent):
@@ -212,7 +225,8 @@ class ShoalModel(Model):
 
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar,
-                             "Nearest Neighbour Distance": nnd})
+                             "Nearest Neighbour Distance": nnd,
+                             "Shoal Area": area})
 
     def step(self):
         self.datacollector.collect(self)
@@ -283,7 +297,7 @@ model_params = {
 }
 
 # Create charts for the data collectors
-# Todo: include chart titles & improve charts
+# Todo: include chart titles & improve charts - this will require updating Mesa
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                           data_collector_name="datacollector")
 #                         chart_title="Polarization")
@@ -292,9 +306,13 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
                              data_collector_name="datacollector")
 #                            chart_title="Nearest Neighbour Distance")
 
+area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
+                         data_collector_name="datacollector")
+#                        chart_title="Nearest Neighbour Distance")
+
 # Launch server
 server = ModularServer(ShoalModel,
-                       [shoal_canvas, polar_chart, neighbor_chart],
+                       [shoal_canvas, polar_chart, neighbor_chart, area_chart],
                        "Boids Model of Shoaling Behavior",
                        model_params)
 server.launch()
