@@ -16,7 +16,7 @@ collectors in the model. These are:
     2. Nearest neighbour distance: the mean distance of the 5 nearest agents,
        determined using a k-distance tree.
     3. Shoal area: convex hull
-    4. Distance between two farthest fish
+    4. Mean distance from centroid
 
 These parameters all produce a single value per step in the model. The
 dataframes created in this file are:
@@ -26,7 +26,7 @@ These dataframes can then be exported as .csv files to be further examined in R
 or graphed with matplotlib.
 """
 
-# Todo: Write function & add data collector for distance between farthest fish
+# Todo: Write function & add data collector for mean distance from centroid
 
 import numpy as np
 import random
@@ -82,25 +82,35 @@ def nnd(model):
 def area(model):
     """
     Computes convex hull (smallest convex set that contains all points) as
-    measure of shoal area.
+    measure of shoal area. Uses the area variable from the scipy.spatial
+    ConvexHull function.
     """
     # Data needs to be a numpy array of floats - two columns (x,y)
     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    # save area variable from convex hull calculation
     shoal_area = ConvexHull(np.column_stack((pos_x, pos_y))).area
     return shoal_area
 
 
-def farthest_fish(model):
+def centroid_dist(model):
     """
-    Extracts xy coordinates for each agent and then calculates the distance
-    between the two furthest-removed agents - distance between two farthest
-    fish.
+    Extracts xy coordinates for each agent, finds the centroid, and then
+    calculates the mean distance of each agent from the centroid.
     """
-    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
-    pos = list(itertools.chain(*pos))
-    return pos
+    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
+    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
+    mean_x = np.mean(pos_x)
+    mean_y = np.mean(pos_y)
+    centroid = np.asarray(mean_x, mean_y)
+    pos = np.asarray([agent.pos for agent in model.schedule.agents])
+    cent_dist = []
+    for p in pos:
+        dist = model.space.get_distance(p, centroid)
+        cent_dist += dist
+        return cent_dist
+    mean_dist = np.mean(cent_dist)
+    return mean_dist
+
 
 
 class Fish(Agent):
