@@ -83,12 +83,12 @@ def nnd(model):  # WORKS
 def area(model):
     """
     Computes convex hull (smallest convex set that contains all points) as
-    measure of shoal area.
+    measure of shoal area. Uses the area variable from the scipy.spatial
+    ConvexHull function.
     """
     # Data needs to be a numpy array of floats - two columns (x,y)
     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    # save area variable from convex hull calculation
     shoal_area = ConvexHull(np.column_stack((pos_x, pos_y))).area
     return shoal_area
 
