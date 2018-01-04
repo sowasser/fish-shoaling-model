@@ -243,7 +243,8 @@ class ShoalModel(Model):
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar,
                              "Nearest Neighbour Distance": nnd,
-                             "Shoal Area": area})
+                             "Shoal Area": area,
+                             "Mean Distance from Centroid": centroid_dist})
 
     def step(self):
         self.datacollector.collect(self)
