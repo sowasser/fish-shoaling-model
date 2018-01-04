@@ -93,26 +93,6 @@ def area(model):
     return shoal_area
 
 
-def centroid_dist(model):
-    """
-    Extracts xy coordinates for each agent, finds the centroid, and then
-    calculates the mean distance of each agent from the centroid.
-    """
-    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
-    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    mean_x = np.mean(pos_x)
-    mean_y = np.mean(pos_y)
-    centroid = np.asarray(mean_x, mean_y)
-    pos = np.asarray([agent.pos for agent in model.schedule.agents])
-    cent_dist = []
-    for p in pos:
-        dist = model.space.get_distance(p, centroid)
-        cent_dist += dist
-        return cent_dist
-    mean_dist = np.mean(cent_dist)
-    return mean_dist
-
-
 class Fish(Agent):
     """
     A Boid-style agent. Boids have a vision that defines the radius in which
@@ -245,8 +225,7 @@ class ShoalModel(Model):
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar,
                              "Nearest Neighbour Distance": nnd,
-                             "Shoal Area": area,
-                             "Mean Distance from Centroid": centroid_dist})
+                             "Shoal Area": area})
 
     def step(self):
         self.datacollector.collect(self)
@@ -328,11 +307,15 @@ neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "
 
 area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
                          data_collector_name="datacollector")
-#                        chart_title="Nearest Neighbour Distance")
+#                        chart_title="Shoal Area")
+
 
 # Launch server
 server = ModularServer(ShoalModel,
-                       [shoal_canvas, polar_chart, neighbor_chart, area_chart],
+                       [shoal_canvas,
+                        polar_chart,
+                        neighbor_chart,
+                        area_chart],
                        "Boids Model of Shoaling Behavior",
                        model_params)
 server.launch()
