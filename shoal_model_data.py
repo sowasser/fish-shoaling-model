@@ -46,10 +46,9 @@ def polar(model):
     """
     Computes median absolute deviation (MAD) from the mean velocity of the
     group. As the value approaches 0, polarization increases.
-    In order to find the MAD, the x,y coordinates are converted to radians by
-    finding the arc tangent of y/x. The function used pays attention to the
-    sign of the input to make sure that the correct quadrant for the angle is
-    determined.
+    To find the MAD, the x,y coordinates are converted to radians by finding
+    the arc tangent of y/x. The function used pays attention to the sign of
+    the input to make sure that the correct quadrant for the angle is determined.
     """
     velocity_x = [agent.velocity[0] for agent in model.schedule.agents]
     velocity_y = [agent.velocity[1] for agent in model.schedule.agents]
@@ -110,7 +109,6 @@ def centroid_dist(model):
         return cent_dist
     mean_dist = np.mean(cent_dist)
     return mean_dist
-
 
 
 class Fish(Agent):
