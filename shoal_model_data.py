@@ -100,15 +100,13 @@ def centroid_dist(model):
     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
     mean_x = np.mean(pos_x)
     mean_y = np.mean(pos_y)
-    centroid = np.asarray(mean_x, mean_y)
-    pos = np.asarray([agent.pos for agent in model.schedule.agents])
-    cent_dist = []
+    centroid = (mean_x, mean_y)
+    pos = [agent.pos for agent in model.schedule.agents]
+    cent_dist = ()
     for p in pos:
         dist = model.space.get_distance(p, centroid)
         cent_dist += dist
-        return cent_dist
-    mean_dist = np.mean(cent_dist)
-    return mean_dist
+    return np.mean(cent_dist)
 
 
 class Fish(Agent):
@@ -261,7 +259,7 @@ class ShoalModel(Model):
 # Collect the data from a single run with x number of steps into a dataframe
 # 100 agents
 model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
-for i in range(600):
+for i in range(10):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data"
