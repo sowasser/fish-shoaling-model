@@ -5,9 +5,9 @@ Model of shoaling behavior based on the Boids model by Craig Reynolds in 1986,
 using the basic code provided in the Flocker example of the Mesa framework for
 agent-based modelling in Python. This model is based on 3 parameters that each
 agent follows:
-    1. Attraction to (coherence with) other agents,
-    2. Avoidance of other agents,
-    3. Alignment with other agents.
+    1. Attraction to other agents (cohere),
+    2. Avoidance of other agents (separation),
+    3. Alignment with other agents (match_velocity).
 
 These rules are based on the neighbours each agent perceives within their
 'vision' radius. This is a geometrical distance, rather than topological
@@ -97,7 +97,7 @@ class Fish(Agent):
     """
     A Boid-style agent. Boids have a vision that defines the radius in which
     they look for their neighbors to flock with. Their heading (a unit vector)
-    and their interactions with their neighbors - cohering and avoiding -
+    and their interactions with their neighbors - cohering and separating -
     define their movement. Separation is their desired minimum distance from
     any other Boid.
     """
@@ -139,7 +139,8 @@ class Fish(Agent):
 
     def separate(self, neighbors):
         """
-        Return a vector away rom any neighbors closer than avoidance distance.
+        Return a vector away rom any neighbors closer than the separation
+        distance.
         """
         me = self.pos
         them = (n.pos for n in neighbors)
