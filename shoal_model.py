@@ -14,8 +14,9 @@ These rules are based on the neighbours each agent perceives within their
 (Mann et al. 2011). Another version of this model is being constructed
 for the topological (set number of neighbours at any distance).
 
-Data is collected on the median absolute deviation of velocity and the nearest
-neighbor distance, calculated using a k-d tree, as measures of cohesion.
+Data is collected on the median absolute deviation of velocity, the nearest
+neighbor distance, calculated using a k-d tree, and the area of the convex
+hull formed by the group as measures of cohesion and spatial extent.
 
 The model is based on an toroidal (unbounded & wrapping), 2D area. Later
 versions will be 3D, bounded and include obstacles, environmental gradients,
@@ -23,7 +24,6 @@ and agents with goal-, food-, or safety-seeking behaviour.
 
 This script also includes the code for visualizing the model using an HTML5
 object. The parameters for the visualization rely on a JavaScript canvas.
-This script uses the NEW version of Mesa and is currently not fully working.
 """
 
 import numpy as np
@@ -110,8 +110,8 @@ class Fish(Agent):
             pos: Starting position
             speed: Distance to move per step.
             velocity: numpy vector for the Boid's direction of movement.
-            vision: Radius to look around for nearby Boids.
-            separation: Minimum distance to maintain from other Boids.
+            vision: Radius to look around for nearby Fish.
+            separation: Minimum distance to maintain from other Fish.
             cohere: the relative importance of matching neighbors' positions
             separate: the relative importance of avoiding close neighbors
             match: the relative importance of matching neighbors' headings
