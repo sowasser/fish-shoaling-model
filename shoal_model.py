@@ -95,16 +95,16 @@ def area(model):
 
 class Fish(Agent):
     """
-    A Boid-style agent. Boids have a vision that defines the radius in which
+    A Boid-style agent. Agents have a vision that defines the radius in which
     they look for their neighbors to flock with. Their heading (a unit vector)
     and their interactions with their neighbors - cohering and separating -
     define their movement. Separation is their desired minimum distance from
-    any other Boid.
+    any other Fish.
     """
     def __init__(self, unique_id, model, pos, speed, velocity, vision,
                  separation, cohere=0.025, separate=0.25, match=0.04):
         """
-        Create a new Boid (bird, fish) agent.
+        Create a new Fish agent.
         Args:
             unique_id: Unique agent identifier.
             pos: Starting position
@@ -152,7 +152,7 @@ class Fish(Agent):
 
     def match_velocity(self, neighbors):
         """
-        Have Boids match the velocity of neighbors.
+        Have fish match the velocity of neighbors.
         """
         match_vector = np.zeros(2)
         if neighbors:
@@ -163,7 +163,7 @@ class Fish(Agent):
 
     def step(self):
         """ 
-        Get the Boid's neighbors, compute the new vector, and move accordingly.
+        Get the fish's neighbors, compute the new vector, and move accordingly.
         """
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
@@ -188,12 +188,12 @@ class ShoalModel(Model):
                  separate=0.25,
                  match=0.04):
         """
-        Create a new Boids model. Args:
-            N: Number of Boids
+        Create a new Shoal model. Args:
+            N: Number of Fish
             width, height: Size of the space.
-            speed: how fast the boids should move.
+            speed: how fast the fish should move.
             vision: how far around should each Boid look for its neighbors
-            separation: what's the minimum distance each Boid will attempt to
+            separation: what's the minimum distance each fish will attempt to
                         keep from any other
             cohere, separate, match: factors for the relative importance of
                                      the three drives.
