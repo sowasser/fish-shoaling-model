@@ -61,5 +61,9 @@ The sliders for model parameters also allow the user to test the model response 
 ## Details
 
 ### Initialisation
+Individuals are initialized at a random position and are given a random velocity. They then move to a new position at the speed determined in the model parameters and begin to implement the rules provided. The initial position and velocity and the speed of the individuals moving forward does not currently come from any data, but can be later adapted to fit data collected in the lab.
+
 ### Input
+There are currently no data inputs into the model. This will change as lab data are collected.
+
 ### Submodels
