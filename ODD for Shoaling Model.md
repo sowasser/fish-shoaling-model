@@ -8,6 +8,8 @@ To accurately represent a mackerel shoal to provide information on overall shape
 <br>
 
 ### Entities, State Variables, and Scales
+The model is based on the Boids model by [Reynolds (1987)][reynolds], where simple movement rules lead to collective behaviour.
+
 The model consists of agents/individuals representing individual, identical fish within a shoal. They occupy a two-dimensional, toroidal space, the dimensions of which can be specified in the model. Aside from the behavioural rules, the fish are governed by the following variables: 
 
 * Their speed (min: 0, max: 10)
@@ -103,5 +105,6 @@ Currently, the following submodels are being developed:
 * __Three-dimensions__ - model in three-dimensional space. All other variables are the same.
 
 
+[reynolds]: https://dl.acm.org/citation.cfm?id=37406
 [quera]: https://www.sciencedirect.com/science/article/pii/S0025556415002394
 [mann]: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0022827
