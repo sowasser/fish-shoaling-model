@@ -29,8 +29,7 @@ or graphed with matplotlib.
 
 import numpy as np
 import random
-import math  # why can't this module be found (5Dec17)?
-import itertools
+import math
 from scipy.spatial import KDTree, ConvexHull
 from statsmodels.robust.scale import mad
 from mesa import Agent, Model
