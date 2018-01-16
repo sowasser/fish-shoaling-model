@@ -71,8 +71,7 @@ def nnd(model):
         neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
         dist = list(neighbors[0])  # select dist not neighbor # from .query output
         dist.pop(0)  # removes closest agent - itself @ dist = 0
-        mean_dist = sum(dist) / len(dist)
-        means.append(mean_dist)
+        means.append(sum(dist) / len(dist))
     return sum(means) / len(means)
 
 
