@@ -18,11 +18,13 @@ import numpy as np
 import pandas as pd
 import itertools
 import random
-from mesa import Agent, Model
+from mesa import Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
 import os
+
+from shoal_model import Fish
 # import matplotlib.pyplot as plt
 # from matplotlib import animation
 
@@ -36,86 +38,6 @@ def positions(model):
     pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents]
     pos = list(itertools.chain(*pos))
     return pos
-
-
-class Fish(Agent):
-    """
-    A Boid-style agent. Boids have a vision that defines the radius in which
-    they look for their neighbors to flock with. Their heading (a unit vector)
-    and their interactions with their neighbors - cohering and avoiding -
-    define their movement. Separation is their desired minimum distance from
-    any other Boid.
-    """
-    def __init__(self, unique_id, model, pos, speed, velocity, vision,
-                 separation, cohere=0.025, separate=0.25, match=0.04):
-        """
-        Create a new Boid (bird, fish) agent.
-        Args:
-            unique_id: Unique agent identifier.
-            pos: Starting position
-            speed: Distance to move per step.
-            velocity: numpy vector for the Boid's direction of movement.
-            vision: Radius to look around for nearby Boids.
-            separation: Minimum distance to maintain from other Boids.
-            cohere: the relative importance of matching neighbors' positions
-            separate: the relative importance of avoiding close neighbors
-            match: the relative importance of matching neighbors' headings
-        """
-        super().__init__(unique_id, model)
-        self.pos = np.array(pos)
-        self.speed = speed
-        self.velocity = velocity
-        self.vision = vision
-        self.separation = separation
-        self.cohere_factor = cohere
-        self.separate_factor = separate
-        self.match_factor = match
-
-    def cohere(self, neighbors):
-        """
-        Return the vector toward the centroid of the local neighbors.
-        """
-        cohere = np.zeros(2)
-        if neighbors:
-            for neighbor in neighbors:
-                cohere += self.model.space.get_heading(self.pos, neighbor.pos)
-            cohere /= len(neighbors)
-        return cohere
-
-    def separate(self, neighbors):
-        """
-        Return a vector away rom any neighbors closer than avoidance distance.
-        """
-        me = self.pos
-        them = (n.pos for n in neighbors)
-        separate_vector = np.zeros(2)
-        for other in them:
-            if self.model.space.get_distance(me, other) < self.separation:
-                separate_vector -= self.model.space.get_heading(me, other)
-        return separate_vector
-
-    def match_velocity(self, neighbors):
-        """
-        Have Boids match the velocity of neighbors.
-        """
-        match_vector = np.zeros(2)
-        if neighbors:
-            for neighbor in neighbors:
-                match_vector += neighbor.velocity
-            match_vector /= len(neighbors)
-        return match_vector
-
-    def step(self):
-        """
-        Get the Boid's neighbors, compute the new vector, and move accordingly.
-        """
-        neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
-        self.velocity += (self.cohere(neighbors) * self.cohere_factor +
-                          self.separate(neighbors) * self.separate_factor +
-                          self.match_velocity(neighbors) * self.match_factor) / 2
-        self.velocity /= np.linalg.norm(self.velocity)
-        new_pos = self.pos + self.velocity * self.speed
-        self.model.space.move_agent(self, new_pos)
 
 
 class ShoalModel(Model):
