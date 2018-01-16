@@ -36,23 +36,23 @@ from data_collectors import *
 
 class Fish(Agent):
     """
-    A Boid-style agent. Agents have a vision that defines the radius in which
+    A Boid-style agent. Boids have a vision that defines the radius in which
     they look for their neighbors to flock with. Their heading (a unit vector)
-    and their interactions with their neighbors - cohering and separating -
+    and their interactions with their neighbors - cohering and avoiding -
     define their movement. Separation is their desired minimum distance from
-    any other Fish.
+    any other Boid.
     """
     def __init__(self, unique_id, model, pos, speed, velocity, vision,
                  separation, cohere=0.025, separate=0.25, match=0.04):
         """
-        Create a new Fish agent.
+        Create a new Boid (bird, fish) agent.
         Args:
             unique_id: Unique agent identifier.
             pos: Starting position
             speed: Distance to move per step.
             velocity: numpy vector for the Boid's direction of movement.
-            vision: Radius to look around for nearby Fish.
-            separation: Minimum distance to maintain from other Fish.
+            vision: Radius to look around for nearby Boids.
+            separation: Minimum distance to maintain from other Boids.
             cohere: the relative importance of matching neighbors' positions
             separate: the relative importance of avoiding close neighbors
             match: the relative importance of matching neighbors' headings
@@ -80,8 +80,7 @@ class Fish(Agent):
 
     def separate(self, neighbors):
         """
-        Return a vector away rom any neighbors closer than the separation
-        distance.
+        Return a vector away rom any neighbors closer than avoidance distance.
         """
         me = self.pos
         them = (n.pos for n in neighbors)
@@ -93,7 +92,7 @@ class Fish(Agent):
 
     def match_velocity(self, neighbors):
         """
-        Have fish match the velocity of neighbors.
+        Have Boids match the velocity of neighbors.
         """
         match_vector = np.zeros(2)
         if neighbors:
@@ -103,8 +102,8 @@ class Fish(Agent):
         return match_vector
 
     def step(self):
-        """ 
-        Get the fish's neighbors, compute the new vector, and move accordingly.
+        """
+        Get the Boid's neighbors, compute the new vector, and move accordingly.
         """
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
@@ -129,12 +128,12 @@ class ShoalModel(Model):
                  separate=0.25,
                  match=0.04):
         """
-        Create a new Shoal model. Args:
-            N: Number of Fish
+        Create a new Boids model. Args:
+            N: Number of Boids
             width, height: Size of the space.
-            speed: how fast the fish should move.
+            speed: how fast the boids should move.
             vision: how far around should each Boid look for its neighbors
-            separation: what's the minimum distance each fish will attempt to
+            separation: what's the minimum distance each Boid will attempt to
                         keep from any other
             cohere, separate, match: factors for the relative importance of
                                      the three drives.
@@ -151,8 +150,8 @@ class ShoalModel(Model):
         self.running = True
 
     def make_agents(self):
-        """ 
-        Create N agents, with random positions and starting velocities. 
+        """
+        Create N agents, with random positions and starting velocities.
         """
         for i in range(self.population):
             x = random.random() * self.space.x_max
@@ -167,7 +166,8 @@ class ShoalModel(Model):
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar,
                              "Nearest Neighbour Distance": nnd,
-                             "Shoal Area": area})
+                             "Shoal Area": area,
+                             "Mean Distance from Centroid": centroid_dist})
 
     def step(self):
         self.datacollector.collect(self)
