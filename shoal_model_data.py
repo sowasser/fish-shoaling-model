@@ -85,8 +85,7 @@ def area(model):
     # Data needs to be a numpy array of floats - two columns (x,y)
     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    shoal_area = ConvexHull(np.column_stack((pos_x, pos_y))).area
-    return shoal_area
+    return ConvexHull(np.column_stack((pos_x, pos_y))).area
 
 
 def centroid_dist(model):
@@ -104,8 +103,7 @@ def centroid_dist(model):
     for p in pos:
         dist = model.space.get_distance(p, centroid)
         cent_dist = np.append(cent_dist, dist)
-    mean = np.mean(cent_dist)
-    return mean
+    return np.mean(cent_dist)
 
 
 class Fish(Agent):
@@ -265,14 +263,14 @@ for i in range(500):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
 data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
-#
+
 # 50 agents
 model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
 for j in range(500):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
 data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
-#
+
 # # 200 agents
 model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
 for k in range(500):
