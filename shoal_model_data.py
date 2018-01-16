@@ -103,8 +103,9 @@ def centroid_dist(model):
     cent_dist = []
     for p in pos:
         dist = model.space.get_distance(p, centroid)
-        cent_dist += dist
-    return np.mean(cent_dist)
+        cent_dist = np.append(cent_dist, dist)
+    mean = np.mean(cent_dist)
+    return mean
 
 
 class Fish(Agent):
