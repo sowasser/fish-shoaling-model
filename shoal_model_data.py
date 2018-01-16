@@ -186,26 +186,26 @@ class ShoalModel(Model):
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
+path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
 # 100 agents
 model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
-for i in range(10):
+for i in range(500):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
 data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 # 50 agents
 model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
-for j in range(10):
+for j in range(500):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
 data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
 
 # # 200 agents
 model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
-for k in range(10):
+for k in range(500):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
 data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
