@@ -27,11 +27,7 @@ or graphed with matplotlib.
 """
 
 
-import numpy as np
 import random
-import math
-from scipy.spatial import KDTree, ConvexHull
-from statsmodels.robust.scale import mad
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
@@ -39,70 +35,7 @@ from mesa.space import ContinuousSpace
 import os
 from mesa.batchrunner import BatchRunner
 
-
-def polar(model):
-    """
-    Computes median absolute deviation (MAD) from the mean velocity of the
-    group. As the value approaches 0, polarization increases.
-    To find the MAD, the x,y coordinates are converted to radians by finding
-    the arc tangent of y/x. The function used pays attention to the sign of
-    the input to make sure that the correct quadrant for the angle is determined.
-    """
-    velocity_x = [agent.velocity[0] for agent in model.schedule.agents]
-    velocity_y = [agent.velocity[1] for agent in model.schedule.agents]
-    angle = []
-    for (y, x) in zip(velocity_y, velocity_x):
-        a = math.atan2(y, x)
-        angle.append(a)
-    return mad(np.asarray(angle), center=np.median)
-
-
-def nnd(model):
-    """
-    Computes the average nearest neighbor distance for each agent as another
-    measure of cohesion. Method finds & averages the nearest neighbours
-    using a KDTree, a machine learning concept for clustering or
-    compartmentalizing data. Right now, the 5 nearest neighbors are considered.
-    """
-    fish = np.asarray([agent.pos for agent in model.schedule.agents])
-    fish_tree = KDTree(fish)
-    means = []
-    for me in fish:
-        neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
-        dist = list(neighbors[0])  # select dist not neighbor # from .query output
-        dist.pop(0)  # removes closest agent - itself @ dist = 0
-        means.append(sum(dist) / len(dist))
-    return sum(means) / len(means)
-
-
-def area(model):
-    """
-    Computes convex hull (smallest convex set that contains all points) as
-    measure of shoal area. Uses the area variable from the scipy.spatial
-    ConvexHull function.
-    """
-    # Data needs to be a numpy array of floats - two columns (x,y)
-    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
-    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    return ConvexHull(np.column_stack((pos_x, pos_y))).area
-
-
-def centroid_dist(model):
-    """
-    Extracts xy coordinates for each agent, finds the centroid, and then
-    calculates the mean distance of each agent from the centroid.
-    """
-    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
-    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    mean_x = np.mean(pos_x)
-    mean_y = np.mean(pos_y)
-    centroid = (mean_x, mean_y)
-    pos = [agent.pos for agent in model.schedule.agents]
-    cent_dist = []
-    for p in pos:
-        dist = model.space.get_distance(p, centroid)
-        cent_dist = np.append(cent_dist, dist)
-    return np.mean(cent_dist)
+from data_collectors import *
 
 
 class Fish(Agent):
@@ -258,21 +191,21 @@ path = "/Users/user/Desktop/Local/Mackerel/Mackerel_Data/shoal-model-in-R"
 
 # 100 agents
 model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
-for i in range(500):
+for i in range(10):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
 data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 # 50 agents
 model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
-for j in range(500):
+for j in range(10):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
 data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
 
 # # 200 agents
 model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
-for k in range(500):
+for k in range(10):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
 data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")

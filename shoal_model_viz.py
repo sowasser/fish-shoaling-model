@@ -19,23 +19,21 @@ from shoal_model import *
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
+from mesa.visualization.UserParam import UserSettableParameter
 
 
 # Create canvas for visualization
 class SimpleCanvas(VisualizationElement):
     """ Uses JavaScript file for a simple, continuous canvas. """
     local_includes = ["simple_continuous_canvas.js"]
-    portrayal_method = None
-    canvas_height = 500
-    canvas_width = 500
 
     def __init__(self, portrayal_method, canvas_height=500, canvas_width=500):
         """ Instantiate a new SimpleCanvas """
         self.portrayal_method = portrayal_method
         self.canvas_height = canvas_height
         self.canvas_width = canvas_width
-        new_element = ("new Simple_Continuous_Module({}, {})".
-                       format(self.canvas_width, self.canvas_height))
+        new_element = ("new Simple_Continuous_Module({}, {})"
+                       .format(self.canvas_width, self.canvas_height))
         self.js_code = "elements.push(" + new_element + ");"
 
     def render(self, model):
@@ -55,29 +53,56 @@ class SimpleCanvas(VisualizationElement):
 
 
 def fish_draw(agent):
-    return {"Shape": "circle", "r": 3, "Filled": "true", "Color": "Blue"}
+    portrayal = {"Shape": "circle",
+                 "Color": "Blue",
+                 "Filled": "true",
+                 "r": 3}
+    return portrayal
 
+
+# Create slider for interactive parameter
+# Todo: make other model parameters interactive
+n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
+                                 value=100, min_value=2, max_value=200, step=1)
+speed_slider = UserSettableParameter(param_type='slider', name='Speed',
+                                     value=2, min_value=0, max_value=10, step=1)
+vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
+                                      value=10, min_value=0, max_value=20, step=1)
+sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
+                                   value=2, min_value=0, max_value=10, step=1)
 
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
+model_params = {
+    "population": n_slider,
+    "width": 50,
+    "height": 50,
+    "speed": speed_slider,
+    "vision": vision_slider,
+    "separation": sep_slider
+}
 
 # Create charts for the data collectors
+# Todo: include chart titles & improve charts - this will require updating Mesa
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-                          data_collector_name="datacollector",
-                          chart_title="Polarization")
+                          data_collector_name="datacollector")
+#                         chart_title="Polarization")
 
 neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
-                             data_collector_name="datacollector",
-                             chart_title="Nearest Neighbour Distance")
+                             data_collector_name="datacollector")
+#                            chart_title="Nearest Neighbour Distance")
+
+area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
+                         data_collector_name="datacollector")
+#                        chart_title="Shoal Area")
 
 
 # Launch server
-server = ModularServer(ShoalModel, [shoal_canvas, polar_chart, neighbor_chart],
+server = ModularServer(ShoalModel,
+                       [shoal_canvas,
+                        polar_chart,
+                        neighbor_chart,
+                        area_chart],
                        "Boids Model of Shoaling Behavior",
-                       population=100,
-                       width=50,
-                       height=50,
-                       speed=1,
-                       vision=10,
-                       separation=2)
+                       model_params)
 server.launch()
