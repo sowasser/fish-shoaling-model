@@ -1,7 +1,7 @@
 """
 This file is for running multiple iterations of the shoal model under set
 conditions, rather than individual runs for looking at sensitivity, as housed
-in the sensitivity_data.py file. This method provides the overall distributions
+in the data_sensitivity.py file. This method provides the overall distributions
 of the model. The process is automated by Mesa.
 
 Data are collected in the data_collectors.py script and are:
@@ -37,6 +37,6 @@ batch_run.run_all()
 
 
 # Data collection methods
-# Extract data as a DataFrame 
+# Extract data as a DataFrame
 batch_data = batch_run.get_model_vars_dataframe()
 print(batch_data)

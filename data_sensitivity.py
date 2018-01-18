@@ -51,4 +51,3 @@ for k in range(500):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
 data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
-
