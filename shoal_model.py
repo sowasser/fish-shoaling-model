@@ -1,6 +1,4 @@
 """
-Original, basic shoaling model
-
 Model of shoaling behavior based on the Boids model by Craig Reynolds in 1986,
 using the basic code provided in the Flocker example of the Mesa framework for
 agent-based modelling in Python. This model is based on 3 parameters that each
@@ -14,9 +12,13 @@ These rules are based on the neighbours each agent perceives within their
 (Mann et al. 2011). Another version of this model is being constructed
 for the topological (set number of neighbours at any distance).
 
-Data is collected on the median absolute deviation of velocity, the nearest
-neighbor distance, calculated using a k-d tree, and the area of the convex
-hull formed by the group as measures of cohesion and spatial extent.
+Data are collected in the data_collectors.py script and are:
+    1. Polarization: a function returning the median absolute deviation of
+       agent heading from the mean heading of the group
+    2. Nearest neighbour distance: the mean distance of the 5 nearest agents,
+       determined using a k-distance tree.
+    3. Shoal Area: convex hull
+    4. Mean Distance From Centroid
 
 The model is based on an toroidal (unbounded & wrapping), 2D area. Later
 versions will be 3D, bounded and include obstacles, environmental gradients,

@@ -1,7 +1,17 @@
 """
-Data is collected on the median absolute deviation of velocity, the nearest
-neighbor distance, calculated using a k-d tree, and the area of the convex
-hull formed by the group as measures of cohesion and spatial extent.
+This script contains the functions used to collect data on the polarization
+and spatial extent of the shoal. These are, currently:
+    1. Polarization: a function returning the median absolute deviation of
+       agent heading from the mean heading of the group
+    2. Nearest neighbour distance: the mean distance of the 5 nearest agents,
+       determined using a k-distance tree.
+    3. Shoal Area: convex hull
+    4. Mean Distance From Centroid
+
+More functions will be added as more methods for conceptualizing the shoal are
+found in the literature.
+
+These are used in shoal_model.py and elsewhere.
 """
 
 import numpy as np

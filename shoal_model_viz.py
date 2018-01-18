@@ -1,17 +1,25 @@
 """
-Code for just the visualization element of a Boids model of fish collective
+Code for just the visualization element of the shoal model of fish collective
 behaviour using code (in shoal_model.py) based on the Flocker example from the
 Mesa agent based modelling framework for Python.
 
-This version is built using a customized version of Mesa - allows for chart
-titles and at this point actually works.
-
 The visualization uses a JavaScript canvas to create an HTML5 object. It
-includes an animation of the agents and a chart that shows a metric for overall
-cohesion - also described in the model code.
+includes an animation of the agents, charts that showing a metrics of overall
+cohesion. The current options for charts are:
+    1. Polarization: a function returning the median absolute deviation of
+       agent heading from the mean heading of the group
+    2. Nearest Neighbour Distance: the mean distance of the 5 nearest agents,
+       determined using a k-distance tree.
+    3. Shoal Area: convex hull
+    4. Mean Distance from Centroid
+More information is available in the shoal_model.py and data_collectors.py
+scripts.
 
-Can change the model parameters to match the parameters used during
-experimentation in the Jupyter notebook version.
+The visualization also includes sliders for model variables, such as:
+    - number of agents
+    - agent speed
+    - vision/perception radius
+    - distance at which agents separate
 """
 
 from shoal_model import *
