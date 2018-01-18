@@ -15,7 +15,9 @@ These rules are based on the neighbours each agent perceives within their
 for the topological (set number of neighbours at any distance).
 
 Data is collected on the median absolute deviation of velocity and the nearest
-neighbor distance, calculated using a k-d tree, as measures of cohesion.
+neighbor distance, calculated using a k-d tree, as measures of cohesion and
+area of the convex hull and mean distance from the centroid as measures of
+shoal extent.
 
 The model is based on a bounded, 2D area. Will be updated to 3D when possible.
 
@@ -68,24 +70,6 @@ class Fish(Agent):
         self.x_max = model.space.x_max
         self.y_max = model.space.y_max
 
-    def turn(self):
-        """
-        When an agent reaches the border, it rebounds at a random angle.
-        """
-        # Todo: fix this function so that agents turn around at edges
-        rebound_vector_x = np.zeros(2)
-        rebound_vector_y = np.zeros(2)
-        if self.pos[0] >= self.x_max or self.pos[0] <= 0:
-            rebound_vector_x -= self.model.space.get_heading(self.pos,
-                                                             self.x_max) \
-                                + random.uniform(-1, 1)
-            return rebound_vector_x
-        if self.pos[1] >= self.y_max or self.pos[1] <= 0:
-            rebound_vector_y -= self.model.space.get_heading(self.pos,
-                                                             self.x_max) \
-                                + random.uniform(-1, 1)
-            return rebound_vector_y
-
     def cohere(self, neighbors):
         """
         Return the vector toward the centroid of the local neighbors.
@@ -99,10 +83,13 @@ class Fish(Agent):
 
     def separate(self, neighbors):
         """
-        Return a vector away rom any neighbors closer than avoidance distance.
+        Return a vector away rom any neighbors or borders closer than the
+        separation distance determined in the model parameters.
         """
+        # Todo: add borders to separation function
         me = self.pos
         them = (n.pos for n in neighbors)
+        borders = []
         separate_vector = np.zeros(2)
         for other in them:
             if self.model.space.get_distance(me, other) < self.separation:
