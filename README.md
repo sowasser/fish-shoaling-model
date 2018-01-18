@@ -8,6 +8,14 @@ An agent-based modelling using the Mesa framework for Python. There are five sep
 5. I have also configured the data collector to output agent position (x,y) at every step. This can be used for other visualizations, i.e. [animated plots in matplotlib][matplotlib], or exported to R, etc.
 4. Attempts to adapt the Boids model to various other models of collective behaviour from the literature. Right now, the first attempt is to define vision by a certain number of neighbours, rather than a static distance. Other attempts will include behavioural zones, removing velocity matching, leadership, memory, inclusion of environmental factors, etc. One big future project will be to adapt the model to 3D.
 
+The basic shoal model is broken down into the following scripts:
+
+* `shoal_model.py` contains the agent and model definitions, including the code for collecting the data within the model.
+* `data_collectors.py` contains the functions used to collect data on the polarization and spatial extent of the shoal.
+* `shoal_model_viz.py` contains the code for the visualization element of the model. Uses a Javascript canvas to create an HTML5 object.
+* `data_sensitivity.py` and `data_batch.py` contain code for exporting the data from single runs of the model and batch runs of the model, respectively.
+
+
 
 ## Installation
 These installation instructions assume you are using macOS (because that's all I know how to use).
