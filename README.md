@@ -1,12 +1,19 @@
 # fish-shoaling-model
-An agent-based modelling using the Mesa framework for Python. There are five separate exercises included.
+An agent-based modelling using the Mesa framework for Python. This repository includes the following exercises:
 
 
 1. The Flocking example of collective behaviour from [mesa][mesa]. The code for this example is included as both a Jupyter notebook and Python code. Also includes a JavaScript file that sets up a HTML5 canvas for visualization of a simple, continuous canvas.
 2. I've messed with the visualization by updating to the more recent version of Chart.js in order to add chart titles. This is currently not working, but when it does, in order for the script to work without chart titles, just remove the `chart_title="  "` from `ChartModule`.
-3.  Preliminary attempts to adapt the boids model for a model of fish shoaling behaviour. So far, this version adds a data collector for spatial statistics with three functions: mean nearest neighbour distance as a measure of cohesion, the median absolute deviation of each agent's heading from the mean heading of the group as a measure of polarization, and the area of the group calculated from the convex hull. Other data collectors will be added in the future. The outputs of the data collector are added to pandas dataframes and then exported as .csv files to be used in R. The Jupyter notebook version of this file is useful for running the model under various model conditions.
+3.  Preliminary attempts to adapt the boids model for a model of fish shoaling behaviour. So far, this version adds a data collector for spatial statistics with four functions. Others will be added in the future. The outputs are added to pandas dataframes and then exported as .csv files to be used in R. 
+4. The Jupyter notebook versions of the data collection file are useful for running the model under various model conditions. 
 5. I have also configured the data collector to output agent position (x,y) at every step. This can be used for other visualizations, i.e. [animated plots in matplotlib][matplotlib], or exported to R, etc.
-4. Attempts to adapt the Boids model to various other models of collective behaviour from the literature. Right now, the first attempt is to define vision by a certain number of neighbours, rather than a static distance. Other attempts will include behavioural zones, removing velocity matching, leadership, memory, inclusion of environmental factors, etc. One big future project will be to adapt the model to 3D.
+4. Attempts to adapt the Boids model to various other models of collective behaviour from the literature:
+	1. Define vision by a certain number of neighbours, rather than a static distance - `shoal_model_neighbours.py`
+	2. Include a blind spot behind the agent - `shoal_model_blindspot.py`
+	3. Alignment (velocity matching) removed as a behaviour rule & considered an emergent behaviour - `shoal_model_noalign.py`
+	4. Bounded, rather than toroidal, topology - `shoal_model_bounded.py`
+	5. 3D!
+
 
 The basic shoal model is broken down into the following scripts:
 
