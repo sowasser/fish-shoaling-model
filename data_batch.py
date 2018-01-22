@@ -15,6 +15,7 @@ Data are collected in the data_collectors.py script and are:
 
 from shoal_model import *
 from mesa.batchrunner import BatchRunner
+import os
 
 
 parameters = {"population": 100,
@@ -26,8 +27,7 @@ parameters = {"population": 100,
 
 batch_run = BatchRunner(ShoalModel,
                         parameters,
-                        iterations=1,
-                        # 5 instantiations of the model
+                        iterations=1,  # instantiations of the model
                         max_steps=100,  # Run each for 100 steps
                         model_reporters={"Polarization": polar,
                                          "NND": nnd,
@@ -39,4 +39,6 @@ batch_run.run_all()
 # Data collection methods
 # Extract data as a DataFrame
 batch_data = batch_run.get_model_vars_dataframe()
-print(batch_data)
+
+path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
+batch_data.to_csv(os.path.join(path, r"batch_data.csv"), index=",")
