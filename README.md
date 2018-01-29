@@ -27,7 +27,7 @@ The basic shoal model is broken down into the following scripts:
 ## Installation
 These installation instructions assume you are using macOS (because that's all I know how to use).
 
-1. Clone this repository to your computer: `git clone https://github.com/sowassermann/Python_Practice.git`
+1. Clone this repository to your computer: `git clone https://github.com/sowasser/fish-shoaling-model.git`
 2. Make sure you have [Homebrew][Homebrew] installed.
 3. Make sure you have Python 3.6; currently I am running this project with Python 3.6.3.
 4. I am using [my own version of mesa][my_mesa], since I've been playing around. That can be installed with [pip][pip], using the requirements.txt file, along with all dependencies.
