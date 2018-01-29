@@ -36,3 +36,14 @@ track.columns = ["time", "x1", "y1", "x1_v", "y1_v",
                  "x18", "y18", "x18_v", "y18_v",
                  "x19", "y19", "x19_v", "y19_v"]
 
+
+# This renames the columns successfully, but in the wrong order. This outputs:
+# time, x1, x2, x3..., y1, y2, y3..., x1_v, x2_v, x3_v..., y1_v, y2_v, y3_v...
+
+# rng = range(1, int((len(list(track)) - 1) / 4) + 1)
+# new_cols = ["time"] + \
+#            ["x" + str(i) for i in rng] + \
+#            ["y" + str(i) for i in rng] + \
+#            ["x" + str(i) + "_v" for i in rng] + \
+#            ["y" + str(i) + "_v" for i in rng]
+# track.columns = new_cols
