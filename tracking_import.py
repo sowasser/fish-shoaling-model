@@ -10,6 +10,7 @@ model.
 
 import pandas as pd
 import os
+import itertools
 
 # Import first stickleback file. Was accelerated by 300%
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
@@ -35,6 +36,9 @@ track.columns = ["time", "x1", "y1", "x1_v", "y1_v",
                  "x17", "y17", "x17_v", "y17_v",
                  "x18", "y18", "x18_v", "y18_v",
                  "x19", "y19", "x19_v", "y19_v"]
+
+pos_y = track[track.columns[2::4]]
+pos_x = track[track.columns[1::4]]
 
 
 # This renames the columns successfully, but in the wrong order. This outputs:
