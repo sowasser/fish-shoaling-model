@@ -40,11 +40,38 @@ track.columns = ["time", "x1", "y1", "x1_v", "y1_v",
                  "x19", "y19", "x19_v", "y19_v"]
 
 time = track[track.columns[0]]
-pos_y = track[track.columns[2::4]]
-pos_x = track[track.columns[1::4]]
 
-mean_y = pos_y.mean(axis=1)
-mean_x = pos_x.mean(axis=1)
+# Separate dataframes for position of each fish. There must be a better way
+f1p = track[track.columns[1:5]]
+f2p = track[track.columns[5:9]]
+f3p = track[track.columns[9:13]]
+f4p = track[track.columns[13:17]]
+f5p = track[track.columns[17:21]]
+f6p = track[track.columns[21:25]]
+f7p = track[track.columns[25:29]]
+f8p = track[track.columns[29:33]]
+f9p = track[track.columns[33:37]]
+f10p = track[track.columns[37:41]]
+f11p = track[track.columns[41:45]]
+f12p = track[track.columns[45:49]]
+f13p = track[track.columns[49:53]]
+f14p = track[track.columns[53:57]]
+f15p = track[track.columns[57:61]]
+f16p = track[track.columns[61:65]]
+f17p = track[track.columns[65:69]]
+f18p = track[track.columns[69:73]]
+f19p = track[track.columns[73:77]]
+
+
+def distance(p1, p2):
+    """Calculates Euclidean distance between two points"""
+    dist = math.sqrt(sum((p1 - p2) ^ 2))
+    return dist
+
+# pos_y = track[track.columns[2::4]]
+# pos_x = track[track.columns[1::4]]
+# mean_y = pos_y.mean(axis=1)
+# mean_x = pos_x.mean(axis=1)
 
 
 # This renames the columns successfully, but in the wrong order. This outputs:
