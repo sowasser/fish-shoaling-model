@@ -42,31 +42,34 @@ track.columns = ["time", "x1", "y1", "x1_v", "y1_v",
 time = track[track.columns[0]]
 
 # Separate dataframes for position of each fish. There must be a better way
-f1p = track[track.columns[1:5]]
-f2p = track[track.columns[5:9]]
-f3p = track[track.columns[9:13]]
-f4p = track[track.columns[13:17]]
-f5p = track[track.columns[17:21]]
-f6p = track[track.columns[21:25]]
-f7p = track[track.columns[25:29]]
-f8p = track[track.columns[29:33]]
-f9p = track[track.columns[33:37]]
-f10p = track[track.columns[37:41]]
-f11p = track[track.columns[41:45]]
-f12p = track[track.columns[45:49]]
-f13p = track[track.columns[49:53]]
-f14p = track[track.columns[53:57]]
-f15p = track[track.columns[57:61]]
-f16p = track[track.columns[61:65]]
-f17p = track[track.columns[65:69]]
-f18p = track[track.columns[69:73]]
-f19p = track[track.columns[73:77]]
+f1p = track[track.columns[1:3]]
+f2p = track[track.columns[5:7]]
+f3p = track[track.columns[9:11]]
+f4p = track[track.columns[13:15]]
+f5p = track[track.columns[17:19]]
+f6p = track[track.columns[21:23]]
+f7p = track[track.columns[25:27]]
+f8p = track[track.columns[29:31]]
+f9p = track[track.columns[33:35]]
+f10p = track[track.columns[37:39]]
+f11p = track[track.columns[41:43]]
+f12p = track[track.columns[45:47]]
+f13p = track[track.columns[49:51]]
+f14p = track[track.columns[53:55]]
+f15p = track[track.columns[57:59]]
+f16p = track[track.columns[61:63]]
+f17p = track[track.columns[65:67]]
+f18p = track[track.columns[69:71]]
+f19p = track[track.columns[73:75]]
 
 
-def distance(p1, p2):
+def distance(x1, x2, y1, y2):
     """Calculates Euclidean distance between two points"""
-    dist = math.sqrt(sum((p1 - p2) ^ 2))
+    dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
     return dist
+
+# having trouble: go to this stack overflow post for next steps:
+# https://stackoverflow.com/questions/36609457/run-function-exactly-once-for-each-row-in-a-pandas-dataframe
 
 # pos_y = track[track.columns[2::4]]
 # pos_x = track[track.columns[1::4]]
