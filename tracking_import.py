@@ -10,6 +10,8 @@ model.
 
 import pandas as pd
 import os
+import numpy as np
+import math
 import itertools
 
 # Import first stickleback file. Was accelerated by 300%
@@ -37,8 +39,12 @@ track.columns = ["time", "x1", "y1", "x1_v", "y1_v",
                  "x18", "y18", "x18_v", "y18_v",
                  "x19", "y19", "x19_v", "y19_v"]
 
+time = track[track.columns[0]]
 pos_y = track[track.columns[2::4]]
 pos_x = track[track.columns[1::4]]
+
+mean_y = pos_y.mean(axis=1)
+mean_x = pos_x.mean(axis=1)
 
 
 # This renames the columns successfully, but in the wrong order. This outputs:
