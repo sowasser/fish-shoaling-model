@@ -10,9 +10,7 @@ model.
 
 import pandas as pd
 import os
-import numpy as np
 import math
-import itertools
 
 # Import first stickleback file. Was accelerated by 300%
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
