@@ -43,25 +43,29 @@ s14 = list(track[track.columns[26:28]].dropna(axis=0).itertuples(index=False, na
 
 # Distance from centroid for each frame
 
-def distance(x1, x2, y1, y2):
-    """Calculates Euclidean distance between two points"""
-    dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+def distance(df1, df2):
+    """Calculates Euclidean distance between two points."""
+    dist = math.sqrt((df2[:, 0] - df1[:, 0])**2 + (df2[:, 1] - df1[:, 1])**2)
     return dist
 
 
-def centroid_dist(df):
-    """
-    Finds the centroid of each frame, and then calculates the mean distance of
-    the fish from the centroid"""
+def centroid(df):
+    """Finds the centroid of each frame."""
     pos_x = df[:, 0]
     pos_y = df[:, 1]
     mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
-    centroid = (mean_x, mean_y)
+    cent = (mean_x, mean_y)
+    return np.asarray(cent)
+
+
+def centroid_dist(df):
+    """Calculates mean distance of all fish from the centroid for each frame."""
     cent_dist = []
     for i in df:
-        dist = distance(df[i], centroid)  # this is where the problem is
+        pos = df[i:, ]  # issue here
+        dist = distance(pos, centroid(df))
         cent_dist = np.append(cent_dist, dist)
-    return cent_dist
+    return np.mean(cent_dist)
 
 
 s1_cd = centroid_dist(s1)
