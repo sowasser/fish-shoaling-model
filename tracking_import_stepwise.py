@@ -11,6 +11,7 @@ that in the tracking_import.py script.
 import pandas as pd
 import os
 import math
+import numpy as np
 
 # Import second stickleback file. Was accelerated by 500% and data captured
 # every 20 steps
@@ -24,7 +25,7 @@ track.columns = ["x1", "y1", "x2", "y2", "x3", "y3", "x4", "y4", "x5", "y5",
                  "x11", "y11", "x12", "y12", "x13", "y13", "x14", "y14"]
 
 # Separate list of tuples for each step, remove empty row to prep for analysis
-s1 = list(track[track.columns[0:2]].dropna(axis=0).itertuples(index=False, name=None))
+s1 = np.asarray(track[track.columns[0:2]].dropna(axis=0))
 s2 = list(track[track.columns[2:4]].dropna(axis=0).itertuples(index=False, name=None))
 s3 = list(track[track.columns[4:6]].dropna(axis=0).itertuples(index=False, name=None))
 s4 = list(track[track.columns[6:8]].dropna(axis=0).itertuples(index=False, name=None))
@@ -39,5 +40,28 @@ s12 = list(track[track.columns[22:24]].dropna(axis=0).itertuples(index=False, na
 s13 = list(track[track.columns[24:26]].dropna(axis=0).itertuples(index=False, name=None))
 s14 = list(track[track.columns[26:28]].dropna(axis=0).itertuples(index=False, name=None))
 
-# Centroid of each frame
 
+# Distance from centroid for each frame
+
+def distance(x1, x2, y1, y2):
+    """Calculates Euclidean distance between two points"""
+    dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+    return dist
+
+
+def centroid_dist(df):
+    """
+    Finds the centroid of each frame, and then calculates the mean distance of
+    the fish from the centroid"""
+    pos_x = df[:, 0]
+    pos_y = df[:, 1]
+    mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
+    centroid = (mean_x, mean_y)
+    cent_dist = []
+    for i in df:
+        dist = distance(df[i], centroid)  # this is where the problem is
+        cent_dist = np.append(cent_dist, dist)
+    return cent_dist
+
+
+s1_cd = centroid_dist(s1)

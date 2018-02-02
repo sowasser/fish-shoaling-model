@@ -74,8 +74,7 @@ def centroid_dist(model):
     """
     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
-    mean_x = np.mean(pos_x)
-    mean_y = np.mean(pos_y)
+    mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
     centroid = (mean_x, mean_y)
     pos = [agent.pos for agent in model.schedule.agents]
     cent_dist = []
