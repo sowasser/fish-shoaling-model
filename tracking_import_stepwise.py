@@ -6,11 +6,13 @@ In this script, the data are imported and cleaned, then position is extracted
 for statistical analyses, similar to the data collectors in the fish shoaling
 model. The data structure for this analysis method is completely different than
 that in the tracking_import.py script.
+
+Statistics performed:
+    * Mean distance from the centroid
 """
 
 import pandas as pd
 import os
-import math
 import numpy as np
 
 # Import second stickleback file. Was accelerated by 500% and data captured
@@ -41,16 +43,19 @@ s13 = np.asarray(track[track.columns[24:26]].dropna(axis=0))
 s14 = np.asarray(track[track.columns[26:28]].dropna(axis=0))
 
 
-# Distance from centroid for each frame
+# Mean distance from centroid for each frame.
 def centroid_dist(df):
-    """Finds the centroid of each frame."""
+    """
+    Finds the centroid of each frame and then calculates mean distance of
+    objects from the centroid.
+    """
     pos_x = df[:, 0]
     pos_y = df[:, 1]
     mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
     cent = np.asarray(mean_x, mean_y)
 
     def distance(array):
-        """Euclidean distance"""
+        """Euclidean distance between object and centroid."""
         dist = np.linalg.norm(array - cent)
         return dist
 
