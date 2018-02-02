@@ -1,6 +1,6 @@
 """
 Data captured from video of fish (sticklebacks or zebrafish) using LoggerPro.
-The position of each fish is captured for selected time steps of the video.
+The position of each fish is captured for selected frames of the video.
 
 In this script, the data are imported and cleaned, then position is extracted
 for statistical analyses, similar to the data collectors in the fish shoaling
@@ -14,6 +14,7 @@ Statistics performed:
 import pandas as pd
 import os
 import numpy as np
+from scipy.spatial import KDTree
 
 # Import second stickleback file. Was accelerated by 500% and data captured
 # every 20 steps
@@ -26,7 +27,7 @@ track.columns = ["x1", "y1", "x2", "y2", "x3", "y3", "x4", "y4", "x5", "y5",
                  "x6", "y6", "x7", "y7", "x8", "y8", "x9", "y9", "x10", "y10",
                  "x11", "y11", "x12", "y12", "x13", "y13", "x14", "y14"]
 
-# Separate list of tuples for each step, remove empty row to prep for analysis
+# Separate arrays of object position per frame. Removed empty rows.
 s1 = np.asarray(track[track.columns[0:2]].dropna(axis=0))
 s2 = np.asarray(track[track.columns[2:4]].dropna(axis=0))
 s3 = np.asarray(track[track.columns[4:6]].dropna(axis=0))
@@ -43,7 +44,10 @@ s13 = np.asarray(track[track.columns[24:26]].dropna(axis=0))
 s14 = np.asarray(track[track.columns[26:28]].dropna(axis=0))
 
 
-# Mean distance from centroid for each frame.
+###############################
+# Mean distance from centroid #
+###############################
+
 def centroid_dist(df):
     """
     Finds the centroid of each frame and then calculates mean distance of
@@ -68,3 +72,28 @@ centroid_distance = [centroid_dist(s1), centroid_dist(s2), centroid_dist(s3),
                      centroid_dist(s7), centroid_dist(s8), centroid_dist(s9),
                      centroid_dist(s10), centroid_dist(s11), centroid_dist(s12),
                      centroid_dist(s13), centroid_dist(s14)]
+
+
+##############################
+# Nearest Neighbour Distance #
+##############################
+
+def nnd(df):
+    """
+    Computes the average nearest neighbour distance for each object. Finds &
+    averages nearest neighbours using a KDTree, a machine learning concept for
+    clustering or compartmentalizing data. Can control how many neighbours are
+    considered 'near'.
+    """
+    fish_tree = KDTree(df)
+    means = []
+    for me in df:
+        neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
+        dist = list(neighbors[0])  # select dist from .query output
+        dist.pop(0)  # removes closest agent - itself @ dist = 0
+        means.append(sum(dist) / len(dist))
+    return sum(means) / len(means)
+
+
+nn_distance = [nnd(s1), nnd(s2), nnd(s3), nnd(s4), nnd(s5), nnd(s6), nnd(s7),
+               nnd(s8), nnd(s9), nnd(s10), nnd(s11), nnd(s12), nnd(s13), nnd(s14)]

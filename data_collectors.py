@@ -39,7 +39,7 @@ def polar(model):
 
 def nnd(model):
     """
-    Computes the average nearest neighbor distance for each agent as another
+    Computes the average nearest neighbour distance for each agent as another
     measure of cohesion. Method finds & averages the nearest neighbours
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
@@ -48,8 +48,8 @@ def nnd(model):
     fish_tree = KDTree(fish)
     means = []
     for me in fish:
-        neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
-        dist = list(neighbors[0])  # select dist not neighbor # from .query output
+        neighbours = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
+        dist = list(neighbours[0])  # select dist from .query output
         dist.pop(0)  # removes closest agent - itself @ dist = 0
         means.append(sum(dist) / len(dist))
     return sum(means) / len(means)
