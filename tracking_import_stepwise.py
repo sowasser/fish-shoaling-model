@@ -62,7 +62,7 @@ def centroid_dist(df):
     """Calculates mean distance of all fish from the centroid for each frame."""
     cent_dist = []
     for i in df:
-        pos = df[i:, ]  # issue here
+        pos = df[i, :]  # issue here
         dist = distance(pos, centroid(df))
         cent_dist = np.append(cent_dist, dist)
     return np.mean(cent_dist)
