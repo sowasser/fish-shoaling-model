@@ -55,15 +55,14 @@ def centroid_dist(df):
     """
     pos_x = df[:, 0]
     pos_y = df[:, 1]
-    mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
-    cent = np.asarray(mean_x, mean_y)
+    cent = np.asarray(np.mean(pos_x), np.mean(pos_y))
 
     def distance(array):
         """Euclidean distance between object and centroid."""
         dist = np.linalg.norm(array - cent)
         return dist
 
-    cent_dist = np.apply_along_axis(distance, axis=1, arr=df)
+    cent_dist = np.mean(np.apply_along_axis(distance, axis=1, arr=df))
     return np.mean(cent_dist)
 
 
