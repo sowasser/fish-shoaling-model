@@ -111,16 +111,11 @@ nn_distance = [nnd(s1), nnd(s2), nnd(s3), nnd(s4), nnd(s5), nnd(s6), nnd(s7),
 def area(df):
     """
     Computes convex hull (smallest convex set that contains all points) as a
-    measure of shoal area.
+    measure of shoal area. Uses the area variable from the scipy.spatial
+    ConvexHull function, which requires a numpy array of tuples as input.
     """
-
-    def con_hull(array):
-        """Area variable from the scipy.spatial ConvexHull function"""
-        pos_x = array[:, 0]
-        pos_y = array[:, 1]
-        return ConvexHull(np.column_stack((pos_x, pos_y))).area
-
-    return np.apply_along_axis(con_hull, axis=1, arr=df)
+    position = np.column_stack((np.asarray(df[:, 0]), np.asarray(df[:, 1])))
+    return ConvexHull(position).area
 
 
 shoal_area = [area(s1), area(s2), area(s3), area(s4), area(s5), area(s6),
