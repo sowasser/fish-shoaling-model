@@ -9,12 +9,18 @@ that in the tracking_import.py script.
 
 Statistics performed:
     * Mean distance from the centroid
+    * Mean nearest neighbour distance
+    * Shoal area (area of the convex hull)
+
+Shoal area will likely not be very useful, as the fish tend to stay at the
+boarders of the tub they're in. Polarization can be added if additional points
+on the body of each fish are.
 """
 
 import pandas as pd
 import os
 import numpy as np
-from scipy.spatial import KDTree
+from scipy.spatial import KDTree, ConvexHull
 
 # Import second stickleback file. Was accelerated by 500% and data captured
 # every 20 steps
@@ -96,3 +102,27 @@ def nnd(df):
 
 nn_distance = [nnd(s1), nnd(s2), nnd(s3), nnd(s4), nnd(s5), nnd(s6), nnd(s7),
                nnd(s8), nnd(s9), nnd(s10), nnd(s11), nnd(s12), nnd(s13), nnd(s14)]
+
+
+##############
+# Shoal Area #
+##############
+
+def area(df):
+    """
+    Computes convex hull (smallest convex set that contains all points) as a
+    measure of shoal area.
+    """
+
+    def con_hull(array):
+        """Area variable from the scipy.spatial ConvexHull function"""
+        pos_x = array[:, 0]
+        pos_y = array[:, 1]
+        return ConvexHull(np.column_stack((pos_x, pos_y))).area
+
+    return np.apply_along_axis(con_hull, axis=1, arr=df)
+
+
+shoal_area = [area(s1), area(s2), area(s3), area(s4), area(s5), area(s6),
+              area(s7), area(s8), area(s9), area(s10), area(s11), area(s12),
+              area(s13), area(s14)]

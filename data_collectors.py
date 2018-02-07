@@ -57,7 +57,7 @@ def nnd(model):
 
 def area(model):
     """
-    Computes convex hull (smallest convex set that contains all points) as
+    Computes convex hull (smallest convex set that contains all points) as a
     measure of shoal area. Uses the area variable from the scipy.spatial
     ConvexHull function.
     """
