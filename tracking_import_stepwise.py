@@ -7,19 +7,25 @@ for statistical analyses. The data structure for this analysis method is
 completely different than that in the tracking_import.py script. The results
 are then graphed using matplotlib.
 
-The functions for the statistical analyses are in the tracking_functions.py
-script and are as follows:
+These functions are for statistical analysis of the data, similar to the data
+collectors in the fish shoaling model. They are:
     * Mean distance from the centroid
     * Mean nearest neighbour distance
     * Shoal area (area of the convex hull)
     * Polarization - can be included for tracking data with 2 points per fish
+
+Shoal area will likely not be very useful, as the fish tend to stay at the
+boarders of the tub they're in. Polarization can be included for tracking data
+with 2 points per fish per frame.
 """
 
 # Todo: Code data import to make it work automatically for different datasets
+# Todo: Code polarization function
 
 import pandas as pd
+import numpy as np
 import os
-from tracking_functions import *
+from scipy.spatial import KDTree, ConvexHull
 import matplotlib.pyplot as plt
 
 
@@ -65,29 +71,73 @@ steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
 
 
 # Mean Distance from Centroid
+def centroid_dist(df):
+    """
+    Finds the centroid of each frame and then calculates mean distance of
+    objects from the centroid.
+    """
+    pos_x = df[:, 0]
+    pos_y = df[:, 1]
+    cent = np.asarray(np.mean(pos_x), np.mean(pos_y))
+
+    def distance(array):
+        """Euclidean distance between object and centroid."""
+        dist = np.linalg.norm(array - cent)
+        return dist
+
+    cent_dist = np.mean(np.apply_along_axis(distance, axis=1, arr=df))
+    return np.mean(cent_dist)
+
+
 centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
 centroid_distance.to_csv(os.path.join(path, r"track_cent_dist.csv"))
 
-# Graph in matplotlib
-# plt.style.use('dark_background')
-# plt.plot(centroid_distance)
-# plt.title("Mean Distance from Centroid")
-# plt.xlabel("step")
-# plt.ylabel("distance (mm)")
-# plt.show()
-
 
 # Nearest Neighbour Distance
+def nnd(df):
+    """
+    Computes the average nearest neighbour distance for each object. Finds &
+    averages nearest neighbours using a KDTree, a machine learning concept for
+    clustering or compartmentalizing data. Can control how many neighbours are
+    considered 'near'.
+    """
+    fish_tree = KDTree(df)
+    means = []
+    for me in df:
+        neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
+        dist = list(neighbors[0])  # select dist from .query output
+        dist.pop(0)  # removes closest agent - itself @ dist = 0
+        means.append(sum(dist) / len(dist))
+    return sum(means) / len(means)
+
+
 nn_distance = pd.DataFrame([nnd(s) for s in steps])
 nn_distance.to_csv(os.path.join(path, r"track_nnd.csv"))
 
 
 # Shoal Area
+def area(df):
+    """
+    Computes convex hull (smallest convex set that contains all points) as a
+    measure of shoal area. Uses the area variable from the scipy.spatial
+    ConvexHull function, which requires a numpy array of tuples as input.
+    """
+    position = np.column_stack((np.asarray(df[:, 0]), np.asarray(df[:, 1])))
+    return ConvexHull(position).area
+
+
 shoal_area = pd.DataFrame([area(s) for s in steps])
 shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 
 
 # Polarization
+def polar(df):
+    """
+    Computes median absolute deviation (MAD) from the mean heading of the group
+    as a measure of polarization.
+    """
+
+
 # polarization = pd.DataFrame([polar(s) for s in steps])
 # polarization.to_csv(os.path.join(path, r"track_polar.csv"))
 
