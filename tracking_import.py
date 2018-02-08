@@ -9,79 +9,66 @@ model.
 """
 
 import pandas as pd
+import numpy as np
 import os
-import math
+
 
 # Import first stickleback file. Was accelerated by 300%
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
 track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300x.csv"),
                     sep=",")
-# Rename columns. There has to be a better way to do this.
-track.columns = ["time", "x1", "y1", "x1_v", "y1_v",
-                 "x2", "y2", "x2_v", "y2_v",
-                 "x3", "y3", "x3_v", "y3_v",
-                 "x4", "y4", "x4_v", "y4_v",
-                 "x5", "y5", "x5_v", "y5_v",
-                 "x6", "y6", "x6_v", "y6_v",
-                 "x7", "y7", "x7_v", "y7_v",
-                 "x8", "y8", "x8_v", "y8_v",
-                 "x9", "y9", "x9_v", "y9_v",
-                 "x10", "y10", "x10_v", "y10_v",
-                 "x11", "y11", "x11_v", "y11_v",
-                 "x12", "y12", "x12_v", "y12_v",
-                 "x13", "y13", "x13_v", "y13_v",
-                 "x14", "y14", "x14_v", "y14_v",
-                 "x15", "y15", "x15_v", "y15_v",
-                 "x16", "y16", "x16_v", "y16_v",
-                 "x17", "y17", "x17_v", "y17_v",
-                 "x18", "y18", "x18_v", "y18_v",
-                 "x19", "y19", "x19_v", "y19_v"]
 
+# Column names: x1, y1, x1_v, y1_v, x2, y2, x2_v, y2_v, etc.
+# Separate out 1st (time) column
 time = track[track.columns[0]]
+track = track.drop(track.columns[0], axis=1)
 
-# Separate dataframes for position of each fish. There must be a better way
-f1p = track[track.columns[1:3]]
-f2p = track[track.columns[5:7]]
-f3p = track[track.columns[9:11]]
-f4p = track[track.columns[13:15]]
-f5p = track[track.columns[17:19]]
-f6p = track[track.columns[21:23]]
-f7p = track[track.columns[25:27]]
-f8p = track[track.columns[29:31]]
-f9p = track[track.columns[33:35]]
-f10p = track[track.columns[37:39]]
-f11p = track[track.columns[41:43]]
-f12p = track[track.columns[45:47]]
-f13p = track[track.columns[49:51]]
-f14p = track[track.columns[53:55]]
-f15p = track[track.columns[57:59]]
-f16p = track[track.columns[61:63]]
-f17p = track[track.columns[65:67]]
-f18p = track[track.columns[69:71]]
-f19p = track[track.columns[73:75]]
+nums = range(1, 20)  # End is #+1. CHANGE THIS FOR DIFFERENT DATA SOURCES
+list_x = ["x" + str(n) for n in nums]
+list_y = ["y" + str(n) for n in nums]
+list_xv = ["x" + str(n) + "_v" for n in nums]
+list_yv = ["y" + str(n) + "_v" for n in nums]
+
+# iterate between lists and assign as column names
+track.columns = [item for sublist in zip(list_x, list_y, list_xv, list_yv)
+                 for item in sublist]
+
+# Separate dataframes for position of each fish.
+f1p = np.asarray(track[track.columns[0:2]])
+f2p = np.asarray(track[track.columns[4:6]])
+f3p = track[track.columns[8:10]]
+f4p = track[track.columns[12:14]]
+f5p = track[track.columns[16:18]]
+f6p = track[track.columns[20:22]]
+f7p = track[track.columns[24:26]]
+f8p = track[track.columns[28:30]]
+f9p = track[track.columns[32:34]]
+f10p = track[track.columns[36:38]]
+f11p = track[track.columns[40:42]]
+f12p = track[track.columns[44:46]]
+f13p = track[track.columns[48:50]]
+f14p = track[track.columns[52:54]]
+f15p = track[track.columns[56:58]]
+f16p = track[track.columns[60:62]]
+f17p = track[track.columns[64:66]]
+f18p = track[track.columns[68:70]]
+f19p = track[track.columns[72:74]]
+
+pair1 = np.column_stack((f1p, f2p))
 
 
-def distance(x1, x2, y1, y2):
-    """Calculates Euclidean distance between two points"""
-    dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-    return dist
+def mean_distance(pair):
+    """Calculates mean distance between agents per time step"""
 
-# having trouble: go to this stack overflow post for next steps:
-# https://stackoverflow.com/questions/36609457/run-function-exactly-once-for-each-row-in-a-pandas-dataframe
+    def distance(df):
+        """Calculates Euclidean distance between two points"""
+        # Todo: fix this function!
+        df1 = df[:, [0, 1]]
+        df2 = df[:, [2, 3]]
+        dist = np.linalg.norm(df1 - df2)
+        return dist
 
-# pos_y = track[track.columns[2::4]]
-# pos_x = track[track.columns[1::4]]
-# mean_y = pos_y.mean(axis=1)
-# mean_x = pos_x.mean(axis=1)
+    return np.mean(np.apply_along_axis(distance, axis=1, arr=pair))
 
 
-# This renames the columns successfully, but in the wrong order. This outputs:
-# time, x1, x2, x3..., y1, y2, y3..., x1_v, x2_v, x3_v..., y1_v, y2_v, y3_v...
-
-# rng = range(1, int((len(list(track)) - 1) / 4) + 1)
-# new_cols = ["time"] + \
-#            ["x" + str(i) for i in rng] + \
-#            ["y" + str(i) for i in rng] + \
-#            ["x" + str(i) + "_v" for i in rng] + \
-#            ["y" + str(i) + "_v" for i in rng]
-# track.columns = new_cols
+md = mean_distance(pair1)
