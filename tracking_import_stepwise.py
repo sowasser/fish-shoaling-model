@@ -66,7 +66,7 @@ steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
 
 # Mean Distance from Centroid
 centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
-centroid_distance.to_csv(os.path.join(path, r"track_cent_distance.csv"))
+centroid_distance.to_csv(os.path.join(path, r"track_cent_dist.csv"))
 
 
 # Nearest Neighbour Distance
