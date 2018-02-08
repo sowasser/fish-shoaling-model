@@ -5,8 +5,7 @@ The position of each fish is captured for selected frames of the video.
 In this script, the data are imported and cleaned, then position is extracted
 for statistical analyses. The data structure for this analysis method is
 completely different than that in the tracking_import.py script. The results
-can then be exported to R for graphing if you're a ggplot fan, or eventually
-you (and by you I mean I) can figure out how to make graphs in Python. :þ
+are then graphed using matplotlib.
 
 The functions for the statistical analyses are in the tracking_functions.py
 script and are as follows:
@@ -92,10 +91,13 @@ shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 # polarization = pd.DataFrame([polar(s) for s in steps])
 # polarization.to_csv(os.path.join(path, r"track_polar.csv"))
 
+
+###############################################################################
+
 # Plot Styles
-# plt.style.use("dark_background")
+plt.style.use("dark_background")
 # plt.style.use("ggplot")
-plt.style.use("seaborn-dark")
+# plt.style.use("seaborn-dark")
 # plt.style.use("Solarize_Light2")
 
 # Create multiplot
@@ -122,3 +124,6 @@ plt.xlabel("step")
 plt.tight_layout()
 
 plt.show()
+
+plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
+fig.savefig(os.path.join(plot_path, r"tracking.png"))
