@@ -65,16 +65,20 @@ steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
 
 
 # Mean Distance from Centroid
-centroid_distance = [centroid_dist(s) for s in steps]
+centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
+centroid_distance.to_csv(os.path.join(path, r"track_cent_distance.csv"))
 
 
 # Nearest Neighbour Distance
-nn_distance = [nnd(s) for s in steps]
+nn_distance = pd.DataFrame([nnd(s) for s in steps])
+nn_distance.to_csv(os.path.join(path, r"track_nnd.csv"))
 
 
 # Shoal Area
-shoal_area = [area(s) for s in steps]
+shoal_area = pd.DataFrame([area(s) for s in steps])
+shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 
 
 # Polarization
-# polarization = [polar(s) for s in steps]
+# polarization = pd.DataFrame([polar(s) for s in steps])
+# polarization.to_csv(os.path.join(path, r"track_polar.csv"))
