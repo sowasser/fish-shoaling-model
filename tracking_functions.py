@@ -70,5 +70,3 @@ def polar(df):
     Computes median absolute deviation (MAD) from the mean heading of the group
     as a measure of polarization.
     """
-
-
