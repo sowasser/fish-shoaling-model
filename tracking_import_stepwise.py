@@ -70,12 +70,12 @@ centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
 centroid_distance.to_csv(os.path.join(path, r"track_cent_dist.csv"))
 
 # Graph in matplotlib
-plt.style.use('dark_background')
-plt.plot(centroid_distance)
-plt.title("Mean Distance from Centroid")
-plt.xlabel("step")
-plt.ylabel("distance (mm)")
-plt.show()
+# plt.style.use('dark_background')
+# plt.plot(centroid_distance)
+# plt.title("Mean Distance from Centroid")
+# plt.xlabel("step")
+# plt.ylabel("distance (mm)")
+# plt.show()
 
 
 # Nearest Neighbour Distance
@@ -91,3 +91,28 @@ shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 # Polarization
 # polarization = pd.DataFrame([polar(s) for s in steps])
 # polarization.to_csv(os.path.join(path, r"track_polar.csv"))
+
+plt.style.use('dark_background')
+fig = plt.figure(figsize=(6, 9), dpi=300)
+
+ax1 = plt.subplot(311)
+plt.title("Mean Distance from Centroid")
+plt.ylabel("distance (mm)")
+
+ax2 = plt.subplot(312)
+plt.title("Mean Nearest Neighbour Distance")
+plt.ylabel("distance (mm)")
+
+ax3 = plt.subplot(313)
+plt.title("Shoal Area")
+plt.ylabel("area (mm2)")
+
+ax1.plot(centroid_distance)
+ax2.plot(nn_distance)
+ax3.plot(shoal_area)
+
+ax1.get_shared_x_axes().join(ax1, ax2, ax3)
+plt.xlabel("step")
+plt.tight_layout()
+
+plt.show()
