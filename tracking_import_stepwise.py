@@ -3,25 +3,22 @@ Data captured from video of fish (sticklebacks or zebrafish) using LoggerPro.
 The position of each fish is captured for selected frames of the video.
 
 In this script, the data are imported and cleaned, then position is extracted
-for statistical analyses, similar to the data collectors in the fish shoaling
-model. The data structure for this analysis method is completely different than
-that in the tracking_import.py script.
+for statistical analyses. The data structure for this analysis method is
+completely different than that in the tracking_import.py script.
 
-Statistics performed:
+The functions for the statistical analyses are in the tracking_functions.py
+script and are as follows:
     * Mean distance from the centroid
     * Mean nearest neighbour distance
     * Shoal area (area of the convex hull)
-    * Polarization
-
-Shoal area will likely not be very useful, as the fish tend to stay at the
-boarders of the tub they're in. Polarization can be added if additional points
-on the body of each fish are.
+    * Polarization - can be included for tracking data with 2 points per fish
 """
+
+# Todo: Make data import and final dataframe creation for each statistic more universal
 
 import pandas as pd
 import os
-import numpy as np
-from scipy.spatial import KDTree, ConvexHull
+from tracking_functions import *
 
 
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
@@ -60,26 +57,8 @@ s14 = np.asarray(track[track.columns[26:28]].dropna(axis=0))
 
 
 ###############################
-# Mean distance from centroid #
+# Mean Distance from Centroid #
 ###############################
-
-def centroid_dist(df):
-    """
-    Finds the centroid of each frame and then calculates mean distance of
-    objects from the centroid.
-    """
-    pos_x = df[:, 0]
-    pos_y = df[:, 1]
-    cent = np.asarray(np.mean(pos_x), np.mean(pos_y))
-
-    def distance(array):
-        """Euclidean distance between object and centroid."""
-        dist = np.linalg.norm(array - cent)
-        return dist
-
-    cent_dist = np.mean(np.apply_along_axis(distance, axis=1, arr=df))
-    return np.mean(cent_dist)
-
 
 centroid_distance = [centroid_dist(s1), centroid_dist(s2), centroid_dist(s3),
                      centroid_dist(s4), centroid_dist(s5), centroid_dist(s6),
@@ -95,23 +74,6 @@ centroid_distance = [centroid_dist(s1), centroid_dist(s2), centroid_dist(s3),
 # Nearest Neighbour Distance #
 ##############################
 
-def nnd(df):
-    """
-    Computes the average nearest neighbour distance for each object. Finds &
-    averages nearest neighbours using a KDTree, a machine learning concept for
-    clustering or compartmentalizing data. Can control how many neighbours are
-    considered 'near'.
-    """
-    fish_tree = KDTree(df)
-    means = []
-    for me in df:
-        neighbors = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
-        dist = list(neighbors[0])  # select dist from .query output
-        dist.pop(0)  # removes closest agent - itself @ dist = 0
-        means.append(sum(dist) / len(dist))
-    return sum(means) / len(means)
-
-
 nn_distance = [nnd(s1), nnd(s2), nnd(s3), nnd(s4), nnd(s5), nnd(s6), nnd(s7),
                nnd(s8), nnd(s9), nnd(s10), nnd(s11), nnd(s12), nnd(s13),
                nnd(s14)]
@@ -122,16 +84,6 @@ nn_distance = [nnd(s1), nnd(s2), nnd(s3), nnd(s4), nnd(s5), nnd(s6), nnd(s7),
 # Shoal Area #
 ##############
 
-def area(df):
-    """
-    Computes convex hull (smallest convex set that contains all points) as a
-    measure of shoal area. Uses the area variable from the scipy.spatial
-    ConvexHull function, which requires a numpy array of tuples as input.
-    """
-    position = np.column_stack((np.asarray(df[:, 0]), np.asarray(df[:, 1])))
-    return ConvexHull(position).area
-
-
 shoal_area = [area(s1), area(s2), area(s3), area(s4), area(s5), area(s6),
               area(s7), area(s8), area(s9), area(s10), area(s11), area(s12),
               area(s13), area(s14)]
@@ -141,14 +93,7 @@ shoal_area = [area(s1), area(s2), area(s3), area(s4), area(s5), area(s6),
 ################
 # Polarization #
 ################
-#
-# def polar(df):
-#     """
-#     Computes median absolute deviation (MAD) from the mean heading of the group
-#     as a measure of polarization.
-#     """
-#
-#
+
 # polarization = [polar(s1), polar(s2), polar(s3), polar(s4), polar(s5),
 #                 polar(s6), polar(s7), polar(s8), polar(s9), polar(s10),
 #                 polar(s11), polar(s12), polar(s13), polar(s14), polar(s15),
