@@ -92,7 +92,13 @@ shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 # polarization = pd.DataFrame([polar(s) for s in steps])
 # polarization.to_csv(os.path.join(path, r"track_polar.csv"))
 
-plt.style.use('dark_background')
+# Plot Styles
+# plt.style.use("dark_background")
+# plt.style.use("ggplot")
+plt.style.use("seaborn-dark")
+# plt.style.use("Solarize_Light2")
+
+# Create multiplot
 fig = plt.figure(figsize=(6, 9), dpi=300)
 
 ax1 = plt.subplot(311)
