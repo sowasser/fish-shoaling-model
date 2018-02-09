@@ -137,14 +137,16 @@ shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 def polar(df):
     """
     Computes median absolute deviation (MAD) from the mean heading of the group
-    as a measure of polarization by calculating the angle (in radians) between
-    the two points and then calculating the MAD for the step.
+    as a measure of polarization by calculating the angle (in radians) of the
+    line between points at the front & back of each fish, then the MAD.
     """
-    df1, df2 = df[::2], df[::2]
-    x_front = np.ndarray.tolist(df1[:, 0])
-    y_front = np.ndarray.tolist(df1[:, 1])
-    x_back = np.ndarray.tolist(df2[:, 0])
-    y_back = np.ndarray.tolist(df2[:, 1])
+    # Separate out points for front & back of the fish
+    x_front = np.ndarray.tolist(df[::2, 0])
+    y_front = np.ndarray.tolist(df[::2, 1])
+    x_back = np.ndarray.tolist(df[1::2, 0])
+    y_back = np.ndarray.tolist(df[1::2, 1])
+
+    # Calculate difference, angle of line, return MAD
     x_diff = [xb - xf for xb, xf in zip(x_back, x_front)]
     y_diff = [yb - yf for yb, yf in zip(y_back, y_front)]
     angles = [math.atan2(y, x) for y, x in zip(y_diff, x_diff)]
