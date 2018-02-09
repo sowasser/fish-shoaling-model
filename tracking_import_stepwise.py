@@ -20,7 +20,6 @@ with 2 points per fish per frame.
 """
 
 # Todo: Code data import to make it work automatically for different datasets
-# Todo: Code polarization function
 
 import pandas as pd
 import numpy as np
@@ -37,7 +36,8 @@ track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xst
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
 # Column names: x1, y1, x2, y2, etc.
-nums = range(1, 22)  # End is #+1. CHANGE THIS FOR DIFFERENT DATA SOURCES
+# Todo: CHANGE NUMS RANGE FOR DIFFERENT DATA SOURCES
+nums = range(1, 22)  # End is #+1
 list_x = ["x" + str(n) for n in nums]
 list_y = ["y" + str(n) for n in nums]
 
@@ -66,7 +66,6 @@ s18 = np.asarray(track[track.columns[34:36]].dropna(axis=0))
 s19 = np.asarray(track[track.columns[36:38]].dropna(axis=0))
 s20 = np.asarray(track[track.columns[38:40]].dropna(axis=0))
 s21 = np.asarray(track[track.columns[40:42]].dropna(axis=0))
-
 
 # Combine for iterating into final dataframes
 steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16,
@@ -154,7 +153,7 @@ def polar(df):
 
 
 polarization = pd.DataFrame([polar(s) for s in steps])
-# polarization.to_csv(os.path.join(path, r"track_polar.csv"))
+polarization.to_csv(os.path.join(path, r"track_polar.csv"))
 
 
 ###############################################################################
@@ -166,29 +165,32 @@ plt.style.use("dark_background")
 # plt.style.use("Solarize_Light2")
 
 # Create multiplot
-fig = plt.figure(figsize=(6, 9), dpi=300)
+fig = plt.figure(figsize=(8, 6), dpi=300)
 
-ax1 = plt.subplot(311)
+ax1 = plt.subplot(221)
 plt.title("Mean Distance from Centroid")
 plt.ylabel("distance (mm)")
 
-ax2 = plt.subplot(312)
+ax2 = plt.subplot(222)
 plt.title("Mean Nearest Neighbour Distance")
 plt.ylabel("distance (mm)")
 
-ax3 = plt.subplot(313)
+ax3 = plt.subplot(223)
 plt.title("Shoal Area")
 plt.ylabel("area (mm2)")
+
+ax4 = plt.subplot(224)
+plt.title("Polarization")
+plt.ylabel("Mean Absolute Deviation")
 
 ax1.plot(centroid_distance)
 ax2.plot(nn_distance)
 ax3.plot(shoal_area)
+ax4.plot(polarization)
 
-ax1.get_shared_x_axes().join(ax1, ax2, ax3)
-plt.xlabel("step")
 plt.tight_layout()
 
 plt.show()
 
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
-fig.savefig(os.path.join(plot_path, r"tracking.png"))
+fig.savefig(os.path.join(plot_path, r"sticklebacks1_300xstepwise.png"))
