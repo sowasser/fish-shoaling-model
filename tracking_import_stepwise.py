@@ -26,6 +26,7 @@ import pandas as pd
 import numpy as np
 import os
 from scipy.spatial import KDTree, ConvexHull
+import math
 from statsmodels.robust.scale import mad
 import matplotlib.pyplot as plt
 
@@ -166,9 +167,11 @@ def polar(df):
 
     def angle_between(array):
         array1, array2 = array[::2], array[::2]
-        angle1 = np.arctan2(*array1[::-1])
-        angle2 = np.arctan2(*array2[::-1])
-        return np.rad2deg((angle1 - angle2) % (2 * np.pi))
+        x1, y1 = array1[:, 0], array1[:, 1]
+        x2, y2 = array2[:, 0], array2[:, 1]
+        x_diff = x2 - x1
+        y_diff = y2 - y1
+        return math.atan2(y_diff, x_diff)
 
     angles = np.apply_along_axis(angle_between(df), axis=1, arr=df)
     return mad(np.asarray(angles), center=np.median)
