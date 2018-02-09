@@ -26,16 +26,17 @@ import pandas as pd
 import numpy as np
 import os
 from scipy.spatial import KDTree, ConvexHull
+from statsmodels.robust.scale import mad
 import matplotlib.pyplot as plt
 
 
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
-track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks2_500x20.csv"),
+track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xstepwise.csv"),
                     sep=",")
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
 # Column names: x1, y1, x2, y2, etc.
-nums = range(1, 15)  # End is #+1. CHANGE THIS FOR DIFFERENT DATA SOURCES
+nums = range(1, 22)  # End is #+1. CHANGE THIS FOR DIFFERENT DATA SOURCES
 list_x = ["x" + str(n) for n in nums]
 list_y = ["y" + str(n) for n in nums]
 
@@ -57,17 +58,18 @@ s11 = np.asarray(track[track.columns[20:22]].dropna(axis=0))
 s12 = np.asarray(track[track.columns[22:24]].dropna(axis=0))
 s13 = np.asarray(track[track.columns[24:26]].dropna(axis=0))
 s14 = np.asarray(track[track.columns[26:28]].dropna(axis=0))
-# s15 = np.asarray(track[track.columns[28:30]].dropna(axis=0))
-# s16 = np.asarray(track[track.columns[30:32]].dropna(axis=0))
-# s17 = np.asarray(track[track.columns[32:34]].dropna(axis=0))
-# s18 = np.asarray(track[track.columns[34:36]].dropna(axis=0))
-# s19 = np.asarray(track[track.columns[36:38]].dropna(axis=0))
-# s20 = np.asarray(track[track.columns[38:40]].dropna(axis=0))
-# s21 = np.asarray(track[track.columns[40:42]].dropna(axis=0))
+s15 = np.asarray(track[track.columns[28:30]].dropna(axis=0))
+s16 = np.asarray(track[track.columns[30:32]].dropna(axis=0))
+s17 = np.asarray(track[track.columns[32:34]].dropna(axis=0))
+s18 = np.asarray(track[track.columns[34:36]].dropna(axis=0))
+s19 = np.asarray(track[track.columns[36:38]].dropna(axis=0))
+s20 = np.asarray(track[track.columns[38:40]].dropna(axis=0))
+s21 = np.asarray(track[track.columns[40:42]].dropna(axis=0))
+
 
 # Combine for iterating into final dataframes
-steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
-# s15, s16, s17, s18, s19, s20, s21
+steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16,
+         s17, s18, s19, s20, s21]
 
 
 # Mean Distance from Centroid
@@ -131,14 +133,48 @@ shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 
 
 # Polarization
+# Separate into arrays for front point and back point
+# s1_2 = [s1[::2], s1[1::2]]
+# s2_2 = [s2[::2], s2[1::2]]
+# s3_2 = [s3[::2], s3[1::2]]
+# s4_2 = [s4[::2], s4[1::2]]
+# s5_2 = [s5[::2], s5[1::2]]
+# s6_2 = [s6[::2], s6[1::2]]
+# s7_2 = [s7[::2], s7[1::2]]
+# s8_2 = [s8[::2], s8[1::2]]
+# s9_2 = [s9[::2], s9[1::2]]
+# s10_2 = [s10[::2], s10[1::2]]
+# s11_2 = [s11[::2], s11[1::2]]
+# s12_2 = [s12[::2], s12[1::2]]
+# s13_2 = [s13[::2], s13[1::2]]
+# s14_2 = [s14[::2], s14[1::2]]
+# s15_2 = [s15[::2], s15[1::2]]
+# s16_2 = [s16[::2], s16[1::2]]
+# s17_2 = [s17[::2], s17[1::2]]
+# s18_2 = [s18[::2], s18[1::2]]
+# s19_2 = [s19[::2], s19[1::2]]
+# s20_2 = [s20[::2], s20[1::2]]
+# s21_2 = [s21[::2], s21[1::2]]
+
+
 def polar(df):
     """
     Computes median absolute deviation (MAD) from the mean heading of the group
-    as a measure of polarization.
+    as a measure of polarization by calculating the counterclockwise angle (in
+    radians) between the two points and then calculating the MAD for the step.
     """
 
+    def angle_between(array):
+        array1, array2 = array[::2], array[::2]
+        angle1 = np.arctan2(*array1[::-1])
+        angle2 = np.arctan2(*array2[::-1])
+        return np.rad2deg((angle1 - angle2) % (2 * np.pi))
 
-# polarization = pd.DataFrame([polar(s) for s in steps])
+    angles = np.apply_along_axis(angle_between(df), axis=1, arr=df)
+    return mad(np.asarray(angles), center=np.median)
+
+
+polarization = pd.DataFrame([polar(s) for s in steps])
 # polarization.to_csv(os.path.join(path, r"track_polar.csv"))
 
 
