@@ -134,46 +134,20 @@ shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 
 
 # Polarization
-# Separate into arrays for front point and back point
-# s1_2 = [s1[::2], s1[1::2]]
-# s2_2 = [s2[::2], s2[1::2]]
-# s3_2 = [s3[::2], s3[1::2]]
-# s4_2 = [s4[::2], s4[1::2]]
-# s5_2 = [s5[::2], s5[1::2]]
-# s6_2 = [s6[::2], s6[1::2]]
-# s7_2 = [s7[::2], s7[1::2]]
-# s8_2 = [s8[::2], s8[1::2]]
-# s9_2 = [s9[::2], s9[1::2]]
-# s10_2 = [s10[::2], s10[1::2]]
-# s11_2 = [s11[::2], s11[1::2]]
-# s12_2 = [s12[::2], s12[1::2]]
-# s13_2 = [s13[::2], s13[1::2]]
-# s14_2 = [s14[::2], s14[1::2]]
-# s15_2 = [s15[::2], s15[1::2]]
-# s16_2 = [s16[::2], s16[1::2]]
-# s17_2 = [s17[::2], s17[1::2]]
-# s18_2 = [s18[::2], s18[1::2]]
-# s19_2 = [s19[::2], s19[1::2]]
-# s20_2 = [s20[::2], s20[1::2]]
-# s21_2 = [s21[::2], s21[1::2]]
-
-
 def polar(df):
     """
     Computes median absolute deviation (MAD) from the mean heading of the group
-    as a measure of polarization by calculating the counterclockwise angle (in
-    radians) between the two points and then calculating the MAD for the step.
+    as a measure of polarization by calculating the angle (in radians) between
+    the two points and then calculating the MAD for the step.
     """
-
-    def angle_between(array):
-        array1, array2 = array[::2], array[::2]
-        x1, y1 = array1[:, 0], array1[:, 1]
-        x2, y2 = array2[:, 0], array2[:, 1]
-        x_diff = x2 - x1
-        y_diff = y2 - y1
-        return math.atan2(y_diff, x_diff)
-
-    angles = np.apply_along_axis(angle_between(df), axis=1, arr=df)
+    df1, df2 = df[::2], df[::2]
+    x_front = np.ndarray.tolist(df1[:, 0])
+    y_front = np.ndarray.tolist(df1[:, 1])
+    x_back = np.ndarray.tolist(df2[:, 0])
+    y_back = np.ndarray.tolist(df2[:, 1])
+    x_diff = [xb - xf for xb, xf in zip(x_back, x_front)]
+    y_diff = [yb - yf for yb, yf in zip(y_back, y_front)]
+    angles = [math.atan2(y, x) for y, x in zip(y_diff, x_diff)]
     return mad(np.asarray(angles), center=np.median)
 
 
