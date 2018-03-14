@@ -22,7 +22,7 @@ The visualization also includes sliders for model variables, such as:
     - distance at which agents separate
 """
 
-from shoal_model import *
+from shoal_model_bounded import *
 
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
