@@ -30,7 +30,7 @@ import random
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
-from continuous_bounded import BoundedSpace
+from mesa.space import ContinuousSpace
 
 from data_collectors import *
 
@@ -150,10 +150,10 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = BoundedSpace(x_max=width, y_max=height,
-                                  torus=False,
-                                  x_min=0, y_min=0,
-                                  grid_width=100, grid_height=100)
+        self.space = ContinuousSpace(x_max=width, y_max=height,
+                                     torus=False,
+                                     x_min=0, y_min=0,
+                                     grid_width=100, grid_height=100)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
         self.running = True
