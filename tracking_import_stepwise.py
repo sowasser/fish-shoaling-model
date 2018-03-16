@@ -36,48 +36,43 @@ track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xst
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
 # Column names: x1, y1, x2, y2, etc.
-# Todo: CHANGE NUMS RANGE & N_COL FOR DIFFERENT DATA SOURCES
+# Todo: CHANGE NUMS RANGE FOR DIFFERENT DATA SOURCES
 nums = range(1, 22)  # End is #+1
-n_col = 42  # max column index
 list_x = ["x" + str(n) for n in nums]
 list_y = ["y" + str(n) for n in nums]
 
 # iterate between lists and assign as column names
 track.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
 
-# Separate arrays of object position per frame & remove empty rows.
-# Todo: figure out how to iterate into these different dataframes
+# List of arrays for each step of the video. Remove empty rows.
+# Todo: CHANGE RANGE FOR DIFFERENT DATA SOURCES
+steps = [track[track.columns[start:stop]].dropna(axis=0) for start, stop in list(range(0, 43, 2))]
 
-steps = []
-# Todo: Run for every 2 numbers....how?
-for n in nums:
-    np.asarray(track[track.columns[0:42]].dropna(axis=0))
-
-s1 = np.asarray(track[track.columns[0:2]].dropna(axis=0))
-s2 = np.asarray(track[track.columns[2:4]].dropna(axis=0))
-s3 = np.asarray(track[track.columns[4:6]].dropna(axis=0))
-s4 = np.asarray(track[track.columns[6:8]].dropna(axis=0))
-s5 = np.asarray(track[track.columns[8:10]].dropna(axis=0))
-s6 = np.asarray(track[track.columns[10:12]].dropna(axis=0))
-s7 = np.asarray(track[track.columns[12:14]].dropna(axis=0))
-s8 = np.asarray(track[track.columns[14:16]].dropna(axis=0))
-s9 = np.asarray(track[track.columns[16:18]].dropna(axis=0))
-s10 = np.asarray(track[track.columns[18:20]].dropna(axis=0))
-s11 = np.asarray(track[track.columns[20:22]].dropna(axis=0))
-s12 = np.asarray(track[track.columns[22:24]].dropna(axis=0))
-s13 = np.asarray(track[track.columns[24:26]].dropna(axis=0))
-s14 = np.asarray(track[track.columns[26:28]].dropna(axis=0))
-s15 = np.asarray(track[track.columns[28:30]].dropna(axis=0))
-s16 = np.asarray(track[track.columns[30:32]].dropna(axis=0))
-s17 = np.asarray(track[track.columns[32:34]].dropna(axis=0))
-s18 = np.asarray(track[track.columns[34:36]].dropna(axis=0))
-s19 = np.asarray(track[track.columns[36:38]].dropna(axis=0))
-s20 = np.asarray(track[track.columns[38:40]].dropna(axis=0))
-s21 = np.asarray(track[track.columns[40:42]].dropna(axis=0))
+# s1 = np.asarray(track[track.columns[0:2]].dropna(axis=0))
+# s2 = np.asarray(track[track.columns[2:4]].dropna(axis=0))
+# s3 = np.asarray(track[track.columns[4:6]].dropna(axis=0))
+# s4 = np.asarray(track[track.columns[6:8]].dropna(axis=0))
+# s5 = np.asarray(track[track.columns[8:10]].dropna(axis=0))
+# s6 = np.asarray(track[track.columns[10:12]].dropna(axis=0))
+# s7 = np.asarray(track[track.columns[12:14]].dropna(axis=0))
+# s8 = np.asarray(track[track.columns[14:16]].dropna(axis=0))
+# s9 = np.asarray(track[track.columns[16:18]].dropna(axis=0))
+# s10 = np.asarray(track[track.columns[18:20]].dropna(axis=0))
+# s11 = np.asarray(track[track.columns[20:22]].dropna(axis=0))
+# s12 = np.asarray(track[track.columns[22:24]].dropna(axis=0))
+# s13 = np.asarray(track[track.columns[24:26]].dropna(axis=0))
+# s14 = np.asarray(track[track.columns[26:28]].dropna(axis=0))
+# s15 = np.asarray(track[track.columns[28:30]].dropna(axis=0))
+# s16 = np.asarray(track[track.columns[30:32]].dropna(axis=0))
+# s17 = np.asarray(track[track.columns[32:34]].dropna(axis=0))
+# s18 = np.asarray(track[track.columns[34:36]].dropna(axis=0))
+# s19 = np.asarray(track[track.columns[36:38]].dropna(axis=0))
+# s20 = np.asarray(track[track.columns[38:40]].dropna(axis=0))
+# s21 = np.asarray(track[track.columns[40:42]].dropna(axis=0))
 
 # Combine for iterating into final dataframes
-steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16,
-         s17, s18, s19, s20, s21]
+# steps = [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16,
+#          s17, s18, s19, s20, s21]
 
 
 # Mean Distance from Centroid
