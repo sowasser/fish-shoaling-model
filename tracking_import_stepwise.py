@@ -36,8 +36,9 @@ track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xst
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
 # Column names: x1, y1, x2, y2, etc.
-# Todo: CHANGE NUMS RANGE FOR DIFFERENT DATA SOURCES
+# Todo: CHANGE NUMS RANGE & N_COL FOR DIFFERENT DATA SOURCES
 nums = range(1, 22)  # End is #+1
+n_col = 42  # max column index
 list_x = ["x" + str(n) for n in nums]
 list_y = ["y" + str(n) for n in nums]
 
@@ -45,6 +46,13 @@ list_y = ["y" + str(n) for n in nums]
 track.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
 
 # Separate arrays of object position per frame & remove empty rows.
+# Todo: figure out how to iterate into these different dataframes
+
+steps = []
+# Todo: Run for every 2 numbers....how?
+for n in nums:
+    np.asarray(track[track.columns[0:42]].dropna(axis=0))
+
 s1 = np.asarray(track[track.columns[0:2]].dropna(axis=0))
 s2 = np.asarray(track[track.columns[2:4]].dropna(axis=0))
 s3 = np.asarray(track[track.columns[4:6]].dropna(axis=0))
