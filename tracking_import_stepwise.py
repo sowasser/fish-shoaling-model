@@ -30,6 +30,7 @@ import matplotlib.pyplot as plt
 
 
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
+# Todo: CHANGE NAME OF FILE
 track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xstepwise.csv"),
                     sep=",")
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
@@ -69,7 +70,7 @@ def centroid_dist(df):
 
 
 centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
-centroid_distance.to_csv(os.path.join(path, r"track_cent_dist.csv"))
+# centroid_distance.to_csv(os.path.join(path, r"track_cent_dist.csv"))
 
 
 # Nearest Neighbour Distance
@@ -91,7 +92,7 @@ def nnd(df):
 
 
 nn_distance = pd.DataFrame([nnd(s) for s in steps])
-nn_distance.to_csv(os.path.join(path, r"track_nnd.csv"))
+# nn_distance.to_csv(os.path.join(path, r"track_nnd.csv"))
 
 
 # Shoal Area
@@ -106,7 +107,7 @@ def area(df):
 
 
 shoal_area = pd.DataFrame([area(s) for s in steps])
-shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
+# shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
 
 
 # Polarization
@@ -130,7 +131,7 @@ def polar(df):
 
 
 polarization = pd.DataFrame([polar(s) for s in steps])
-polarization.to_csv(os.path.join(path, r"track_polar.csv"))
+# polarization.to_csv(os.path.join(path, r"track_polar.csv"))
 
 
 ###############################################################################
@@ -170,4 +171,5 @@ plt.tight_layout()
 plt.show()
 
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
+# Todo: CHANGE NAME OF FILE
 fig.savefig(os.path.join(plot_path, r"sticklebacks1_300xstepwise.png"))
