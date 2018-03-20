@@ -19,7 +19,6 @@ boarders of the tub they're in. Polarization can be included for tracking data
 with 2 points per fish per frame.
 """
 
-# Todo: Code data import to make it work automatically for different datasets
 
 import pandas as pd
 import numpy as np
@@ -36,8 +35,8 @@ track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xst
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
 # Column names: x1, y1, x2, y2, etc.
-# Todo: CHANGE NUMS RANGE FOR DIFFERENT DATA SOURCES
-nums = range(1, 22)  # End is #+1
+# Todo: CHANGE NUMS RANGE FOR DIFFERENT DATA SOURCES - # of steps + 1
+nums = range(1, 22)
 list_x = ["x" + str(n) for n in nums]
 list_y = ["y" + str(n) for n in nums]
 
@@ -45,35 +44,9 @@ list_y = ["y" + str(n) for n in nums]
 track.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
 
 # List of arrays for each step of the video. Remove empty rows.
-# Todo: CHANGE RANGE FOR DIFFERENT DATA SOURCES
-
-# steps = []
-# for start, stop in list(range(0, 41, 2)), list(range(2, 43, 2)):
-#     steps += track[track.columns[start:stop]].dropna(axis=0)
-
-# steps = [track[track.columns[start:stop]].dropna(axis=0) for start, stop in list(range(0, 41, 2))]
-
-steps = [np.asarray(track[track.columns[0:2]].dropna(axis=0)),
-         np.asarray(track[track.columns[2:4]].dropna(axis=0)),
-         np.asarray(track[track.columns[4:6]].dropna(axis=0)),
-         np.asarray(track[track.columns[6:8]].dropna(axis=0)),
-         np.asarray(track[track.columns[8:10]].dropna(axis=0)),
-         np.asarray(track[track.columns[10:12]].dropna(axis=0)),
-         np.asarray(track[track.columns[12:14]].dropna(axis=0)),
-         np.asarray(track[track.columns[14:16]].dropna(axis=0)),
-         np.asarray(track[track.columns[16:18]].dropna(axis=0)),
-         np.asarray(track[track.columns[18:20]].dropna(axis=0)),
-         np.asarray(track[track.columns[20:22]].dropna(axis=0)),
-         np.asarray(track[track.columns[22:24]].dropna(axis=0)),
-         np.asarray(track[track.columns[24:26]].dropna(axis=0)),
-         np.asarray(track[track.columns[26:28]].dropna(axis=0)),
-         np.asarray(track[track.columns[28:30]].dropna(axis=0)),
-         np.asarray(track[track.columns[30:32]].dropna(axis=0)),
-         np.asarray(track[track.columns[32:34]].dropna(axis=0)),
-         np.asarray(track[track.columns[34:36]].dropna(axis=0)),
-         np.asarray(track[track.columns[36:38]].dropna(axis=0)),
-         np.asarray(track[track.columns[38:40]].dropna(axis=0)),
-         np.asarray(track[track.columns[40:42]].dropna(axis=0))]
+# Todo: CHANGE RANGE FOR DIFFERENT DATA SOURCES - (# of steps x 2) - 1
+steps = [np.asarray(track[track.columns[start:(start + 2)]].dropna(axis=0))
+         for start in list(range(0, 41, 2))]
 
 
 # Mean Distance from Centroid
