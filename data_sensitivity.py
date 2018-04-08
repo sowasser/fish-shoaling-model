@@ -34,7 +34,7 @@ import matplotlib.pyplot as plt
 
 # 100 agents
 model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
-for i in range(500):
+for i in range(10):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
 cent_dist100 = data100.columns[0]
@@ -45,7 +45,7 @@ area100 = data100.columns[3]
 
 # 50 agents
 model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
-for j in range(500):
+for j in range(10):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
 cent_dist50 = data100.columns[0]
@@ -56,7 +56,7 @@ area50 = data50.columns[3]
 
 # # 200 agents
 model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
-for k in range(500):
+for k in range(10):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
 cent_dist200 = data200.columns[0]
@@ -133,7 +133,11 @@ plt.tight_layout()
 
 plt.show()
 
+# Desktop path
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
+# Laptop path
+plot_path = "/Users/Sophie/Desktop"
+
 # Todo: CHANGE NAME OF FILE
-fig.savefig(os.path.join(plot_path, r"sticklebacks1_300xstepwise.png"))
+fig.savefig(os.path.join(plot_path, r"sensitivity.png"))
 
