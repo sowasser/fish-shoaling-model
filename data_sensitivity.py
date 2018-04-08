@@ -66,5 +66,74 @@ area200 = data200.columns[3]
 # data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
 
 
+# Plotting
+plt.style.use("dark_background")
+# plt.style.use("ggplot")
+# plt.style.use("seaborn-dark")
+# plt.style.use("Solarize_Light2")
 
+# Create multiplot
+fig = plt.figure(figsize=(8, 6), dpi=300)
+
+ax1 = plt.subplot(431)
+plt.title("Mean Distance from Centroid (n=100)")
+plt.ylabel("distance (mm)")
+ax2 = plt.subplot(432)
+plt.title("Mean Nearest Neighbour Distance (n=100)")
+plt.ylabel("distance (mm)")
+ax3 = plt.subplot(433)
+plt.title("Polarization (n=100)")
+plt.ylabel("Mean Absolute Deviation")
+ax4 = plt.subplot(434)
+plt.title("Shoal Area (n=100)")
+plt.ylabel("area (mm2)")
+
+ax5 = plt.subplot(435)
+plt.title("Mean Distance from Centroid (n=50)")
+plt.ylabel("distance (mm)")
+ax6 = plt.subplot(436)
+plt.title("Mean Nearest Neighbour Distance (n=50)")
+plt.ylabel("distance (mm)")
+ax7 = plt.subplot(437)
+plt.title("Polarization (n=50)")
+plt.ylabel("Mean Absolute Deviation")
+ax8 = plt.subplot(438)
+plt.title("Shoal Area (n=50)")
+plt.ylabel("area (mm2)")
+
+ax9 = plt.subplot(439)
+plt.title("Mean Distance from Centroid (n=200)")
+plt.ylabel("distance (mm)")
+ax10 = plt.subplot(4310)
+plt.title("Mean Nearest Neighbour Distance (n=200)")
+plt.ylabel("distance (mm)")
+ax11 = plt.subplot(4311)
+plt.title("Polarization (n=200)")
+plt.ylabel("Mean Absolute Deviation")
+ax12 = plt.subplot(4312)
+plt.title("Shoal Area (n=200)")
+plt.ylabel("area (mm2)")
+
+ax1.plot(cent_dist100)
+ax2.plot(nnd100)
+ax3.plot(polar100)
+ax4.plot(area100)
+
+ax5.plot(cent_dist50)
+ax6.plot(nnd50)
+ax7.plot(polar50)
+ax8.plot(area50)
+
+ax9.plot(cent_dist200)
+ax10.plot(nnd200)
+ax11.plot(polar200)
+ax12.plot(area200)
+
+plt.tight_layout()
+
+plt.show()
+
+plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
+# Todo: CHANGE NAME OF FILE
+fig.savefig(os.path.join(plot_path, r"sticklebacks1_300xstepwise.png"))
 
