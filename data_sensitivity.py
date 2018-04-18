@@ -72,70 +72,85 @@ plt.style.use("dark_background")
 # plt.style.use("seaborn-dark")
 # plt.style.use("Solarize_Light2")
 
-# Create multiplot
-fig = plt.figure(figsize=(8, 6), dpi=300)
-
-ax1 = plt.subplot(4, 3, 1)
-plt.title("Mean Distance from Centroid (n=100)")
-plt.ylabel("distance (mm)")
-ax2 = plt.subplot(4, 3, 2)
-plt.title("Mean Nearest Neighbour Distance (n=100)")
-plt.ylabel("distance (mm)")
-ax3 = plt.subplot(4, 3, 3)
-plt.title("Polarization (n=100)")
-plt.ylabel("Mean Absolute Deviation")
-ax4 = plt.subplot(4, 3, 4)
-plt.title("Shoal Area (n=100)")
-plt.ylabel("area (mm2)")
-
-ax5 = plt.subplot(4, 3, 5)
+# Create mean distance from centroid multiplot
+dist_fig = plt.figure(figsize=(5, 9), dpi=300)
+ax1 = plt.subplot(3, 1, 1)
 plt.title("Mean Distance from Centroid (n=50)")
-plt.ylabel("distance (mm)")
-ax6 = plt.subplot(4, 3, 6)
-plt.title("Mean Nearest Neighbour Distance (n=50)")
-plt.ylabel("distance (mm)")
-ax7 = plt.subplot(4, 3, 7)
-plt.title("Polarization (n=50)")
-plt.ylabel("Mean Absolute Deviation")
-ax8 = plt.subplot(4, 3, 8)
-plt.title("Shoal Area (n=50)")
-plt.ylabel("area (mm2)")
-
-ax9 = plt.subplot(4, 3, 9)
+plt.ylabel("(mm)")
+ax2 = plt.subplot(3, 1, 2)
+plt.title("Mean Distance from Centroid (n=100)")
+plt.ylabel("(mm)")
+ax3 = plt.subplot(3, 1, 3)
 plt.title("Mean Distance from Centroid (n=200)")
-plt.ylabel("distance (mm)")
-ax10 = plt.subplot(4, 3, 10)
+plt.ylabel("(mm)")
+
+ax1.plot(cent_dist50)
+ax2.plot(cent_dist100)
+ax3.plot(cent_dist200)
+
+plt.tight_layout()
+plt.show()
+
+# Create nearest neighbour distance multiplot
+nnd_fig = plt.figure(figsize=(5, 9), dpi=300)
+ax4 = plt.subplot(3, 1, 1)
+plt.title("Mean Nearest Neighbour Distance (n=50)")
+plt.ylabel("(mm)")
+ax5 = plt.subplot(3, 1, 2)
+plt.title("Mean Nearest Neighbour Distance (n=100)")
+plt.ylabel("(mm)")
+ax6 = plt.subplot(3, 1, 3)
 plt.title("Mean Nearest Neighbour Distance (n=200)")
-plt.ylabel("distance (mm)")
-ax11 = plt.subplot(4, 3, 11)
+plt.ylabel("(mm)")
+
+ax4.plot(nnd50)
+ax5.plot(nnd100)
+ax6.plot(nnd200)
+
+plt.tight_layout()
+plt.show()
+
+# Create polarization multiplot
+polar_fig = plt.figure(figsize=(5, 9), dpi=300)
+ax7 = plt.subplot(3, 1, 1)
+plt.title("Polarization (n=50)")
+ax8 = plt.subplot(3, 1, 2)
+plt.title("Polarization (n=100)")
+ax9 = plt.subplot(3, 1, 3)
 plt.title("Polarization (n=200)")
-plt.ylabel("Mean Absolute Deviation")
-ax12 = plt.subplot(4, 3, 12)
-plt.title("Shoal Area (n=200)")
-plt.ylabel("area (mm2)")
 
-ax1.plot(cent_dist100)
-ax2.plot(nnd100)
-ax3.plot(polar100)
-ax4.plot(area100)
-
-ax5.plot(cent_dist50)
-ax6.plot(nnd50)
 ax7.plot(polar50)
-ax8.plot(area50)
+ax8.plot(polar100)
+ax9.plot(polar200)
 
-ax9.plot(cent_dist200)
-ax10.plot(nnd200)
-ax11.plot(polar200)
+plt.tight_layout()
+plt.show()
+
+# Create shoal area multiplot
+area_fig = plt.figure(figsize=(5, 9), dpi=300)
+ax10 = plt.subplot(3, 1, 1)
+plt.title("Shoal Area (n=50)")
+plt.ylabel("(mm2)")
+ax11 = plt.subplot(3, 1, 2)
+plt.title("Shoal Area (n=100)")
+plt.ylabel("(mm2)")
+ax12 = plt.subplot(3, 1, 3)
+plt.title("Shoal Area (n=200)")
+plt.ylabel("(mm2)")
+
+ax10.plot(area50)
+ax11.plot(area100)
 ax12.plot(area200)
 
 plt.tight_layout()
-
 plt.show()
 
+
+# Export figures
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
 # plot_path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel"
 
-# Todo: CHANGE NAME OF FILE
-fig.savefig(os.path.join(plot_path, r"sensitivity.png"))
-
+dist_fig.savefig(os.path.join(plot_path, r"dist_sensitivity.png"))
+nnd_fig.savefig(os.path.join(plot_path, r"nnd_sensitivity.png"))
+polar_fig.savefig(os.path.join(plot_path, r"polar_sensitivity.png"))
+area_fig.savefig(os.path.join(plot_path, r"area_sensitivity.png"))
