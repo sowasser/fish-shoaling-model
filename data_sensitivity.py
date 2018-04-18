@@ -75,42 +75,42 @@ plt.style.use("dark_background")
 # Create multiplot
 fig = plt.figure(figsize=(8, 6), dpi=300)
 
-ax1 = plt.subplot(431)
+ax1 = plt.subplot(4, 3, 1)
 plt.title("Mean Distance from Centroid (n=100)")
 plt.ylabel("distance (mm)")
-ax2 = plt.subplot(432)
+ax2 = plt.subplot(4, 3, 2)
 plt.title("Mean Nearest Neighbour Distance (n=100)")
 plt.ylabel("distance (mm)")
-ax3 = plt.subplot(433)
+ax3 = plt.subplot(4, 3, 3)
 plt.title("Polarization (n=100)")
 plt.ylabel("Mean Absolute Deviation")
-ax4 = plt.subplot(434)
+ax4 = plt.subplot(4, 3, 4)
 plt.title("Shoal Area (n=100)")
 plt.ylabel("area (mm2)")
 
-ax5 = plt.subplot(435)
+ax5 = plt.subplot(4, 3, 5)
 plt.title("Mean Distance from Centroid (n=50)")
 plt.ylabel("distance (mm)")
-ax6 = plt.subplot(436)
+ax6 = plt.subplot(4, 3, 6)
 plt.title("Mean Nearest Neighbour Distance (n=50)")
 plt.ylabel("distance (mm)")
-ax7 = plt.subplot(437)
+ax7 = plt.subplot(4, 3, 7)
 plt.title("Polarization (n=50)")
 plt.ylabel("Mean Absolute Deviation")
-ax8 = plt.subplot(438)
+ax8 = plt.subplot(4, 3, 8)
 plt.title("Shoal Area (n=50)")
 plt.ylabel("area (mm2)")
 
-ax9 = plt.subplot(439)
+ax9 = plt.subplot(4, 3, 9)
 plt.title("Mean Distance from Centroid (n=200)")
 plt.ylabel("distance (mm)")
-ax10 = plt.subplot(4310)
+ax10 = plt.subplot(4, 3, 10)
 plt.title("Mean Nearest Neighbour Distance (n=200)")
 plt.ylabel("distance (mm)")
-ax11 = plt.subplot(4311)
+ax11 = plt.subplot(4, 3, 11)
 plt.title("Polarization (n=200)")
 plt.ylabel("Mean Absolute Deviation")
-ax12 = plt.subplot(4312)
+ax12 = plt.subplot(4, 3, 12)
 plt.title("Shoal Area (n=200)")
 plt.ylabel("area (mm2)")
 
@@ -133,10 +133,8 @@ plt.tight_layout()
 
 plt.show()
 
-# Desktop path
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
-# Laptop path
-plot_path = "/Users/Sophie/Desktop"
+# plot_path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel"
 
 # Todo: CHANGE NAME OF FILE
 fig.savefig(os.path.join(plot_path, r"sensitivity.png"))
