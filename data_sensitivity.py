@@ -19,7 +19,7 @@ or graphed with matplotlib.
 import os
 from shoal_model import *
 import matplotlib.pyplot as plt
-
+import pandas as pd
 
 # Data collection for debugging purposes
 # model = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
@@ -32,15 +32,15 @@ import matplotlib.pyplot as plt
 # path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
+steps = list(range(10))
+
 # 100 agents
 model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
 for i in range(10):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
-cent_dist100 = data100.columns[0]
-nnd100 = data100.columns[1]
-polar100 = data100.columns[2]
-area100 = data100.columns[3]
+data100.insert(loc=0, column='steps', value=steps)
+
 # data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 # 50 agents
@@ -48,10 +48,7 @@ model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, sep
 for j in range(10):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
-cent_dist50 = data100.columns[0]
-nnd50 = data50.columns[1]
-polar50 = data50.columns[2]
-area50 = data50.columns[3]
+data50.insert(loc=0, column='steps', value=steps)
 # data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
 
 # # 200 agents
@@ -59,10 +56,8 @@ model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, s
 for k in range(10):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
-cent_dist200 = data200.columns[0]
-nnd200 = data200.columns[1]
-polar200 = data200.columns[2]
-area200 = data200.columns[3]
+data200.insert(loc=0, column='steps', value=steps)
+
 # data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
 
 
