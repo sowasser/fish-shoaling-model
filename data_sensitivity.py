@@ -145,7 +145,7 @@ plt.show()
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
 # plot_path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel"
 
-dist_fig.savefig(os.path.join(plot_path, r"dist_sensitivity.png"))
-nnd_fig.savefig(os.path.join(plot_path, r"nnd_sensitivity.png"))
-polar_fig.savefig(os.path.join(plot_path, r"polar_sensitivity.png"))
-area_fig.savefig(os.path.join(plot_path, r"area_sensitivity.png"))
+# dist_fig.savefig(os.path.join(plot_path, r"dist_sensitivity.png"))
+# nnd_fig.savefig(os.path.join(plot_path, r"nnd_sensitivity.png"))
+# polar_fig.savefig(os.path.join(plot_path, r"polar_sensitivity.png"))
+# area_fig.savefig(os.path.join(plot_path, r"area_sensitivity.png"))
