@@ -19,7 +19,6 @@ or graphed with matplotlib.
 import os
 from shoal_model import *
 import matplotlib.pyplot as plt
-import pandas as pd
 
 # Data collection for debugging purposes
 # model = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
@@ -32,32 +31,26 @@ import pandas as pd
 # path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
-steps = list(range(10))
-
-# 100 agents
-model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
-for i in range(10):
-    model100.step()
-data100 = model100.datacollector.get_model_vars_dataframe()
-data100.insert(loc=0, column='steps', value=steps)
-
-# data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 # 50 agents
 model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
 for j in range(10):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
-data50.insert(loc=0, column='steps', value=steps)
 # data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
+
+# 100 agents
+model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
+for i in range(10):
+    model100.step()
+data100 = model100.datacollector.get_model_vars_dataframe()
+# data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 # # 200 agents
 model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
 for k in range(10):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
-data200.insert(loc=0, column='steps', value=steps)
-
 # data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
 
 
@@ -152,7 +145,7 @@ plt.show()
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
 # plot_path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel"
 
-# dist_fig.savefig(os.path.join(plot_path, r"dist_sensitivity.png"))
-# nnd_fig.savefig(os.path.join(plot_path, r"nnd_sensitivity.png"))
-# polar_fig.savefig(os.path.join(plot_path, r"polar_sensitivity.png"))
-# area_fig.savefig(os.path.join(plot_path, r"area_sensitivity.png"))
+dist_fig.savefig(os.path.join(plot_path, r"dist_sensitivity.png"))
+nnd_fig.savefig(os.path.join(plot_path, r"nnd_sensitivity.png"))
+polar_fig.savefig(os.path.join(plot_path, r"polar_sensitivity.png"))
+area_fig.savefig(os.path.join(plot_path, r"area_sensitivity.png"))
