@@ -30,14 +30,16 @@ import matplotlib.pyplot as plt
 
 
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
+
 # Todo: CHANGE NAME OF FILE
 track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xstepwise.csv"),
                     sep=",")
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
+s = 21  # Todo: CHANGE FOR NUMBER OF STEPS TRACKED
+
 # Column names: x1, y1, x2, y2, etc.
-# Todo: CHANGE NUMS RANGE FOR DIFFERENT DATA SOURCES - # of steps + 1
-nums = range(1, 22)
+nums = range(1, s+1)
 list_x = ["x" + str(n) for n in nums]
 list_y = ["y" + str(n) for n in nums]
 
@@ -45,9 +47,8 @@ list_y = ["y" + str(n) for n in nums]
 track.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
 
 # List of arrays for each step of the video. Remove empty rows.
-# Todo: CHANGE RANGE FOR DIFFERENT DATA SOURCES - (# of steps x 2) - 1
 steps = [np.asarray(track[track.columns[start:(start + 2)]].dropna(axis=0))
-         for start in list(range(0, 41, 2))]
+         for start in list(range(0, (s*2)-1, 2))]
 
 
 # Mean Distance from Centroid
