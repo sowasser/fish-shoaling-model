@@ -32,11 +32,11 @@ import matplotlib.pyplot as plt
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
 
 # Todo: CHANGE NAME OF FILE
-track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xstepwise.csv"),
+track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks2_500x20.csv"),
                     sep=",")
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
-s = 21  # Todo: CHANGE FOR NUMBER OF STEPS TRACKED
+s = 14  # Todo: CHANGE FOR NUMBER OF STEPS TRACKED
 
 # Column names: x1, y1, x2, y2, etc.
 nums = range(1, s+1)
@@ -173,4 +173,4 @@ plt.show()
 
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
 # Todo: CHANGE NAME OF FILE
-fig.savefig(os.path.join(plot_path, r"sticklebacks1_300xstepwise.png"))
+fig.savefig(os.path.join(plot_path, r"sticklebacks2_500x20.png"))
