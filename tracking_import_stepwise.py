@@ -1,6 +1,8 @@
 """
 Data captured from video of fish (sticklebacks or zebrafish) using LoggerPro.
-The position of each fish is captured for selected frames of the video.
+The position of each fish is captured for selected frames of the video as x-y
+coordinates. The head and the tail of each fish is recorded to track its
+orientation.
 
 In this script, the data are imported and cleaned, then position is extracted
 for statistical analyses. The data structure for this analysis method is
@@ -32,11 +34,11 @@ import matplotlib.pyplot as plt
 path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
 
 # Todo: CHANGE NAME OF FILE
-track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks2_500x20.csv"),
+track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sticklebacks1_300xstepwise.csv"),
                     sep=",")
 track = track.drop(track.columns[0], axis=1)  # first column (time) is useless
 
-s = 14  # Todo: CHANGE FOR NUMBER OF STEPS TRACKED
+s = 21  # Todo: CHANGE FOR NUMBER OF STEPS TRACKED
 
 # Column names: x1, y1, x2, y2, etc.
 nums = range(1, s+1)
@@ -173,4 +175,4 @@ plt.show()
 
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
 # Todo: CHANGE NAME OF FILE
-fig.savefig(os.path.join(plot_path, r"sticklebacks2_500x20.png"))
+fig.savefig(os.path.join(plot_path, r"sticklebacks1_300xstepwise.png"))
