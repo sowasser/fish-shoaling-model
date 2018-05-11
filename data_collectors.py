@@ -8,8 +8,8 @@ and spatial extent of the shoal. These are, currently:
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
 
-From Herbert-Read et al. 2017 Anthropogenic noise pollution from pile-driving
-disrupts structure and dynamics of fish shoals.
+From Herbert-Read et al. (2017) Anthropogenic noise pollution from pile-driving
+disrupts the structure and dynamics of fish shoals.
     5. "Distance from each fish to its nearest-neighbour perpendicular to their
        direction of travel (i.e. how far apart side-by-side) and...
     6. parallel to their direction of travel (i.e. how far apart in front-or-
