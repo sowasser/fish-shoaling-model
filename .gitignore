@@ -102,4 +102,4 @@ ENV/
 \.Rhistory
 
 # data files
-.csv
+*.csv
