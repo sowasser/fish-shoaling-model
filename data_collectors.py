@@ -8,6 +8,20 @@ and spatial extent of the shoal. These are, currently:
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
 
+From Herbert-Read et al. 2017 Anthropogenic noise pollution from pile-driving
+disrupts structure and dynamics of fish shoals.
+    5. "Distance from each fish to its nearest-neighbour perpendicular to their
+       direction of travel (i.e. how far apart side-by-side) and...
+    6. parallel to their direction of travel (i.e. how far apart in front-or-
+       behind one another)."
+    7. "Bearing angle to a fish's nearest neighbour, which represents the
+       direction that a neighbour was most likely to be found in relation to
+       the focal individual."
+    8. "The heading difference between neighbours, i.e. the angle between the
+       direction nearest neighbours were fishing" - directional organization
+    9. Direction of each individual - for cross-correlaiton with neighbours,
+       looking for the correlation peaks
+
 More functions will be added as more methods for conceptualizing the shoal are
 found in the literature.
 
@@ -82,3 +96,23 @@ def centroid_dist(model):
         dist = model.space.get_distance(p, centroid)
         cent_dist = np.append(cent_dist, dist)
     return np.mean(cent_dist)
+
+
+def nn_perp_d(model):
+    """"""
+
+
+def nn_para_d(model):
+    """"""
+
+
+def nn_bearing(model):
+    """"""
+
+
+def heading_diff(model):
+    """"""
+
+
+def direction(model):
+    """"""
