@@ -19,6 +19,15 @@ def nnd(model):
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
     """
+    fish = np.asarray([agent.pos for agent in model.schedule.agents])
+    fish_tree = KDTree(fish)
+    means = []
+    for me in fish:
+        neighbours = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
+        dist = list(neighbours[0])  # select dist from .query output
+        dist.pop(0)  # removes closest agent - itself @ dist = 0
+        means.append(sum(dist) / len(dist))
+    return sum(means) / len(means)
 
 
 def nn_perp_d(model):
@@ -48,7 +57,7 @@ def nn_bearing(model):
         neighbours = fish_tree.query(x=me, k=6)  # includes agent @ dist = 0
         angle = list(neighbours[0])  # select dist from .query output
         angle.pop(0)  # removes closest agent - itself @ dist = 0
-        means.append(sum(dist) / len(dist))
+        means.append(sum(angle) / len(angle))
     velocity_x = [agent.velocity[0] for agent in model.schedule.agents]
     velocity_y = [agent.velocity[1] for agent in model.schedule.agents]
 
