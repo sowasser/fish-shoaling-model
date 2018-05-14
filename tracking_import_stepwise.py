@@ -32,7 +32,7 @@ from statsmodels.robust.scale import mad
 import matplotlib.pyplot as plt
 
 
-path = "/Users/user/Desktop/Local/Mackerel/fish_shoaling_model"
+path = "/Users/user/Desktop/Local/Mackerel/fish-shoaling-model"
 
 # Todo: CHANGE NAME OF FILE
 track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"sb1_50.csv"),
