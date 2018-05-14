@@ -19,8 +19,6 @@ disrupts the structure and dynamics of fish shoals.
        the focal individual."
     8. "The heading difference between neighbours, i.e. the angle between the
        direction nearest neighbours were fishing" - directional organization
-    9. Direction of each individual - for cross-correlaiton with neighbours,
-       looking for the correlation peaks
 
 More functions will be added as more methods for conceptualizing the shoal are
 found in the literature.
@@ -99,20 +97,29 @@ def centroid_dist(model):
 
 
 def nn_perp_d(model):
-    """"""
+    """
+    Mean nearest neighbour distance perpendicular to the direction of travel,
+    i.e. how far a part the fish are, side to side.
+    """
 
 
 def nn_para_d(model):
-    """"""
+    """
+    Mean nearest neighbour distance parallel to the direction of travel, i.e.
+    how far apart the fish are in front or behind each other.
+    """
 
 
 def nn_bearing(model):
-    """"""
+    """
+    Mean bearing angle to a fish's nearest neighbour. 90 degrees = a neighbour
+    directly to the side of the focal fish. 0 degrees = neighbour directly
+    ahead; 180 = neighbour directly behind.
+    """
 
 
 def heading_diff(model):
-    """"""
-
-
-def direction(model):
-    """"""
+    """
+    Mean heading difference between nearest neighbours as a measure of
+    alignment. 0 degrees = high alignment; 180 = opposite alignment.
+    """
