@@ -140,6 +140,8 @@ ax12.plot(data200["Shoal Area"])
 plt.tight_layout()
 plt.show()
 
+# Todo: try to create heat maps for density:
+# https://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html
 
 # Export figures
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
