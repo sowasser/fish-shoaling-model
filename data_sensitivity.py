@@ -54,7 +54,10 @@ data200 = model200.datacollector.get_model_vars_dataframe()
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
 
-# Plotting
+############
+# Plotting #
+############
+
 plt.style.use("dark_background")
 # plt.style.use("ggplot")
 # plt.style.use("seaborn-dark")
@@ -140,8 +143,6 @@ ax12.plot(data200["Shoal Area"])
 plt.tight_layout()
 plt.show()
 
-# Todo: try to create heat maps for density:
-# https://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html
 
 # Export figures
 plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
