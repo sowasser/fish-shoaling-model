@@ -2,8 +2,10 @@
 #mesa==0.8.2
 # Use my fork of Mesa:
 git+https://github.com/sowasser/mesa.git#egg=mesa
-matplotlib==2.1.0
-numpy==1.13.3
-statsmodels==0.8.0
-pandas==0.21.0
-scipy==0.19.1
+matplotlib==2.2.2
+numpy==1.15.0
+statsmodels==0.9.0
+pandas==0.23.3
+scipy==1.1.0
+networkx==2.1
+click==5.0
