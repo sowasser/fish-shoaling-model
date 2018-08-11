@@ -32,6 +32,7 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
+from mesa.visualization.UserParam import UserSettableParameter
 
 from data_collectors import *
 
@@ -116,16 +117,29 @@ class Fish(Agent):
         self.model.space.move_agent(self, new_pos)
 
 
+# Creates sliders for interactive parameters in the visualization
+# Todo: make other model parameters (width & height) interactive
+n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
+                                 value=100, min_value=10, max_value=200, step=1)
+speed_slider = UserSettableParameter(param_type='slider', name='Speed',
+                                     value=2, min_value=0, max_value=10, step=1)
+vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
+                                      value=10, min_value=0, max_value=20, step=1)
+sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
+                                   value=2, min_value=0, max_value=10, step=1)
+
+
+
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
     def __init__(self,
-                 population=100,
-                 width=100,
-                 height=100,
-                 speed=1,
-                 vision=10,
-                 separation=2,
+                 population=n_slider,
+                 width=50,
+                 height=50,
+                 speed=speed_slider,
+                 vision=vision_slider,
+                 separation=sep_slider,
                  cohere=0.025,
                  separate=0.25,
                  match=0.04):
