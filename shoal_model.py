@@ -83,14 +83,15 @@ class Fish(Agent):
 
     def separate(self, neighbors):
         """
-        Return a vector away rom any neighbors closer than avoidance distance.
+        Return a vector (inverse of the heading towards a neighbor) away from any
+        neighbors closer than separation distance.
         """
         me = self.pos
-        them = (n.pos for n in neighbors)
+        my_neighbors = (n.pos for n in neighbors)
         separate_vector = np.zeros(2)
-        for other in them:
-            if self.model.space.get_distance(me, other) < self.separation:
-                separate_vector -= self.model.space.get_heading(me, other)
+        for my_neighbor in my_neighbors:
+            if self.model.space.get_distance(me, my_neighbor) < self.separation:
+                separate_vector -= self.model.space.get_heading(me, my_neighbor)
         return separate_vector
 
     def match_velocity(self, neighbors):
@@ -129,7 +130,6 @@ sep_slider = UserSettableParameter(param_type='slider', name='Separation Distanc
                                    value=2, min_value=0, max_value=10, step=1)
 
 
-
 class ShoalModel(Model):
     """ Shoal model class. Handles agent creation, placement and scheduling. """
 
@@ -159,8 +159,7 @@ class ShoalModel(Model):
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, torus=True,
-                                     grid_width=10, grid_height=10)
+        self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
         self.running = True
