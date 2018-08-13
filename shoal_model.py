@@ -125,7 +125,7 @@ class Fish(Agent):
         self.model.space.move_agent(self, new_pos)
 
 
-class Block(Agent):
+class Obstruct(Agent):
     """
     Immobile objects/obstructions. These agents can be used to create borders
     or other static aspects of the model environment for the "Fish" agents to
@@ -142,19 +142,14 @@ class Block(Agent):
         self.pos = np.array(pos)
 
 
+def create_borders(self):
+    """
+    Find and list the coordinates of the borders of the model space.
+    """
+
+
 # Define interactive parameters for the visualization
-n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
-                                 value=100, min_value=10, max_value=200, step=1)
-width_slider = UserSettableParameter(param_type='slider', name='Environment Width',
-                                     value=100, min_value=10, max_value=500, step=10)
-height_slider = UserSettableParameter(param_type='slider', name='Environment Height',
-                                      value=100, min_value=10, max_value=500, step=10)
-speed_slider = UserSettableParameter(param_type='slider', name='Speed',
-                                     value=2, min_value=0, max_value=10, step=1)
-vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
-                                      value=10, min_value=0, max_value=20, step=1)
-sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
-                                   value=2, min_value=0, max_value=10, step=1)
+
 
 
 class ShoalModel(Model):
@@ -163,52 +158,77 @@ class ShoalModel(Model):
     Parameters can be static (better for testing or running the model
     recursively), or interactive, using the user-settable parameters defined
     above.
+
+    Parameters:
+        initial_fish: Initial number of "Fish" agents.
+        initial_obstruct: Initial number of "Obstruct" agents.
+        width, height: Size of the space.
+        speed: how fast the boids should move.
+        vision: how far around should each Boid look for its neighbors
+        separation: what's the minimum distance each Boid will attempt to
+                    keep from any other
+        cohere, separate, match: factors for the relative importance of
+                                 the three drives.
     """
 
+    # STATIC PARAMETERS - FOR TESTING THE MODEL
+    initial_fish = 100,
+    initial_obstruct = 200,
+    width = 50,
+    height = 50,
+    speed = 2,
+    vision = 10,
+    separation = 2,
+
+    # INTERACTIVE PARAMETERS - FOR THE VISUALIZATION
+    n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
+                                     value=100, min_value=10, max_value=200, step=1)
+    width_slider = UserSettableParameter(param_type='slider', name='Environment Width',
+                                         value=100, min_value=10, max_value=500, step=10)
+    height_slider = UserSettableParameter(param_type='slider', name='Environment Height',
+                                          value=100, min_value=10, max_value=500, step=10)
+    speed_slider = UserSettableParameter(param_type='slider', name='Speed',
+                                         value=2, min_value=0, max_value=10, step=1)
+    vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
+                                          value=10, min_value=0, max_value=20, step=1)
+    sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
+                                       value=2, min_value=0, max_value=10, step=1)
+
+    cohere = 0.025,
+    separate = 0.25,
+    match = 0.04
+
     def __init__(self,
-                 # STATIC VARIABLES - FOR TESTING THE MODEL
-                 population=100,
-                 width=50,
-                 height=50,
-                 speed=2,
-                 vision=10,
-                 separation=2,
-                 # # INTERACTIVE VARIABLES - FOR THE VISUALIZATION
-                 # population=n_slider,
-                 # width=width_slider,
-                 # height=height_slider,
-                 # speed=speed_slider,
-                 # vision=vision_slider,
-                 # separation=sep_slider,
-                 cohere=0.025,
-                 separate=0.25,
-                 match=0.04):
-        """
-        Create a new Boids model. Args:
-            N: Number of Boids
-            width, height: Size of the space.
-            speed: how fast the boids should move.
-            vision: how far around should each Boid look for its neighbors
-            separation: what's the minimum distance each Boid will attempt to
-                        keep from any other
-            cohere, separate, match: factors for the relative importance of
-                                     the three drives.
-        """
-        self.population = population
+                 # Todo: Change definitions for static or interactive parameters
+                 initial_fish=initial_fish,
+                 initial_obstruct=initial_obstruct,
+                 width=width,
+                 height=height,
+                 speed=speed,
+                 vision=vision,
+                 separation=separation,
+                 cohere=cohere,
+                 separate=separate,
+                 match=match):
+
+        self.initial_fish = initial_fish
+        self.initial_obstruct = initial_obstruct
         self.vision = vision
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
-        self.make_agents()
+        self.make_fish()
+        self.make_obstructions()
         self.running = True
 
-    def make_agents(self):
+    def make_fish(self):
         """
-        Create N agents, with random positions and starting velocities.
+        Create N "Fish" agents, with random positions and starting velocities.
+        Call data collectors for fish collective behaviour.
         """
-        for i in range(self.population):
+        for i in range(self.initial_fish):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = np.array((x, y))
@@ -223,6 +243,19 @@ class ShoalModel(Model):
                              "Nearest Neighbour Distance": nnd,
                              "Shoal Area": area,
                              "Mean Distance from Centroid": centroid_dist})
+
+    def make_obstructions(self):
+        """
+        Create N "Obstruct" agents, with set positions & no movement.
+        """
+        for i in range(self.initial_obstruct):
+            # Todo: figure out how to define the borders to be used here
+            x = range(200)
+            y = range(200)
+            pos = np.array((x, y))
+            obstruct = Obstruct(i, self, pos)
+            self.space.place_agent(obstruct, pos)
+            self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
