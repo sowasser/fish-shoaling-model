@@ -20,11 +20,14 @@ Data are collected in the data_collectors.py script and are:
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
 
-The model is based on an toroidal (unbounded & wrapping), 2D area. Later
-versions will be 3D, bounded and include obstacles, environmental gradients,
-and agents with goal-, food-, or safety-seeking behaviour.
+The model is based on an toroidal (unbounded & wrapping), 2D area. Currently
+working on adding obstacles that can serve as boundaries or other aspects of
+the environment. Later versions will be 3D, with environmental gradients, and
+agents with goal-, food-, or safety-seeking behaviour.
 
-A visualization of the model in an HTML object is in shoal_model_viz.py
+A visualization of the model in an HTML object is in shoal_model_viz.py. For
+the visualization, the parameters in the ShoalModel class can be changed to run
+based on interactive, user-settable sliders.
 """
 
 import random
@@ -118,10 +121,13 @@ class Fish(Agent):
         self.model.space.move_agent(self, new_pos)
 
 
-# Creates sliders for interactive parameters in the visualization
-# Todo: make other model parameters (width & height) interactive
+# Define interactive parameters for the visualization
 n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
                                  value=100, min_value=10, max_value=200, step=1)
+width_slider = UserSettableParameter(param_type='slider', name='Environment Width',
+                                     value=100, min_value=10, max_value=500, step=10)
+height_slider = UserSettableParameter(param_type='slider', name='Environment Height',
+                                      value=100, min_value=10, max_value=500, step=10)
 speed_slider = UserSettableParameter(param_type='slider', name='Speed',
                                      value=2, min_value=0, max_value=10, step=1)
 vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
@@ -131,15 +137,29 @@ sep_slider = UserSettableParameter(param_type='slider', name='Separation Distanc
 
 
 class ShoalModel(Model):
-    """ Shoal model class. Handles agent creation, placement and scheduling. """
+    """
+    Shoal model class. Handles agent creation, placement and scheduling.
+    Parameters can be static (better for testing or running the model
+    recursively), or interactive, using the user-settable parameters defined
+    above.
+
+    """
 
     def __init__(self,
-                 population=n_slider,
+                 # STATIC VARIABLES - FOR TESTING THE MODEL
+                 population=100,
                  width=50,
                  height=50,
-                 speed=speed_slider,
-                 vision=vision_slider,
-                 separation=sep_slider,
+                 speed=2,
+                 vision=10,
+                 separation=2,
+                 # # INTERACTIVE VARIABLES - FOR THE VISUALIZATION
+                 # population=n_slider,
+                 # width=width_slider,
+                 # height=height_slider,
+                 # speed=speed_slider,
+                 # vision=vision_slider,
+                 # separation=sep_slider,
                  cohere=0.025,
                  separate=0.25,
                  match=0.04):
