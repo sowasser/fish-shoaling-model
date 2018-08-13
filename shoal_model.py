@@ -149,7 +149,18 @@ def create_borders(self):
 
 
 # Define interactive parameters for the visualization
-
+n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
+                                 value=100, min_value=10, max_value=200, step=1)
+width_slider = UserSettableParameter(param_type='slider', name='Environment Width',
+                                     value=100, min_value=10, max_value=500, step=10)
+height_slider = UserSettableParameter(param_type='slider', name='Environment Height',
+                                      value=100, min_value=10, max_value=500, step=10)
+speed_slider = UserSettableParameter(param_type='slider', name='Speed',
+                                     value=2, min_value=0, max_value=10, step=1)
+vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
+                                      value=10, min_value=0, max_value=20, step=1)
+sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
+                                   value=2, min_value=0, max_value=10, step=1)
 
 
 class ShoalModel(Model):
@@ -180,26 +191,19 @@ class ShoalModel(Model):
     vision = 10,
     separation = 2,
 
-    # INTERACTIVE PARAMETERS - FOR THE VISUALIZATION
-    n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
-                                     value=100, min_value=10, max_value=200, step=1)
-    width_slider = UserSettableParameter(param_type='slider', name='Environment Width',
-                                         value=100, min_value=10, max_value=500, step=10)
-    height_slider = UserSettableParameter(param_type='slider', name='Environment Height',
-                                          value=100, min_value=10, max_value=500, step=10)
-    speed_slider = UserSettableParameter(param_type='slider', name='Speed',
-                                         value=2, min_value=0, max_value=10, step=1)
-    vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
-                                          value=10, min_value=0, max_value=20, step=1)
-    sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
-                                       value=2, min_value=0, max_value=10, step=1)
+    # # INTERACTIVE PARAMETERS - FOR THE VISUALIZATION
+    # initial_fish = n_slider,
+    # width = width_slider,
+    # height = height_slider,
+    # speed = speed_slider,
+    # vision = vision_slider,
+    # separation = sep_slider
 
     cohere = 0.025,
     separate = 0.25,
     match = 0.04
 
     def __init__(self,
-                 # Todo: Change definitions for static or interactive parameters
                  initial_fish=initial_fish,
                  initial_obstruct=initial_obstruct,
                  width=width,

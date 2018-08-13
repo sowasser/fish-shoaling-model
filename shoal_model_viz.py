@@ -27,7 +27,6 @@ from shoal_model import *
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
 from mesa.visualization.modules import ChartModule
-from mesa.visualization.UserParam import UserSettableParameter
 
 
 # Create canvas for visualization
@@ -69,18 +68,18 @@ def fish_draw(agent):
 
 
 # Create canvas, 500x500 pixels
-shoal_canvas = SimpleCanvas(fish_draw, 500, 500)
+shoal_canvas = SimpleCanvas(fish_draw, 100, 100)
 model_params = {
     "population": n_slider,
-    "width": 50,
-    "height": 50,
+    "width": width_slider,
+    "height": height_slider,
     "speed": speed_slider,
     "vision": vision_slider,
     "separation": sep_slider
 }
 
 # Create charts for the data collectors
-# Todo: include chart titles & improve charts - this will require updating Mesa
+# Todo: include chart titles & improve charts
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                           data_collector_name="datacollector")
 #                         chart_title="Polarization")
