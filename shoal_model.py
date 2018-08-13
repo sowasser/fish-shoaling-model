@@ -12,6 +12,15 @@ These rules are based on the neighbours each agent perceives within their
 (Mann et al. 2011). Another version of this model is being constructed
 for the topological (set number of neighbours at any distance).
 
+The 'fish' also interact with objects (also agents) that don't move. These
+obstructions can act as borders to the world (i.e. to represent a fish tank) or
+elements in an open environment. Later, I plan to add moving obstructions (i.e.
+a trawl).
+
+The model is based on an toroidal (unbounded & wrapping), 2D area. Later
+versions will be 3D, with environmental gradients, and agents with goal-,
+food-, or safety-seeking behaviour.
+
 Data are collected in the data_collectors.py script and are:
     1. Polarization: a function returning the median absolute deviation of
        agent heading from the mean heading of the group
@@ -19,11 +28,6 @@ Data are collected in the data_collectors.py script and are:
        determined using a k-distance tree.
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
-
-The model is based on an toroidal (unbounded & wrapping), 2D area. Currently
-working on adding obstacles that can serve as boundaries or other aspects of
-the environment. Later versions will be 3D, with environmental gradients, and
-agents with goal-, food-, or safety-seeking behaviour.
 
 A visualization of the model in an HTML object is in shoal_model_viz.py. For
 the visualization, the parameters in the ShoalModel class can be changed to run
@@ -121,6 +125,23 @@ class Fish(Agent):
         self.model.space.move_agent(self, new_pos)
 
 
+class Block(Agent):
+    """
+    Immobile objects/obstructions. These agents can be used to create borders
+    or other static aspects of the model environment for the "Fish" agents to
+    interact with.
+    """
+    def __init__(self, unique_id, model, pos):
+        """
+        Create a new Boid (bird, fish) agent.
+        Args:
+            unique_id: Unique agent identifier.
+            pos: Starting position
+        """
+        super().__init__(unique_id, model)
+        self.pos = np.array(pos)
+
+
 # Define interactive parameters for the visualization
 n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
                                  value=100, min_value=10, max_value=200, step=1)
@@ -142,7 +163,6 @@ class ShoalModel(Model):
     Parameters can be static (better for testing or running the model
     recursively), or interactive, using the user-settable parameters defined
     above.
-
     """
 
     def __init__(self,
