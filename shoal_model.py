@@ -166,9 +166,8 @@ sep_slider = UserSettableParameter(param_type='slider', name='Separation Distanc
 class ShoalModel(Model):
     """
     Shoal model class. Handles agent creation, placement and scheduling.
-    Parameters can be static (better for testing or running the model
-    recursively), or interactive, using the user-settable parameters defined
-    above.
+    Parameters are set in the "value" argument in the user settable parameters
+    for the visualization.
 
     Parameters:
         initial_fish: Initial number of "Fish" agents.
@@ -182,22 +181,14 @@ class ShoalModel(Model):
                                  the three drives.
     """
 
-    # STATIC PARAMETERS - FOR TESTING THE MODEL
-    initial_fish = 100,
-    initial_obstruct = 200,
-    width = 50,
-    height = 50,
-    speed = 2,
-    vision = 10,
-    separation = 2,
+    initial_fish = n_slider,
+    width = width_slider,
+    height = height_slider,
+    speed = speed_slider,
+    vision = vision_slider,
+    separation = sep_slider
 
-    # # INTERACTIVE PARAMETERS - FOR THE VISUALIZATION
-    # initial_fish = n_slider,
-    # width = width_slider,
-    # height = height_slider,
-    # speed = speed_slider,
-    # vision = vision_slider,
-    # separation = sep_slider
+    initial_obstruct = 200
 
     cohere = 0.025,
     separate = 0.25,
@@ -205,7 +196,7 @@ class ShoalModel(Model):
 
     def __init__(self,
                  initial_fish=initial_fish,
-                 initial_obstruct=initial_obstruct,
+                 # initial_obstruct=initial_obstruct,
                  width=width,
                  height=height,
                  speed=speed,
@@ -216,7 +207,7 @@ class ShoalModel(Model):
                  match=match):
 
         self.initial_fish = initial_fish
-        self.initial_obstruct = initial_obstruct
+        # self.initial_obstruct = initial_obstruct
         self.vision = vision
         self.speed = speed
         self.separation = separation
@@ -224,7 +215,7 @@ class ShoalModel(Model):
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_fish()
-        self.make_obstructions()
+        # self.make_obstructions()
         self.running = True
 
     def make_fish(self):
@@ -247,19 +238,19 @@ class ShoalModel(Model):
                              "Nearest Neighbour Distance": nnd,
                              "Shoal Area": area,
                              "Mean Distance from Centroid": centroid_dist})
-
-    def make_obstructions(self):
-        """
-        Create N "Obstruct" agents, with set positions & no movement.
-        """
-        for i in range(self.initial_obstruct):
-            # Todo: figure out how to define the borders to be used here
-            x = range(200)
-            y = range(200)
-            pos = np.array((x, y))
-            obstruct = Obstruct(i, self, pos)
-            self.space.place_agent(obstruct, pos)
-            self.schedule.add(obstruct)
+    #
+    # def make_obstructions(self):
+    #     """
+    #     Create N "Obstruct" agents, with set positions & no movement.
+    #     """
+    #     for i in range(self.initial_obstruct):
+    #         # Todo: figure out how to define the borders to be used here
+    #         x = range(200)
+    #         y = range(200)
+    #         pos = np.array((x, y))
+    #         obstruct = Obstruct(i, self, pos)
+    #         self.space.place_agent(obstruct, pos)
+    #         self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
