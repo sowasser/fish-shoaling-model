@@ -148,7 +148,8 @@ def create_borders(self):
     """
 
 
-# Define interactive parameters for the visualization
+# Interactive sliders for model arguments.
+# Todo: Change "value" argument for initial or testing conditions
 n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
                                  value=100, min_value=10, max_value=200, step=1)
 width_slider = UserSettableParameter(param_type='slider', name='Environment Width',
@@ -166,8 +167,8 @@ sep_slider = UserSettableParameter(param_type='slider', name='Separation Distanc
 class ShoalModel(Model):
     """
     Shoal model class. Handles agent creation, placement and scheduling.
-    Parameters are set in the "value" argument in the user settable parameters
-    for the visualization.
+    Parameters are interactive, using the user-settable parameters defined
+    above.
 
     Parameters:
         initial_fish: Initial number of "Fish" agents.
@@ -180,31 +181,17 @@ class ShoalModel(Model):
         cohere, separate, match: factors for the relative importance of
                                  the three drives.
     """
-
-    initial_fish = n_slider,
-    width = width_slider,
-    height = height_slider,
-    speed = speed_slider,
-    vision = vision_slider,
-    separation = sep_slider
-
-    initial_obstruct = 200
-
-    cohere = 0.025,
-    separate = 0.25,
-    match = 0.04
-
     def __init__(self,
-                 initial_fish=initial_fish,
+                 initial_fish=n_slider,
                  # initial_obstruct=initial_obstruct,
-                 width=width,
-                 height=height,
-                 speed=speed,
-                 vision=vision,
-                 separation=separation,
-                 cohere=cohere,
-                 separate=separate,
-                 match=match):
+                 width=width_slider,
+                 height=height_slider,
+                 speed=speed_slider,
+                 vision=vision_slider,
+                 separation=sep_slider,
+                 cohere=0.025,
+                 separate=0.25,
+                 match=0.04):
 
         self.initial_fish = initial_fish
         # self.initial_obstruct = initial_obstruct

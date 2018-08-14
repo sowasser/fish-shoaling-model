@@ -70,7 +70,7 @@ def fish_draw(agent):
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 100, 100)
 model_params = {
-    "population": n_slider,
+    "initial_fish": n_slider,
     "width": width_slider,
     "height": height_slider,
     "speed": speed_slider,
