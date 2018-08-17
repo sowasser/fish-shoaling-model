@@ -183,7 +183,7 @@ class ShoalModel(Model):
     """
     def __init__(self,
                  initial_fish=n_slider,
-                 # initial_obstruct=initial_obstruct,
+                 initial_obstruct=400,  # Todo: figure out what # this needs to be
                  width=width_slider,
                  height=height_slider,
                  speed=speed_slider,
@@ -194,7 +194,7 @@ class ShoalModel(Model):
                  match=0.04):
 
         self.initial_fish = initial_fish
-        # self.initial_obstruct = initial_obstruct
+        self.initial_obstruct = initial_obstruct
         self.vision = vision
         self.speed = speed
         self.separation = separation
@@ -202,7 +202,7 @@ class ShoalModel(Model):
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_fish()
-        # self.make_obstructions()
+        self.make_obstructions()
         self.running = True
 
     def make_fish(self):
@@ -225,19 +225,19 @@ class ShoalModel(Model):
                              "Nearest Neighbour Distance": nnd,
                              "Shoal Area": area,
                              "Mean Distance from Centroid": centroid_dist})
-    #
-    # def make_obstructions(self):
-    #     """
-    #     Create N "Obstruct" agents, with set positions & no movement.
-    #     """
-    #     for i in range(self.initial_obstruct):
-    #         # Todo: figure out how to define the borders to be used here
-    #         x = range(200)
-    #         y = range(200)
-    #         pos = np.array((x, y))
-    #         obstruct = Obstruct(i, self, pos)
-    #         self.space.place_agent(obstruct, pos)
-    #         self.schedule.add(obstruct)
+
+    def make_obstructions(self):
+        """
+        Create N "Obstruct" agents, with set positions & no movement.
+        """
+        for i in range(self.initial_obstruct):
+            # Todo: figure out how to define the borders to be used here
+            x = range(200)
+            y = range(200)
+            pos = np.array((x, y))
+            obstruct = Obstruct(i, self, pos)
+            self.space.place_agent(obstruct, pos)
+            self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
