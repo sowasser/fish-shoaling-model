@@ -68,10 +68,11 @@ def fish_draw(agent):
 
 
 def border_draw(agent):
-    portrayal = {"Shape": "square",
+    portrayal = {"Shape": "rectangle",
                  "Color": "Red",
                  "Filled": "true",
-                 "r": 3}
+                 "x": 3,
+                 "y": 3}
     return portrayal
 
 
