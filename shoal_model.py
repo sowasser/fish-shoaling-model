@@ -228,12 +228,18 @@ class ShoalModel(Model):
 
     def make_obstructions(self):
         """
-        Create N "Obstruct" agents, with set positions & no movement.
+        Create N "Obstruct" agents, with set positions & no movement. Borders
+        are defined as coordinate points between 0 and the width/height, i.e.
+        the following coordinate ranges:
+            (0, 0:height)
+            (0:width, height)
+            (width, 0:height)
+            (0:width, 0)
         """
         for i in range(self.initial_obstruct):
             # Todo: figure out how to define the borders to be used here
-            x = range(200)
-            y = range(200)
+            x = range(100)  # width
+            y = range(100)  # height
             pos = np.array((x, y))
             obstruct = Obstruct(i, self, pos)
             self.space.place_agent(obstruct, pos)
