@@ -67,6 +67,14 @@ def fish_draw(agent):
     return portrayal
 
 
+def border_draw(agent):
+    portrayal = {"Shape": "square",
+                 "Color": "Red",
+                 "Filled": "true",
+                 "r": 3}
+    return portrayal
+
+
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(fish_draw, 100, 100)
 model_params = {
