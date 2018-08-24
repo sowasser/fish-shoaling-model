@@ -77,6 +77,7 @@ def fish_draw(agent):
 
 
 # Create canvas, 500x500 pixels
+# Todo: how can you have two different agent portrayals?
 shoal_canvas = SimpleCanvas(fish_draw, canvas_width=500, canvas_height=500)
 model_params = {
     "initial_fish": n_slider,
