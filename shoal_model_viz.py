@@ -67,21 +67,19 @@ def fish_draw(agent):
     return portrayal
 
 
-def border_draw(agent):
-    portrayal = {"Shape": "rectangle",
-                 "Color": "Red",
-                 "Filled": "true",
-                 "x": 3,
-                 "y": 3}
-    return portrayal
+# def border_draw(agent):
+#     portrayal = {"Shape": "rectangle",
+#                  "Color": "Red",
+#                  "Filled": "true",
+#                  "x": 3,
+#                  "y": 3}
+#     return portrayal
 
 
 # Create canvas, 500x500 pixels
-shoal_canvas = SimpleCanvas(fish_draw, 100, 100)
+shoal_canvas = SimpleCanvas(fish_draw, canvas_width=500, canvas_height=500)
 model_params = {
     "initial_fish": n_slider,
-    "width": width_slider,
-    "height": height_slider,
     "speed": speed_slider,
     "vision": vision_slider,
     "separation": sep_slider

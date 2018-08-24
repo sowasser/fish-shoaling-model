@@ -152,16 +152,13 @@ def create_borders(self):
 # Todo: Change "value" argument for initial or testing conditions
 n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
                                  value=100, min_value=10, max_value=200, step=1)
-width_slider = UserSettableParameter(param_type='slider', name='Environment Width',
-                                     value=100, min_value=10, max_value=500, step=10)
-height_slider = UserSettableParameter(param_type='slider', name='Environment Height',
-                                      value=100, min_value=10, max_value=500, step=10)
 speed_slider = UserSettableParameter(param_type='slider', name='Speed',
                                      value=2, min_value=0, max_value=10, step=1)
 vision_slider = UserSettableParameter(param_type='slider', name='Vision Radius',
                                       value=10, min_value=0, max_value=20, step=1)
 sep_slider = UserSettableParameter(param_type='slider', name='Separation Distance',
                                    value=2, min_value=0, max_value=10, step=1)
+
 
 
 class ShoalModel(Model):
@@ -182,19 +179,19 @@ class ShoalModel(Model):
                                  the three drives.
     """
     def __init__(self,
-                 initial_fish=n_slider,
-                 initial_obstruct=400,  # Todo: figure out what # this needs to be
-                 width=width_slider,
-                 height=height_slider,
-                 speed=speed_slider,
-                 vision=vision_slider,
-                 separation=sep_slider,
+                 initial_fish=100,
+                 # initial_obstruct=100,  # Todo: figure out what # this needs to be
+                 width=100,
+                 height=100,
+                 speed=2,
+                 vision=10,
+                 separation=2,
                  cohere=0.025,
                  separate=0.25,
                  match=0.04):
 
         self.initial_fish = initial_fish
-        self.initial_obstruct = initial_obstruct
+        # self.initial_obstruct = initial_obstruct
         self.vision = vision
         self.speed = speed
         self.separation = separation
@@ -202,7 +199,7 @@ class ShoalModel(Model):
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_fish()
-        self.make_obstructions()
+        # self.make_obstructions()
         self.running = True
 
     def make_fish(self):
@@ -226,24 +223,28 @@ class ShoalModel(Model):
                              "Shoal Area": area,
                              "Mean Distance from Centroid": centroid_dist})
 
-    def make_obstructions(self):
-        """
-        Create N "Obstruct" agents, with set positions & no movement. Borders
-        are defined as coordinate points between 0 and the width/height, i.e.
-        the following coordinate ranges:
-            (0, 0:height)
-            (0:width, height)
-            (width, 0:height)
-            (0:width, 0)
-        """
-        for i in range(self.initial_obstruct):
-            # Todo: figure out how to define the borders to be used here
-            x = range(100)  # width
-            y = range(100)  # height
-            pos = np.array((x, y))
-            obstruct = Obstruct(i, self, pos)
-            self.space.place_agent(obstruct, pos)
-            self.schedule.add(obstruct)
+    # def make_obstructions(self):
+    #     """
+    #     Create N "Obstruct" agents, with set positions & no movement. Borders
+    #     are defined as coordinate points between 0 and the width/height, i.e.
+    #     the following coordinate ranges:
+    #         (0, 0:height)
+    #         (0:width, height)
+    #         (width, 0:height)
+    #         (0:width, 0)
+    #     """
+    #     for i in range(self.initial_obstruct):
+    #         # Todo: figure out how to define the borders to be used here
+    #         x = range(100)  # width
+    #         y = range(100)  # height
+    #         border1 = (0, y)
+    #         border2 = (x, 100)
+    #         border3 = (100, y)
+    #         border4 = (x, 0)
+    #         pos = np.array((x, 50))
+    #         obstruct = Obstruct(i, self, pos)
+    #         self.space.place_agent(obstruct, pos)
+    #         self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
