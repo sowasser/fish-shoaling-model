@@ -234,12 +234,12 @@ class ShoalModel(Model):
         """
         for i in range(self.initial_obstruct):
             # Todo: figure out how to define the borders to be used here
-            x = range(50)  # width
+            x = range(100)  # width
             y = range(100)  # height
             border1 = (0, y)
             border2 = (x, 100)
             border3 = (100, y)
-            border4 = (x, 3)
+            border4 = (x, 0)
             pos = np.array((x, 50))
             obstruct = Obstruct(i, self, pos)
             self.space.place_agent(obstruct, pos)
