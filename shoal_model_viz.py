@@ -59,26 +59,34 @@ class SimpleCanvas(VisualizationElement):
         return space_state
 
 
-def fish_draw(agent):
-    portrayal = {"Shape": "circle",
-                 "Color": "Blue",
-                 "Filled": "true",
-                 "r": 3}
+def draw_agents(agent):
+    """
+    Defines how the agents (the fish & the obstructions/borders) are drawn in
+    the model visualization.
+    """
+    if agent is None:
+        return
+
+    portrayal = {}
+
+    if type(agent) is Fish:
+        portrayal["Shape"] = "circle"
+        portrayal["Color"] = "Blue"
+        portrayal["Filled"] = "true"
+        portrayal["r"] = 3
+
+    elif type(agent) is Obstruct:
+        portrayal["Shape"] = "rect"
+        portrayal["Color"] = "Red"
+        portrayal["Filled"] = "true"
+        portrayal["w"] = 3
+        portrayal["h"] = 3
+
     return portrayal
 
 
-# def border_draw(agent):
-#     portrayal = {"Shape": "rectangle",
-#                  "Color": "Red",
-#                  "Filled": "true",
-#                  "x": 3,
-#                  "y": 3}
-#     return portrayal
-
-
 # Create canvas, 500x500 pixels
-# Todo: how can you have two different agent portrayals?
-shoal_canvas = SimpleCanvas(fish_draw, canvas_width=500, canvas_height=500)
+shoal_canvas = SimpleCanvas(draw_agents, canvas_width=500, canvas_height=500)
 model_params = {
     "initial_fish": n_slider,
     "speed": speed_slider,
