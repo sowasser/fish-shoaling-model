@@ -179,7 +179,7 @@ class ShoalModel(Model):
     """
     def __init__(self,
                  initial_fish=100,
-                 # initial_obstruct=100,  # Todo: figure out what # this needs to be
+                 initial_obstruct=100,  # Todo: figure out what # this needs to be
                  width=100,
                  height=100,
                  speed=2,
@@ -190,7 +190,7 @@ class ShoalModel(Model):
                  match=0.04):
 
         self.initial_fish = initial_fish
-        # self.initial_obstruct = initial_obstruct
+        self.initial_obstruct = initial_obstruct
         self.vision = vision
         self.speed = speed
         self.separation = separation
@@ -198,7 +198,7 @@ class ShoalModel(Model):
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_fish()
-        # self.make_obstructions()
+        self.make_obstructions()
         self.running = True
 
     def make_fish(self):
@@ -215,7 +215,6 @@ class ShoalModel(Model):
                         self.separation, **self.factors)
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
-            return pos
 
         self.datacollector = DataCollector(
             model_reporters={"Polarization": polar,
@@ -223,28 +222,26 @@ class ShoalModel(Model):
                              "Shoal Area": area,
                              "Mean Distance from Centroid": centroid_dist})
 
-    # def make_obstructions(self):
-    #     """
-    #     Create N "Obstruct" agents, with set positions & no movement. Borders
-    #     are defined as coordinate points between 0 and the width/height, i.e.
-    #     the following coordinate ranges:
-    #         (0, 0:height)
-    #         (0:width, height)
-    #         (width, 0:height)
-    #         (0:width, 0)
-    #     """
-    #     for i in range(self.initial_obstruct):
-    #         # Todo: figure out how to define the borders to be used here
-    #         x = range(100)  # width
-    #         y = range(100)  # height
-    #         border1 = (0, y)
-    #         border2 = (x, 100)
-    #         border3 = (100, y)
-    #         border4 = (x, 0)
-    #         pos = np.array((x, y))
-    #         obstruct = Obstruct(i, self, pos)
-    #         self.space.place_agent(obstruct, pos)
-    #         self.schedule.add(obstruct)
+    def make_obstructions(self):
+        """
+        Create N "Obstruct" agents, with set positions & no movement. Borders
+        are defined as coordinate points between 0 and the width/height, i.e.
+        the following coordinate ranges:
+            left border = (0, 0:height)
+            top border = (0:width, height)
+            right border = (width, 0:height)
+            bottom border = (0:width, 0)
+        """
+
+        for i in range(self.initial_obstruct):
+            # Todo: figure out how to define the borders to be used here
+            borders = [(10, n) + (n, 20) + (20, n) + (n, 10) for n in range(10, 20)]
+            x = [x[0] for x in borders]
+            y = [y[1] for y in borders]
+            pos = np.array((x, y))
+            obstruct = Obstruct(i, self, pos)
+            self.space.place_agent(obstruct, pos)
+            self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
