@@ -7,6 +7,7 @@ a border around the model space.
 """
 
 import numpy as np
+import random
 import matplotlib.pyplot as plt
 
 left = [(40, n) for n in range(40, 60)]
@@ -18,6 +19,10 @@ borders = left + top + right + bottom
 x = [x[0] for x in borders]
 y = [y[1] for y in borders]
 pos = np.array((x, y))
+
+x_fish = random.random() * 100
+y_fish = random.random() * 100
+pos_fish = np.array((x_fish, y_fish))
 
 # Plotting
 plt.style.use("dark_background")

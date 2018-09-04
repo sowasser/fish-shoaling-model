@@ -179,7 +179,7 @@ class ShoalModel(Model):
     """
     def __init__(self,
                  initial_fish=100,
-                 initial_obstruct=800,  # Todo: figure out what # this needs to be
+                 initial_obstruct=160,  # Todo: figure out what # this needs to be
                  width=100,
                  height=100,
                  speed=2,
@@ -203,8 +203,9 @@ class ShoalModel(Model):
 
     def make_fish(self):
         """
-        Create N "Fish" agents, with random positions and starting velocities.
-        Call data collectors for fish collective behaviour.
+        Create N "Fish" agents. A random position and starting velocity is
+        assigned for each fish.
+        Call data collectors for fish collective behaviour
         """
         for i in range(self.initial_fish):
             x = random.random() * self.space.x_max
@@ -233,8 +234,10 @@ class ShoalModel(Model):
             bottom border = (0:width, 0)
         """
 
+        # x_axis = [x[0] for x in borders]
+        # y_axis = [y[1] for y in borders]
+
         for i in range(self.initial_obstruct):
-            # Todo: figure out how to define the borders to be used here
             # left = [(self.space.x_min, n) for n in range(self.space.y_max)]
             # top = [(n, self.space.y_max) for n in range(self.space.x_max)]
             # right = [(self.space.x_max, n) for n in range(self.space.x_max)]
@@ -244,10 +247,10 @@ class ShoalModel(Model):
             right = [(60, n) for n in range(40, 60)]
             bottom = [(n, 40) for n in range(40, 60)]
             borders = left + top + right + bottom
-            x = [x[0] for x in borders]
-            y = [y[1] for y in borders]
-            pos = np.array((x, y))
+            single_point = random.choice(borders)
+            pos = np.array((single_point[0], single_point[1]))
             obstruct = Obstruct(i, self, pos)
+
             self.space.place_agent(obstruct, pos)
             self.schedule.add(obstruct)
 

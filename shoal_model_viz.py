@@ -78,9 +78,9 @@ def draw_agents(agent):
     elif type(agent) is Obstruct:
         portrayal["Shape"] = "rect"
         portrayal["Color"] = "Red"
-        portrayal["Filled"] = "true"
-        portrayal["w"] = 3
-        portrayal["h"] = 3
+        portrayal["Filled"] = "false"
+        portrayal["w"] = 1
+        portrayal["h"] = 1
 
     return portrayal
 
