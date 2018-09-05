@@ -239,14 +239,14 @@ class ShoalModel(Model):
         # y_axis = [y[1] for y in borders]
 
         for i in range(self.initial_obstruct):
-            # left = [(self.space.x_min, n) for n in range(self.space.y_max)]
-            # top = [(n, self.space.y_max) for n in range(self.space.x_max)]
-            # right = [(self.space.x_max, n) for n in range(self.space.x_max)]
-            # bottom = [(n, self.space.y_min) for n in range(self.space.y_max)]
-            left = [(40, n) for n in range(40, 60)]
-            top = [(n, 60) for n in range(40, 60)]
-            right = [(60, n) for n in range(40, 60)]
-            bottom = [(n, 40) for n in range(40, 60)]
+            left = [(self.space.x_min, n) for n in range(self.space.y_max)]
+            top = [(n, self.space.y_max) for n in range(self.space.x_max)]
+            right = [(self.space.x_max, n) for n in range(self.space.x_max)]
+            bottom = [(n, self.space.y_min) for n in range(self.space.y_max)]
+            # left = [(40, n) for n in range(40, 60)]
+            # top = [(n, 60) for n in range(40, 60)]
+            # right = [(60, n) for n in range(40, 60)]
+            # bottom = [(n, 40) for n in range(40, 60)]
             borders = left + top + right + bottom
             single_point = random.choice(borders)
             pos = np.array((single_point[0], single_point[1]))
