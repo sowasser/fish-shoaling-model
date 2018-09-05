@@ -96,25 +96,25 @@ model_params = {
 
 # Create charts for the data collectors
 # Todo: include chart titles & improve charts
-polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-                          data_collector_name="datacollector")
-#                         chart_title="Polarization")
-
-neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
-                             data_collector_name="datacollector")
-#                            chart_title="Nearest Neighbour Distance")
-
-area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
-                         data_collector_name="datacollector")
-#                        chart_title="Shoal Area")
+# polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+#                           data_collector_name="datacollector")
+# #                         chart_title="Polarization")
+#
+# neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+#                              data_collector_name="datacollector")
+# #                            chart_title="Nearest Neighbour Distance")
+#
+# area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
+#                          data_collector_name="datacollector")
+# #                        chart_title="Shoal Area")
 
 
 # Launch server
 server = ModularServer(ShoalModel,
-                       [shoal_canvas,
-                        polar_chart,
-                        neighbor_chart,
-                        area_chart],
+                       [shoal_canvas],
+                        # polar_chart,
+                        # neighbor_chart,
+                        # area_chart],
                        "Boids Model of Shoaling Behavior",
                        model_params)
 server.launch()

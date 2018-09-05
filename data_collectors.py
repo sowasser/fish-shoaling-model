@@ -26,6 +26,8 @@ found in the literature.
 These are used in shoal_model.py and elsewhere.
 """
 
+# TODO: FIX THESE SO THEY ONLY INCLUDE THE "FISH" AGENTS, NOT THE OBSTRUCTIONS
+
 import numpy as np
 import math
 from scipy.spatial import KDTree, ConvexHull
