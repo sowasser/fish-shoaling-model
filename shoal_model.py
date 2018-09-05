@@ -131,7 +131,7 @@ class Obstruct(Agent):
     or other static aspects of the model environment for the "Fish" agents to
     interact with.
     """
-    def __init__(self, unique_id, model, pos):
+    def __init__(self, unique_id, model, pos, velocity):
         """
         Create a new Boid (bird, fish) agent.
         Args:
@@ -140,6 +140,7 @@ class Obstruct(Agent):
         """
         super().__init__(unique_id, model)
         self.pos = np.array(pos)
+        self.velocity = velocity
 
 
 def create_borders(self):
