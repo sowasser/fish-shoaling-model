@@ -249,8 +249,8 @@ class ShoalModel(Model):
             borders = left + top + right + bottom
             single_point = random.choice(borders)
             pos = np.array((single_point[0], single_point[1]))
-            obstruct = Obstruct(i, self, pos)
-
+            velocity = 0
+            obstruct = Obstruct(i, self, pos, velocity)
             self.space.place_agent(obstruct, pos)
             self.schedule.add(obstruct)
 
