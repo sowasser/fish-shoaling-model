@@ -180,7 +180,7 @@ class ShoalModel(Model):
     """
     def __init__(self,
                  initial_fish=100,
-                 initial_obstruct=400,  # Todo: figure out what # this needs to be
+                 initial_obstruct=1000,  # Todo: figure out what # this needs to be
                  width=100,
                  height=100,
                  speed=2,
@@ -242,12 +242,12 @@ class ShoalModel(Model):
             left = [(self.space.x_min, n) for n in range(self.space.y_max)]
             top = [(n, self.space.y_max) for n in range(self.space.x_max)]
             right = [(self.space.x_max, n) for n in range(self.space.x_max)]
-            bottom = [(n, self.space.y_min) for n in range(self.space.y_max)]
-            # left = [(40, n) for n in range(40, 60)]
-            # top = [(n, 60) for n in range(40, 60)]
-            # right = [(60, n) for n in range(40, 60)]
-            # bottom = [(n, 40) for n in range(40, 60)]
-            borders = left + top + right + bottom
+            # bottom = [(n, self.space.y_min) for n in range(self.space.y_max)]
+        #     left = [(40, n) for n in range(40, 60)]
+        #     top = [(n, 60) for n in range(40, 60)]
+        #     right = [(60, n) for n in range(40, 60)]
+        #     bottom = [(n, 40) for n in range(40, 60)]
+            borders = left + top + right
             single_point = random.choice(borders)
             pos = np.array((single_point[0], single_point[1]))
             velocity = 0
