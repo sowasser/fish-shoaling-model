@@ -180,7 +180,7 @@ class ShoalModel(Model):
     """
     def __init__(self,
                  initial_fish=100,
-                 initial_obstruct=160,  # Todo: figure out what # this needs to be
+                 initial_obstruct=400,  # Todo: figure out what # this needs to be
                  width=100,
                  height=100,
                  speed=2,
