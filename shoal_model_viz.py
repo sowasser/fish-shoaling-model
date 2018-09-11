@@ -79,8 +79,8 @@ def draw_agents(agent):
         portrayal["Shape"] = "rect"
         portrayal["Color"] = "Red"
         portrayal["Filled"] = "false"
-        portrayal["w"] = 0.01
-        portrayal["h"] = 0.01
+        portrayal["w"] = 0.005
+        portrayal["h"] = 0.005
 
     return portrayal
 

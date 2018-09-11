@@ -227,18 +227,13 @@ class ShoalModel(Model):
     def make_obstructions(self):
         """
         Create N "Obstruct" agents, with set positions & no movement. Borders
-        are defined as coordinate points between 0 and the width/height, i.e.
-        the following coordinate ranges:
-            left border = (0, 0:height)
-            top border = (0:width, height)
-            right border = (width, 0:height)
-            bottom border = (0:width, 0)
-        These ranges are drawn from the model space limits, with a slight buffer.
+        are defined as coordinate points between the maximum and minimum extent
+        of the width/height of the obstruction. These ranges are drawn from the
+        model space limits, with a slight buffer.
+
+        The points are then generated at random along the lines drawn for the
+        obstruction and given a velocity of 0.
         """
-
-        # x_axis = [x[0] for x in borders]
-        # y_axis = [y[1] for y in borders]
-
         for i in range(self.initial_obstruct):
             x_min = self.space.x_min + 1
             x_max = self.space.x_max - 1
