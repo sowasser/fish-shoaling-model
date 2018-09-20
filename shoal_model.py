@@ -37,7 +37,7 @@ based on interactive, user-settable sliders.
 import random
 from mesa import Agent, Model
 from mesa.time import RandomActivation
-# from mesa.datacollection import DataCollector
+from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
 from mesa.visualization.UserParam import UserSettableParameter
 
@@ -218,11 +218,11 @@ class ShoalModel(Model):
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
-        # self.datacollector = DataCollector(
-        #     model_reporters={"Polarization": polar,
-        #                      "Nearest Neighbour Distance": nnd,
-        #                      "Shoal Area": area,
-        #                      "Mean Distance from Centroid": centroid_dist})
+        self.datacollector = DataCollector(
+            model_reporters={"Polarization": polar,
+                             "Nearest Neighbour Distance": nnd,
+                             "Shoal Area": area,
+                             "Mean Distance from Centroid": centroid_dist})
 
     def make_obstructions(self):
         """
@@ -253,5 +253,5 @@ class ShoalModel(Model):
             self.schedule.add(obstruct)
 
     def step(self):
-        # self.datacollector.collect(self)
+        self.datacollector.collect(self)
         self.schedule.step()
