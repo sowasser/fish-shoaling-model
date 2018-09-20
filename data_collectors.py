@@ -42,8 +42,8 @@ def polar(model):
     the arc tangent of y/x. The function used pays attention to the sign of
     the input to make sure that the correct quadrant for the angle is determined.
     """
-    velocity_x = [agent.velocity[0] for agent in model.schedule.agents.fish]
-    velocity_y = [agent.velocity[1] for agent in model.schedule.agents.fish]
+    velocity_x = [agent.velocity[0] for agent in model.schedule.agents]
+    velocity_y = [agent.velocity[1] for agent in model.schedule.agents]
     angle = []
     for (y, x) in zip(velocity_y, velocity_x):
         a = math.atan2(y, x)
@@ -58,7 +58,7 @@ def nnd(model):
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
     """
-    fish = np.asarray([agent.pos for agent in model.schedule.agents.fish])
+    fish = np.asarray([agent.pos for agent in model.schedule.agents])
     fish_tree = KDTree(fish)
     means = []
     for me in fish:
@@ -76,8 +76,8 @@ def area(model):
     ConvexHull function.
     """
     # Data needs to be a numpy array of floats - two columns (x,y)
-    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents.fish])
-    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents.fish])
+    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
+    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
     return ConvexHull(np.column_stack((pos_x, pos_y))).area
 
 
@@ -86,8 +86,8 @@ def centroid_dist(model):
     Extracts xy coordinates for each agent, finds the centroid, and then
     calculates the mean distance of each agent from the centroid.
     """
-    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents.fish])
-    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents.fish])
+    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents])
+    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents])
     mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
     centroid = (mean_x, mean_y)
     pos = [agent.pos for agent in model.schedule.agents]
