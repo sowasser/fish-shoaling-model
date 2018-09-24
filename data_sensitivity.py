@@ -20,34 +20,45 @@ import os
 from shoal_model import *
 import matplotlib.pyplot as plt
 
-# Data collection for debugging purposes
-# model = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
-# for i in range(10):
-#     model.step()
-# data = model.datacollector.get_model_vars_dataframe()
-
 
 # 50 agents
-model50 = ShoalModel(population=50, width=50, height=50, speed=1, vision=10, separation=2)
+model50 = ShoalModel(initial_fish=100,
+                     initial_obstruct=4000,
+                     width=100,
+                     height=100,
+                     speed=1,
+                     vision=10,
+                     separation=2)
 for j in range(1000):
     model50.step()
 data50 = model50.datacollector.get_model_vars_dataframe()
 # data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
 
 # 100 agents
-model100 = ShoalModel(population=100, width=50, height=50, speed=1, vision=10, separation=2)
+model100 = ShoalModel(initial_fish=100,
+                      initial_obstruct=4000,
+                      width=100,
+                      height=100,
+                      speed=1,
+                      vision=10,
+                      separation=2)
 for i in range(1000):
     model100.step()
 data100 = model100.datacollector.get_model_vars_dataframe()
 # data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 # # 200 agents
-model200 = ShoalModel(population=200, width=50, height=50, speed=1, vision=10, separation=2)
+model200 = ShoalModel(initial_fish=100,
+                      initial_obstruct=4000,
+                      width=100,
+                      height=100,
+                      speed=1,
+                      vision=10,
+                      separation=2)
 for k in range(1000):
     model200.step()
 data200 = model200.datacollector.get_model_vars_dataframe()
 # data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
-
 
 # Paths for exporting the data, rather than graphing
 # path = "/Users/user/Desktop/Local/Mackerel/shoal-model-in-R"
