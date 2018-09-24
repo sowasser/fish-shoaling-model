@@ -27,8 +27,6 @@ found in the literature.
 These are used in shoal_model.py and elsewhere.
 """
 
-# TODO: FIX THESE SO THEY ONLY INCLUDE THE "FISH" AGENTS, NOT THE OBSTRUCTIONS
-
 import numpy as np
 import math
 from scipy.spatial import KDTree, ConvexHull
@@ -42,9 +40,11 @@ def polar(model):
     To find the MAD, the x,y coordinates are converted to radians by finding
     the arc tangent of y/x. The function used pays attention to the sign of
     the input to make sure that the correct quadrant for the angle is determined.
+
+    Collects velocity from ONLY the agents tagged as "fish".
     """
     velocity_x = [agent.velocity[0] for agent in model.schedule.agents
-                  if agent.tag == "fish"]  # ONLY the fish agents
+                  if agent.tag == "fish"]
     velocity_y = [agent.velocity[1] for agent in model.schedule.agents
                   if agent.tag == "fish"]
     angle = []
@@ -60,6 +60,8 @@ def nnd(model):
     measure of cohesion. Method finds & averages the nearest neighbours
     using a KDTree, a machine learning concept for clustering or
     compartmentalizing data. Right now, the 5 nearest neighbors are considered.
+
+    Collects position from ONLY the agents tagged as "fish".
     """
     fish = np.asarray([agent.pos for agent in model.schedule.agents
                        if agent.tag == "fish"])
@@ -78,6 +80,8 @@ def area(model):
     Computes convex hull (smallest convex set that contains all points) as a
     measure of shoal area. Uses the area variable from the scipy.spatial
     ConvexHull function.
+
+    Collects position from ONLY the agents tagged as "fish".
     """
     # Data needs to be a numpy array of floats - two columns (x,y)
     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents
@@ -91,6 +95,8 @@ def centroid_dist(model):
     """
     Extracts xy coordinates for each agent, finds the centroid, and then
     calculates the mean distance of each agent from the centroid.
+
+    Collects position from ONLY the agents tagged as "fish".
     """
     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents
                         if agent.tag == "fish"])
