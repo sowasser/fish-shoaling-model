@@ -143,12 +143,6 @@ class Obstruct(Agent):
         self.velocity = velocity
 
 
-def create_borders(self):
-    """
-    Find and list the coordinates of the borders of the model space.
-    """
-
-
 # Interactive sliders for model arguments.
 # Todo: Change "value" argument for initial or testing conditions
 n_slider = UserSettableParameter(param_type='slider', name='Number of Agents',
