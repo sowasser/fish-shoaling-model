@@ -35,6 +35,7 @@ based on interactive, user-settable sliders.
 """
 
 import random
+import numpy as np
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.datacollection import DataCollector
@@ -213,7 +214,8 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            model_reporters={"Polarization": polar})
+            model_reporters={"Shoal Area": area})
+                             # "Polarization": polar,
                              # "Nearest Neighbour Distance": nnd,
                              # "Shoal Area": area,
                              # "Mean Distance from Centroid": centroid_dist})
