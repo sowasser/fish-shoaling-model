@@ -112,6 +112,14 @@ def centroid_dist(model):
     return np.mean(cent_dist)
 
 
+def mean_position(model):
+    """
+    Just what it says on the tin. Mean position of the fish to be graphed on a
+    cartesian plane to compare to other patterns, since the visualization is
+    too slow with the obstruction agents.
+    """
+    # Todo: code this data collector & create a new script for graphing
+
 def nn_perp_d(model):
     """
     Mean nearest neighbour distance perpendicular to the direction of travel,

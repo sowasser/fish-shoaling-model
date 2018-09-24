@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 
 
 # 50 agents
-model50 = ShoalModel(initial_fish=100,
+model50 = ShoalModel(initial_fish=50,
                      initial_obstruct=4000,
                      width=100,
                      height=100,
@@ -35,7 +35,7 @@ data50 = model50.datacollector.get_model_vars_dataframe()
 # data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
 
 # 100 agents
-model100 = ShoalModel(initial_fish=100,
+model100 = ShoalModel(initial_fish=50,
                       initial_obstruct=4000,
                       width=100,
                       height=100,
@@ -48,7 +48,7 @@ data100 = model100.datacollector.get_model_vars_dataframe()
 # data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
 # # 200 agents
-model200 = ShoalModel(initial_fish=100,
+model200 = ShoalModel(initial_fish=50,
                       initial_obstruct=4000,
                       width=100,
                       height=100,
