@@ -213,10 +213,10 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            model_reporters={"Polarization": polar,
-                             "Nearest Neighbour Distance": nnd,
-                             "Shoal Area": area,
-                             "Mean Distance from Centroid": centroid_dist})
+            model_reporters={"Polarization": polar})
+                             # "Nearest Neighbour Distance": nnd,
+                             # "Shoal Area": area,
+                             # "Mean Distance from Centroid": centroid_dist})
 
     def make_obstructions(self):
         """
