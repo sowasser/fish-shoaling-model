@@ -54,7 +54,7 @@ class Fish(Agent):
     any other Boid.
     """
     def __init__(self, unique_id, model, pos, speed, velocity, vision,
-                 separation, cohere=0.025, separate=0.25, match=0.04):
+                 separation, cohere=0.025, separate=0.25, match=0.04, tag="fish"):
         """
         Create a new Boid (bird, fish) agent.
         Args:
@@ -67,6 +67,7 @@ class Fish(Agent):
             cohere: the relative importance of matching neighbors' positions
             separate: the relative importance of avoiding close neighbors
             match: the relative importance of matching neighbors' headings
+            tag: indicator that these are "fish" agents for the data collectors.
         """
         super().__init__(unique_id, model)
         self.pos = np.array(pos)
@@ -77,6 +78,7 @@ class Fish(Agent):
         self.cohere_factor = cohere
         self.separate_factor = separate
         self.match_factor = match
+        self.tag = tag
 
     def cohere(self, neighbors):
         """
@@ -132,16 +134,18 @@ class Obstruct(Agent):
     or other static aspects of the model environment for the "Fish" agents to
     interact with.
     """
-    def __init__(self, unique_id, model, pos, velocity):
+    def __init__(self, unique_id, model, pos, velocity, tag="obstruction"):
         """
         Create a new Boid (bird, fish) agent.
         Args:
             unique_id: Unique agent identifier.
             pos: Starting position
+            tag: indicator that these are "obstruction" agents.
         """
         super().__init__(unique_id, model)
         self.pos = np.array(pos)
         self.velocity = velocity
+        self.tag = tag
 
 
 # Interactive sliders for model arguments.
@@ -214,11 +218,10 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
-            model_reporters={"Shoal Area": area})
-                             # "Polarization": polar,
-                             # "Nearest Neighbour Distance": nnd,
-                             # "Shoal Area": area,
-                             # "Mean Distance from Centroid": centroid_dist})
+            model_reporters={"Polarization": polar,
+                             "Nearest Neighbour Distance": nnd,
+                             "Shoal Area": area,
+                             "Mean Distance from Centroid": centroid_dist})
 
     def make_obstructions(self):
         """
