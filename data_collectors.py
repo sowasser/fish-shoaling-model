@@ -124,8 +124,8 @@ def mean_position(model):
                         if agent.tag == "fish"])
     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents
                         if agent.tag == "fish"])
-    mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
-    return mean_x, mean_y
+    centroid = (np.mean(pos_x), np.mean(pos_y))
+    return centroid
 
 
 def nn_perp_d(model):
