@@ -14,17 +14,11 @@ each step, using the data collector. The dataframe can then be exported as a
 .csv file, or graphed using matplotlib.
 """
 
-import numpy as np
 import pandas as pd
 import itertools
-import random
-from mesa import Model
-from mesa.time import RandomActivation
-from mesa.datacollection import DataCollector
-from mesa.space import ContinuousSpace
+from shoal_model import *
 import os
 
-from shoal_model import Fish
 # import matplotlib.pyplot as plt
 # from matplotlib import animation
 
@@ -40,65 +34,14 @@ def positions(model):
     return pos
 
 
-class ShoalModel(Model):
-    """ Shoal model class. Handles agent creation, placement and scheduling. """
-
-    def __init__(self,
-                 population=100,
-                 width=100,
-                 height=100,
-                 speed=1,
-                 vision=10,
-                 separation=2,
-                 cohere=0.025,
-                 separate=0.25,
-                 match=0.04):
-        """
-        Create a new Boids model. Args:
-            N: Number of Boids
-            width, height: Size of the space.
-            speed: how fast the boids should move.
-            vision: how far around should each Boid look for its neighbors
-            separation: what's the minimum distance each Boid will attempt to
-                        keep from any other
-            cohere, separate, match: factors for the relative importance of
-                                     the three drives.
-        """
-        self.population = population
-        self.vision = vision
-        self.speed = speed
-        self.separation = separation
-        self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, torus=True,
-                                     grid_width=10, grid_height=10)
-        self.factors = dict(cohere=cohere, separate=separate, match=match)
-        self.make_agents()
-        self.running = True
-
-    def make_agents(self):
-        """
-        Create N agents, with random positions and starting velocities.
-        """
-        for i in range(self.population):
-            x = random.random() * self.space.x_max
-            y = random.random() * self.space.y_max
-            pos = np.array((x, y))
-            velocity = np.random.random(2) * 2 - 1
-            fish = Fish(i, self, pos, self.speed, velocity, self.vision,
-                        self.separation, **self.factors)
-            self.space.place_agent(fish, pos)
-            self.schedule.add(fish)
-
-        self.datacollector = DataCollector(
-            model_reporters={"Position (x, y)": positions})
-
-    def step(self):
-        self.datacollector.collect(self)
-        self.schedule.step()
-
-
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(population=7, width=30, height=30, speed=1, vision=10, separation=2)
+model = ShoalModel(initial_fish=50,
+                   initial_obstruct=4000,
+                   width=100,
+                   height=100,
+                   speed=1,
+                   vision=10,
+                   separation=2)
 for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
