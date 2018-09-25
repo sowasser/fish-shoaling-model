@@ -8,6 +8,7 @@ not any obstructions. The data collected are, currently:
        determined using a k-distance tree.
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
+    5. Mean Position (centroid) of the shoal
 
 From Herbert-Read et al. (2017) Anthropogenic noise pollution from pile-driving
 disrupts the structure and dynamics of fish shoals.
@@ -114,11 +115,18 @@ def centroid_dist(model):
 
 def mean_position(model):
     """
-    Just what it says on the tin. Mean position of the fish to be graphed on a
-    cartesian plane to compare to other patterns, since the visualization is
-    too slow with the obstruction agents.
+    Just what it says on the tin. Mean position of the fish (centroid) to be
+    graphed on a cartesian plane to compare to other patterns, since the
+    visualization is too slow with the obstruction agents.
     """
     # Todo: code this data collector & create a new script for graphing
+    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents
+                        if agent.tag == "fish"])
+    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents
+                        if agent.tag == "fish"])
+    mean_x, mean_y = np.mean(pos_x), np.mean(pos_y)
+    return mean_x, mean_y
+
 
 def nn_perp_d(model):
     """
