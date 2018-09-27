@@ -20,7 +20,7 @@ model = ShoalModel(initial_fish=50,
                    speed=1,
                    vision=10,
                    separation=10)
-for i in range(2):
+for i in range(10):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
@@ -30,10 +30,12 @@ polar = np_data[:, 0]
 nnd = np_data[:, 1]
 area = np_data[:, 2]
 centroid_dist = np_data[:, 3]
-mean_pos = np_data[:, 4]
-# Todo: flatten the mean_pos array or otherwise change it to be more simple
 
-print(mean_pos)
+mean_pos = np_data[:, 4]
+df = pd.DataFrame(mean_pos)  # create a pandas data frame
+pos = df[0].apply(pd.Series)  # removed a set of brackets
+pos.columns = ["x", "y"]
+
 
 # Plotting
 plt.style.use("dark_background")
