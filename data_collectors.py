@@ -8,6 +8,7 @@ not any obstructions. The data collected are, currently:
        determined using a k-distance tree.
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
+    6. Positions of each of the
     5. Mean Position (centroid) of the shoal
 
 From Herbert-Read et al. (2017) Anthropogenic noise pollution from pile-driving
@@ -30,6 +31,7 @@ These are used in shoal_model.py and elsewhere.
 
 import numpy as np
 import math
+import itertools
 from scipy.spatial import KDTree, ConvexHull
 from statsmodels.robust.scale import mad
 
@@ -113,13 +115,21 @@ def centroid_dist(model):
     return np.mean(cent_dist)
 
 
+def positions(model):
+    """ Extracts xy coordinates for each agent tagged as "fish". """
+    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents
+           if agent.tag == "fish"]
+    pos = list(itertools.chain(*pos))
+    return pos
+
+
 def mean_position(model):
     """
     Just what it says on the tin. Mean position of the fish (centroid) to be
     graphed on a cartesian plane to compare to other patterns, since the
     visualization is too slow with the obstruction agents.
     """
-    # Todo: code this data collector & create a new script for graphing
+    # Todo: figure out if this is necessary if the positions data collector works
     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents
                         if agent.tag == "fish"])
     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents
