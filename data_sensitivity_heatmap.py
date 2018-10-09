@@ -56,39 +56,9 @@ mean_pos_df.columns = ["x", "y"]
 
 # # Plotting
 # plt.style.use("dark_background")
-# fig, ax = plt.subplots()
-# ax.scatter(data[0], data[1])
-#
-# plt.tight_layout()
-# plt.show()
 
-# # Animation in matplotlib
-# plt.style.use('dark_background')
-#
-# # Set up figure, axes, and plot element
-# fig = plt.figure()
-# ax = plt.axes(xlim=(0, 100), ylim=(0, 100))
-# scatter,  = ax.plot([], [], markersize=2)
-#
-#
-# # Initialization function - background of frames
-# def init():
-#     scatter.set_data([], [])
-#     return scatter,
-#
-#
-# # Animation function - called sequentially
-# def animate(i):
-#     x = output[i, ::2]
-#     y = output[i, 1::2]
-#     scatter.set_data(x, y)
-#     return scatter,
-#
-#
-# # Call the animator
-# anim = animation.FuncAnimation(fig, animate, init_func=init,
-#                                frames=100, interval=20)
-# plt.show()
-#
-# # Save the animation - need FFmpeg to save as mp4
-# # anim.save('basic_animation.mp4', fps=30)
+fig = plt.figure(figsize=(8, 8))
+ax = fig.add_subplot(111)
+plt.title("Position of Fish")  # Todo: figure out sequential step numbering
+
+scatter = ax.scatter()
