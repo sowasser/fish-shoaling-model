@@ -5,8 +5,9 @@ outlined in data_collectors.py. Here, they are separated and manipulated to
 create more simple outputs
 """
 
-# Todo: try to create animated heatmaps for density:
+# Todo: try to create animated heatmaps (or, rather, pcolormesh) for density:
 # https://www.kaggle.com/jaeyoonpark/heatmap-animation-us-drought-map/code
+# https://www.programcreek.com/python/example/102329/matplotlib.pyplot.pcolormesh
 
 from shoal_model import *
 import pandas as pd
@@ -34,8 +35,8 @@ np_data = np.asarray(data)
 # centroid_dist = np_data[:, 3]
 
 # Flatten Positions so it is more accessible & add column names
-position = pd.DataFrame(np_data[:, 4].flatten())  # remove one set of brackets & make a dataframe
-pos_df = pd.DataFrame(position)
+position = np_data[:, 4].flatten()  # remove one set of brackets & make a dataframe
+pos_df = pd.DataFrame(position.flatten())  # remove one set of brackets & make a dataframe
 pos_df = pos_df[0].apply(pd.Series)  # remove another set of brackets
 pos_df[0].apply(pd.Series)  # remove last set of brackets
 np_pos = np.asarray(pos_df)  # back to numpy array
@@ -43,8 +44,14 @@ np_pos = np.asarray(pos_df)  # back to numpy array
 nums = range(1, 51)  # list same length as # of agents (end value is num + 1)
 list_x = ["x" + str(i) for i in nums]  # creates x1, x2, etc.
 list_y = ["y" + str(j) for j in nums]  # same for y
+
 # iterate between lists and assign as column names
 pos_df.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
+
+# isolate position data for first step
+x1 = np_pos[0, 0::2].tolist()
+y1 = np_pos[0, 1::2].tolist()
+step1 = [x1, y1]
 
 
 # Flatten Mean Position so it is more accessible & add column names
@@ -55,10 +62,14 @@ mean_pos_df.columns = ["x", "y"]
 
 
 # # Plotting
-# plt.style.use("dark_background")
+plt.style.use("dark_background")
 
-fig = plt.figure(figsize=(8, 8))
+x = range(100)
+y = range(100)
+
+fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111)
 plt.title("Position of Fish")  # Todo: figure out sequential step numbering
 
-scatter = ax.scatter()
+scatter = ax.pcolormesh([x, y], step1)
+plt.show()
