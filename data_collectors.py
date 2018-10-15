@@ -116,10 +116,10 @@ def centroid_dist(model):
 
 
 def positions(model):
-    """ Extracts xy coordinates for each agent tagged as "fish". """
+    """ Extracts xy coordinates for each agent tagged as "fish"."""
     pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents
            if agent.tag == "fish"]
-    pos = list(itertools.chain(*pos))
+    pos = list(itertools.chain(*pos))  # creates lists of positions, rather than tuples
     return pos
 
 
