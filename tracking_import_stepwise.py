@@ -1,8 +1,9 @@
 """
 Data captured from video of fish (sticklebacks or zebrafish) using LoggerPro.
 The position of each fish is captured for selected frames of the video as x-y
-coordinates. The head and the tail of each fish is recorded to track its
-orientation.
+coordinates. The head, then the tail, of each fish (sequentially, one fish at
+a time, for each fish in a frame) is recorded to track its orientation. Fish
+are tracked every 10 frames.
 
 In this script, the data are imported and cleaned, then position is extracted
 for statistical analyses. The data structure for this analysis method is
