@@ -31,8 +31,8 @@ from statsmodels.robust.scale import mad
 import matplotlib.pyplot as plt
 
 
-# path = "/Users/user/Desktop/Local/Mackerel/fish-shoaling-model"  # for desktop
-path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
+path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
+# path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 # Todo: CHANGE NAME OF FILE
 track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"stepwise.csv"),
@@ -175,6 +175,6 @@ plt.tight_layout()
 
 plt.show()
 
-# plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
-# # Todo: CHANGE NAME OF FILE
-# fig.savefig(os.path.join(plot_path, r"sb1_50.png"))
+plot_path = "/Users/user/Desktop/Local/Mackerel/Images"
+# Todo: CHANGE NAME OF FILE
+fig.savefig(os.path.join(plot_path, r"stepwise1.png"))
