@@ -8,7 +8,8 @@ are tracked every 10 frames.
 In this script, the data are imported and cleaned, then position is extracted
 for statistical analyses. The data structure for this analysis method is
 completely different than that in the tracking_import.py script. The results
-are then graphed using matplotlib.
+can then be exported as individual .csv files, if preferred, and are then
+graphed using matplotlib.
 
 These functions are for statistical analysis of the data, similar to the data
 collectors in the fish shoaling model. They are:
@@ -19,7 +20,11 @@ collectors in the fish shoaling model. They are:
 
 Shoal area will likely not be very useful, as the fish tend to stay at the
 boarders of the tub they're in. Polarization can be included for tracking data
-with 2 points per fish per frame.
+with 2 points per fish per frame - nose and tail.
+
+Next steps: adding an animation of the fish positions at each frame studied to
+correlate the position around the tank to these parameters, as they appear to
+gather & become less organised in one corner.
 """
 
 import pandas as pd
