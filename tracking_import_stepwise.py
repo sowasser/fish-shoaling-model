@@ -80,7 +80,7 @@ def centroid_dist(df):
 
 
 centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
-# centroid_distance.to_csv(os.path.join(path, r"track_cent_dist.csv"))
+centroid_distance.to_csv(os.path.join(path, r"step1_cent_dist.csv"))  # save data to use in R
 
 
 # Nearest Neighbour Distance
@@ -102,7 +102,7 @@ def nnd(df):
 
 
 nn_distance = pd.DataFrame([nnd(s) for s in steps])
-# nn_distance.to_csv(os.path.join(path, r"track_nnd.csv"))
+nn_distance.to_csv(os.path.join(path, r"step1_nnd.csv"))  # save data to use in R
 
 
 # Shoal Area
@@ -117,7 +117,7 @@ def area(df):
 
 
 shoal_area = pd.DataFrame([area(s) for s in steps])
-# shoal_area.to_csv(os.path.join(path, r"track_shoal_area.csv"))
+shoal_area.to_csv(os.path.join(path, r"step1_shoal_area.csv"))  # save data to use in R
 
 
 # Polarization
@@ -141,7 +141,7 @@ def polar(df):
 
 
 polarization = pd.DataFrame([polar(s) for s in steps])
-# polarization.to_csv(os.path.join(path, r"track_polar.csv"))
+polarization.to_csv(os.path.join(path, r"step1_polar.csv"))  # save data to use in R
 
 
 ###############################################################################
@@ -180,6 +180,7 @@ plt.tight_layout()
 
 plt.show()
 
-plot_path = "/Users/user/Desktop/Local/Mackerel/Images"
-# Todo: CHANGE NAME OF FILE
-fig.savefig(os.path.join(plot_path, r"stepwise1.png"))
+# # Export graphs as .png
+# plot_path = "/Users/user/Desktop/Local/Mackerel/Images"
+# # Todo: CHANGE NAME OF FILE
+# fig.savefig(os.path.join(plot_path, r"stepwise1.png"))
