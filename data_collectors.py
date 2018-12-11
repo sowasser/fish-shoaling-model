@@ -115,27 +115,27 @@ def centroid_dist(model):
     return np.mean(cent_dist)
 
 
-# def positions(model):
-#     """ Extracts xy coordinates for each agent tagged as "fish"."""
-#     pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents
-#            if agent.tag == "fish"]
-#     pos = list(itertools.chain(*pos))  # creates lists of positions, rather than tuples
-#     return pos
-#
-#
-# def mean_position(model):
-#     """
-#     Just what it says on the tin. Mean position of the fish (centroid) to be
-#     graphed on a cartesian plane to compare to other patterns, since the
-#     visualization is too slow with the obstruction agents.
-#     """
-#     # Todo: figure out if this is necessary if the positions data collector works
-#     pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents
-#                         if agent.tag == "fish"])
-#     pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents
-#                         if agent.tag == "fish"])
-#     centroid = (np.mean(pos_x), np.mean(pos_y))
-#     return centroid
+def positions(model):
+    """ Extracts xy coordinates for each agent tagged as "fish"."""
+    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents
+           if agent.tag == "fish"]
+    pos = list(itertools.chain(*pos))  # creates lists of positions, rather than tuples
+    return pos
+
+
+def mean_position(model):
+    """
+    Just what it says on the tin. Mean position of the fish (centroid) to be
+    graphed on a cartesian plane to compare to other patterns, since the
+    visualization is too slow with the obstruction agents.
+    """
+    # Todo: figure out if this is necessary if the positions data collector works
+    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents
+                        if agent.tag == "fish"])
+    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents
+                        if agent.tag == "fish"])
+    centroid = (np.mean(pos_x), np.mean(pos_y))
+    return centroid
 
 
 def nn_perp_d(model):
