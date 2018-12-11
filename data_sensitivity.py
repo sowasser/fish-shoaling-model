@@ -24,17 +24,18 @@ import matplotlib.pyplot as plt
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
-model = ShoalModel(initial_fish=38,
-                   initial_obstruct=4000,
-                   width=100,
-                   height=100,
-                   speed=1,
-                   vision=10,
-                   separation=2)
-for j in range(1000):
-    model.step()
-data = model.datacollector.get_model_vars_dataframe()
-data.to_csv(os.path.join(path, r"shoal_data.csv"), index=",")
+for j in range(2):  # how many runs of the model
+    model = ShoalModel(initial_fish=38,
+                       initial_obstruct=4000,
+                       width=100,
+                       height=100,
+                       speed=1,
+                       vision=10,
+                       separation=2)
+    for i in range(10):  # how many steps
+        model.step()
+    data = model.datacollector.get_model_vars_dataframe()
+# data.to_csv(os.path.join(path, r"NEW_shoal_data.csv"), index=",")
 
 
 # model50 = ShoalModel(initial_fish=50,
