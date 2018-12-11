@@ -17,6 +17,7 @@ Data are collected in the data_collectors.py script and are:
 
 from shoal_model import *
 from mesa.batchrunner import BatchRunner
+import pandas as pd
 import os
 
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
@@ -50,15 +51,22 @@ path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 # batch_data.to_csv(os.path.join(path, r"batch_data.csv"), index=",")
 
 
-for j in range(2):  # how many runs of the model
-    model = ShoalModel(initial_fish=38,
-                       initial_obstruct=4000,
-                       width=100,
-                       height=100,
-                       speed=1,
-                       vision=10,
-                       separation=2)
-    for i in range(10):  # how many steps
-        model.step()
-    data = model.datacollector.get_model_vars_dataframe()
-data.to_csv(os.path.join(path, r"NEW_shoal_data.csv"), index=",")
+model = ShoalModel(initial_fish=38,
+                   initial_obstruct=4000,
+                   width=100,
+                   height=100,
+                   speed=1,
+                   vision=10,
+                   separation=2)
+
+for a in range(10):  # how many steps
+    model.step()
+data1 = model.datacollector.get_model_vars_dataframe()
+
+for b in range(10):
+    model.step()
+data2 = model.datacollector.get_model_vars_dataframe()
+
+for c in range(10):
+    model.step()
+data3 = model.datacollector.get_model_vars_dataframe()
