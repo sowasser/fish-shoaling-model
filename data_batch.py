@@ -19,33 +19,19 @@ import os
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 
 
-def mean_model(iterations):
+def run_polar(steps):
     """
-    Runs the model many times and takes the average of all data collectors for
-    all runs for each step of the model.
+    Runs the shoal model for a certain number of steps and pulls out polarization.
     """
-    steps = pd.DataFrame()
-    for i in iterations:
-        model = ShoalModel(initial_fish=38,
-                           initial_obstruct=4000,
-                           width=100,
-                           height=100,
-                           speed=1,
-                           vision=10,
-                           separation=2)
-        for j in range(10):
-            model.step()
-        data = model.datacollector.get_model_vars_dataframe()
-        polar_run = data.iloc[:, 0]
-        polar_all = steps.append(polar_run, ignore_index=True)
-        # nnd_run = data.iloc[:, 1]
-        # nnd_all = steps.append(nnd_run, ignore_index=True)
-        # area_run = data.iloc[:, 2]
-        # area_all = steps.append(area_run, ignore_index=True)
-        # cent_run = data.iloc[:, 3]
-        # cent_all = steps.append(cent_run, ignore_index=True)
-        # return polar_all, nnd_all, area_all, cent_all
-    return polar_all
-
-
-mean_model(range(2))
+    model = ShoalModel(initial_fish=38,
+                       initial_obstruct=4000,
+                       width=100,
+                       height=100,
+                       speed=1,
+                       vision=10,
+                       separation=2)
+    for j in range(steps):
+        model.step()
+    data = model.datacollector.get_model_vars_dataframe()
+    polar_run = data.iloc[:, 0]
+    return polar_run
