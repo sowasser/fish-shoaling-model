@@ -33,9 +33,17 @@ def run_polar(steps):
     for j in range(steps):
         model.step()
     data = model.datacollector.get_model_vars_dataframe()
-    polar_run = data.iloc[:, 0]
-    return list(polar_run)
+    return data
 
 
-multi = pd.DataFrame([run_polar(10), run_polar(10), run_polar(10)])
-means = multi.mean(axis=0)
+p = pd.DataFrame([list(run_polar(10).iloc[:, 0]), list(run_polar(10).iloc[:, 0])])
+polar_mean = p.mean(axis=0)
+
+n = pd.DataFrame([list(run_polar(10).iloc[:, 1]), list(run_polar(10).iloc[:, 1])])
+nnd_mean = n.mean(axis=0)
+
+a = pd.DataFrame([list(run_polar(10).iloc[:, 2]), list(run_polar(10).iloc[:, 2])])
+area_mean = a.mean(axis=0)
+
+c = pd.DataFrame([list(run_polar(10).iloc[:, 3]), list(run_polar(10).iloc[:, 3])])
+cent_mean = c.mean(axis=0)
