@@ -19,7 +19,7 @@ import os
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 
 
-def run_polar(steps):
+def run_model(steps):
     """
     Runs the shoal model for a certain number of steps and pulls out polarization.
     """
@@ -36,14 +36,14 @@ def run_polar(steps):
     return data
 
 
-p = pd.DataFrame([list(run_polar(10).iloc[:, 0]), list(run_polar(10).iloc[:, 0])])
+p = pd.DataFrame([list(run_model(10).iloc[:, 0]), list(run_model(10).iloc[:, 0])])
 polar_mean = p.mean(axis=0)
 
-n = pd.DataFrame([list(run_polar(10).iloc[:, 1]), list(run_polar(10).iloc[:, 1])])
+n = pd.DataFrame([list(run_model(10).iloc[:, 1]), list(run_model(10).iloc[:, 1])])
 nnd_mean = n.mean(axis=0)
 
-a = pd.DataFrame([list(run_polar(10).iloc[:, 2]), list(run_polar(10).iloc[:, 2])])
+a = pd.DataFrame([list(run_model(10).iloc[:, 2]), list(run_model(10).iloc[:, 2])])
 area_mean = a.mean(axis=0)
 
-c = pd.DataFrame([list(run_polar(10).iloc[:, 3]), list(run_polar(10).iloc[:, 3])])
+c = pd.DataFrame([list(run_model(10).iloc[:, 3]), list(run_model(10).iloc[:, 3])])
 cent_mean = c.mean(axis=0)
