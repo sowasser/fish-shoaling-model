@@ -34,4 +34,8 @@ def run_polar(steps):
         model.step()
     data = model.datacollector.get_model_vars_dataframe()
     polar_run = data.iloc[:, 0]
-    return polar_run
+    return list(polar_run)
+
+
+multi = pd.DataFrame([run_polar(10), run_polar(10), run_polar(10)])
+means = multi.mean(axis=0)
