@@ -27,7 +27,7 @@ from shoal_model import *
 import pandas as pd
 import os
 
-# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
+path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 
 
 def run_model(steps):
@@ -49,17 +49,33 @@ def run_model(steps):
 
 
 # Isolate the polarization data from many runs of the model
-p = pd.DataFrame([list(run_model(10).iloc[:, 0]), list(run_model(10).iloc[:, 0])])
+p = pd.DataFrame([list(run_model(100).iloc[:, 0]), list(run_model(100).iloc[:, 0]), list(run_model(100).iloc[:, 0]),
+                  list(run_model(100).iloc[:, 0]), list(run_model(100).iloc[:, 0]), list(run_model(100).iloc[:, 0]),
+                  list(run_model(100).iloc[:, 0]), list(run_model(100).iloc[:, 0]), list(run_model(100).iloc[:, 0]),
+                  list(run_model(100).iloc[:, 0])])
 polar_mean = p.mean(axis=0)
+polar_mean.to_csv(os.path.join(path, r"polar_mean.csv"))  # save data to use in R
 
 # Isolate the nearest neighbour distance data from many runs of the model
-n = pd.DataFrame([list(run_model(10).iloc[:, 1]), list(run_model(10).iloc[:, 1])])
+n = pd.DataFrame([list(run_model(100).iloc[:, 1]), list(run_model(100).iloc[:, 1]), list(run_model(100).iloc[:, 1]),
+                  list(run_model(100).iloc[:, 1]), list(run_model(100).iloc[:, 1]), list(run_model(100).iloc[:, 1]),
+                  list(run_model(100).iloc[:, 1]), list(run_model(100).iloc[:, 1]), list(run_model(100).iloc[:, 1]),
+                  list(run_model(100).iloc[:, 1])])
 nnd_mean = n.mean(axis=0)
+nnd_mean.to_csv(os.path.join(path, r"nnd_mean.csv"))
 
 # Isolate the shoal area data from many runs of the model
-a = pd.DataFrame([list(run_model(10).iloc[:, 2]), list(run_model(10).iloc[:, 2])])
+a = pd.DataFrame([list(run_model(100).iloc[:, 2]), list(run_model(100).iloc[:, 2]), list(run_model(100).iloc[:, 2]),
+                  list(run_model(100).iloc[:, 2]), list(run_model(100).iloc[:, 2]), list(run_model(100).iloc[:, 2]),
+                  list(run_model(100).iloc[:, 2]), list(run_model(100).iloc[:, 2]), list(run_model(100).iloc[:, 2]),
+                  list(run_model(100).iloc[:, 2])])
 area_mean = a.mean(axis=0)
+area_mean.to_csv(os.path.join(path, r"area_mean.csv"))
 
 # Isolate the mean distance from the centroid data from many runs of the model
-c = pd.DataFrame([list(run_model(10).iloc[:, 3]), list(run_model(10).iloc[:, 3])])
+c = pd.DataFrame([list(run_model(100).iloc[:, 3]), list(run_model(100).iloc[:, 3]), list(run_model(100).iloc[:, 3]),
+                  list(run_model(100).iloc[:, 3]), list(run_model(100).iloc[:, 3]), list(run_model(100).iloc[:, 3]),
+                  list(run_model(100).iloc[:, 3]), list(run_model(100).iloc[:, 3]), list(run_model(100).iloc[:, 3]),
+                  list(run_model(100).iloc[:, 3])])
 cent_mean = c.mean(axis=0)
+cent_mean.to_csv(os.path.join(path, r"cent_mean.csv"))
