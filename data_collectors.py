@@ -127,7 +127,8 @@ def positions(model):
 def center_mass(model):
     """
     Calculates the center of mass of the shoal. Same as the centroid when the
-    body has a uniform density.
+    body has a uniform density. Calculated with the scipy.ndimage.center_of_mass
+    function.
     """
     # Todo: figure out if this is necessary if the positions data collector works
     pos = np.asarray([agent.pos for agent in model.schedule.agents
