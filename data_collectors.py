@@ -8,8 +8,8 @@ not any obstructions. The data collected are, currently:
        determined using a k-distance tree.
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
-    6. Positions of each of the
-    5. Mean Position (centroid) of the shoal
+    6. Positions of each of the fish in the shoal
+    5. Center of mass of the shoal
 
 From Herbert-Read et al. (2017) Anthropogenic noise pollution from pile-driving
 disrupts the structure and dynamics of fish shoals.
@@ -33,6 +33,7 @@ import numpy as np
 import math
 import itertools
 from scipy.spatial import KDTree, ConvexHull
+from scipy.ndimage import center_of_mass
 from statsmodels.robust.scale import mad
 
 
@@ -123,19 +124,16 @@ def positions(model):
     return pos
 
 
-def mean_position(model):
+def center_mass(model):
     """
-    Just what it says on the tin. Mean position of the fish (centroid) to be
-    graphed on a cartesian plane to compare to other patterns, since the
-    visualization is too slow with the obstruction agents.
+    Calculates the center of mass of the shoal. Same as the centroid when the
+    body has a uniform density.
     """
     # Todo: figure out if this is necessary if the positions data collector works
-    pos_x = np.asarray([agent.pos[0] for agent in model.schedule.agents
+    pos = np.asarray([agent.pos for agent in model.schedule.agents
                         if agent.tag == "fish"])
-    pos_y = np.asarray([agent.pos[1] for agent in model.schedule.agents
-                        if agent.tag == "fish"])
-    centroid = (np.mean(pos_x), np.mean(pos_y))
-    return centroid
+    center = center_of_mass(pos)
+    return center
 
 
 def nn_perp_d(model):
