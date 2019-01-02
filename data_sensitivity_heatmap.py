@@ -57,15 +57,15 @@ step1 = [x1, y1]
 #
 #
 #
-# # # Plotting
-# plt.style.use("dark_background")
-#
-# x = range(100)
-# y = range(100)
-#
-# fig = plt.figure(figsize=(6, 6))
-# ax = fig.add_subplot(111)
-# plt.title("Position of Fish")  # Todo: figure out sequential step numbering
-#
-# scatter = ax.pcolormesh([x, y], step1)
-# plt.show()
+# # Plotting
+plt.style.use("dark_background")
+
+x = range(100)
+y = range(100)
+
+fig = plt.figure(figsize=(6, 6))
+ax = fig.add_subplot(111)
+plt.title("Position of Fish")  # Todo: figure out sequential step numbering
+
+scatter = ax.scatter(x=x1, y=y1)
+plt.show()
