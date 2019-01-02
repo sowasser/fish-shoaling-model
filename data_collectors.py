@@ -130,11 +130,12 @@ def center_mass(model):
     body has a uniform density. Calculated with the scipy.ndimage.center_of_mass
     function.
     """
+    # Todo: fix! Some sort of "string" error.
     # Todo: figure out if this is necessary if the positions data collector works
     pos = np.asarray([agent.pos for agent in model.schedule.agents
-                        if agent.tag == "fish"])
+                      if agent.tag == "fish"])
     center = center_of_mass(pos)
-    return center
+    return np.asarray(center)
 
 
 def nn_perp_d(model):
