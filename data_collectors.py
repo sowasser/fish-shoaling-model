@@ -9,7 +9,9 @@ not any obstructions. The data collected are, currently:
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
     6. Positions of each of the fish in the shoal
-    5. Center of mass of the shoal
+    5. Center of mass of the shoal. This is calculated separately because the
+       data structure for this function is different from the output needed for
+       the positions of the fish.
 
 From Herbert-Read et al. (2017) Anthropogenic noise pollution from pile-driving
 disrupts the structure and dynamics of fish shoals.
@@ -130,8 +132,6 @@ def center_mass(model):
     body has a uniform density. Calculated with the scipy.ndimage.center_of_mass
     function.
     """
-    # Todo: fix! Some sort of "string" error.
-    # Todo: figure out if this is necessary if the positions data collector works
     pos = np.asarray([agent.pos for agent in model.schedule.agents
                       if agent.tag == "fish"])
     center = center_of_mass(pos)
