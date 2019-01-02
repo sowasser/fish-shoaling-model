@@ -54,10 +54,9 @@ step1 = [x1, y1]
 # mean_pos = pd.DataFrame(np_data[:, 5])
 # mean_pos_df = mean_pos[0].apply(pd.Series)  # removed a set of brackets
 # mean_pos_df.columns = ["x", "y"]
-#
-#
-#
-# # Plotting
+
+
+# Plotting
 plt.style.use("dark_background")
 
 x = range(100)
