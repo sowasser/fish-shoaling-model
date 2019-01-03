@@ -28,7 +28,8 @@ from shoal_model import *
 import pandas as pd
 import os
 
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
+path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 
 def run_model(steps):
