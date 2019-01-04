@@ -79,8 +79,8 @@ def draw_agents(agent):
         portrayal["Shape"] = "rect"
         portrayal["Color"] = "Red"
         portrayal["Filled"] = "false"
-        portrayal["w"] = 0.005
-        portrayal["h"] = 0.005
+        portrayal["w"] = 0.02
+        portrayal["h"] = 0.02
 
     return portrayal
 
@@ -88,7 +88,7 @@ def draw_agents(agent):
 # Create canvas, 500x500 pixels
 shoal_canvas = SimpleCanvas(draw_agents, canvas_width=500, canvas_height=500)
 model_params = {
-    "initial_fish": n_slider,
+    "initial_fish": 20,
     "speed": speed_slider,
     "vision": vision_slider,
     "separation": sep_slider
@@ -111,10 +111,7 @@ area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
 
 # Launch server
 server = ModularServer(ShoalModel,
-                       [shoal_canvas,
-                        polar_chart,
-                        neighbor_chart,
-                        area_chart],
+                       [shoal_canvas, polar_chart, neighbor_chart, area_chart],
                        "Boids Model of Shoaling Behavior",
                        model_params)
 server.launch()

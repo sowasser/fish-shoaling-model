@@ -37,10 +37,10 @@ def run_model(steps):
     Runs the shoal model for a certain number of steps, returning a dataframe
     with all of the data collectors.
     """
-    model = ShoalModel(initial_fish=38,
+    model = ShoalModel(initial_fish=19,
                        initial_obstruct=4000,
-                       width=100,
-                       height=100,
+                       width=50,
+                       height=50,
                        speed=1,
                        vision=10,
                        separation=2)

@@ -177,10 +177,10 @@ class ShoalModel(Model):
                                  the three drives.
     """
     def __init__(self,
-                 initial_fish=100,
+                 initial_fish=20,
                  initial_obstruct=4000,  # Todo: figure out what # this needs to be
-                 width=100,
-                 height=100,
+                 width=30,
+                 height=30,
                  speed=2,
                  vision=10,
                  separation=2,
