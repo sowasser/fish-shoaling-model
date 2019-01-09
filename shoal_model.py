@@ -33,6 +33,8 @@ A visualization of the model in an HTML object is in shoal_model_viz.py. For
 the visualization, the parameters in the ShoalModel class can be changed to run
 based on interactive, user-settable sliders.
 """
+# Todo: figure out how to differentiate between fish and obstructions
+
 
 import random
 from mesa import Agent, Model
@@ -53,7 +55,7 @@ class Fish(Agent):
     any other Boid.
     """
     def __init__(self, unique_id, model, pos, speed, velocity, vision,
-                 separation, cohere=0.025, separate=0.25, match=0.04, tag="fish"):
+                 separation, tag=1, cohere=0.025, separate=0.25, match=0.04):
         """
         Create a new Boid (bird, fish) agent.
         Args:
@@ -119,6 +121,7 @@ class Fish(Agent):
         Get the Boid's neighbors, compute the new vector, and move accordingly.
         """
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
+        fish = [n for n in neighbors if n.tag == 1]
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
                           self.separate(neighbors) * self.separate_factor +
                           self.match_velocity(neighbors) * self.match_factor) / 2
@@ -133,7 +136,7 @@ class Obstruct(Agent):
     or other static aspects of the model environment for the "Fish" agents to
     interact with.
     """
-    def __init__(self, unique_id, model, pos, velocity, tag="obstruction"):
+    def __init__(self, unique_id, model, pos, velocity, tag=2):
         """
         Create a new Boid (bird, fish) agent.
         Args:
