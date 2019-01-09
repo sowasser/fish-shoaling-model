@@ -55,7 +55,7 @@ class Fish(Agent):
     any other Boid.
     """
     def __init__(self, unique_id, model, pos, speed, velocity, vision,
-                 separation, tag=1, cohere=0.025, separate=0.25, match=0.04):
+                 separation, tag="fish", cohere=0.025, separate=0.25, match=0.04):
         """
         Create a new Boid (bird, fish) agent.
         Args:
@@ -81,15 +81,15 @@ class Fish(Agent):
         self.match_factor = match
         self.tag = tag
 
-    def cohere(self, neighbors):
+    def cohere(self, fish):
         """
         Return the vector toward the centroid of the local neighbors.
         """
         cohere = np.zeros(2)
-        if neighbors:
-            for neighbor in neighbors:
-                cohere += self.model.space.get_heading(self.pos, neighbor.pos)
-            cohere /= len(neighbors)
+        if fish:
+            for f in fish:
+                cohere += self.model.space.get_heading(self.pos, f.pos)
+            cohere /= len(fish)
         return cohere
 
     def separate(self, neighbors):
@@ -105,15 +105,15 @@ class Fish(Agent):
                 separate_vector -= self.model.space.get_heading(me, my_neighbor)
         return separate_vector
 
-    def match_velocity(self, neighbors):
+    def match_velocity(self, fish):
         """
         Have Boids match the velocity of neighbors.
         """
         match_vector = np.zeros(2)
-        if neighbors:
-            for neighbor in neighbors:
-                match_vector += neighbor.velocity
-            match_vector /= len(neighbors)
+        if fish:
+            for f in fish:
+                match_vector += f.velocity
+            match_vector /= len(fish)
         return match_vector
 
     def step(self):
@@ -121,7 +121,7 @@ class Fish(Agent):
         Get the Boid's neighbors, compute the new vector, and move accordingly.
         """
         neighbors = self.model.space.get_neighbors(self.pos, self.vision, False)
-        fish = [n for n in neighbors if n.tag == 1]
+        fish = [n for n in neighbors if n.tag == "fish"]
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
                           self.separate(neighbors) * self.separate_factor +
                           self.match_velocity(neighbors) * self.match_factor) / 2
@@ -136,7 +136,7 @@ class Obstruct(Agent):
     or other static aspects of the model environment for the "Fish" agents to
     interact with.
     """
-    def __init__(self, unique_id, model, pos, velocity, tag=2):
+    def __init__(self, unique_id, model, pos, velocity, tag="obstruct"):
         """
         Create a new Boid (bird, fish) agent.
         Args:
