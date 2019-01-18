@@ -249,6 +249,12 @@ class ShoalModel(Model):
             borders = left + top + right + bottom
             border_length = len(borders)  # determines number of agents
 
+            # # start and end points for each border, moving clockwise
+            # left = [[x_min, y_min], [x_min, y_max]]
+            # top = [[x_min, y_max], [x_max, y_max]]
+            # right = [[x_max, y_max], [x_max, y_min]]
+            # bottom = [[x_max, y_min], [x_min, y_min]]
+
             points = [np.asarray((point[0], point[1])) for point in borders]
             for pos in points:
                 obstruct = Obstruct(i, self, pos, velocity=0)
