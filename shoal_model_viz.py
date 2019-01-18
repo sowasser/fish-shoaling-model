@@ -59,34 +59,38 @@ class SimpleCanvas(VisualizationElement):
         return space_state
 
 
-def draw_agents(agent):
+def agent_draw(agent):
     """
     Defines how the agents (the fish & the obstructions/borders) are drawn in
     the model visualization.
     """
-    if agent is None:
-        return
+    portrayal = None
 
-    portrayal = {}
+    if isinstance(agent, Fish):
+        print("Uid: {0}, Velocity: {1}".format(agent.unique_id, agent.velocity))
+        portrayal = {
+            "Shape": "arrowhead",
+            "Filled": "True",
+            "Color": "Blue",
+            "heading_x": agent.velocity[0],
+            "heading_y": agent.velocity[1],
+            "scale": 3
+        }
 
-    if type(agent) is Fish:
-        portrayal["Shape"] = "circle"
-        portrayal["Color"] = "Blue"
-        portrayal["Filled"] = "true"
-        portrayal["r"] = 3
-
-    elif type(agent) is Obstruct:
-        portrayal["Shape"] = "rect"
-        portrayal["Color"] = "Red"
-        portrayal["Filled"] = "false"
-        portrayal["w"] = 0.02
-        portrayal["h"] = 0.02
+    elif isinstance(agent, Obstruct):
+        portrayal = {
+            "Shape": "rect",
+            "Filled": "True",
+            "Color": "Red",
+            "w": 0.02,
+            "h": 0.02
+        }
 
     return portrayal
 
 
 # Create canvas, 500x500 pixels
-shoal_canvas = SimpleCanvas(draw_agents, canvas_width=500, canvas_height=500)
+shoal_canvas = SimpleCanvas(agent_draw, canvas_width=500, canvas_height=500)
 model_params = {
     "initial_fish": 20,
     "speed": speed_slider,
