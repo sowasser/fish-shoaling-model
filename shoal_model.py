@@ -182,7 +182,7 @@ class ShoalModel(Model):
     """
     def __init__(self,
                  initial_fish=20,
-                 initial_obstruct=4000,  # Todo: figure out what # this needs to be
+                 initial_obstruct=112,  # Todo: figure out what # this needs to be
                  width=30,
                  height=30,
                  speed=2,
@@ -235,8 +235,7 @@ class ShoalModel(Model):
         of the width/height of the obstruction. These ranges are drawn from the
         model space limits, with a slight buffer.
 
-        The points are then generated at random along the lines drawn for the
-        obstruction and given a velocity of 0.
+        The points are then generated for every point along the defined borders.
         """
         for i in range(self.initial_obstruct):
             x_min = self.space.x_min + 1
@@ -248,13 +247,13 @@ class ShoalModel(Model):
             right = [(x_max, n) for n in range(x_min, x_max)]
             bottom = [(n, y_min) for n in range(y_min, y_max)]
             borders = left + top + right + bottom
+            border_length = len(borders)  # determines number of agents
 
-            single_point = random.choice(borders)
-            pos = np.array((single_point[0], single_point[1]))
-            velocity = 0
-            obstruct = Obstruct(i, self, pos, velocity)
-            self.space.place_agent(obstruct, pos)
-            self.schedule.add(obstruct)
+            points = [np.asarray((point[0], point[1])) for point in borders]
+            for pos in points:
+                obstruct = Obstruct(i, self, pos, velocity=0)
+                self.space.place_agent(obstruct, pos)
+                self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
