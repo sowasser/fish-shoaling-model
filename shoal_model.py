@@ -182,7 +182,7 @@ class ShoalModel(Model):
     """
     def __init__(self,
                  initial_fish=20,
-                 initial_obstruct=112,  # Todo: figure out what # this needs to be
+                 initial_obstruct=4000,  # Todo: figure out what # this needs to be
                  width=30,
                  height=30,
                  speed=2,
@@ -238,16 +238,24 @@ class ShoalModel(Model):
         The points are then generated for every point along the defined borders.
         """
         for i in range(self.initial_obstruct):
-            x_min = self.space.x_min + 1
-            x_max = self.space.x_max - 1
-            y_min = self.space.y_min + 1
-            y_max = self.space.y_max - 1
-            left = [(x_min, n) for n in range(x_min, x_max)]
-            top = [(n, y_max) for n in range(y_min, y_max)]
-            right = [(x_max, n) for n in range(x_min, x_max)]
-            bottom = [(n, y_min) for n in range(y_min, y_max)]
-            borders = left + top + right + bottom
-            border_length = len(borders)  # determines number of agents
+            # x_min = self.space.x_min + 1
+            # x_max = self.space.x_max - 1
+            # y_min = self.space.y_min + 1
+            # y_max = self.space.y_max - 1
+            # left = [(x_min, n) for n in range(x_min, x_max)]
+            # top = [(n, y_max) for n in range(y_min, y_max)]
+            # right = [(x_max, n) for n in range(x_min, x_max)]
+            # bottom = [(n, y_min) for n in range(y_min, y_max)]
+            # borders = left + top + right + bottom
+
+            # if the space is square (i.e. y_max and x_max are the same):
+            max_lim = self.space.x_max - 1
+            min_lim = self.space.x_min + 1
+            line = range(min_lim, max_lim)
+            borders = [(min_lim, n) for n in line] + [(n, max_lim) for n in line] + \
+                      [(max_lim, n) for n in line] + [(n, min_lim) for n in line]
+
+            # border_length = len(borders)  # determines number of agents
 
             # # start and end points for each border, moving clockwise
             # left = [[x_min, y_min], [x_min, y_max]]
