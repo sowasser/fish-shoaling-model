@@ -90,9 +90,8 @@ def agent_draw(agent):
 
 
 # Create canvas, 500x500 pixels
-shoal_canvas = SimpleCanvas(agent_draw, canvas_width=500, canvas_height=500)
+shoal_canvas = SimpleCanvas(agent_draw)
 model_params = {
-    "initial_fish": 20,
     "speed": speed_slider,
     "vision": vision_slider,
     "separation": sep_slider

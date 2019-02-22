@@ -8,14 +8,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(initial_fish=50,
-                   initial_obstruct=4000,
-                   width=50,
-                   height=50,
-                   speed=1,
-                   vision=10,
-                   separation=10)
-for i in range(200):
+model = ShoalModel()
+for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
