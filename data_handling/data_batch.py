@@ -9,7 +9,7 @@ point, not one per step, like with the data collectors when the model is run
 once.
 
 In this code, the model is run within a function that can be called as many
-times as needed...manually, unfortunately. Then the means are taken across all
+times as needed...manually, unfortunately. The different data collectors Then the means are taken across all
 of the model runs, for each step of the model.
 
 # Todo: find some way to avoid doing this manually!
@@ -64,8 +64,8 @@ p = pd.DataFrame([list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), 
                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0])])
-polar_mean = p.mean(axis=0)
-polar_mean.to_csv(os.path.join(path, r"polar_mean.csv"))  # save data to use in R
+p.to_csv(os.path.join(path, r"polar_batch.csv"))  # save data to use in R
+
 
 # Isolate the nearest neighbour distance data from many runs of the model
 n = pd.DataFrame([list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
@@ -85,8 +85,8 @@ n = pd.DataFrame([list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), 
                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1])])
-nnd_mean = n.mean(axis=0)
-nnd_mean.to_csv(os.path.join(path, r"nnd_mean.csv"))
+n.to_csv(os.path.join(path, r"nnd_batch.csv"))
+
 
 # Isolate the shoal area data from many runs of the model
 a = pd.DataFrame([list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
@@ -106,8 +106,7 @@ a = pd.DataFrame([list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), 
                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2])])
-area_mean = a.mean(axis=0)
-area_mean.to_csv(os.path.join(path, r"area_mean.csv"))
+a.to_csv(os.path.join(path, r"area_batch.csv"))
 
 # Isolate the mean distance from the centroid data from many runs of the model
 c = pd.DataFrame([list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
@@ -127,5 +126,10 @@ c = pd.DataFrame([list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), 
                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3])])
-cent_mean = c.mean(axis=0)
-cent_mean.to_csv(os.path.join(path, r"cent_mean.csv"))
+c.to_csv(os.path.join(path, r"cent_batch.csv"))
+
+
+# Calclate means & create a dataframe with them
+means = pd.DataFrame(p.mean(axis=0), n.mean(axis=0), a.mean(axis=0), c.mean(axis=0))
+means.columns = ["polar", "nnd", "area", "centroid"]
+means.to_csv(os.path.join(path, r"batch_means.csv"))
