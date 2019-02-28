@@ -25,6 +25,7 @@ model = ShoalModel()
 for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
+data.columns = ["polar", "nnd", "area", "centroid", "positions", "mass"]
 
 data.to_csv(os.path.join(path, r"single_run.csv"))  # save data to use in R
 
