@@ -26,7 +26,7 @@ for i in range(100):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
-data.to_csv(os.path.join(path, r"singe_run.csv"))  # save data to use in R
+data.to_csv(os.path.join(path, r"single_run.csv"))  # save data to use in R
 
 
 ########################
