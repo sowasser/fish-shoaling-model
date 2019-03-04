@@ -130,6 +130,6 @@ c.to_csv(os.path.join(path, r"cent_batch.csv"))
 
 
 # Calculate means & create a dataframe with them
-means = pd.DataFrame(p.mean(axis=0), n.mean(axis=0), a.mean(axis=0), c.mean(axis=0))
-means.columns = ["polar", "nnd", "area", "centroid"]
-means.to_csv(os.path.join(path, r"batch_means.csv"))
+# means = pd.DataFrame(p.mean(axis=0), n.mean(axis=0), a.mean(axis=0), c.mean(axis=0))
+# means.columns = ["polar", "nnd", "area", "centroid"]
+# means.to_csv(os.path.join(path, r"batch_means.csv"))
