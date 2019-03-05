@@ -46,87 +46,90 @@ def run_model(steps):
 
 s = 150  # number of steps to run the model for each time
 
+all_data = pd.DataFrame([run_model(s)])
+all_data.to_csv(os.path.join(path, r"all_batch.csv"))  # save data to use in R
+
 # Isolate the polarization data from many runs of the model
-p = pd.DataFrame([list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0])])
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
-                  # list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0])])
-p.to_csv(os.path.join(path, r"polar_batch.csv"))  # save data to use in R
+# p = pd.DataFrame([list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0]),
+#                   list(run_model(s).iloc[:, 0]), list(run_model(s).iloc[:, 0])])
+# p.to_csv(os.path.join(path, r"polar_batch.csv"))  # save data to use in R
 
 
 # Isolate the nearest neighbour distance data from many runs of the model
-n = pd.DataFrame([list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1])])
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
-                  # list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1])])
-n.to_csv(os.path.join(path, r"nnd_batch.csv"))
+# n = pd.DataFrame([list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1])])
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1]),
+#                   list(run_model(s).iloc[:, 1]), list(run_model(s).iloc[:, 1])])
+# n.to_csv(os.path.join(path, r"nnd_batch.csv"))
 
 
 # Isolate the shoal area data from many runs of the model
-a = pd.DataFrame([list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2])])
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
-                  # list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2])])
-a.to_csv(os.path.join(path, r"area_batch.csv"))
+# a = pd.DataFrame([list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2])])
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2]),
+#                   list(run_model(s).iloc[:, 2]), list(run_model(s).iloc[:, 2])])
+# a.to_csv(os.path.join(path, r"area_batch.csv"))
 
 # Isolate the mean distance from the centroid data from many runs of the model
-c = pd.DataFrame([list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3])])
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
-                  # list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3])])
-c.to_csv(os.path.join(path, r"cent_batch.csv"))
+# c = pd.DataFrame([list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3])])
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3]),
+#                   list(run_model(s).iloc[:, 3]), list(run_model(s).iloc[:, 3])])
+# c.to_csv(os.path.join(path, r"cent_batch.csv"))
 
 
 # Calculate means & create a dataframe with them
