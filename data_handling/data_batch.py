@@ -46,7 +46,7 @@ def run_model(steps):
 
 s = 150  # number of steps to run the model for each time
 
-all_data = pd.DataFrame([run_model(s)])
+all_data = run_model(s)
 all_data.to_csv(os.path.join(path, r"all_batch.csv"))  # save data to use in R
 
 # Isolate the polarization data from many runs of the model
