@@ -1,7 +1,7 @@
 """
-Script for a single run of the model, with data exported and/or plotted with
-matplotlib. A script for multiple runs of the model under the same conditions
-can be found in data_batch.py.
+Script for a single run of the model, with data exported as a dataframe and/or
+plotted with matplotlib. A script for multiple runs of the model under the
+same conditions can be found in data_batch.py.
 
 Data are collected in the data_collectors.py script and are:
     1. Polarization: a function returning the median absolute deviation of
@@ -10,6 +10,9 @@ Data are collected in the data_collectors.py script and are:
        determined using a k-distance tree.
     3. Shoal Area: convex hull
     4. Mean Distance From Centroid
+
+A single run isn't going to be very useful for analysis, but it is useful for
+quickly testing the model performance or R code.
 """
 
 from shoal_model import *
