@@ -139,10 +139,10 @@ def run_model(steps):
     return data
 
 
-s = 3  # number of steps to run the model for each time
+s = 100  # number of steps to run the model for each time
 
 
 polar_data = pd.DataFrame()
-for run in range(10):
+for run in range(100):
     polar_data = polar_data.append(run_model(s).mean(), ignore_index=True)
-# polar_data.to_csv(os.path.join(path, r"polar_runs.csv"))
+polar_data.to_csv(os.path.join(path, r"polar_runs.csv"))
