@@ -1,5 +1,5 @@
 # Use the default Mesa:
-mesa
+mesa==0.8.6
 # Use my fork of Mesa:
 # git+https://github.com/sowasser/mesa.git#egg=mesa
 matplotlib==3.0.3
