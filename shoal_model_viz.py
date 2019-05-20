@@ -67,7 +67,6 @@ def agent_draw(agent):
     portrayal = None
 
     if isinstance(agent, Fish):
-        print("Uid: {0}, Velocity: {1}".format(agent.unique_id, agent.velocity))
         portrayal = {
             "Shape": "arrowhead",
             "Filled": "True",
