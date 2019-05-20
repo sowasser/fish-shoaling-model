@@ -139,7 +139,7 @@ class Obstruct(Agent):
     or other static aspects of the model environment for the "Fish" agents to
     interact with.
     """
-    def __init__(self, unique_id, model, pos, velocity, tag="obstruct"):
+    def __init__(self, unique_id, model, pos, tag="obstruct"):
         """
         Create a new Boid (bird, fish) agent.
         Args:
@@ -149,8 +149,11 @@ class Obstruct(Agent):
         """
         super().__init__(unique_id, model)
         self.pos = np.array(pos)
-        self.velocity = velocity
         self.tag = tag
+
+    def step(self):
+        """Make obstruction agents do nothing."""
+        pass
 
 
 # Interactive sliders for model arguments.
@@ -222,7 +225,6 @@ class ShoalModel(Model):
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
-
     def make_obstructions(self):
         """
         Create N "Obstruct" agents, with set positions & no movement. Borders
@@ -244,7 +246,7 @@ class ShoalModel(Model):
 
             points = [np.asarray((point[0], point[1])) for point in borders]
             for pos in points:
-                obstruct = Obstruct(i, self, pos, velocity=0)
+                obstruct = Obstruct(i, self, pos)
                 self.space.place_agent(obstruct, pos)
                 self.schedule.add(obstruct)
 
