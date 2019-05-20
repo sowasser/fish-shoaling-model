@@ -39,6 +39,13 @@ from scipy.ndimage import center_of_mass
 from statsmodels.robust.scale import mad
 
 
+def test(model):
+    obstruct = [agent.pos for agent in model.schedule.agents if agent.tag == "obstruct"]
+    fish = [agent.pos for agent in model.schedule.agents if agent.tag == "fish"]
+    overall = [agent.pos for agent in model.schedule.agents]
+    return obstruct, fish, overall
+
+
 def polar(model):
     """
     Computes median absolute deviation (MAD) from the mean velocity of the
