@@ -33,7 +33,7 @@ A visualization of the model in an HTML object is in shoal_model_viz.py. For
 the visualization, the parameters in the ShoalModel class can be changed to run
 based on interactive, user-settable sliders.
 """
-# Todo: figure out how to differentiate between fish and obstructions
+# Todo: figure out how to turn off the torus feature for actual bounded space.
 
 
 import random
@@ -151,8 +151,7 @@ class Obstruct(Agent):
 
     def step(self):
         """Make obstruction agents do nothing."""
-        new_pos = self.pos + 0
-        self.model.space.move_agent(self, new_pos)
+        pass
 
 
 # Interactive sliders for model arguments.
@@ -241,8 +240,8 @@ class ShoalModel(Model):
         defined borders.
         """
         # if the space is square (i.e. y_max and x_max are the same):
-        max_lim = self.space.x_max + 1
-        min_lim = self.space.x_min - 1
+        max_lim = self.space.x_max - 1
+        min_lim = self.space.x_min + 1
         line = range(min_lim, max_lim)
         borders = np.asarray([(min_lim, n) for n in line] + [(n, max_lim) for n in line] +
                              [(max_lim, n) for n in line] + [(n, min_lim) for n in line])
