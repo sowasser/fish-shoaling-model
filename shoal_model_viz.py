@@ -99,6 +99,7 @@ model_params = {
 }
 
 # Create charts for the data collectors
+# Todo: figure out why charts aren't showing up.
 # Todo: include chart titles & improve charts
 polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
                           data_collector_name="datacollector")
