@@ -40,10 +40,12 @@ from statsmodels.robust.scale import mad
 
 
 def test(model):
-    obstruct = [agent.pos for agent in model.schedule.agents if agent.tag == "obstruct"]
+    """
+    Data collector for testing whether the model is generating agents correctly.
+    """
     fish = [agent.pos for agent in model.schedule.agents if agent.tag == "fish"]
-    overall = [agent.pos for agent in model.schedule.agents]
-    return obstruct, fish, overall
+    obstruct = [agent.pos for agent in model.schedule.agents if agent.tag == "obstruct"]
+    return fish, obstruct
 
 
 def polar(model):

@@ -25,10 +25,10 @@ path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 
 # Collect the data from a single run with x number of steps into a dataframe
 model = ShoalModel()
-for i in range(2):
+for i in range(10):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
-# data.columns = ["polar", "nnd", "area", "centroid", "mass"]
+data.columns = ["polar", "nnd", "area", "centroid", "mass"]
 
 # data.to_csv(os.path.join(path, r"single_run.csv"))  # save data to use in R
 

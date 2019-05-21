@@ -137,7 +137,7 @@ class Obstruct(Agent):
     or other static aspects of the model environment for the "Fish" agents to
     interact with.
     """
-    def __init__(self, unique_id, model, pos, velocity, tag="obstruct"):
+    def __init__(self, unique_id, model, pos, tag="obstruct"):
         """
         Create a new Boid (bird, fish) agent.
         Args:
@@ -147,8 +147,12 @@ class Obstruct(Agent):
         """
         super().__init__(unique_id, model)
         self.pos = np.array(pos)
-        self.velocity = velocity
         self.tag = tag
+
+    def step(self):
+        """Make obstruction agents do nothing."""
+        new_pos = self.pos + 0
+        self.model.space.move_agent(self, new_pos)
 
 
 # Interactive sliders for model arguments.
@@ -170,8 +174,7 @@ class ShoalModel(Model):
     above.
 
     Parameters:
-        initial_fish: Initial number of "Fish" agents.
-        initial_obstruct: Initial number of "Obstruct" agents.
+        n_fish: Initial number of "Fish" agents.
         width, height: Size of the space.
         speed: how fast the boids should move.
         vision: how far around should each Boid look for its neighbors
@@ -181,8 +184,7 @@ class ShoalModel(Model):
                                  the three drives.
     """
     def __init__(self,
-                 initial_fish=50,
-                 initial_obstruct=192,  # This is always len(borders)
+                 n_fish=50,
                  width=50,
                  height=50,
                  speed=2,
@@ -192,16 +194,15 @@ class ShoalModel(Model):
                  separate=0.25,
                  match=0.04):
 
-        self.initial_fish = initial_fish
-        self.initial_obstruct = initial_obstruct
+        self.n_fish = n_fish
         self.vision = vision
         self.speed = speed
         self.separation = separation
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
-        self.make_fish()
         self.make_obstructions()
+        self.make_fish()
         self.running = True
 
     def make_fish(self):
@@ -210,7 +211,7 @@ class ShoalModel(Model):
         assigned for each fish.
         Call data collectors for fish collective behaviour
         """
-        for i in range(self.initial_fish):
+        for i in range(self.n_fish):
             x = random.random() * self.space.x_max
             y = random.random() * self.space.y_max
             pos = np.array((x, y))
@@ -221,6 +222,7 @@ class ShoalModel(Model):
             self.schedule.add(fish)
 
         self.datacollector = DataCollector(
+            # model_reporters={"test": test})
             model_reporters={"Polarization": polar,
                              "Nearest Neighbour Distance": nnd,
                              "Shoal Area": area,
@@ -235,39 +237,24 @@ class ShoalModel(Model):
         of the width/height of the obstruction. These ranges are drawn from the
         model space limits, with a slight buffer.
 
-        The points are then generated for every point along the defined borders.
+        The obstruction agents are then generated for every point along the
+        defined borders.
         """
-        for i in range(self.initial_obstruct):
-            # x_min = self.space.x_min + 1
-            # x_max = self.space.x_max - 1
-            # y_min = self.space.y_min + 1
-            # y_max = self.space.y_max - 1
-            # left = [(x_min, n) for n in range(x_min, x_max)]
-            # top = [(n, y_max) for n in range(y_min, y_max)]
-            # right = [(x_max, n) for n in range(x_min, x_max)]
-            # bottom = [(n, y_min) for n in range(y_min, y_max)]
-            # borders = left + top + right + bottom
+        # if the space is square (i.e. y_max and x_max are the same):
+        max_lim = self.space.x_max - 1
+        min_lim = self.space.x_min + 1
+        line = range(min_lim, max_lim)
+        borders = np.asarray([(min_lim, n) for n in line] + [(n, max_lim) for n in line] + \
+                             [(max_lim, n) for n in line] + [(n, min_lim) for n in line])
+        x_points = np.ndarray.tolist(borders[:, 0])
+        y_points = np.ndarray.tolist(borders[:, 1])
+        points = list(zip(x_points, y_points))
 
-            # if the space is square (i.e. y_max and x_max are the same):
-            max_lim = self.space.x_max - 1
-            min_lim = self.space.x_min + 1
-            line = range(min_lim, max_lim)
-            borders = [(min_lim, n) for n in line] + [(n, max_lim) for n in line] + \
-                      [(max_lim, n) for n in line] + [(n, min_lim) for n in line]
-
-            # border_length = len(borders)  # determines number of agents
-
-            # # start and end points for each border, moving clockwise
-            # left = [[x_min, y_min], [x_min, y_max]]
-            # top = [[x_min, y_max], [x_max, y_max]]
-            # right = [[x_max, y_max], [x_max, y_min]]
-            # bottom = [[x_max, y_min], [x_min, y_min]]
-
-            points = [np.asarray((point[0], point[1])) for point in borders]
-            for pos in points:
-                obstruct = Obstruct(i, self, pos, velocity=0)
-                self.space.place_agent(obstruct, pos)
-                self.schedule.add(obstruct)
+        for i in points:  # create obstruction agent for all points along the borders
+            pos = np.array(i)
+            obstruct = Obstruct(i, self, pos)
+            self.space.place_agent(obstruct, pos)
+            self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
