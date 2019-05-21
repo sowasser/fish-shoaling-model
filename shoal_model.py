@@ -212,8 +212,8 @@ class ShoalModel(Model):
         Call data collectors for fish collective behaviour
         """
         for i in range(self.n_fish):
-            x = random.random() * self.space.x_max
-            y = random.random() * self.space.y_max
+            x = random.randrange(2, (self.space.x_max - 1))
+            y = random.randrange(2, (self.space.y_max - 1))
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
