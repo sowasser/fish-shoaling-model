@@ -67,13 +67,15 @@ def agent_draw(agent):
     portrayal = None
 
     if isinstance(agent, Fish):
+        # Todo: change portrayal to include heading & make the viz clearer.
         portrayal = {
-            "Shape": "arrowhead",
+            "Shape": "rect",
             "Filled": "True",
             "Color": "Blue",
             "heading_x": agent.velocity[0],
             "heading_y": agent.velocity[1],
-            "scale": 3
+            "w": 0.01,
+            "h": 0.01
         }
 
     elif isinstance(agent, Obstruct):
