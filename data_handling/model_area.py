@@ -1,9 +1,8 @@
 """
-Instance of the shoal model with just the mean distance from the centroid data
-collector.
+Instance of the shoal model with just the shoal area data collector.
 
-Then the model is implemented in single and batch runs, useful for determining
-mean centroid distance for the whole model.
+Then the model is implemented a specified number of times for a specified
+number of steps, with the data exported for analysis in R or elsewhere.
 """
 
 import random
@@ -16,7 +15,7 @@ from mesa.datacollection import DataCollector
 from mesa.space import ContinuousSpace
 
 from shoal_model import Fish, Obstruct
-from data_collectors import centroid_dist
+from data_collectors import area
 
 
 class ShoalModel(Model):
@@ -76,7 +75,7 @@ class ShoalModel(Model):
             self.space.place_agent(fish, pos)
             self.schedule.add(fish)
 
-        self.datacollector = DataCollector(model_reporters={"Mean Distance from Centroid": centroid_dist})
+        self.datacollector = DataCollector(model_reporters={"Shoal Area": area})
 
     def make_obstructions(self):
         """
@@ -85,39 +84,24 @@ class ShoalModel(Model):
         of the width/height of the obstruction. These ranges are drawn from the
         model space limits, with a slight buffer.
 
-        The points are then generated for every point along the defined borders.
+        The obstruction agents are then generated for every point along the
+        defined borders.
         """
-        for i in range(self.initial_obstruct):
-            # x_min = self.space.x_min + 1
-            # x_max = self.space.x_max - 1
-            # y_min = self.space.y_min + 1
-            # y_max = self.space.y_max - 1
-            # left = [(x_min, n) for n in range(x_min, x_max)]
-            # top = [(n, y_max) for n in range(y_min, y_max)]
-            # right = [(x_max, n) for n in range(x_min, x_max)]
-            # bottom = [(n, y_min) for n in range(y_min, y_max)]
-            # borders = left + top + right + bottom
+        # if the space is square (i.e. y_max and x_max are the same):
+        max_lim = self.space.x_max - 1
+        min_lim = self.space.x_min + 1
+        line = range(min_lim, max_lim)
+        borders = np.asarray([(min_lim, n) for n in line] + [(n, max_lim) for n in line] +
+                             [(max_lim, n) for n in line] + [(n, min_lim) for n in line])
+        x_points = np.ndarray.tolist(borders[:, 0])
+        y_points = np.ndarray.tolist(borders[:, 1])
+        points = list(zip(x_points, y_points))
 
-            # if the space is square (i.e. y_max and x_max are the same):
-            max_lim = self.space.x_max - 1
-            min_lim = self.space.x_min + 1
-            line = range(min_lim, max_lim)
-            borders = [(min_lim, n) for n in line] + [(n, max_lim) for n in line] + \
-                      [(max_lim, n) for n in line] + [(n, min_lim) for n in line]
-
-            # border_length = len(borders)  # determines number of agents
-
-            # # start and end points for each border, moving clockwise
-            # left = [[x_min, y_min], [x_min, y_max]]
-            # top = [[x_min, y_max], [x_max, y_max]]
-            # right = [[x_max, y_max], [x_max, y_min]]
-            # bottom = [[x_max, y_min], [x_min, y_min]]
-
-            points = [np.asarray((point[0], point[1])) for point in borders]
-            for pos in points:
-                obstruct = Obstruct(i, self, pos, velocity=0)
-                self.space.place_agent(obstruct, pos)
-                self.schedule.add(obstruct)
+        for i in points:  # create obstruction agent for all points along the borders
+            pos = np.array(i)
+            obstruct = Obstruct(i, self, pos)
+            self.space.place_agent(obstruct, pos)
+            self.schedule.add(obstruct)
 
     def step(self):
         self.datacollector.collect(self)
@@ -140,10 +124,7 @@ def run_model(steps):
     return data
 
 
-s = 3  # number of steps to run the model for each time
-
-
-cent_data = pd.DataFrame()
-for run in range(10):
-    cent_data = cent_data.append(run_model(s).mean(), ignore_index=True)
-# cent_data.to_csv(os.path.join(path, r"cent_runs.csv"))
+area_data = pd.DataFrame()
+for run in range(100):  # number of times to run the model
+    area_data = area_data.append(run_model(100).mean(), ignore_index=True)  # for x steps
+# area_data.to_csv(os.path.join(path, r"area_runs.csv"))
