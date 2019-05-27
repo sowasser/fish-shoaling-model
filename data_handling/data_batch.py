@@ -45,8 +45,8 @@ def run_model(steps):
     return data
 
 
-s = 100  # number of steps to run the model for each time
-r = 100  # number of runs of the model
+s = 10  # number of steps to run the model for each time
+r = 10  # number of runs of the model
 
 
 # Isolate the polarization data from many runs of the model

@@ -9,6 +9,7 @@ These can be useful for sensitivity analysis and to accompany future analysis.
 from data_handling.data_batch import *
 import matplotlib.pyplot as plt
 
+# TODO: figure out why both sets of graphs are showing up the same
 
 # MEANS FOR EACH STEP OVER ALL RUNS -------------------------------------------
 plt.style.use("dark_background")
@@ -33,9 +34,6 @@ ax1.plot(mean_runs["polar"])
 ax2.plot(mean_runs["nnd"])
 ax3.plot(mean_runs["area"])
 ax4.plot(mean_runs["centroid"])
-
-plt.tight_layout()
-plt.show()
 
 
 # MEANS FOR EACH RUN OVER ALL STEPS -------------------------------------------
