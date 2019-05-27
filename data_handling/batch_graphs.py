@@ -37,11 +37,6 @@ ax4.plot(mean_runs["centroid"])
 
 
 # MEANS FOR EACH RUN OVER ALL STEPS -------------------------------------------
-p_runs = p.mean(axis=1)
-n_runs = n.mean(axis=1)
-a_runs = a.mean(axis=1)
-c_runs = c.mean(axis=1)
-
 plt.style.use("dark_background")
 fig2 = plt.figure(figsize=(8, 5), dpi=300)
 ax5 = plt.subplot(2, 2, 1)
@@ -60,10 +55,10 @@ ax8 = plt.subplot(2, 2, 4)
 plt.xlabel("Shoal Area")
 plt.title("Mean Steps")
 
-ax5.plot(p_runs)
-ax6.plot(n_runs)
-ax7.plot(a_runs)
-ax8.plot(c_runs)
+ax5.plot(mean_steps["polar"])
+ax6.plot(mean_steps["nnd"])
+ax7.plot(mean_steps["area"])
+ax8.plot(mean_steps["centroid"])
 
 plt.tight_layout()
 plt.show()
