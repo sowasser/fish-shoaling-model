@@ -27,6 +27,7 @@ Data are collected in the data_collectors.py script and are:
 from shoal_model import *
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
@@ -44,8 +45,8 @@ def run_model(steps):
     return data
 
 
-s = 5  # number of steps to run the model for each time
-r = 10  # number of runs of the model
+s = 100  # number of steps to run the model for each time
+r = 100  # number of runs of the model
 
 
 # Isolate the polarization data from many runs of the model
@@ -79,10 +80,18 @@ c = c.T
 # c.to_csv(os.path.join(path, r"cent_batch.csv"))
 
 
-# Calculate means & create a dataframe with them
-means = pd.concat([p.mean(axis=1), n.mean(axis=1), a.mean(axis=1), c.mean(axis=1)], axis=1)
-means.columns = ["polar", "nnd", "area", "centroid"]
-overall_mean = pd.DataFrame(means.mean(axis=0))  # mean of each data collector for all steps and all runs
+# CALCULATE MEANS -------------------------------------------------------------
 
-# means.to_csv(os.path.join(path, r"batch_means.csv"))
+# For each step over all runs
+mean_runs = pd.concat([p.mean(axis=1), n.mean(axis=1), a.mean(axis=1), c.mean(axis=1)], axis=1)
+mean_runs.columns = ["polar", "nnd", "area", "centroid"]
+
+# For each run over all steps
+# TODO: find a way to do this that is more helpful, if it's actually needed
+# mean_steps = pd.concat([p.mean(axis=0), n.mean(axis=0), a.mean(axis=0), c.mean(axis=0)], axis=0)
+
+# For all steps and all runs
+overall_mean = pd.DataFrame(mean_runs.mean(axis=0))  # mean of each data collector for all steps and all runs
+
+# mean_runs.to_csv(os.path.join(path, r"batch_means.csv"))
 # overall_mean.to_csv(os.path.join(path, r"overall_means.csv"))
