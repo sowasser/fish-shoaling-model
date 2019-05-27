@@ -17,7 +17,7 @@ quickly testing the model performance or R code.
 
 from shoal_model import *
 import os
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
@@ -33,9 +33,7 @@ data.columns = ["polar", "nnd", "area", "centroid", "mass"]
 # data.to_csv(os.path.join(path, r"single_run.csv"))  # save data to use in R
 
 
-########################
-# DATA COLLECTOR PLOTS #
-########################
+# DATA COLLECTOR PLOTS --------------------------------------------------------
 
 # plt.style.use("dark_background")
 # fig = plt.figure(figsize=(8, 5), dpi=300)

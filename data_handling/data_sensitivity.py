@@ -24,8 +24,7 @@ import matplotlib.pyplot as plt
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
-model50 = ShoalModel(initial_fish=50,
-                     initial_obstruct=4000,
+model50 = ShoalModel(n_fish=200,
                      width=100,
                      height=100,
                      speed=1,
@@ -36,8 +35,7 @@ for j in range(150):
 data50 = model50.datacollector.get_model_vars_dataframe()
 # data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
 
-model100 = ShoalModel(initial_fish=100,
-                      initial_obstruct=4000,
+model100 = ShoalModel(n_fish=200,
                       width=100,
                       height=100,
                       speed=1,
@@ -48,8 +46,7 @@ for j in range(150):
 data100 = model100.datacollector.get_model_vars_dataframe()
 # data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
 
-model200 = ShoalModel(initial_fish=200,
-                      initial_obstruct=4000,
+model200 = ShoalModel(n_fish=200,
                       width=100,
                       height=100,
                       speed=1,
@@ -60,10 +57,7 @@ for j in range(150):
 data200 = model200.datacollector.get_model_vars_dataframe()
 # data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
 
-
-############
-# Plotting #
-############
+# Plotting --------------------------------------------------------------------
 
 plt.style.use("dark_background")
 # # plt.style.use("ggplot")
