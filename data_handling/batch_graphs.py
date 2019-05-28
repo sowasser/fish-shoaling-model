@@ -13,22 +13,19 @@ import matplotlib.pyplot as plt
 
 # MEANS FOR EACH STEP OVER ALL RUNS -------------------------------------------
 plt.style.use("dark_background")
-fig = plt.figure(figsize=(8, 5), dpi=300)
-ax1 = plt.subplot(2, 2, 1)
-plt.xlabel("Distance from Centroid")
-plt.title("Mean Runs")
-
-ax2 = plt.subplot(2, 2, 2)
-plt.xlabel("Nearest Neighbour Distance")
-plt.title("Mean Runs")
-
-ax3 = plt.subplot(2, 2, 3)
+fig = plt.figure(figsize=(8, 11), dpi=300)
+ax1 = plt.subplot(4, 2, 1)
 plt.xlabel("Polarization")
 plt.title("Mean Runs")
 
-ax4 = plt.subplot(2, 2, 4)
-plt.xlabel("Shoal Area")
-plt.title("Mean Runs")
+ax2 = plt.subplot(4, 2, 3)
+plt.xlabel("Nearest Neighbour Distance")
+
+ax3 = plt.subplot(4, 2, 5)
+plt.xlabel("Shoal Arean")
+
+ax4 = plt.subplot(4, 2, 7)
+plt.xlabel("Disttance from Centroid")
 
 ax1.plot(mean_runs["polar"])
 ax2.plot(mean_runs["nnd"])
@@ -37,23 +34,18 @@ ax4.plot(mean_runs["centroid"])
 
 
 # MEANS FOR EACH RUN OVER ALL STEPS -------------------------------------------
-plt.style.use("dark_background")
-fig2 = plt.figure(figsize=(8, 5), dpi=300)
-ax5 = plt.subplot(2, 2, 1)
-plt.xlabel("Distance from Centroid")
-plt.title("Mean Steps")
-
-ax6 = plt.subplot(2, 2, 2)
-plt.xlabel("Nearest Neighbour Distance")
-plt.title("Mean Steps")
-
-ax7 = plt.subplot(2, 2, 3)
+ax5 = plt.subplot(4, 2, 2)
 plt.xlabel("Polarization")
 plt.title("Mean Steps")
 
-ax8 = plt.subplot(2, 2, 4)
+ax6 = plt.subplot(4, 2, 4)
+plt.xlabel("Nearest Neighbour Distance")
+
+ax7 = plt.subplot(4, 2, 6)
 plt.xlabel("Shoal Area")
-plt.title("Mean Steps")
+
+ax8 = plt.subplot(4, 2, 8)
+plt.xlabel("Distance from Centroid")
 
 ax5.plot(mean_steps["polar"])
 ax6.plot(mean_steps["nnd"])
