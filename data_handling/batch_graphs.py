@@ -16,7 +16,7 @@ plt.style.use("dark_background")
 fig = plt.figure(figsize=(8, 11), dpi=300)
 ax1 = plt.subplot(4, 2, 1)
 plt.xlabel("Polarization")
-plt.title("Mean Runs")
+plt.title("Mean Runs by Step")
 
 ax2 = plt.subplot(4, 2, 3)
 plt.xlabel("Nearest Neighbour Distance")
@@ -36,7 +36,7 @@ ax4.plot(mean_runs["centroid"])
 # MEANS FOR EACH RUN OVER ALL STEPS -------------------------------------------
 ax5 = plt.subplot(4, 2, 2)
 plt.xlabel("Polarization")
-plt.title("Mean Steps")
+plt.title("Mean Steps by Run")
 
 ax6 = plt.subplot(4, 2, 4)
 plt.xlabel("Nearest Neighbour Distance")
