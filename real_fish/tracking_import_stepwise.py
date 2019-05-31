@@ -80,7 +80,7 @@ def centroid_dist(df):
 
 
 centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
-centroid_distance.to_csv(os.path.join(path, r"step1_cent_dist.csv"))  # save data to use in R
+# centroid_distance.to_csv(os.path.join(path, r"step1_cent_dist.csv"))  # save data to use in R
 
 
 # Nearest Neighbour Distance
@@ -102,7 +102,7 @@ def nnd(df):
 
 
 nn_distance = pd.DataFrame([nnd(s) for s in steps])
-nn_distance.to_csv(os.path.join(path, r"step1_nnd.csv"))  # save data to use in R
+# nn_distance.to_csv(os.path.join(path, r"step1_nnd.csv"))  # save data to use in R
 
 
 # Shoal Area
@@ -117,7 +117,7 @@ def area(df):
 
 
 shoal_area = pd.DataFrame([area(s) for s in steps])
-shoal_area.to_csv(os.path.join(path, r"step1_shoal_area.csv"))  # save data to use in R
+# shoal_area.to_csv(os.path.join(path, r"step1_shoal_area.csv"))  # save data to use in R
 
 
 # Polarization
@@ -141,44 +141,49 @@ def polar(df):
 
 
 polarization = pd.DataFrame([polar(s) for s in steps])
-polarization.to_csv(os.path.join(path, r"step1_polar.csv"))  # save data to use in R
+# polarization.to_csv(os.path.join(path, r"step1_polar.csv"))  # save data to use in R
 
 
-###############################################################################
+# Combine data into one dataframe
+stepwise_data = pd.concat([centroid_distance, nn_distance, shoal_area, polarization], axis=1)
+stepwise_data.columns = ["centroid", "nnd", "area", "polar"]
+stepwise_data.to_csv(os.path.join(path, r"stepwise_data.csv"))
 
-# Plot Styles
-plt.style.use("dark_background")
-# plt.style.use("ggplot")
-# plt.style.use("seaborn-dark")
-# plt.style.use("Solarize_Light2")
+# Plotting --------------------------------------------------------------------
 
-# Create multiplot
-fig = plt.figure(figsize=(8, 6), dpi=300)
-
-ax1 = plt.subplot(221)
-plt.title("Mean Distance from Centroid")
-plt.ylabel("distance (mm)")
-
-ax2 = plt.subplot(222)
-plt.title("Mean Nearest Neighbour Distance")
-plt.ylabel("distance (mm)")
-
-ax3 = plt.subplot(223)
-plt.title("Shoal Area")
-plt.ylabel("area (mm2)")
-
-ax4 = plt.subplot(224)
-plt.title("Polarization")
-plt.ylabel("Mean Absolute Deviation")
-
-ax1.plot(centroid_distance)
-ax2.plot(nn_distance)
-ax3.plot(shoal_area)
-ax4.plot(polarization)
-
-plt.tight_layout()
-
-plt.show()
+# # Plot Styles
+# plt.style.use("dark_background")
+# # plt.style.use("ggplot")
+# # plt.style.use("seaborn-dark")
+# # plt.style.use("Solarize_Light2")
+#
+# # Create multiplot
+# fig = plt.figure(figsize=(8, 6), dpi=300)
+#
+# ax1 = plt.subplot(221)
+# plt.title("Mean Distance from Centroid")
+# plt.ylabel("distance (mm)")
+#
+# ax2 = plt.subplot(222)
+# plt.title("Mean Nearest Neighbour Distance")
+# plt.ylabel("distance (mm)")
+#
+# ax3 = plt.subplot(223)
+# plt.title("Shoal Area")
+# plt.ylabel("area (mm2)")
+#
+# ax4 = plt.subplot(224)
+# plt.title("Polarization")
+# plt.ylabel("Mean Absolute Deviation")
+#
+# ax1.plot(centroid_distance)
+# ax2.plot(nn_distance)
+# ax3.plot(shoal_area)
+# ax4.plot(polarization)
+#
+# plt.tight_layout()
+#
+# plt.show()
 
 # # Export graphs as .png
 # plot_path = "/Users/user/Desktop/Local/Mackerel/Images"
