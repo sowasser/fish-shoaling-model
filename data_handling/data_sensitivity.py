@@ -22,8 +22,8 @@ import os
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
-s = 2  # number of steps to run the model for each time
-r = 3  # number of runs of the model
+s = 100  # number of steps to run the model for each time
+r = 30  # number of runs of the model
 
 
 def run_model1(steps):
@@ -47,25 +47,21 @@ def run_model1(steps):
 p1 = pd.DataFrame()
 for run in range(r):
     p1 = p1.append(run_model1(s).iloc[:, 0])  # add each run to data frame
-p1 = p1.T  # transpose dataframe so each column is a run & each row is a step
 
 # Isolate the nearest neighbour distance data from many runs of the model
 n1 = pd.DataFrame()
 for run in range(r):
     n1 = n1.append(run_model1(s).iloc[:, 1])
-n1 = n1.T
 
 # Isolate the shoal area data from many runs of the model
 a1 = pd.DataFrame()
 for run in range(r):
     a1 = a1.append(run_model1(s).iloc[:, 2])
-a1 = a1.T
 
 # Isolate the mean distance from the centroid data from many runs of the model
 c1 = pd.DataFrame()
 for run in range(r):
     c1 = c1.append(run_model1(s).iloc[:, 3])
-c1 = c1.T
 
 
 def run_model2(steps):
@@ -89,25 +85,21 @@ def run_model2(steps):
 p2 = pd.DataFrame()
 for run in range(r):
     p2 = p2.append(run_model2(s).iloc[:, 0])  # add each run to data frame
-p2 = p2.T  # transpose dataframe so each column is a run & each row is a step
 
 # Isolate the nearest neighbour distance data from many runs of the model
 n2 = pd.DataFrame()
 for run in range(r):
     n2 = n2.append(run_model2(s).iloc[:, 1])
-n2 = n2.T
 
 # Isolate the shoal area data from many runs of the model
 a2 = pd.DataFrame()
 for run in range(r):
     a2 = a2.append(run_model2(s).iloc[:, 2])
-a2 = a2.T
 
 # Isolate the mean distance from the centroid data from many runs of the model
 c2 = pd.DataFrame()
 for run in range(r):
     c2 = c2.append(run_model2(s).iloc[:, 3])
-c2 = c2.T
 
 
 def run_model3(steps):
@@ -131,38 +123,33 @@ def run_model3(steps):
 p3 = pd.DataFrame()
 for run in range(r):
     p3 = p3.append(run_model3(s).iloc[:, 0])  # add each run to data frame
-p3 = p3.T  # transpose dataframe so each column is a run & each row is a step
 
 # Isolate the nearest neighbour distance data from many runs of the model
 n3 = pd.DataFrame()
 for run in range(r):
     n3 = n3.append(run_model3(s).iloc[:, 1])
-n3 = n3.T
 
 # Isolate the shoal area data from many runs of the model
 a3 = pd.DataFrame()
 for run in range(r):
     a3 = a3.append(run_model3(s).iloc[:, 2])
-a3 = a3.T
 
 # Isolate the mean distance from the centroid data from many runs of the model
 c3 = pd.DataFrame()
 for run in range(r):
     c3 = c3.append(run_model3(s).iloc[:, 3])
-c3 = c3.T
 
 
 # CALCULATE MEANS & CREATE DATA EXPORT ----------------------------------------
 
 # Combine data from each model call into one dataframe, find means, combine again
-# TODO: fix means so each row is a run
-means = pd.concat([pd.concat([p1, p2, p3]).mean(axis=0).reset_index(drop=True),
-                   pd.concat([n1, n2, n3]).mean(axis=0).reset_index(drop=True),
-                   pd.concat([a1, a2, a3]).mean(axis=0).reset_index(drop=True),
-                   pd.concat([c1, c2, c3]).mean(axis=0).reset_index(drop=True)], axis=1)
+means = pd.concat([pd.concat([p1, p2, p3]).mean(axis=1).reset_index(drop=True),
+                   pd.concat([n1, n2, n3]).mean(axis=1).reset_index(drop=True),
+                   pd.concat([a1, a2, a3]).mean(axis=1).reset_index(drop=True),
+                   pd.concat([c1, c2, c3]).mean(axis=1).reset_index(drop=True)], axis=1)
 
-
-var = pd.Series([1] * 3 + [10] * 3 + [50] * 3)
+# Add the variable values in question for each run & export
+var = pd.Series([1] * 30 + [10] * 30 + [50] * 30)
 means = pd.concat([means, var], axis=1)
 means.columns = ["polar", "nnd", "area", "centroid", "var"]
-# mean_steps.to_csv(os.path.join(path, r"batch_means_steps.csv"))
+means.to_csv(os.path.join(path, r"means_var-speed.csv"))
