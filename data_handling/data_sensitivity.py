@@ -1,6 +1,7 @@
 """
-This file is for creating dataframes containing the results from the data
-collectors in the model. These are:
+This file is for testing the effect of different model conditions on the output
+from the data collectors. These tests are used for validating the model with
+Approximate Bayesian Computation, in R. The data collectors are:
     1. Polarization: a function returning the median absolute deviation of
        agent heading from the mean heading of the group
     2. Nearest neighbour distance: the mean distance of the 5 nearest agents,
@@ -8,148 +9,160 @@ collectors in the model. These are:
     3. Shoal area: convex hull
     4. Mean distance from centroid
 
-These parameters all produce a single value per step in the model. The
-dataframes created in this file are:
-    1. The model run for X number of steps with set variables
-    2. The model run for X times with X number of steps with set variables.
-These dataframes can then be exported as .csv files to be further examined in R
-or graphed with matplotlib.
+The model is run for x steps, x number of times and then the mean of each data
+collector per run (average of all steps) is calculated and added to a dataframe
+along with the parameter being tested (i.e. speed, vision, etc.)
 """
 
-import os
 from shoal_model import *
-import matplotlib.pyplot as plt
+import pandas as pd
+import os
 
-# Paths for exporting the data, rather than graphing
+# Paths for exporting the data
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 # path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
-model50 = ShoalModel(n_fish=200,
-                     width=100,
-                     height=100,
-                     speed=1,
-                     vision=10,
-                     separation=2)
-for j in range(150):
-    model50.step()
-data50 = model50.datacollector.get_model_vars_dataframe()
-# data50.to_csv(os.path.join(path, r"shoal_data_50.csv"), index=",")
-
-model100 = ShoalModel(n_fish=200,
-                      width=100,
-                      height=100,
-                      speed=1,
-                      vision=10,
-                      separation=2)
-for j in range(150):
-    model100.step()
-data100 = model100.datacollector.get_model_vars_dataframe()
-# data100.to_csv(os.path.join(path, r"shoal_data_100.csv"), index=",")
-
-model200 = ShoalModel(n_fish=200,
-                      width=100,
-                      height=100,
-                      speed=1,
-                      vision=10,
-                      separation=2)
-for j in range(150):
-    model200.step()
-data200 = model200.datacollector.get_model_vars_dataframe()
-# data200.to_csv(os.path.join(path, r"shoal_data_200.csv"), index=",")
-
-# Plotting --------------------------------------------------------------------
-
-plt.style.use("dark_background")
-# # plt.style.use("ggplot")
-# # plt.style.use("seaborn-dark")
-# # plt.style.use("Solarize_Light2")
-
-# Mean distance from centroid multiplot
-dist_fig = plt.figure(figsize=(5, 9), dpi=300)
-ax1 = plt.subplot(3, 1, 1)
-plt.title("Mean Distance from Centroid", fontsize="x-large")
-plt.xlabel("(n=50)")
-plt.ylabel("mm")
-ax2 = plt.subplot(3, 1, 2)
-plt.xlabel("(n=100)")
-plt.ylabel("mm")
-ax3 = plt.subplot(3, 1, 3)
-plt.xlabel("(n=200)")
-plt.ylabel("mm")
-
-ax1.plot(data50["Mean Distance from Centroid"])
-ax2.plot(data100["Mean Distance from Centroid"])
-ax3.plot(data200["Mean Distance from Centroid"])
-
-plt.tight_layout()
-plt.show()
-
-# Nearest neighbour distance multiplot
-nnd_fig = plt.figure(figsize=(5, 9), dpi=300)
-ax4 = plt.subplot(3, 1, 1)
-plt.title("Mean Nearest Neighbour Distance", fontsize="x-large")
-plt.xlabel("(n=50)")
-plt.ylabel("mm")
-ax5 = plt.subplot(3, 1, 2)
-plt.xlabel("(n=100)")
-plt.ylabel("mm")
-ax6 = plt.subplot(3, 1, 3)
-plt.xlabel("(n=200)")
-plt.ylabel("mm")
-
-ax4.plot(data50["Nearest Neighbour Distance"])
-ax5.plot(data100["Nearest Neighbour Distance"])
-ax6.plot(data200["Nearest Neighbour Distance"])
-
-plt.tight_layout()
-plt.show()
-
-# Polarization multiplot
-polar_fig = plt.figure(figsize=(5, 9), dpi=300)
-ax7 = plt.subplot(3, 1, 1)
-plt.title("Polarization", fontsize="x-large")
-plt.xlabel("(n=50)")
-plt.ylabel("median absolute deviation")
-ax8 = plt.subplot(3, 1, 2)
-plt.xlabel("(n=100)")
-plt.ylabel("median absolute deviation")
-ax9 = plt.subplot(3, 1, 3)
-plt.xlabel("(n=200)")
-plt.ylabel("median absolute deviation")
-
-ax7.plot(data50["Polarization"])
-ax8.plot(data50["Polarization"])
-ax9.plot(data50["Polarization"])
-
-plt.tight_layout()
-plt.show()
-
-# Create shoal area multiplot
-area_fig = plt.figure(figsize=(5, 9), dpi=300)
-ax10 = plt.subplot(3, 1, 1)
-plt.title("Shoal Area", fontsize="x-large")
-plt.xlabel("(n=50)")
-plt.ylabel("mm2")
-ax11 = plt.subplot(3, 1, 2)
-plt.xlabel("(n=100)")
-plt.ylabel("mm2")
-ax12 = plt.subplot(3, 1, 3)
-plt.xlabel("(n=200)")
-plt.ylabel("mm2")
-
-ax10.plot(data50["Shoal Area"])
-ax11.plot(data100["Shoal Area"])
-ax12.plot(data200["Shoal Area"])
-
-plt.tight_layout()
-plt.show()
+s = 2  # number of steps to run the model for each time
+r = 3  # number of runs of the model
 
 
-# # Export figures
-# plot_path = "/Users/user/Desktop/Local/Mackerel/Figures"
-# # plot_path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel"
-#
-# dist_fig.savefig(os.path.join(plot_path, r"dist_sensitivity.png"))
-# nnd_fig.savefig(os.path.join(plot_path, r"nnd_sensitivity.png"))
-# polar_fig.savefig(os.path.join(plot_path, r"polar_sensitivity.png"))
-# area_fig.savefig(os.path.join(plot_path, r"area_sensitivity.png"))
+def run_model1(steps):
+    """
+    Runs the shoal model for a certain number of steps, returning a dataframe
+    with all of the data collectors.
+    """
+    model = ShoalModel(n_fish=50,
+                       width=50,
+                       height=50,
+                       speed=1,
+                       vision=10,
+                       separation=2)
+    for j in range(steps):
+        model.step()
+    data1 = model.datacollector.get_model_vars_dataframe()
+    return data1
+
+
+# Isolate the polarization data from many runs of the model
+p1 = pd.DataFrame()
+for run in range(r):
+    p1 = p1.append(run_model1(s).iloc[:, 0])  # add each run to data frame
+p1 = p1.T  # transpose dataframe so each column is a run & each row is a step
+
+# Isolate the nearest neighbour distance data from many runs of the model
+n1 = pd.DataFrame()
+for run in range(r):
+    n1 = n1.append(run_model1(s).iloc[:, 1])
+n1 = n1.T
+
+# Isolate the shoal area data from many runs of the model
+a1 = pd.DataFrame()
+for run in range(r):
+    a1 = a1.append(run_model1(s).iloc[:, 2])
+a1 = a1.T
+
+# Isolate the mean distance from the centroid data from many runs of the model
+c1 = pd.DataFrame()
+for run in range(r):
+    c1 = c1.append(run_model1(s).iloc[:, 3])
+c1 = c1.T
+
+
+def run_model2(steps):
+    """
+    Runs the shoal model for a certain number of steps, returning a dataframe
+    with all of the data collectors.
+    """
+    model = ShoalModel(n_fish=50,
+                       width=50,
+                       height=50,
+                       speed=10,
+                       vision=10,
+                       separation=2)
+    for j in range(steps):
+        model.step()
+    data2 = model.datacollector.get_model_vars_dataframe()
+    return data2
+
+
+# Isolate the polarization data from many runs of the model
+p2 = pd.DataFrame()
+for run in range(r):
+    p2 = p2.append(run_model2(s).iloc[:, 0])  # add each run to data frame
+p2 = p2.T  # transpose dataframe so each column is a run & each row is a step
+
+# Isolate the nearest neighbour distance data from many runs of the model
+n2 = pd.DataFrame()
+for run in range(r):
+    n2 = n2.append(run_model2(s).iloc[:, 1])
+n2 = n2.T
+
+# Isolate the shoal area data from many runs of the model
+a2 = pd.DataFrame()
+for run in range(r):
+    a2 = a2.append(run_model2(s).iloc[:, 2])
+a2 = a2.T
+
+# Isolate the mean distance from the centroid data from many runs of the model
+c2 = pd.DataFrame()
+for run in range(r):
+    c2 = c2.append(run_model2(s).iloc[:, 3])
+c2 = c2.T
+
+
+def run_model3(steps):
+    """
+    Runs the shoal model for a certain number of steps, returning a dataframe
+    with all of the data collectors.
+    """
+    model = ShoalModel(n_fish=50,
+                       width=50,
+                       height=50,
+                       speed=50,
+                       vision=10,
+                       separation=2)
+    for j in range(steps):
+        model.step()
+    data3 = model.datacollector.get_model_vars_dataframe()
+    return data3
+
+
+# Isolate the polarization data from many runs of the model
+p3 = pd.DataFrame()
+for run in range(r):
+    p3 = p3.append(run_model3(s).iloc[:, 0])  # add each run to data frame
+p3 = p3.T  # transpose dataframe so each column is a run & each row is a step
+
+# Isolate the nearest neighbour distance data from many runs of the model
+n3 = pd.DataFrame()
+for run in range(r):
+    n3 = n3.append(run_model3(s).iloc[:, 1])
+n3 = n3.T
+
+# Isolate the shoal area data from many runs of the model
+a3 = pd.DataFrame()
+for run in range(r):
+    a3 = a3.append(run_model3(s).iloc[:, 2])
+a3 = a3.T
+
+# Isolate the mean distance from the centroid data from many runs of the model
+c3 = pd.DataFrame()
+for run in range(r):
+    c3 = c3.append(run_model3(s).iloc[:, 3])
+c3 = c3.T
+
+
+# CALCULATE MEANS & CREATE DATA EXPORT ----------------------------------------
+
+# Combine data from each model call into one dataframe, find means, combine again
+# TODO: fix means so each row is a run
+means = pd.concat([pd.concat([p1, p2, p3]).mean(axis=0).reset_index(drop=True),
+                   pd.concat([n1, n2, n3]).mean(axis=0).reset_index(drop=True),
+                   pd.concat([a1, a2, a3]).mean(axis=0).reset_index(drop=True),
+                   pd.concat([c1, c2, c3]).mean(axis=0).reset_index(drop=True)], axis=1)
+
+
+var = pd.Series([1] * 3 + [10] * 3 + [50] * 3)
+means = pd.concat([means, var], axis=1)
+means.columns = ["polar", "nnd", "area", "centroid", "var"]
+# mean_steps.to_csv(os.path.join(path, r"batch_means_steps.csv"))
