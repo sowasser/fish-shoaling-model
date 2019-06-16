@@ -19,8 +19,8 @@ import pandas as pd
 import os
 
 # Paths for exporting the data
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
-# path_laptop = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
+path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
 s = 100  # number of steps to run the model for each time
 r = 30  # number of runs of the model
@@ -149,7 +149,7 @@ means = pd.concat([pd.concat([p1, p2, p3]).mean(axis=1).reset_index(drop=True),
                    pd.concat([c1, c2, c3]).mean(axis=1).reset_index(drop=True)], axis=1)
 
 # Add the variable values in question for each run & export
-var = pd.Series([1] * 30 + [10] * 30 + [50] * 30)
+var = pd.Series([1] * r + [10] * r + [50] * r)
 means = pd.concat([means, var], axis=1)
 means.columns = ["polar", "nnd", "area", "centroid", "var"]
 means.to_csv(os.path.join(path, r"means_var-speed.csv"))
