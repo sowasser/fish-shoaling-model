@@ -225,9 +225,9 @@ class ShoalModel(Model):
             model_reporters={"Polarization": polar,
                              "Nearest Neighbour Distance": nnd,
                              "Shoal Area": area,
-                             "Mean Distance from Centroid": centroid_dist,
+                             "Mean Distance from Centroid": centroid_dist})
                              # "Positions": positions,
-                             "Center of Mass": center_mass})
+                             # "Center of Mass": center_mass})
 
     def make_obstructions(self):
         """
