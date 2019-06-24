@@ -23,7 +23,7 @@ import os
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"
 
 s = 100  # number of steps to run the model for each time
-r = 30  # number of runs of the model
+r = 10  # number of runs of the model
 
 
 def run_model1(steps):
@@ -34,7 +34,7 @@ def run_model1(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=1,
+                       speed=2,
                        vision=10,
                        separation=2)
     for j in range(steps):
@@ -72,8 +72,8 @@ def run_model2(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=10,
-                       vision=10,
+                       speed=2,
+                       vision=50,
                        separation=2)
     for j in range(steps):
         model.step()
@@ -110,8 +110,8 @@ def run_model3(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=50,
-                       vision=10,
+                       speed=2,
+                       vision=100,
                        separation=2)
     for j in range(steps):
         model.step()
@@ -152,4 +152,4 @@ means = pd.concat([pd.concat([p1, p2, p3]).mean(axis=1).reset_index(drop=True),
 var = pd.Series([1] * r + [10] * r + [50] * r)
 means = pd.concat([means, var], axis=1)
 means.columns = ["polar", "nnd", "area", "centroid", "var"]
-means.to_csv(os.path.join(path, r"means_var-speed.csv"))
+means.to_csv(os.path.join(path, r"means_var-vision.csv"))
