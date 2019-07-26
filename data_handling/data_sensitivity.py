@@ -25,6 +25,28 @@ path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 s = 3  # number of steps to run the model for each time
 r = 10  # number of runs of the model
 
+# SET PARAMETER VALUES --------------------------------------------------------
+# Todo: update these values for whatever parameter you want to test.
+speed1 = 1
+speed2 = 5
+speed3 = 10
+speed4 = 15
+speed5 = 20
+
+vis1 = 10
+vis2 = 10
+vis3 = 10
+vis4 = 10
+vis5 = 10
+
+sep1 = 2
+sep2 = 2
+sep3 = 2
+sep4 = 2
+sep5 = 2
+
+
+# RUN MODELS & COLLECT DATA ---------------------------------------------------
 
 def run_model1(steps):
     """
@@ -34,9 +56,9 @@ def run_model1(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=1,
-                       vision=10,
-                       separation=2)
+                       speed=speed1,
+                       vision=vis1,
+                       separation=sep1)
     for j in range(steps):
         model.step()
     data1 = model.datacollector.get_model_vars_dataframe()
@@ -72,9 +94,9 @@ def run_model2(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=5,
-                       vision=10,
-                       separation=2)
+                       speed=speed2,
+                       vision=vis2,
+                       separation=sep2)
     for j in range(steps):
         model.step()
     data2 = model.datacollector.get_model_vars_dataframe()
@@ -110,9 +132,9 @@ def run_model3(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=10,
-                       vision=10,
-                       separation=2)
+                       speed=speed3,
+                       vision=vis3,
+                       separation=sep3)
     for j in range(steps):
         model.step()
     data3 = model.datacollector.get_model_vars_dataframe()
@@ -148,9 +170,9 @@ def run_model4(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=15,
-                       vision=10,
-                       separation=2)
+                       speed=speed4,
+                       vision=vis4,
+                       separation=sep4)
     for j in range(steps):
         model.step()
     data4 = model.datacollector.get_model_vars_dataframe()
@@ -186,9 +208,9 @@ def run_model5(steps):
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
-                       speed=20,
-                       vision=10,
-                       separation=2)
+                       speed=speed5,
+                       vision=vis5,
+                       separation=sep5)
     for j in range(steps):
         model.step()
     data5 = model.datacollector.get_model_vars_dataframe()
@@ -223,18 +245,25 @@ means = pd.concat([pd.concat([p1, p2, p3, p4, p5]).mean(axis=1).reset_index(drop
                    pd.concat([a1, a2, a3, a4, a5]).mean(axis=1).reset_index(drop=True),
                    pd.concat([c1, c2, c3, c4, c5]).mean(axis=1).reset_index(drop=True)], axis=1)
 
-# Add the variable values for each run & export
-
-# parameter that you're testing - numbers in brackets is the parameter value,
-# with the expression copied for each model instance
-speed = pd.Series([1] * r +
-                  [5] * r +
-                  [10] * r +
-                  [15] * r +
-                  [20] * r)
-sep = pd.Series([2] * r * 5)  # other variable
-vision = pd.Series([10] * r * 5)  # other variable
+# Add the parameter values for each run & export
+speed = pd.Series([speed1] * r +
+                  [speed2] * r +
+                  [speed3] * r +
+                  [speed4] * r +
+                  [speed5] * r)
+vision = pd.Series([vis1] * r +
+                   [vis2] * r +
+                   [vis3] * r +
+                   [vis4] * r +
+                   [vis5] * r)
+sep = pd.Series([sep1] * r +
+                [sep2] * r +
+                [sep3] * r +
+                [sep4] * r +
+                [sep5] * r)
 
 means = pd.concat([means, speed, sep, vision], axis=1)
-means.columns = ["polar", "nnd", "area", "centroid", "speed", "sep", "vision"]
+means.columns = ["polar", "nnd", "area", "centroid", "speed", "vision", "separation"]
+
+# Todo: change the name of the file to represent parameter varied
 means.to_csv(os.path.join(path, r"means_var-speed.csv"))
