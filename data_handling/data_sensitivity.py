@@ -22,8 +22,8 @@ import os
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-s = 100  # number of steps to run the model for each time
-r = 100  # number of runs of the model
+s = 3  # number of steps to run the model for each time
+r = 10  # number of runs of the model
 
 
 def run_model1(steps):
@@ -223,8 +223,18 @@ means = pd.concat([pd.concat([p1, p2, p3, p4, p5]).mean(axis=1).reset_index(drop
                    pd.concat([a1, a2, a3, a4, a5]).mean(axis=1).reset_index(drop=True),
                    pd.concat([c1, c2, c3, c4, c5]).mean(axis=1).reset_index(drop=True)], axis=1)
 
-# Add the variable values in question for each run & export
-var = pd.Series([1] * r + [10] * r + [50] * r)
-means = pd.concat([means, var], axis=1)
-means.columns = ["polar", "nnd", "area", "centroid", "var"]
+# Add the variable values for each run & export
+
+# parameter that you're testing - numbers in brackets is the parameter value,
+# with the expression copied for each model instance
+speed = pd.Series([1] * r +
+                  [5] * r +
+                  [10] * r +
+                  [15] * r +
+                  [20] * r)
+sep = pd.Series([2] * r * 5)  # other variable
+vision = pd.Series([10] * r * 5)  # other variable
+
+means = pd.concat([means, speed, sep, vision], axis=1)
+means.columns = ["polar", "nnd", "area", "centroid", "speed", "sep", "vision"]
 means.to_csv(os.path.join(path, r"means_var-speed.csv"))
