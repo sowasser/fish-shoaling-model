@@ -22,16 +22,16 @@ import os
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-s = 3  # number of steps to run the model for each time
+s = 100  # number of steps to run the model for each time
 r = 10  # number of runs of the model
 
 # SET PARAMETER VALUES --------------------------------------------------------
 # Todo: update these values for whatever parameter you want to test.
-speed1 = 1
-speed2 = 5
-speed3 = 10
-speed4 = 15
-speed5 = 20
+speed1 = 2
+speed2 = 2
+speed3 = 2
+speed4 = 2
+speed5 = 2
 
 vis1 = 10
 vis2 = 10
@@ -39,11 +39,11 @@ vis3 = 10
 vis4 = 10
 vis5 = 10
 
-sep1 = 2
-sep2 = 2
-sep3 = 2
-sep4 = 2
-sep5 = 2
+sep1 = 0.5
+sep2 = 1
+sep3 = 5
+sep4 = 10
+sep5 = 20
 
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
@@ -256,14 +256,14 @@ vision = pd.Series([vis1] * r +
                    [vis3] * r +
                    [vis4] * r +
                    [vis5] * r)
-sep = pd.Series([sep1] * r +
-                [sep2] * r +
-                [sep3] * r +
-                [sep4] * r +
-                [sep5] * r)
+separation = pd.Series([sep1] * r +
+                       [sep2] * r +
+                       [sep3] * r +
+                       [sep4] * r +
+                       [sep5] * r)
 
-means = pd.concat([means, speed, sep, vision], axis=1)
+means = pd.concat([means, speed, vision, separation], axis=1)
 means.columns = ["polar", "nnd", "area", "centroid", "speed", "vision", "separation"]
 
 # Todo: change the name of the file to represent parameter varied
-means.to_csv(os.path.join(path, r"means_var-speed.csv"))
+means.to_csv(os.path.join(path, r"means_var-sep.csv"))
