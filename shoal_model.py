@@ -106,6 +106,9 @@ class Fish(Agent):
                 separate_vector -= self.model.space.get_heading(me, my_neighbor)
         return separate_vector
 
+    def avoid_boundaries(self):
+        return np.zeros(2)
+
     def match_velocity(self, neighbors):
         """
         Have Boids match the velocity of neighbors.
@@ -126,8 +129,25 @@ class Fish(Agent):
         self.velocity += (self.cohere(neighbors) * self.cohere_factor +
                           self.separate(neighbors) * self.separate_factor +
                           self.match_velocity(neighbors) * self.match_factor) / 2
+
+        # Make self.velocity a unit vector. There is a potential problem here though. Is it
+        # the desired outcome that the velocity vector changes if there are no neighbours?
         self.velocity /= np.linalg.norm(self.velocity)
+
+        #if self.unique_id == 0:
+        #    print(self.velocity)
+
         new_pos = self.pos + self.velocity * self.speed
+
+        # if new_pos[0] < self.model.space.x_min:
+        #     new_pos[0] = 0
+        # if new_pos[0] >= self.model.space.x_max:
+        #     new_pos[0] = 49.999
+        # if new_pos[1] < self.model.space.y_min:
+        #     new_pos[1] = 0
+        # if new_pos[1] >= self.model.space.y_max:
+        #     new_pos[1] = 49.999
+
         self.model.space.move_agent(self, new_pos)
 
 
@@ -214,7 +234,7 @@ class ShoalModel(Model):
             x = random.randrange(2, (self.space.x_max - 1))
             y = random.randrange(2, (self.space.y_max - 1))
             pos = np.array((x, y))
-            velocity = np.random.random(2) * 2 - 1
+            velocity = np.random.random(2) * 2 - 1 # [-1.0 .. 1.0, -1.0 .. 1.0]
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
                         self.separation, **self.factors)
             self.space.place_agent(fish, pos)
@@ -240,8 +260,8 @@ class ShoalModel(Model):
         defined borders.
         """
         # if the space is square (i.e. y_max and x_max are the same):
-        max_lim = self.space.x_max - 1
-        min_lim = self.space.x_min + 1
+        max_lim = self.space.x_max * 10 - 1
+        min_lim = self.space.x_min * 10 + 1
         line = range(min_lim, max_lim)
         borders = np.asarray([(min_lim, n) for n in line] + [(n, max_lim) for n in line] +
                              [(max_lim, n) for n in line] + [(n, min_lim) for n in line])
