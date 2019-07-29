@@ -260,8 +260,8 @@ class ShoalModel(Model):
         defined borders.
         """
         # if the space is square (i.e. y_max and x_max are the same):
-        max_lim = self.space.x_max * 10 - 1
-        min_lim = self.space.x_min * 10 + 1
+        max_lim = self.space.x_max - 1
+        min_lim = self.space.x_min + 1
         line = range(min_lim, max_lim)
         borders = np.asarray([(min_lim, n) for n in line] + [(n, max_lim) for n in line] +
                              [(max_lim, n) for n in line] + [(n, min_lim) for n in line])
