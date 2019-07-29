@@ -69,22 +69,28 @@ def agent_draw(agent):
     if isinstance(agent, Fish):
         # Todo: change portrayal to include heading & make the viz clearer.
         portrayal = {
-            "Shape": "rect",
-            "Filled": "True",
-            "Color": "Blue",
-            "heading_x": agent.velocity[0],
-            "heading_y": agent.velocity[1],
-            "w": 0.01,
-            "h": 0.01
+            "shape": "circle",
+            "filled": True,
+            "color": "blue",
+            "r": 5,
+
+            "showVisionRange": True,
+            "vision": agent.vision,
+
+            "showHeadingVector": True,
+            "headingX": agent.velocity[0],
+            "headingY": agent.velocity[1],
+
+            "id": agent.unique_id
         }
 
     elif isinstance(agent, Obstruct):
         portrayal = {
-            "Shape": "rect",
-            "Filled": "True",
-            "Color": "Red",
-            "w": 0.02,
-            "h": 0.02
+            "shape": "rect",
+            "filled": True,
+            "color": "red",
+            "w": 0.005,
+            "h": 0.005,
         }
 
     return portrayal
@@ -101,22 +107,23 @@ model_params = {
 # Create charts for the data collectors
 # Todo: figure out why charts aren't showing up.
 # Todo: include chart titles & improve charts
-polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-                          data_collector_name="datacollector")
+#polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+#                          data_collector_name="datacollector")
 #                         chart_title="Polarization")
 
-neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
-                             data_collector_name="datacollector")
+#neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+#                             data_collector_name="datacollector")
 #                            chart_title="Nearest Neighbour Distance")
 
-area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
-                         data_collector_name="datacollector")
+#area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
+#                         data_collector_name="datacollector")
 #                        chart_title="Shoal Area")
 
 
 # Launch server
 server = ModularServer(ShoalModel,
-                       [shoal_canvas, polar_chart, neighbor_chart, area_chart],
+                       #[shoal_canvas, polar_chart, neighbor_chart, area_chart],
+                       [shoal_canvas],
                        "Boids Model of Shoaling Behavior",
                        model_params)
 server.launch()
