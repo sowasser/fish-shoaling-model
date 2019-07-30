@@ -22,8 +22,8 @@ import os
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-s = 100  # number of steps to run the model for each time
-r = 10  # number of runs of the model
+s = 200  # number of steps to run the model for each time
+r = 100  # number of runs of the model
 
 # SET PARAMETER VALUES --------------------------------------------------------
 # Todo: update these values for whatever parameter you want to test.
@@ -40,7 +40,7 @@ vis4 = 10
 vis5 = 10
 
 sep1 = 0.5
-sep2 = 1
+sep2 = 2
 sep3 = 5
 sep4 = 10
 sep5 = 20
@@ -238,6 +238,8 @@ for run in range(r):
     c5 = c5.append(run_model5(s).iloc[:, 3])
 
 # CALCULATE MEANS & CREATE DATA EXPORT ----------------------------------------
+
+# Todo: remove early steps (burn-in) where the fish haven't started to cohere.
 
 # Combine data from each model call into one dataframe, find means, combine again
 means = pd.concat([pd.concat([p1, p2, p3, p4, p5]).mean(axis=1).reset_index(drop=True),
