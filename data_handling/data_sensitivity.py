@@ -16,14 +16,15 @@ along with the parameter being tested (i.e. speed, vision, etc.)
 
 from shoal_model import *
 import pandas as pd
+import itertools
 import os
 
 # Paths for exporting the data
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-s = 200  # number of steps to run the model for each time
-r = 100  # number of runs of the model
+s = 20  # number of steps to run the model for each time
+r = 3  # number of runs of the model
 
 # SET PARAMETER VALUES --------------------------------------------------------
 # Todo: update these values for whatever parameter you want to test.
@@ -57,9 +58,13 @@ sep_distrib = [2, 2, 2, 2, 2]
 
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
-for speed, vis, sep in speed_distrib, vis_distrib, sep_distrib:
+p = pd.DataFrame()
+n = pd.DataFrame()
+a = pd.DataFrame()
+c = pd.DataFrame()
+# data = pd.DataFrame()
 
-    data = pd.DataFrame()
+for speed, vis, sep in zip(speed_distrib, vis_distrib, sep_distrib):
 
     def run_model(steps):
         """
@@ -69,31 +74,27 @@ for speed, vis, sep in speed_distrib, vis_distrib, sep_distrib:
         model = ShoalModel(n_fish=50,
                            width=50,
                            height=50,
-                           speed=speed,
-                           vision=vis,
-                           separation=sep)
+                           speed=5,
+                           vision=10,
+                           separation=2)
         for step in range(steps):
             model.step()
-        data.append(model.datacollector.get_model_vars_dataframe())
+        data = model.datacollector.get_model_vars_dataframe()
         return data
 
     # Isolate the polarization data from many runs of the model
-    p = pd.DataFrame()
     for run in range(r):
         p = p.append(run_model(s).iloc[:, 0])  # add each run to data frame
 
     # Isolate the nearest neighbour distance data from many runs of the model
-    n = pd.DataFrame()
     for run in range(r):
         n = n.append(run_model(s).iloc[:, 1])
 
     # Isolate the shoal area data from many runs of the model
-    a = pd.DataFrame()
     for run in range(r):
         a = a.append(run_model(s).iloc[:, 2])
 
     # Isolate the mean distance from the centroid data from many runs of the model
-    c = pd.DataFrame()
     for run in range(r):
         c = c.append(run_model(s).iloc[:, 3])
 
