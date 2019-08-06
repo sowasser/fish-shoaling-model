@@ -9,9 +9,10 @@ Approximate Bayesian Computation, in R. The data collectors are:
     3. Shoal area: convex hull
     4. Mean distance from centroid
 
-The model is run for x steps, x number of times and then the mean of each data
-collector per run (average of all steps) is calculated and added to a dataframe
-along with the parameter being tested (i.e. speed, vision, etc.)
+The model is run for x steps for x number of values in a lognormal distribution
+of parameter values and then the mean of each data collector per run (average
+of all steps) is calculated and added to a dataframe along with the parameter
+being tested (i.e. speed, vision, etc.)
 """
 
 from shoal_model import *
@@ -29,28 +30,14 @@ r = 3  # number of runs of the model
 # SET PARAMETER VALUES --------------------------------------------------------
 # Todo: update these values for whatever parameter you want to test.
 
+# Todo: figure out how to run the model from a list of randomly-selected values from a lognormal distribution
 speed_distrib = [0.5, 2, 5, 10, 20]
-# speed1 = 2
-# speed2 = 2
-# speed3 = 2
-# speed4 = 2
-# speed5 = 2
 
 vis_distrib = [10, 10, 10, 10, 10]
-# vis1 = 10
-# vis2 = 10
-# vis3 = 10
-# vis4 = 10
-# vis5 = 10
 
 sep_distrib = [2, 2, 2, 2, 2]
-# sep1 = 0.5
-# sep2 = 2
-# sep3 = 5
-# sep4 = 10
-# sep5 = 20
 
-# Todo: figure out how to run the model over random samples from a lognormal distribution
+
 # these are returning very high values - I guess the sum of the whole distribution?
 # speed_dist = np.random.lognormal(mean=2, sigma=1, size=None)
 # vis_dist = np.random.lognormal(mean=10, sigma=1, size=None)
@@ -80,32 +67,12 @@ def run_speed_model(steps, speed):
     data["speed"] = speed_parameter  # add parameter value column
     return data
 
-p = pd.DataFrame()
-n = pd.DataFrame()
-a = pd.DataFrame()
-c = pd.DataFrame()
 
 speed_data = pd.concat([run_speed_model(s, i) for i in speed_distrib])
 print(speed_data)
 
-
-
-    # Isolate the polarization data from many runs of the model
-    # for run in range(r):
-    #     p = run_model(s).iloc[:, 0]  # add each run to data frame
-    #
-    # # Isolate the nearest neighbour distance data from many runs of the model
-    # for run in range(r):
-    #     n = run_model(s).iloc[:, 1]
-    #
-    # # Isolate the shoal area data from many runs of the model
-    # for run in range(r):
-    #     a = run_model(s).iloc[:, 2]
-    #
-    # # Isolate the mean distance from the centroid data from many runs of the model
-    # for run in range(r):
-    #     c = run_model(s).iloc[:, 3]
-
+# Todo: repeat the above for vision and separation
+# Todo: figure out how to calculate the run means that we need!
 
 # CALCULATE MEANS & CREATE DATA EXPORT ----------------------------------------
 
