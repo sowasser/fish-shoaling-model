@@ -27,245 +27,106 @@ r = 100  # number of runs of the model
 
 # SET PARAMETER VALUES --------------------------------------------------------
 # Todo: update these values for whatever parameter you want to test.
-speed1 = 2
-speed2 = 2
-speed3 = 2
-speed4 = 2
-speed5 = 2
 
-vis1 = 10
-vis2 = 10
-vis3 = 10
-vis4 = 10
-vis5 = 10
+speed_distrib = [0.5, 2, 5, 10, 20]
+# speed1 = 2
+# speed2 = 2
+# speed3 = 2
+# speed4 = 2
+# speed5 = 2
 
-sep1 = 0.5
-sep2 = 2
-sep3 = 5
-sep4 = 10
-sep5 = 20
+vis_distrib = [10, 10, 10, 10, 10]
+# vis1 = 10
+# vis2 = 10
+# vis3 = 10
+# vis4 = 10
+# vis5 = 10
+
+sep_distrib = [2, 2, 2, 2, 2]
+# sep1 = 0.5
+# sep2 = 2
+# sep3 = 5
+# sep4 = 10
+# sep5 = 20
+
+# Todo: figure out how to run the model over random samples from a lognormal distribution
+# these are returning very high values - I guess the sum of the whole distribution?
+# speed_dist = np.random.lognormal(mean=2, sigma=1, size=None)
+# vis_dist = np.random.lognormal(mean=10, sigma=1, size=None)
+# sep_dist = np.random.lognormal(mean=2, sigma=1, size=None)
 
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
+for speed, vis, sep in speed_distrib, vis_distrib, sep_distrib:
 
-def run_model1(steps):
-    """
-    Runs the shoal model for a certain number of steps, returning a dataframe
-    with all of the data collectors.
-    """
-    model = ShoalModel(n_fish=50,
-                       width=50,
-                       height=50,
-                       speed=speed1,
-                       vision=vis1,
-                       separation=sep1)
-    for j in range(steps):
-        model.step()
-    data1 = model.datacollector.get_model_vars_dataframe()
-    return data1
+    data = pd.DataFrame()
 
+    def run_model(steps):
+        """
+        Runs the shoal model for a certain number of steps, returning a dataframe
+        with all of the data collectors.
+        """
+        model = ShoalModel(n_fish=50,
+                           width=50,
+                           height=50,
+                           speed=speed,
+                           vision=vis,
+                           separation=sep)
+        for step in range(steps):
+            model.step()
+        data.append(model.datacollector.get_model_vars_dataframe())
+        return data
 
-# Isolate the polarization data from many runs of the model
-p1 = pd.DataFrame()
-for run in range(r):
-    p1 = p1.append(run_model1(s).iloc[:, 0])  # add each run to data frame
+    # Isolate the polarization data from many runs of the model
+    p = pd.DataFrame()
+    for run in range(r):
+        p = p.append(run_model(s).iloc[:, 0])  # add each run to data frame
 
-# Isolate the nearest neighbour distance data from many runs of the model
-n1 = pd.DataFrame()
-for run in range(r):
-    n1 = n1.append(run_model1(s).iloc[:, 1])
+    # Isolate the nearest neighbour distance data from many runs of the model
+    n = pd.DataFrame()
+    for run in range(r):
+        n = n.append(run_model(s).iloc[:, 1])
 
-# Isolate the shoal area data from many runs of the model
-a1 = pd.DataFrame()
-for run in range(r):
-    a1 = a1.append(run_model1(s).iloc[:, 2])
+    # Isolate the shoal area data from many runs of the model
+    a = pd.DataFrame()
+    for run in range(r):
+        a = a.append(run_model(s).iloc[:, 2])
 
-# Isolate the mean distance from the centroid data from many runs of the model
-c1 = pd.DataFrame()
-for run in range(r):
-    c1 = c1.append(run_model1(s).iloc[:, 3])
+    # Isolate the mean distance from the centroid data from many runs of the model
+    c = pd.DataFrame()
+    for run in range(r):
+        c = c.append(run_model(s).iloc[:, 3])
 
-
-def run_model2(steps):
-    """
-    Runs the shoal model for a certain number of steps, returning a dataframe
-    with all of the data collectors.
-    """
-    model = ShoalModel(n_fish=50,
-                       width=50,
-                       height=50,
-                       speed=speed2,
-                       vision=vis2,
-                       separation=sep2)
-    for j in range(steps):
-        model.step()
-    data2 = model.datacollector.get_model_vars_dataframe()
-    return data2
-
-
-# Isolate the polarization data from many runs of the model
-p2 = pd.DataFrame()
-for run in range(r):
-    p2 = p2.append(run_model2(s).iloc[:, 0])  # add each run to data frame
-
-# Isolate the nearest neighbour distance data from many runs of the model
-n2 = pd.DataFrame()
-for run in range(r):
-    n2 = n2.append(run_model2(s).iloc[:, 1])
-
-# Isolate the shoal area data from many runs of the model
-a2 = pd.DataFrame()
-for run in range(r):
-    a2 = a2.append(run_model2(s).iloc[:, 2])
-
-# Isolate the mean distance from the centroid data from many runs of the model
-c2 = pd.DataFrame()
-for run in range(r):
-    c2 = c2.append(run_model2(s).iloc[:, 3])
-
-
-def run_model3(steps):
-    """
-    Runs the shoal model for a certain number of steps, returning a dataframe
-    with all of the data collectors.
-    """
-    model = ShoalModel(n_fish=50,
-                       width=50,
-                       height=50,
-                       speed=speed3,
-                       vision=vis3,
-                       separation=sep3)
-    for j in range(steps):
-        model.step()
-    data3 = model.datacollector.get_model_vars_dataframe()
-    return data3
-
-
-# Isolate the polarization data from many runs of the model
-p3 = pd.DataFrame()
-for run in range(r):
-    p3 = p3.append(run_model3(s).iloc[:, 0])  # add each run to data frame
-
-# Isolate the nearest neighbour distance data from many runs of the model
-n3 = pd.DataFrame()
-for run in range(r):
-    n3 = n3.append(run_model3(s).iloc[:, 1])
-
-# Isolate the shoal area data from many runs of the model
-a3 = pd.DataFrame()
-for run in range(r):
-    a3 = a3.append(run_model3(s).iloc[:, 2])
-
-# Isolate the mean distance from the centroid data from many runs of the model
-c3 = pd.DataFrame()
-for run in range(r):
-    c3 = c3.append(run_model3(s).iloc[:, 3])
-
-
-def run_model4(steps):
-    """
-    Runs the shoal model for a certain number of steps, returning a dataframe
-    with all of the data collectors.
-    """
-    model = ShoalModel(n_fish=50,
-                       width=50,
-                       height=50,
-                       speed=speed4,
-                       vision=vis4,
-                       separation=sep4)
-    for j in range(steps):
-        model.step()
-    data4 = model.datacollector.get_model_vars_dataframe()
-    return data4
-
-
-# Isolate the polarization data from many runs of the model
-p4 = pd.DataFrame()
-for run in range(r):
-    p4 = p4.append(run_model4(s).iloc[:, 0])  # add each run to data frame
-
-# Isolate the nearest neighbour distance data from many runs of the model
-n4 = pd.DataFrame()
-for run in range(r):
-    n4 = n4.append(run_model4(s).iloc[:, 1])
-
-# Isolate the shoal area data from many runs of the model
-a4 = pd.DataFrame()
-for run in range(r):
-    a4 = a4.append(run_model4(s).iloc[:, 2])
-
-# Isolate the mean distance from the centroid data from many runs of the model
-c4 = pd.DataFrame()
-for run in range(r):
-    c4 = c4.append(run_model4(s).iloc[:, 3])
-
-
-def run_model5(steps):
-    """
-    Runs the shoal model for a certain number of steps, returning a dataframe
-    with all of the data collectors.
-    """
-    model = ShoalModel(n_fish=50,
-                       width=50,
-                       height=50,
-                       speed=speed5,
-                       vision=vis5,
-                       separation=sep5)
-    for j in range(steps):
-        model.step()
-    data5 = model.datacollector.get_model_vars_dataframe()
-    return data5
-
-
-# Isolate the polarization data from many runs of the model
-p5 = pd.DataFrame()
-for run in range(r):
-    p5 = p5.append(run_model5(s).iloc[:, 0])  # add each run to data frame
-
-# Isolate the nearest neighbour distance data from many runs of the model
-n5 = pd.DataFrame()
-for run in range(r):
-    n5 = n5.append(run_model5(s).iloc[:, 1])
-
-# Isolate the shoal area data from many runs of the model
-a5 = pd.DataFrame()
-for run in range(r):
-    a5 = a5.append(run_model5(s).iloc[:, 2])
-
-# Isolate the mean distance from the centroid data from many runs of the model
-c5 = pd.DataFrame()
-for run in range(r):
-    c5 = c5.append(run_model5(s).iloc[:, 3])
 
 # CALCULATE MEANS & CREATE DATA EXPORT ----------------------------------------
 
 # Todo: remove early steps (burn-in) where the fish haven't started to cohere.
 
-# Combine data from each model call into one dataframe, find means, combine again
-means = pd.concat([pd.concat([p1, p2, p3, p4, p5]).mean(axis=1).reset_index(drop=True),
-                   pd.concat([n1, n2, n3, n4, n5]).mean(axis=1).reset_index(drop=True),
-                   pd.concat([a1, a2, a3, a4, a5]).mean(axis=1).reset_index(drop=True),
-                   pd.concat([c1, c2, c3, c4, c5]).mean(axis=1).reset_index(drop=True)], axis=1)
-
-# Add the parameter values for each run & export
-speed = pd.Series([speed1] * r +
-                  [speed2] * r +
-                  [speed3] * r +
-                  [speed4] * r +
-                  [speed5] * r)
-vision = pd.Series([vis1] * r +
-                   [vis2] * r +
-                   [vis3] * r +
-                   [vis4] * r +
-                   [vis5] * r)
-separation = pd.Series([sep1] * r +
-                       [sep2] * r +
-                       [sep3] * r +
-                       [sep4] * r +
-                       [sep5] * r)
-
-means = pd.concat([means, speed, vision, separation], axis=1)
-means.columns = ["polar", "nnd", "area", "centroid", "speed", "vision", "separation"]
-
-# Todo: change the name of the file to represent parameter varied
-means.to_csv(os.path.join(path, r"means_var-sep.csv"))
+# # Combine data from each model call into one dataframe, find means, combine again
+# means = pd.concat([pd.concat([p1, p2, p3, p4, p5]).mean(axis=1).reset_index(drop=True),
+#                    pd.concat([n1, n2, n3, n4, n5]).mean(axis=1).reset_index(drop=True),
+#                    pd.concat([a1, a2, a3, a4, a5]).mean(axis=1).reset_index(drop=True),
+#                    pd.concat([c1, c2, c3, c4, c5]).mean(axis=1).reset_index(drop=True)], axis=1)
+#
+# # Add the parameter values for each run & export
+# speed = pd.Series([speed1] * r +
+#                   [speed2] * r +
+#                   [speed3] * r +
+#                   [speed4] * r +
+#                   [speed5] * r)
+# vision = pd.Series([vis1] * r +
+#                    [vis2] * r +
+#                    [vis3] * r +
+#                    [vis4] * r +
+#                    [vis5] * r)
+# separation = pd.Series([sep1] * r +
+#                        [sep2] * r +
+#                        [sep3] * r +
+#                        [sep4] * r +
+#                        [sep5] * r)
+#
+# means = pd.concat([means, speed, vision, separation], axis=1)
+# means.columns = ["polar", "nnd", "area", "centroid", "speed", "vision", "separation"]
+#
+# # Todo: change the name of the file to represent parameter varied
+# means.to_csv(os.path.join(path, r"means_var-sep.csv"))
