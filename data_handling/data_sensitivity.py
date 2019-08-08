@@ -37,9 +37,9 @@ r = 3  # number of runs of the model
 # Todo: figure out how to run the model from a list of randomly-selected values from a lognormal distribution
 speed_distrib = [0.5, 2, 5, 10, 20]
 
-vision_distrib = [10, 10, 10, 10, 10]
+vision_distrib = [1, 5, 10, 20, 50]
 
-sep_distrib = [2, 2, 2, 2, 2]
+sep_distrib = [0.5, 2, 5, 10, 20]
 
 # Fixed values for non-testing parameters
 speed_fixed = 2
@@ -108,7 +108,7 @@ def run_vision_model(steps, vision):
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-vision_data = pd.concat([run_speed_model(s, i) for i in vision_distrib])
+vision_data = pd.concat([run_vision_model(s, i) for i in vision_distrib])
 
 
 def run_sep_model(steps, separation):
@@ -137,7 +137,7 @@ def run_sep_model(steps, separation):
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-sep_data = pd.concat([run_speed_model(s, i) for i in sep_distrib])
+sep_data = pd.concat([run_sep_model(s, i) for i in sep_distrib])
 
 
 # EXPORT DATA -----------------------------------------------------------------
