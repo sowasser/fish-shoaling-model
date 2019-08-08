@@ -1,5 +1,5 @@
 """
-This file is for testing the effect of different model conditions on the output
+This file is for testing the effect of different parameter values on the output
 from the data collectors. These tests are used for validating the model with
 Approximate Bayesian Computation, in R. The data collectors are:
     1. Polarization: a function returning the median absolute deviation of
@@ -11,8 +11,12 @@ Approximate Bayesian Computation, in R. The data collectors are:
 
 The model is run for x steps for x number of values in a lognormal distribution
 of parameter values and then the mean of each data collector per run (average
-of all steps) is calculated and added to a dataframe along with the parameter
-being tested (i.e. speed, vision, etc.)
+of all steps) is calculated and added to a dataframe along with the values of
+all parameters: the one being tested, and the ones remaining fixed.
+
+At the moment, agent speed, vision radius, and separation distance are being
+tested. These are defined in shoal_model.py. In the future, other parameters
+can be added & tested.
 """
 
 from shoal_model import *
