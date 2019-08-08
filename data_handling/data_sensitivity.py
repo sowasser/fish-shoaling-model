@@ -28,27 +28,19 @@ import os
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-s = 5  # number of steps to run the model for each time
-r = 3  # number of runs of the model
-
 # SET PARAMETER VALUES --------------------------------------------------------
-# Todo: update these values for whatever parameter you want to test.
 
-# Todo: figure out how to run the model from a list of randomly-selected values from a lognormal distribution
-speed_distrib = [0.5, 2, 5, 10, 20]
-
-vision_distrib = [1, 5, 10, 20, 50]
-
-sep_distrib = [0.5, 2, 5, 10, 20]
-
-# Fixed values for non-testing parameters
+# Fixed values for non-tested parameters
 speed_fixed = 2
 vision_fixed = 10
 sep_fixed = 2
-# these are returning very high values - I guess the sum of the whole distribution?
-# speed_dist = np.random.lognormal(mean=2, sigma=1, size=None)
-# vis_dist = np.random.lognormal(mean=10, sigma=1, size=None)
-# sep_dist = np.random.lognormal(mean=2, sigma=1, size=None)
+
+# Todo: figure out how to get the range we want.
+speed_dist = np.random.lognormal(mean=2, sigma=1, size=100)
+vision_dist = np.random.lognormal(mean=2, sigma=1, size=100)
+sep_dist = np.random.lognormal(mean=2, sigma=1, size=100)
+
+s = 200  # number of steps to run the model for each time
 
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
@@ -79,7 +71,7 @@ def run_speed_model(steps, speed):
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-speed_data = pd.concat([run_speed_model(s, i) for i in speed_distrib])
+speed_data = pd.concat([run_speed_model(s, i) for i in speed_dist])
 
 
 def run_vision_model(steps, vision):
@@ -108,7 +100,7 @@ def run_vision_model(steps, vision):
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-vision_data = pd.concat([run_vision_model(s, i) for i in vision_distrib])
+vision_data = pd.concat([run_vision_model(s, i) for i in vision_dist])
 
 
 def run_sep_model(steps, separation):
@@ -137,7 +129,7 @@ def run_sep_model(steps, separation):
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-sep_data = pd.concat([run_sep_model(s, i) for i in sep_distrib])
+sep_data = pd.concat([run_sep_model(s, i) for i in sep_dist])
 
 
 # EXPORT DATA -----------------------------------------------------------------
