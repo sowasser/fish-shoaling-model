@@ -37,7 +37,7 @@ r = 3  # number of runs of the model
 # Todo: figure out how to run the model from a list of randomly-selected values from a lognormal distribution
 speed_distrib = [0.5, 2, 5, 10, 20]
 
-vis_distrib = [10, 10, 10, 10, 10]
+vision_distrib = [10, 10, 10, 10, 10]
 
 sep_distrib = [2, 2, 2, 2, 2]
 
@@ -55,9 +55,9 @@ sep_fixed = 2
 
 def run_speed_model(steps, speed):
     """
-    Runs the shoal model for a certain number of steps with speed varying while
-    all other parameters are fixed. Returns a dataframe with the average per
-    run of all data collectors (average of all steps) and columns with the
+    Runs the shoal model for a certain number of steps with agent speed varying
+    while all other parameters are fixed. Returns a dataframe with the average
+    per run of all data collectors (average of all steps) and columns with the
     parameter values for that run, including the varying & fixed parameters so
     all dataframes can be stacked together.
     """
@@ -78,12 +78,71 @@ def run_speed_model(steps, speed):
     return pd.DataFrame(data.mean(axis=0)).T  # means of all columns & new dataframe
 
 
-speed_data = pd.concat([run_speed_model(s, i) for i in speed_distrib])  # s is number of steps
-print(speed_data)
+# Run the model as many times as there are parameter values, for # of steps in "s"
+speed_data = pd.concat([run_speed_model(s, i) for i in speed_distrib])
 
-# Todo: repeat the above for vision and separation
+
+def run_vision_model(steps, vision):
+    """
+    Runs the shoal model for a certain number of steps with vision radius
+    varying while all other parameters are fixed. Returns a dataframe with the
+    average per run of all data collectors (average of all steps) and columns
+    with the parameter values for that run, including the varying & fixed
+    parameters so all dataframes can be stacked together.
+    """
+    vision_parameter = []
+    model = ShoalModel(n_fish=50,
+                       width=50,
+                       height=50,
+                       speed=speed_fixed,
+                       vision=vision,
+                       separation=sep_fixed)
+    for step in range(steps):
+        model.step()  # run the model for certain number of steps
+        vision_parameter.append(vision)  # create list of parameter values tested
+    data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
+    data["speed"] = speed_fixed  # add parameter value column
+    data["vision"] = vision_parameter  # add vision column
+    data["separation"] = sep_fixed  # add separation column
+    return pd.DataFrame(data.mean(axis=0)).T  # means of all columns & new dataframe
+
+
+# Run the model as many times as there are parameter values, for # of steps in "s"
+vision_data = pd.concat([run_speed_model(s, i) for i in vision_distrib])
+
+
+def run_sep_model(steps, separation):
+    """
+    Runs the shoal model for a certain number of steps with separation distance
+    varying while all other parameters are fixed. Returns a dataframe with the
+    average per run of all data collectors (average of all steps) and columns
+    with the parameter values for that run, including the varying & fixed
+    parameters so all dataframes can be stacked together.
+    """
+    sep_parameter = []
+    model = ShoalModel(n_fish=50,
+                       width=50,
+                       height=50,
+                       speed=speed_fixed,
+                       vision=vision_fixed,
+                       separation=separation)
+    for step in range(steps):
+        model.step()  # run the model for certain number of steps
+        sep_parameter.append(separation)  # create list of parameter values tested
+    data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
+    data["speed"] = speed_fixed  # add parameter value column
+    data["vision"] = vision_fixed  # add vision column
+    data["separation"] = sep_parameter  # add separation column
+    return pd.DataFrame(data.mean(axis=0)).T  # means of all columns & new dataframe
+
+
+# Run the model as many times as there are parameter values, for # of steps in "s"
+sep_data = pd.concat([run_speed_model(s, i) for i in sep_distrib])
+
 
 # EXPORT DATA -----------------------------------------------------------------
 # Todo: remove early steps (burn-in) where the fish haven't started to cohere.
 
-# speed_data.to_csv(os.path.join(path, r"means_var-speed.csv"))
+speed_data.to_csv(os.path.join(path, r"var-speed.csv"))
+vision_data.to_csv(os.path.join(path, r"var-vision.csv"))
+sep_data.to_csv(os.path.join(path, r"var-sep.csv"))
