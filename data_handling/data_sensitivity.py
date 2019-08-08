@@ -15,8 +15,8 @@ of all steps) is calculated and added to a dataframe along with the values of
 all parameters: the one being tested, and the ones remaining fixed.
 
 At the moment, agent speed, vision radius, and separation distance are being
-tested. These are defined in shoal_model.py. In the future, other parameters
-can be added & tested.
+tested in separate functions. These parameters are defined in shoal_model.py.
+In the future, other parameters can be added & tested.
 """
 
 from shoal_model import *
