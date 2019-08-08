@@ -37,7 +37,10 @@ vis_distrib = [10, 10, 10, 10, 10]
 
 sep_distrib = [2, 2, 2, 2, 2]
 
-
+# Fixed values for non-testing parameters
+speed_fixed = 2
+vision_fixed = 10
+sep_fixed = 2
 # these are returning very high values - I guess the sum of the whole distribution?
 # speed_dist = np.random.lognormal(mean=2, sigma=1, size=None)
 # vis_dist = np.random.lognormal(mean=10, sigma=1, size=None)
@@ -46,63 +49,37 @@ sep_distrib = [2, 2, 2, 2, 2]
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
 
-
 def run_speed_model(steps, speed):
     """
     Runs the shoal model for a certain number of steps with speed varying while
-    all other parameters are fixed. Returns a dataframe with all of the data
-    collectors and a column with the speed parameter values.
+    all other parameters are fixed. Returns a dataframe with the average per
+    run of all data collectors (average of all steps) and columns with the
+    parameter values for that run, including the varying & fixed parameters so
+    all dataframes can be stacked together.
     """
     speed_parameter = []
     model = ShoalModel(n_fish=50,
                        width=50,
                        height=50,
                        speed=speed,
-                       vision=10,
-                       separation=2)
+                       vision=vision_fixed,
+                       separation=sep_fixed)
     for step in range(steps):
         model.step()  # run the model for certain number of steps
         speed_parameter.append(speed)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
     data["speed"] = speed_parameter  # add parameter value column
-    return data
+    data["vision"] = vision_fixed  # add vision column
+    data["separation"] = sep_fixed  # add separation column
+    return pd.DataFrame(data.mean(axis=0)).T  # means of all columns & new dataframe
 
 
-speed_data = pd.concat([run_speed_model(s, i) for i in speed_distrib])
+speed_data = pd.concat([run_speed_model(s, i) for i in speed_distrib])  # s is number of steps
 print(speed_data)
 
 # Todo: repeat the above for vision and separation
-# Todo: figure out how to calculate the run means that we need!
 
-# CALCULATE MEANS & CREATE DATA EXPORT ----------------------------------------
-
+# EXPORT DATA -----------------------------------------------------------------
 # Todo: remove early steps (burn-in) where the fish haven't started to cohere.
 
-# # Combine data from each model call into one dataframe, find means, combine again
-# means = pd.concat([pd.concat([p1, p2, p3, p4, p5]).mean(axis=1).reset_index(drop=True),
-#                    pd.concat([n1, n2, n3, n4, n5]).mean(axis=1).reset_index(drop=True),
-#                    pd.concat([a1, a2, a3, a4, a5]).mean(axis=1).reset_index(drop=True),
-#                    pd.concat([c1, c2, c3, c4, c5]).mean(axis=1).reset_index(drop=True)], axis=1)
-#
-# # Add the parameter values for each run & export
-# speed = pd.Series([speed1] * r +
-#                   [speed2] * r +
-#                   [speed3] * r +
-#                   [speed4] * r +
-#                   [speed5] * r)
-# vision = pd.Series([vis1] * r +
-#                    [vis2] * r +
-#                    [vis3] * r +
-#                    [vis4] * r +
-#                    [vis5] * r)
-# separation = pd.Series([sep1] * r +
-#                        [sep2] * r +
-#                        [sep3] * r +
-#                        [sep4] * r +
-#                        [sep5] * r)
-#
-# means = pd.concat([means, speed, vision, separation], axis=1)
-# means.columns = ["polar", "nnd", "area", "centroid", "speed", "vision", "separation"]
-#
-# # Todo: change the name of the file to represent parameter varied
-# means.to_csv(os.path.join(path, r"means_var-sep.csv"))
+# speed_data.to_csv(os.path.join(path, r"means_var-speed.csv"))
