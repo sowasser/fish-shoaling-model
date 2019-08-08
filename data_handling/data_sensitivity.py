@@ -36,9 +36,9 @@ vision_fixed = 10
 sep_fixed = 2
 
 # Todo: figure out how to get the range we want.
-speed_dist = np.random.lognormal(mean=2, sigma=1, size=100)
-vision_dist = np.random.lognormal(mean=2, sigma=1, size=100)
-sep_dist = np.random.lognormal(mean=2, sigma=1, size=100)
+speed_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
+vision_dist = np.random.lognormal(mean=1, sigma=2, size=100)
+sep_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
 
 s = 200  # number of steps to run the model for each time
 
