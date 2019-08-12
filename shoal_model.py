@@ -12,7 +12,7 @@ These rules are based on the neighbours each agent perceives within their
 (Mann et al. 2011). Another version of this model is being constructed
 for the topological (set number of neighbours at any distance).
 
-The 'fish' also interact with objects (also agents) that don't move. These
+The 'fish' can also interact with objects (also agents) that don't move. These
 obstructions can act as borders to the world (i.e. to represent a fish tank) or
 elements in an open environment. Later, I plan to add moving obstructions (i.e.
 a trawl).
@@ -220,7 +220,7 @@ class ShoalModel(Model):
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
-        self.make_obstructions()
+        # self.make_obstructions()  # Todo: un-comment this line to include obstructions
         self.make_fish()
         self.running = True
 
