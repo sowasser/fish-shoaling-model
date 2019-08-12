@@ -67,7 +67,6 @@ def agent_draw(agent):
     portrayal = None
 
     if isinstance(agent, Fish):
-        # Todo: change portrayal to include heading & make the viz clearer.
         portrayal = {
             "shape": "circle",
             "filled": True,
@@ -105,25 +104,20 @@ model_params = {
 }
 
 # Create charts for the data collectors
-# Todo: figure out why charts aren't showing up.
-# Todo: include chart titles & improve charts
-#polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
-#                          data_collector_name="datacollector")
-#                         chart_title="Polarization")
+# Todo: Change where charts show up so they can be seen next to the viz
+polar_chart = ChartModule([{"Label": "Polarization", "Color": "Black"}],
+                          data_collector_name="datacollector")
 
-#neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
-#                             data_collector_name="datacollector")
-#                            chart_title="Nearest Neighbour Distance")
+neighbor_chart = ChartModule([{"Label": "Nearest Neighbour Distance", "Color": "Black"}],
+                             data_collector_name="datacollector")
 
-#area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
-#                         data_collector_name="datacollector")
-#                        chart_title="Shoal Area")
+area_chart = ChartModule([{"Label": "Shoal Area", "Color": "Black"}],
+                         data_collector_name="datacollector")
 
 
-# Launch server
+# Launch server with all pieces of the visualization (shoal canvas & charts)
 server = ModularServer(ShoalModel,
-                       #[shoal_canvas, polar_chart, neighbor_chart, area_chart],
-                       [shoal_canvas],
+                       [shoal_canvas, polar_chart, neighbor_chart, area_chart],
                        "Boids Model of Shoaling Behavior",
                        model_params)
 server.launch()
