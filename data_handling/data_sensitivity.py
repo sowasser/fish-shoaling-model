@@ -28,7 +28,7 @@ import os
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-# SET PARAMETER VALUES --------------------------------------------------------
+# SET PARAMETER & MODEL VALUES ------------------------------------------------
 
 # Fixed values for non-tested parameters
 speed_fixed = 2
@@ -36,11 +36,20 @@ vision_fixed = 10
 sep_fixed = 2
 
 # Todo: figure out how to get the range we want.
-speed_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
-vision_dist = np.random.lognormal(mean=1, sigma=2, size=100)
-sep_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
+
+# # Defines the distribution as a range of values
+# speed_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
+# vision_dist = np.random.lognormal(mean=1, sigma=2, size=100)
+# sep_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
+
+# Defines the distribution as a set of values
+speed_dist = [0.5, 2, 5, 10, 20]
+vision_dist = [2, 5, 10, 20, 50]
+sep_dist = [0.5, 2, 5, 10, 20]
 
 s = 200  # number of steps to run the model for each time
+
+burn_in = 25  # number of steps to exclude at the beginning as collective behaviour emerges
 
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
@@ -67,7 +76,8 @@ def run_speed_model(steps, speed):
     data["speed"] = speed_parameter  # add parameter value column
     data["vision"] = vision_fixed  # add vision column
     data["separation"] = sep_fixed  # add separation column
-    return pd.DataFrame(data.mean(axis=0)).T  # means of all columns & new dataframe
+    data_trim = data.iloc[burn_in:, ]  # remove early runs
+    return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
@@ -96,7 +106,8 @@ def run_vision_model(steps, vision):
     data["speed"] = speed_fixed  # add parameter value column
     data["vision"] = vision_parameter  # add vision column
     data["separation"] = sep_fixed  # add separation column
-    return pd.DataFrame(data.mean(axis=0)).T  # means of all columns & new dataframe
+    data_trim = data.iloc[burn_in:, ]  # remove early runs
+    return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
@@ -121,11 +132,12 @@ def run_sep_model(steps, separation):
     for step in range(steps):
         model.step()  # run the model for certain number of steps
         sep_parameter.append(separation)  # create list of parameter values tested
-    data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
+    data = model.datacollector.get_model_vars_dataframe() # retrieve data from model
     data["speed"] = speed_fixed  # add parameter value column
     data["vision"] = vision_fixed  # add vision column
     data["separation"] = sep_parameter  # add separation column
-    return pd.DataFrame(data.mean(axis=0)).T  # means of all columns & new dataframe
+    data_trim = data.iloc[burn_in:, ]  # remove early runs
+    return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
@@ -133,7 +145,6 @@ sep_data = pd.concat([run_sep_model(s, i) for i in sep_dist])
 
 
 # EXPORT DATA -----------------------------------------------------------------
-# Todo: remove early steps (burn-in) where the fish haven't started to cohere.
 
 speed_data.to_csv(os.path.join(path, r"var-speed.csv"))
 vision_data.to_csv(os.path.join(path, r"var-vision.csv"))
