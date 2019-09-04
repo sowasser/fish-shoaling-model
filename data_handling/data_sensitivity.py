@@ -36,6 +36,7 @@ vision_fixed = 10
 sep_fixed = 2
 
 # Todo: figure out how to get the range we want.
+# Todo: figure out where that weird first column is coming from & remove it.
 
 # # Defines the distribution as a range of values
 # speed_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
@@ -43,25 +44,25 @@ sep_fixed = 2
 # sep_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
 
 # Defines the distribution as a set of values
-speed_dist = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+# Todo: figure out how to do this more pythonically.
+speed_dist = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+              0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
               2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-              5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-              10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-              20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
-vision_dist = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+              8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+vision_dist = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
                10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-               20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
-               50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
-sep_dist = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+               15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+               25, 25, 25, 25, 25, 25, 25, 25, 25, 25]
+sep_dist = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+            0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
             2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
             5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-            10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-            20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+            8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
 
 s = 200  # number of steps to run the model for each time
 
-burn_in = 25  # number of steps to exclude at the beginning as collective behaviour emerges
+burn_in = 10  # number of steps to exclude at the beginning as collective behaviour emerges
 
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
