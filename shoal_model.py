@@ -107,7 +107,28 @@ class Fish(Agent):
         return separate_vector
 
     def avoid_boundaries(self):
-        return np.zeros(2)
+        """
+        Returns the new (x,y) position of the agent making sure it bounces off
+        the walls instead of looping around the space in a torus. This function
+        assumes that the self.velocity vector has been calculated in the step()
+        function. If the new x and y co-ordinates go out of bounds we flip the
+        corresponding value in the velocity vector (to bounce off the wall) and
+        recalculate the new_position variable.
+        """
+        new_position = self.pos + self.velocity * self.speed
+        new_x, new_y = new_position
+
+        # If the new position is out of bounds (min & max) on the X-axis
+        if (new_x < self.model.space.x_min) or (new_x >= self.model.space.x_max):
+            self.velocity[0] = -self.velocity[0]  # Bounce off the wall on X axis
+            new_position = self.pos + self.velocity * self.speed
+
+        # If the new position is out of bounds on the Y-axis
+        if (new_y < self.model.space.y_min) or (new_y >= self.model.space.y_max):
+            self.velocity[1] = -self.velocity[1]  # Bounce off the wall on Y axis
+            new_position = self.pos + self.velocity * self.speed
+
+        return new_position
 
     def match_velocity(self, neighbors):
         """
@@ -130,25 +151,13 @@ class Fish(Agent):
                           self.separate(neighbors) * self.separate_factor +
                           self.match_velocity(neighbors) * self.match_factor) / 2
 
-        # Make self.velocity a unit vector. There is a potential problem here though. Is it
-        # the desired outcome that the velocity vector changes if there are no neighbours?
+        # Make self.velocity a unit vector
         self.velocity /= np.linalg.norm(self.velocity)
 
-        #if self.unique_id == 0:
-        #    print(self.velocity)
+        # Get the new position and make sure it bounces off the walls
+        new_position = self.avoid_boundaries()
 
-        new_pos = self.pos + self.velocity * self.speed
-
-        # if new_pos[0] < self.model.space.x_min:
-        #     new_pos[0] = 0
-        # if new_pos[0] >= self.model.space.x_max:
-        #     new_pos[0] = 49.999
-        # if new_pos[1] < self.model.space.y_min:
-        #     new_pos[1] = 0
-        # if new_pos[1] >= self.model.space.y_max:
-        #     new_pos[1] = 49.999
-
-        self.model.space.move_agent(self, new_pos)
+        self.model.space.move_agent(self, new_position)
 
 
 class Obstruct(Agent):
@@ -234,7 +243,7 @@ class ShoalModel(Model):
             x = random.randrange(2, (self.space.x_max - 1))
             y = random.randrange(2, (self.space.y_max - 1))
             pos = np.array((x, y))
-            velocity = np.random.random(2) * 2 - 1 # [-1.0 .. 1.0, -1.0 .. 1.0]
+            velocity = np.random.random(2) * 2 - 1  # [-1.0 .. 1.0, -1.0 .. 1.0]
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
                         self.separation, **self.factors)
             self.space.place_agent(fish, pos)
