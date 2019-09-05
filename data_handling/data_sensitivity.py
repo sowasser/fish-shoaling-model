@@ -151,6 +151,6 @@ sep_data = pd.concat([run_sep_model(s, i) for i in sep_dist])
 
 # EXPORT DATA -----------------------------------------------------------------
 
-speed_data.to_csv(os.path.join(path, r"var-speed.csv"))
-vision_data.to_csv(os.path.join(path, r"var-vision.csv"))
-sep_data.to_csv(os.path.join(path, r"var-sep.csv"))
+speed_data.to_csv(os.path.join(path, r"var-speed.csv"), index=False)
+vision_data.to_csv(os.path.join(path, r"var-vision.csv"), index=False)
+sep_data.to_csv(os.path.join(path, r"var-sep.csv"), index=False)
