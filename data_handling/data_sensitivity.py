@@ -21,7 +21,6 @@ In the future, other parameters can be added & tested.
 
 from shoal_model import *
 import pandas as pd
-import itertools
 import os
 
 # Paths for exporting the data
@@ -44,21 +43,14 @@ sep_fixed = 2
 # sep_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
 
 # Defines the distribution as a set of values
-# Todo: figure out how to do this more pythonically.
-speed_dist = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-              0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-              2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-              8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
-vision_dist = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-               10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-               15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
-               25, 25, 25, 25, 25, 25, 25, 25, 25, 25]
-sep_dist = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-            0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
-            2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-            5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-            8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+speed_params = [0.1, 0.5, 2, 5, 8]  # values to repeat & run
+speed_dist = np.repeat(speed_params, 10).tolist()  # repeats above list n times
+
+vision_params = [1, 5, 10, 15, 25]
+vision_dist = np.repeat(vision_params, 10).tolist()
+
+sep_params = [0.1, 0.5, 2, 5, 8]
+sep_dist = np.repeat(sep_params, 10).tolist()
 
 s = 200  # number of steps to run the model for each time
 
