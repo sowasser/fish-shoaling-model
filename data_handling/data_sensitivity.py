@@ -21,7 +21,9 @@ In the future, other parameters can be added & tested.
 
 from shoal_model import *
 import pandas as pd
+from scipy.stats import gamma
 import os
+
 
 # Paths for exporting the data
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
@@ -34,23 +36,24 @@ speed_fixed = 2
 vision_fixed = 10
 sep_fixed = 2
 
-# Todo: figure out how to get the range we want.
+# Todo: figure out how to get the range we want. Must be non-negative!
 # Todo: figure out where that weird first column is coming from & remove it.
 
-# # Defines the distribution as a range of values
-# speed_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
-# vision_dist = np.random.lognormal(mean=1, sigma=2, size=100)
-# sep_dist = np.random.lognormal(mean=0.5, sigma=2, size=100)
+# Defines the distribution as a range of values, from a gamma distribution
+# Size is # of variables, a is where the distribution is based on.
+speed_dist = gamma.rvs(size=10, a=2)
+vision_dist = gamma.rvs(size=10, a=10)
+sep_dist = gamma.rvs(size=10, a=2)
 
-# Defines the distribution as a set of values
-speed_params = [0.1, 0.5, 2, 5, 8]  # values to repeat & run
-speed_dist = np.repeat(speed_params, 10).tolist()  # repeats above list n times
-
-vision_params = [1, 5, 10, 15, 25]
-vision_dist = np.repeat(vision_params, 10).tolist()
-
-sep_params = [0.1, 0.5, 2, 5, 8]
-sep_dist = np.repeat(sep_params, 10).tolist()
+# # Defines the distribution as a set of values
+# speed_params = [0.1, 0.5, 2, 5, 8]  # values to repeat & run
+# speed_dist = np.repeat(speed_params, 10).tolist()  # repeats above list n times
+#
+# vision_params = [1, 5, 10, 15, 25]
+# vision_dist = np.repeat(vision_params, 10).tolist()
+#
+# sep_params = [0.1, 0.5, 2, 5, 8]
+# sep_dist = np.repeat(sep_params, 10).tolist()
 
 s = 200  # number of steps to run the model for each time
 
