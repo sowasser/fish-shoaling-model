@@ -9,7 +9,7 @@ sep_dist = gamma.rvs(size=10, a=2)
 
 # Graph distributions
 plt.style.use("dark_background")
-fig = plt.figure(figsize=(6, 6))
+fig = plt.figure(figsize=(6, 9))
 
 ax1 = fig.add_subplot(3, 1, 1)
 plt.title("Speed Distribution")
@@ -21,9 +21,9 @@ ax3 = fig.add_subplot(3, 1, 3)
 plt.title("Separation Distribution")
 
 
-ax1.plot.hist(speed_dist)
-ax2.plot.hist(vision_dist)
-ax3.plot.hist(sep_dist)
+ax1.hist(speed_dist)
+ax2.hist(vision_dist)
+ax3.hist(sep_dist)
 
 plt.show()
 
