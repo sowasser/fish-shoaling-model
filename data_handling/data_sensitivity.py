@@ -9,10 +9,13 @@ Approximate Bayesian Computation, in R. The data collectors are:
     3. Shoal area: convex hull
     4. Mean distance from centroid
 
-The model is run for x steps for x number of values in a lognormal distribution
+The model is run for x steps for x number of values in a gamma distribution
 of parameter values and then the mean of each data collector per run (average
 of all steps) is calculated and added to a dataframe along with the values of
 all parameters: the one being tested, and the ones remaining fixed.
+
+The distributions and their approximate shape can be checked and visualized in
+the distributions.py file in the data_handling folder.
 
 At the moment, agent speed, vision radius, and separation distance are being
 tested in separate functions. These parameters are defined in shoal_model.py.
@@ -39,13 +42,14 @@ sep_fixed = 2
 # Todo: figure out how to get the range we want. Must be non-negative!
 # Todo: figure out where that weird first column is coming from & remove it.
 
-# Defines the distribution as a range of values, from a gamma distribution
-# Size is # of variables, a is where the distribution is based on.
-speed_dist = gamma.rvs(size=10, a=2)
-vision_dist = gamma.rvs(size=10, a=10)
-sep_dist = gamma.rvs(size=10, a=2)
+# Defines the distribution as a range of values. Size is # of variables (and
+# therefore runs of the model), a is the number that the distribution is based
+# around.
+speed_dist = gamma.rvs(size=1000, a=2)
+vision_dist = gamma.rvs(size=1000, a=10)
+sep_dist = gamma.rvs(size=1000, a=2)
 
-# # Defines the distribution as a set of values
+# Defines the distribution as a set of repeated values
 # speed_params = [0.1, 0.5, 2, 5, 8]  # values to repeat & run
 # speed_dist = np.repeat(speed_params, 10).tolist()  # repeats above list n times
 #
