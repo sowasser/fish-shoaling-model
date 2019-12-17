@@ -44,9 +44,9 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=100, a=2)
-vision_dist = gamma.rvs(size=100, a=10)
-sep_dist = gamma.rvs(size=100, a=2)
+speed_dist = gamma.rvs(size=1000, a=2)
+vision_dist = gamma.rvs(size=1000, a=10)
+sep_dist = gamma.rvs(size=1000, a=2)
 
 # Defines the distribution as a set of repeated values
 # speed_params = [0.1, 0.5, 2, 5, 8]  # values to repeat & run
@@ -74,7 +74,7 @@ def run_speed_model(steps, speed):
     all dataframes can be stacked together.
     """
     speed_parameter = []
-    model = ShoalModel(n_fish=50,
+    model = ShoalModel(n_fish=20,
                        width=50,
                        height=50,
                        speed=speed,
@@ -104,7 +104,7 @@ def run_vision_model(steps, vision):
     parameters so all dataframes can be stacked together.
     """
     vision_parameter = []
-    model = ShoalModel(n_fish=50,
+    model = ShoalModel(n_fish=20,
                        width=50,
                        height=50,
                        speed=speed_fixed,
@@ -134,7 +134,7 @@ def run_sep_model(steps, separation):
     parameters so all dataframes can be stacked together.
     """
     sep_parameter = []
-    model = ShoalModel(n_fish=50,
+    model = ShoalModel(n_fish=20,
                        width=50,
                        height=50,
                        speed=speed_fixed,
