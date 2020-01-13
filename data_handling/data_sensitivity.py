@@ -25,6 +25,7 @@ In the future, other parameters can be added & tested.
 from shoal_model import *
 import pandas as pd
 from scipy.stats import gamma
+import multiprocessing
 import os
 
 
@@ -44,9 +45,9 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=1000, a=2)
-vision_dist = gamma.rvs(size=1000, a=10)
-sep_dist = gamma.rvs(size=1000, a=2)
+speed_dist = gamma.rvs(size=10, a=2)
+vision_dist = gamma.rvs(size=10, a=10)
+sep_dist = gamma.rvs(size=10, a=2)
 
 # Defines the distribution as a set of repeated values
 # speed_params = [0.1, 0.5, 2, 5, 8]  # values to repeat & run
@@ -88,11 +89,11 @@ def run_speed_model(steps, speed):
     data["vision"] = vision_fixed  # add vision column
     data["separation"] = sep_fixed  # add separation column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
-    return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
+    print(pd.DataFrame(data_trim.mean(axis=0)).T)  # return means of all columns & transposed
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-speed_data = pd.concat([run_speed_model(s, i) for i in speed_dist])
+# speed_data = pd.concat([run_speed_model(s, i) for i in speed_dist])
 
 
 def run_vision_model(steps, vision):
@@ -122,7 +123,7 @@ def run_vision_model(steps, vision):
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-vision_data = pd.concat([run_vision_model(s, i) for i in vision_dist])
+# vision_data = pd.concat([run_vision_model(s, i) for i in vision_dist])
 
 
 def run_sep_model(steps, separation):
@@ -152,11 +153,25 @@ def run_sep_model(steps, separation):
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
-sep_data = pd.concat([run_sep_model(s, i) for i in sep_dist])
+# sep_data = pd.concat([run_sep_model(s, i) for i in sep_dist])
+
+# MULTIPROCESSING -------------------------------------------------------------
+# To speed up the process of running these models locally on a standard computer,
+# I'm working on including some mutliprocessing functionality. There are two
+# ways of doing this: "process" and "pool". Not
+if __name__ == '__main__':
+    jobs = []
+    for i in speed_dist:
+        p = multiprocessing.Process(target=run_speed_model, args=(s, i))
+        jobs.append(p)
+        p.start()
+
+    for job in jobs:
+        job.join()
 
 
 # EXPORT DATA -----------------------------------------------------------------
 
-speed_data.to_csv(os.path.join(path, r"var-speed.csv"), index=False)
-vision_data.to_csv(os.path.join(path, r"var-vision.csv"), index=False)
-sep_data.to_csv(os.path.join(path, r"var-sep.csv"), index=False)
+# speed_data.to_csv(os.path.join(path, r"var-speed.csv"), index=False)
+# vision_data.to_csv(os.path.join(path, r"var-vision.csv"), index=False)
+# sep_data.to_csv(os.path.join(path, r"var-sep.csv"), index=False)
