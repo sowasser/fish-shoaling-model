@@ -66,7 +66,7 @@ burn_in = 10  # number of steps to exclude at the beginning as collective behavi
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
 
-def run_speed_model(steps, speed):
+def run_speed_model(speed):
     """
     Runs the shoal model for a certain number of steps with agent speed varying
     while all other parameters are fixed. Returns a dataframe with the average
@@ -81,7 +81,7 @@ def run_speed_model(steps, speed):
                        speed=speed,
                        vision=vision_fixed,
                        separation=sep_fixed)
-    for step in range(steps):
+    for step in range(200):
         model.step()  # run the model for certain number of steps
         speed_parameter.append(speed)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
@@ -89,7 +89,7 @@ def run_speed_model(steps, speed):
     data["vision"] = vision_fixed  # add vision column
     data["separation"] = sep_fixed  # add separation column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
-    print(pd.DataFrame(data_trim.mean(axis=0)).T)  # return means of all columns & transposed
+    return pd.DataFrame(data_trim.mean(axis=0)).T
 
 
 # Run the model as many times as there are parameter values, for # of steps in "s"
@@ -158,16 +158,14 @@ def run_sep_model(steps, separation):
 # MULTIPROCESSING -------------------------------------------------------------
 # To speed up the process of running these models locally on a standard computer,
 # I'm working on including some mutliprocessing functionality. There are two
-# ways of doing this: "process" and "pool". Not
-if __name__ == '__main__':
-    jobs = []
-    for i in speed_dist:
-        p = multiprocessing.Process(target=run_speed_model, args=(s, i))
-        jobs.append(p)
-        p.start()
+# ways of doing this: "process" and "pool". Not fully functional yet.
+# Todo: fix output to be an accessible file, much like the model outputs above
 
-    for job in jobs:
-        job.join()
+if __name__ == '__main__':
+    p = multiprocessing.Pool(processes=len(speed_dist))
+    speed_data = p.map(run_speed_model, [i for i in speed_dist])
+    p.close()
+    print(speed_data)
 
 
 # EXPORT DATA -----------------------------------------------------------------
