@@ -26,6 +26,7 @@ from shoal_model import *
 import pandas as pd
 from scipy.stats import gamma
 import multiprocessing
+import time
 import os
 
 
@@ -45,7 +46,7 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=1000, a=2)
+speed_dist = gamma.rvs(size=50, a=2)
 vision_dist = gamma.rvs(size=10, a=10)
 sep_dist = gamma.rvs(size=10, a=2)
 
@@ -159,13 +160,15 @@ def run_sep_model(steps, separation):
 # To speed up the process of running these models locally on a standard computer,
 # I'm working on including some mutliprocessing functionality. There are two
 # ways of doing this: "process" and "pool". Not fully functional yet.
-# Todo: fix output to be an accessible file, much like the model outputs above
+# Todo: figure out why this only works when running the debugger....
 
 if __name__ == '__main__':
-    p = multiprocessing.Pool()
+    start = time.time()
+    p = multiprocessing.Pool(processes=len(speed_dist))  # does the # of processes here need to == the range below?
     speed_data = p.map(run_speed_model, [i for i in speed_dist])
     p.close()
-    speed_data = pd.concat(speed_data)
+    speed_data = pd.concat(speed_data)  # change into data format for export
+    print("Time taken = {} minutes".format((time.time() - start)/60))  # print how long it took
 
 # EXPORT DATA -----------------------------------------------------------------
 
