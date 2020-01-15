@@ -162,7 +162,7 @@ def run_sep_model(steps, separation):
 # Todo: fix output to be an accessible file, much like the model outputs above
 
 if __name__ == '__main__':
-    p = multiprocessing.Pool(processes=len(speed_dist))
+    p = multiprocessing.Pool()
     speed_data = p.map(run_speed_model, [i for i in speed_dist])
     p.close()
     speed_data = pd.concat(speed_data)
