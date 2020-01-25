@@ -30,13 +30,46 @@ The basic shoal model is broken down into the following scripts:
 
 
 ## Installation
-These installation instructions assume you are using macOS (because that's all I know how to use).
+These installation instructions assume you are using macOS or Linux with [Python 3.6](python) or newer installed.
 
-1. Clone this repository to your computer: `git clone https://github.com/sowasser/fish-shoaling-model.git`
-2. Make sure you have [Homebrew][Homebrew] installed.
-3. Make sure you have Python 3.6; currently I am running this project with Python 3.6.3.
-4. Clone [mesa][mesa] and install my requirements with [pip][pip], using the requirements.txt file.
-6. If you're using PyCharm, you'll need to add Jupyter to the Project Interpreter in order to run the Jupyter notebooks.
+1. Clone this repository to your computer:
+   
+   ```
+   git clone https://github.com/sowasser/fish-shoaling-model.git
+   ```
+   
+2. Create a virtual environment so Python dependencies will not conflict with other Python projects you may have on your machine:
+   
+   ```
+	cd fish-shoaling-model
+   python3 -m venv env
+   ```
+   
+3. Activate the virtual environment:
+   
+   ```
+   source env/bin/activate 
+   ```
+   
+4. Make sure you have the latest version of pip (Python package installer):
+   
+   ```
+   pip install --upgrade pip 
+   ```
+   
+5. Install the third party dependencies the project require:
+	
+	```
+	pip install -r requirements.txt
+	```
+	
+6. You should now be able to run the Python code in the project:
+	
+	```
+	python3 test_run.py
+	```
+	
+7. If you're using PyCharm, you'll need to add Jupyter to the Project Interpreter in order to run the Jupyter notebooks.
 
 
 [mesa]: https://github.com/projectmesa/mesa
