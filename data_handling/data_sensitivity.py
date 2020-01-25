@@ -32,6 +32,7 @@ import os
 
 # Paths for exporting the data
 path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
+# path = "/Users/user/Desktop"  # for testing
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 # SET PARAMETER & MODEL VALUES ------------------------------------------------
@@ -46,7 +47,7 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=50, a=2)
+speed_dist = gamma.rvs(size=100, a=2)
 vision_dist = gamma.rvs(size=10, a=10)
 sep_dist = gamma.rvs(size=10, a=2)
 
@@ -157,14 +158,14 @@ def run_sep_model(steps, separation):
 # sep_data = pd.concat([run_sep_model(s, i) for i in sep_dist])
 
 # MULTIPROCESSING -------------------------------------------------------------
-# To speed up the process of running these models locally on a standard computer,
-# I'm working on including some mutliprocessing functionality. There are two
-# ways of doing this: "process" and "pool". Not fully functional yet.
-# Todo: figure out why this only works when running the debugger....
+# Runs the model for as many times as is in the distribution of values above,
+# using multiple cores. Number of processes is set to 10, but can be reduced
+# if other work needs to be done on the computer that requires CPU space.
+# Also prints how long it took, for reference.
 
 if __name__ == '__main__':
     start = time.time()
-    p = multiprocessing.Pool(processes=len(speed_dist))  # does the # of processes here need to == the range below?
+    p = multiprocessing.Pool(processes=10)  # 10 processes seems to be a sweet spot
     speed_data = p.map(run_speed_model, [i for i in speed_dist])
     p.close()
     speed_data = pd.concat(speed_data)  # change into data format for export
@@ -172,6 +173,6 @@ if __name__ == '__main__':
 
 # EXPORT DATA -----------------------------------------------------------------
 
-speed_data.to_csv(os.path.join(path, r"TEST.csv"), index=False)
+speed_data.to_csv(os.path.join(path, r"var-speed.csv"), index=False)
 # vision_data.to_csv(os.path.join(path, r"var-vision.csv"), index=False)
 # sep_data.to_csv(os.path.join(path, r"var-sep.csv"), index=False)
