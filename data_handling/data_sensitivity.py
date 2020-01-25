@@ -31,8 +31,8 @@ import os
 
 
 # Paths for exporting the data
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
-# path = "/Users/user/Desktop"  # for testing
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
+path = "/Users/user/Desktop"  # for testing
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 # SET PARAMETER & MODEL VALUES ------------------------------------------------
@@ -47,7 +47,7 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=100, a=2)
+speed_dist = gamma.rvs(size=10, a=2)
 vision_dist = gamma.rvs(size=10, a=10)
 sep_dist = gamma.rvs(size=10, a=2)
 
@@ -61,7 +61,7 @@ sep_dist = gamma.rvs(size=10, a=2)
 # sep_params = [0.1, 0.5, 2, 5, 8]
 # sep_dist = np.repeat(sep_params, 10).tolist()
 
-s = 200  # number of steps to run the model for each time
+steps = 200  # number of steps to run the model for each time
 
 burn_in = 10  # number of steps to exclude at the beginning as collective behaviour emerges
 
@@ -83,7 +83,7 @@ def run_speed_model(speed):
                        speed=speed,
                        vision=vision_fixed,
                        separation=sep_fixed)
-    for step in range(200):
+    for step in range(steps):
         model.step()  # run the model for certain number of steps
         speed_parameter.append(speed)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
@@ -98,7 +98,7 @@ def run_speed_model(speed):
 # speed_data = pd.concat([run_speed_model(s, i) for i in speed_dist])
 
 
-def run_vision_model(steps, vision):
+def run_vision_model(vision):
     """
     Runs the shoal model for a certain number of steps with vision radius
     varying while all other parameters are fixed. Returns a dataframe with the
@@ -128,7 +128,7 @@ def run_vision_model(steps, vision):
 # vision_data = pd.concat([run_vision_model(s, i) for i in vision_dist])
 
 
-def run_sep_model(steps, separation):
+def run_sep_model(separation):
     """
     Runs the shoal model for a certain number of steps with separation distance
     varying while all other parameters are fixed. Returns a dataframe with the
@@ -167,12 +167,16 @@ if __name__ == '__main__':
     start = time.time()
     p = multiprocessing.Pool(processes=10)  # 10 processes seems to be a sweet spot
     speed_data = p.map(run_speed_model, [i for i in speed_dist])
+    vision_data = p.map(run_vision_model, [i for i in vision_dist])
+    sep_data = p.map(run_sep_model, [i for i in sep_dist])
     p.close()
     speed_data = pd.concat(speed_data)  # change into data format for export
+    vision_data = pd.concat(vision_data)
+    sep_data = pd.concat(sep_data)
     print("Time taken = {} minutes".format((time.time() - start)/60))  # print how long it took
 
 # EXPORT DATA -----------------------------------------------------------------
 
 speed_data.to_csv(os.path.join(path, r"var-speed.csv"), index=False)
-# vision_data.to_csv(os.path.join(path, r"var-vision.csv"), index=False)
-# sep_data.to_csv(os.path.join(path, r"var-sep.csv"), index=False)
+vision_data.to_csv(os.path.join(path, r"var-vision.csv"), index=False)
+sep_data.to_csv(os.path.join(path, r"var-sep.csv"), index=False)
