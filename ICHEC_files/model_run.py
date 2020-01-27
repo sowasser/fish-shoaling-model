@@ -16,5 +16,7 @@ for i in range(10):
 data = model.datacollector.get_model_vars_dataframe()
 # data.columns = ["polar", "nnd", "area", "centroid", "mass"]
 
+# print all columns so they output on the cluster
 pd.set_option("display.max_columns", None)
+
 print(data)
