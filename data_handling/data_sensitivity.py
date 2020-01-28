@@ -31,8 +31,8 @@ import os
 
 
 # Paths for exporting the data
-# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
-path = "/Users/user/Desktop"  # for testing
+path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
+# path = "/Users/user/Desktop"  # for testing
 # path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 # SET PARAMETER & MODEL VALUES ------------------------------------------------
@@ -47,9 +47,9 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=10, a=2)
-vision_dist = gamma.rvs(size=10, a=10)
-sep_dist = gamma.rvs(size=10, a=2)
+speed_dist = gamma.rvs(size=1000, a=2)
+vision_dist = gamma.rvs(size=1000, a=10)
+sep_dist = gamma.rvs(size=1000, a=2)
 
 # Defines the distribution as a set of repeated values
 # speed_params = [0.1, 0.5, 2, 5, 8]  # values to repeat & run
