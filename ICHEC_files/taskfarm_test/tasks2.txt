@@ -1,3 +1,0 @@
-python3 ../../ichec_run.py > ../output/22feb2020/task1_output.txt
-python3 ../../ichec_run.py > ../output/22feb2020/task2_output.txt
-python3 ../../ichec_run.py > ../output/22feb2020/task3_output.txt

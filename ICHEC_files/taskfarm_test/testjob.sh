@@ -5,7 +5,7 @@
 # Charge job to myaccount
 #SBATCH -A ngear014c
 # Write stdout+stderr to file
-#SBATCH -o output.txt
+#SBATCH -o output/output.txt
 # Mail me on job start & end
 #SBATCH --mail-user=ichec@sowasser.com
 #SBATCH --mail-type=BEGIN,END
