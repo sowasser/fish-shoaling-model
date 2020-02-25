@@ -9,7 +9,12 @@ Basic script for running the model on the Irish High End Computing Cluster
 from shoal_model import *
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel()
+model = ShoalModel(n_fish=20,
+                   width=50,
+                   height=50,
+                   speed=2,
+                   vision=10,
+                   separation=2)
 for i in range(10):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
