@@ -54,7 +54,11 @@ def run_sep_model(separation):
     return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
 
-# Run the model as many times as there are parameter values, for # of steps in "s"
+# Run the model as many times as there are parameter values
 sep_data = pd.concat([run_sep_model(i) for i in sep_dist])
+
+# Re-name columns so all data will print & index with unique values for R.
 sep_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
+sep_data.index = list(range(len(sep_dist)))  # sequential numbers following # of runs
+
 print(sep_data)  # printing makes the data accessible from the cluster.

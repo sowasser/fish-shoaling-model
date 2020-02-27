@@ -56,5 +56,9 @@ def run_vision_model(vision):
 
 # Run the model as many times as there are parameter values
 vision_data = pd.concat([run_vision_model(i) for i in vision_dist])
+
+# Re-name columns so all data will print & index with unique values for R.
 vision_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
+vision_data.index = list(range(len(vision_dist)))  # sequential numbers following # of runs
+
 print(vision_data)  # printing makes the data accessible from the cluster.

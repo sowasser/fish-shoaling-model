@@ -56,5 +56,9 @@ def run_speed_model(speed):
 
 # Run the model as many times as there are parameter values
 speed_data = pd.concat([run_speed_model(i) for i in speed_dist])
+
+# Re-name columns so all data will print & index with unique values for R.
 speed_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
+speed_data.index = list(range(len(speed_dist)))  # sequential numbers following # of runs
+
 print(speed_data)  # printing makes the data accessible from the cluster.
