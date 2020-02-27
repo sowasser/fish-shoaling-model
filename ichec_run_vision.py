@@ -20,7 +20,7 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-vision_dist = gamma.rvs(size=100, a=10)
+vision_dist = gamma.rvs(size=10, a=10)
 
 steps = 200  # number of steps to run the model for each time
 
@@ -41,7 +41,7 @@ def run_vision_model(vision):
                        width=50,
                        height=50,
                        speed=speed_fixed,
-                       vision=vision_dist,
+                       vision=vision,
                        separation=sep_fixed)
     for step in range(steps):
         model.step()  # run the model for certain number of steps
@@ -56,4 +56,5 @@ def run_vision_model(vision):
 
 # Run the model as many times as there are parameter values
 vision_data = pd.concat([run_vision_model(i) for i in vision_dist])
+vision_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
 print(vision_data)  # printing makes the data accessible from the cluster.

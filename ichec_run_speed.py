@@ -20,9 +20,9 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=100, a=2)
+speed_dist = gamma.rvs(size=10, a=2)
 
-steps = 200  # number of steps to run the model for each time
+steps = 20  # number of steps to run the model for each time
 
 burn_in = 10  # number of steps to exclude at the beginning as collective behaviour emerges
 
@@ -40,7 +40,7 @@ def run_speed_model(speed):
     model = ShoalModel(n_fish=20,
                        width=50,
                        height=50,
-                       speed=speed_dist,
+                       speed=speed,
                        vision=vision_fixed,
                        separation=sep_fixed)
     for step in range(steps):
@@ -56,4 +56,5 @@ def run_speed_model(speed):
 
 # Run the model as many times as there are parameter values
 speed_data = pd.concat([run_speed_model(i) for i in speed_dist])
+speed_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
 print(speed_data)  # printing makes the data accessible from the cluster.
