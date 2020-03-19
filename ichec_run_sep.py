@@ -60,7 +60,7 @@ sep_data = pd.concat([run_sep_model(i) for i in sep_dist])
 # Re-name columns so all data will print & index with unique values for R.
 sep_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
 sep_data.index = list(range(len(sep_dist)))  # sequential numbers following # of runs
-sep_data.set_option("display.max_rows", None)  # display all rows
-sep_data.set_option("display.max_columns", None)  # display all columns
+pd.set_option("display.max_rows", None)  # display all rows
+pd.set_option("display.max_columns", None)  # display all columns
 
 print(sep_data)  # printing makes the data accessible from the cluster.
