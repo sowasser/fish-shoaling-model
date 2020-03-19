@@ -20,7 +20,7 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = gamma.rvs(size=10, a=2)
+speed_dist = gamma.rvs(size=1000, a=2)
 
 steps = 200  # number of steps to run the model for each time
 
