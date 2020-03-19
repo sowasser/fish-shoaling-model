@@ -60,5 +60,7 @@ speed_data = pd.concat([run_speed_model(i) for i in speed_dist])
 # Re-name columns so all data will print & index with unique values for R.
 speed_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
 speed_data.index = list(range(len(speed_dist)))  # sequential numbers following # of runs
+speed_data.set_option("display.max_rows", None)  # display all rows
+speed_data.set_option("display.max_columns", None)  # display all columns
 
 print(speed_data)  # printing makes the data accessible from the cluster.
