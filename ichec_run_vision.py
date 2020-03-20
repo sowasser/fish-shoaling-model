@@ -59,7 +59,7 @@ vision_data = pd.concat([run_vision_model(i) for i in vision_dist])
 
 # Re-name columns so all data will print & index with unique values for R.
 vision_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
-vision_data.index = list(range(len(vision_dist)))  # sequential numbers following # of runs
+# vision_data.index = list(range(len(vision_dist)))  # sequential numbers following # of runs
 pd.set_option("display.max_rows", None)  # display all rows
 pd.set_option("display.max_columns", None)  # display all columns
 
