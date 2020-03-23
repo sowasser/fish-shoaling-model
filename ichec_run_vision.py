@@ -20,7 +20,7 @@ sep_fixed = 2
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-vision_dist = gamma.rvs(size=100, a=10)
+vision_dist = np.random.lognormal(mean=10, sigma=1, size=10000)
 
 steps = 200  # number of steps to run the model for each time
 
@@ -59,7 +59,7 @@ vision_data = pd.concat([run_vision_model(i) for i in vision_dist])
 
 # Re-name columns so all data will print & index with unique values for R.
 vision_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
-# vision_data.index = list(range(len(vision_dist)))  # sequential numbers following # of runs
+vision_data.index = list(range(len(vision_dist)))  # sequential numbers following # of runs
 pd.set_option("display.max_rows", None)  # display all rows
 pd.set_option("display.max_columns", None)  # display all columns
 

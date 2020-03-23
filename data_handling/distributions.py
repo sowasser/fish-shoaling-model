@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-speed_dist = gamma.rvs(size=1000, a=2)
-vision_dist = gamma.rvs(size=1000, a=10)
-sep_dist = gamma.rvs(size=1000, a=2)
+# speed_dist = gamma.rvs(size=1000, a=2)
+# vision_dist = gamma.rvs(size=1000, a=10)
+# sep_dist = gamma.rvs(size=1000, a=2)
 
-# speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=100)
-# vision_dist = np.random.lognormal(mean=0.10, sigma=1, size=100)
-# sep_dist = np.random.lognormal(mean=0.2, sigma=1, size=100)
+speed_dist = np.random.lognormal(mean=2, sigma=1, size=10000)
+vision_dist = np.random.lognormal(mean=10, sigma=1, size=10000)
+sep_dist = np.random.lognormal(mean=2, sigma=1, size=10000)
 
 # Graph distributions
 plt.style.use("dark_background")
