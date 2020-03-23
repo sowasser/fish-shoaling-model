@@ -13,16 +13,16 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 
 # Write a line running the scripts varying each parameter (speed, vision,
 # separation) i times
-for i in range(100):
-    file.write("python3 ../../ichec_run_speed.py > ../output/20Mar2020/speed_output"
+for i in range(1000):
+    file.write("python3 ../../ichec_run_speed.py > ../output/23Mar2020/speed_output"
                + str(i) + ".txt \n")
 
-for i in range(100):
-    file.write("python3 ../../ichec_run_vision.py > ../output/20Mar2020/vision_output"
+for i in range(1000):
+    file.write("python3 ../../ichec_run_vision.py > ../output/23Mar2020/vision_output"
                + str(i) + ".txt \n")
 
-for i in range(100):
-    file.write("python3 ../../ichec_run_sep.py > ../output/20Mar2020/sep_output"
+for i in range(1000):
+    file.write("python3 ../../ichec_run_sep.py > ../output/23Mar2020/sep_output"
                + str(i) + ".txt \n")
 
 file.close()
