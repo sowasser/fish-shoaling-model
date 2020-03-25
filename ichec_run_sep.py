@@ -20,7 +20,7 @@ vision_fixed = 10
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-sep_dist = gamma.rvs(size=400, a=2)
+sep_dist = gamma.rvs(size=300, a=2)
 
 steps = 200  # number of steps to run the model for each time
 
