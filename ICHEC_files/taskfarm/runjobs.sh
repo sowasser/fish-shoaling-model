@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH -p ProdQ
 #SBATCH -N 1
-#SBATCH -t 0:05:00
+#SBATCH -t 1:00:00
 # Charge job to myaccount
 #SBATCH -A ngear014c
 # Write stdout+stderr to file
@@ -14,5 +14,5 @@
 cd $SLURM_SUBMIT_DIR
 
 module load taskfarm
-export TASKFARM_GROUP=20
+export TASKFARM_GROUP=100
 taskfarm modelruns.txt

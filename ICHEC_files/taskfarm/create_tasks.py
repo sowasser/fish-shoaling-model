@@ -21,7 +21,7 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #     file.write("python3 ../../ichec_run_vision.py > ../output/25Mar2020/vision_output"
 #                + str(i) + ".txt \n")
 
-for i in range(1000):
+for i in range(10000):
     file.write("python3 ../../ichec_run_sep.py > ../output/27Mar2020/sep_output"
                + str(i) + ".txt \n")
 
