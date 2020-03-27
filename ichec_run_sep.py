@@ -20,7 +20,7 @@ vision_fixed = 10
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-sep_dist = gamma.rvs(size=300, a=2)
+sep_dist = [2]
 
 steps = 200  # number of steps to run the model for each time
 
@@ -59,8 +59,6 @@ sep_data = pd.concat([run_sep_model(i) for i in sep_dist])
 
 # Re-name columns so all data will print & index with unique values for R.
 sep_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
-sep_data.index = list(range(len(sep_dist)))  # sequential numbers following # of runs
 pd.set_option("display.max_rows", None)  # display all rows
-pd.set_option("display.max_columns", None)  # display all columns
 
 print(sep_data)  # printing makes the data accessible from the cluster.
