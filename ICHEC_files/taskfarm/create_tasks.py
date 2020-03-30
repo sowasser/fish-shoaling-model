@@ -1,28 +1,30 @@
 """
 Script for generating the task list to run the taskfarm on the ICHEC cluster.
-The tasks are run based on a .txt file where each run is a task that has its
-own data output.
+The tasks are run based on a .txt file where each run is a task that passes in
+a unique value for the the prior that is varying in that script (speed, vision
+or separation) and has its own data output.
 """
 
+from scipy.stats import gamma
 import os
+
+# Prior distributions
+speed_dist = gamma.rvs(size=10000, a=2)
+vision_dist = gamma.rvs(size=10000, a=10)
+sep_dist = gamma.rvs(size=10000, a=2)
+
+# Same length as priors; for unique names for the output files
+names = range(10000)
 
 # path = "/Users/user/Desktop/Local/Mackerel/fish-shoaling-model/ICHEC_files/taskfarm"  # desktop
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/fish-shoaling-model/ICHEC_files/taskfarm"  # laptop
 
+
+# Write files with values from distributions above & unique output names
+
 file = open(os.path.join(path, r"modelruns.txt"), "w")
 
-# Write a line running the scripts varying each parameter (speed, vision,
-# separation) i times
-# for i in range(200, 300):
-#     file.write("python3 ../../ichec_run_speed.py > ../output/25Mar2020/speed_output"
-#                + str(i) + ".txt \n")
-#
-# for i in range(200, 300):
-#     file.write("python3 ../../ichec_run_vision.py > ../output/25Mar2020/vision_output"
-#                + str(i) + ".txt \n")
-
-for i in range(10000):
-    file.write("python3 ../../ichec_run_sep.py > ../output/27Mar2020/sep_output"
-               + str(i) + ".txt \n")
-
+[file.write("python3 ../../ichec_run_sep.py " + str(i)
+            + " > ../output/30Mar2020/sep_output" + str(j)  # TODO: make sure date is correct
+            + ".txt \n") for i, j in zip(sep_dist, names)]
 file.close()
