@@ -7,14 +7,11 @@ a value (prior) for separation is passed in from a defined gamma distribution
 
 from shoal_model import *
 import pandas as pd
-import getopt
 import sys
 
 # Fixed values for non-tested parameters
 speed_fixed = 2
 vision_fixed = 10
-
-sep = float(sys.argv[1])
 
 
 def run_sep_model(prior):
@@ -25,15 +22,14 @@ def run_sep_model(prior):
     with the parameter values for that run, including the varying & fixed
     parameters so all dataframes can be stacked together.
     """
-    sep_parameter = []
     model = ShoalModel(n_fish=20,
                        width=50,
                        height=50,
                        speed=speed_fixed,
                        vision=vision_fixed,
                        separation=prior)
-    for step in range(20):  # number of steps to run the model for
-        model.step()  # run the model for certain number of steps
+    for step in range(200):  # number of steps to run the model for
+        model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
     data["speed"] = speed_fixed  # add speed value column
     data["vision"] = vision_fixed  # add vision column
@@ -47,5 +43,6 @@ sep_data = run_sep_model(float(sys.argv[1]))
 
 # Re-name columns so all data will print & index with unique values for R.
 sep_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
+pd.set_option("display.max_columns", None)  # display all columns
 
 print(sep_data)  # printing makes the data accessible from the cluster.
