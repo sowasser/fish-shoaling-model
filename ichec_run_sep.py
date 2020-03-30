@@ -7,11 +7,14 @@ a value (prior) for separation is passed in from a defined gamma distribution
 
 from shoal_model import *
 import pandas as pd
+import getopt
 import sys
 
 # Fixed values for non-tested parameters
 speed_fixed = 2
 vision_fixed = 10
+
+sep = float(sys.argv[1])
 
 
 def run_sep_model(prior):
@@ -29,7 +32,7 @@ def run_sep_model(prior):
                        speed=speed_fixed,
                        vision=vision_fixed,
                        separation=prior)
-    for step in range(200):  # number of steps to run the model for
+    for step in range(20):  # number of steps to run the model for
         model.step()  # run the model for certain number of steps
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
     data["speed"] = speed_fixed  # add speed value column
@@ -39,8 +42,8 @@ def run_sep_model(prior):
     return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transpose
 
 
-# Run the model with value passed in from prior called in create_tasks.py
-sep_data = run_sep_model(sys.argv[1])
+# Run model with prior called in create_tasks.py, as a float
+sep_data = run_sep_model(float(sys.argv[1]))
 
 # Re-name columns so all data will print & index with unique values for R.
 sep_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
