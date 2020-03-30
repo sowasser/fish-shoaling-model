@@ -21,10 +21,18 @@ path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/fish-shoaling-model/IC
 
 
 # Write files with values from distributions above & unique output names
-
 file = open(os.path.join(path, r"modelruns.txt"), "w")
+
+[file.write("python3 ../../ichec_run_speed.py " + str(i)
+            + " > ../output/30Mar2020/speed_output" + str(j)  # TODO: make sure date is correct
+            + ".txt \n") for i, j in zip(speed_dist, names)]
+
+[file.write("python3 ../../ichec_run_vision.py " + str(i)
+            + " > ../output/30Mar2020/vision_output" + str(j)  # TODO: make sure date is correct
+            + ".txt \n") for i, j in zip(vision_dist, names)]
 
 [file.write("python3 ../../ichec_run_sep.py " + str(i)
             + " > ../output/30Mar2020/sep_output" + str(j)  # TODO: make sure date is correct
             + ".txt \n") for i, j in zip(sep_dist, names)]
+
 file.close()
