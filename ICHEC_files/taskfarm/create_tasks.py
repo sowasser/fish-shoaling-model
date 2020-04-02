@@ -14,7 +14,7 @@ import os
 # vision_dist = gamma.rvs(size=10000, a=10)
 # sep_dist = gamma.rvs(size=10000, a=2)
 
-speed_dist = np.random.lognormal(mean=2, sigma=1, size=1000)
+speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
 vision_dist = np.random.lognormal(mean=1, sigma=1, size=1000)
 sep_dist = np.random.lognormal(mean=2, sigma=1, size=1000)
 
