@@ -31,18 +31,30 @@ def run_vision_model(prior):
     for step in range(200):  # number of steps to run the model for
         model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
-    data["speed"] = speed_fixed  # add speed value column
-    data["vision"] = prior  # add vision column
-    data["separation"] = sep_fixed  # add separation column
     data_trim = data.iloc[10:, ]  # remove some # of early runs
-    return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transpose
+    # Condense data collectors into summary stats
+    min = data_trim.min(axis=0)
+    max = data_trim.max(axis=0)
+    mean = data_trim.mean(axis=0)
+    std = data_trim.std(axis=0)
+    all_data = pd.concat([min, max, mean, std], axis=0)
+    all_data["speed"] = speed_fixed  # add speed value column
+    all_data["vision"] = prior  # add vision columnm
+    all_data["separation"] = sep_fixed  # add separation column
+    return pd.DataFrame(all_data).T
 
 
 # Run the model as many times as there are parameter values
 vision_data = run_vision_model(float(sys.argv[1]))
 
 # Re-name columns so all data will print & index with unique values for R.
-vision_data.columns = ["polar", "nnd", "area", "cent", "speed", "vision", "sep"]
+vision_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",
+                       "cent_max", "nnd_max", "polar_max", "area_max",
+                       "cent_mean", "nnd_mean", "polar_mean", "area_mean",
+                       "cent_std", "nnd_std", "polar_std", "area_std",
+                       "speed", "vision", "sep"]
+
 pd.set_option("display.max_columns", None)  # display all columns
+pd.set_option("display.width", 1000)  # stop print from splitting columns on to new lines
 
 print(vision_data)  # printing makes the data accessible from the cluster.
