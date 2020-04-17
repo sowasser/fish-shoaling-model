@@ -1,300 +1,500 @@
-python3 ../../ichec_run_speed.py 4.8057546912 > ../output/16Apr2020/speed_output0.txt 
-python3 ../../ichec_run_speed.py 2.69422917751 > ../output/16Apr2020/speed_output1.txt 
-python3 ../../ichec_run_speed.py 1.77478247242 > ../output/16Apr2020/speed_output2.txt 
-python3 ../../ichec_run_speed.py 0.336068438234 > ../output/16Apr2020/speed_output3.txt 
-python3 ../../ichec_run_speed.py 1.87767755802 > ../output/16Apr2020/speed_output4.txt 
-python3 ../../ichec_run_speed.py 1.45727078055 > ../output/16Apr2020/speed_output5.txt 
-python3 ../../ichec_run_speed.py 0.991113599423 > ../output/16Apr2020/speed_output6.txt 
-python3 ../../ichec_run_speed.py 0.774781158824 > ../output/16Apr2020/speed_output7.txt 
-python3 ../../ichec_run_speed.py 1.48456560866 > ../output/16Apr2020/speed_output8.txt 
-python3 ../../ichec_run_speed.py 2.0519826979 > ../output/16Apr2020/speed_output9.txt 
-python3 ../../ichec_run_speed.py 2.62190469447 > ../output/16Apr2020/speed_output10.txt 
-python3 ../../ichec_run_speed.py 2.01284357166 > ../output/16Apr2020/speed_output11.txt 
-python3 ../../ichec_run_speed.py 4.05657883025 > ../output/16Apr2020/speed_output12.txt 
-python3 ../../ichec_run_speed.py 1.79355812699 > ../output/16Apr2020/speed_output13.txt 
-python3 ../../ichec_run_speed.py 1.40561240028 > ../output/16Apr2020/speed_output14.txt 
-python3 ../../ichec_run_speed.py 1.25899804567 > ../output/16Apr2020/speed_output15.txt 
-python3 ../../ichec_run_speed.py 3.10134587922 > ../output/16Apr2020/speed_output16.txt 
-python3 ../../ichec_run_speed.py 0.994171003793 > ../output/16Apr2020/speed_output17.txt 
-python3 ../../ichec_run_speed.py 0.843738490702 > ../output/16Apr2020/speed_output18.txt 
-python3 ../../ichec_run_speed.py 3.7280018555 > ../output/16Apr2020/speed_output19.txt 
-python3 ../../ichec_run_speed.py 2.61332213963 > ../output/16Apr2020/speed_output20.txt 
-python3 ../../ichec_run_speed.py 2.125712057 > ../output/16Apr2020/speed_output21.txt 
-python3 ../../ichec_run_speed.py 1.51983152241 > ../output/16Apr2020/speed_output22.txt 
-python3 ../../ichec_run_speed.py 0.360834980337 > ../output/16Apr2020/speed_output23.txt 
-python3 ../../ichec_run_speed.py 1.30103560978 > ../output/16Apr2020/speed_output24.txt 
-python3 ../../ichec_run_speed.py 1.83264017503 > ../output/16Apr2020/speed_output25.txt 
-python3 ../../ichec_run_speed.py 2.97488087079 > ../output/16Apr2020/speed_output26.txt 
-python3 ../../ichec_run_speed.py 1.4217475234 > ../output/16Apr2020/speed_output27.txt 
-python3 ../../ichec_run_speed.py 2.06042234186 > ../output/16Apr2020/speed_output28.txt 
-python3 ../../ichec_run_speed.py 2.95414669366 > ../output/16Apr2020/speed_output29.txt 
-python3 ../../ichec_run_speed.py 1.12880523907 > ../output/16Apr2020/speed_output30.txt 
-python3 ../../ichec_run_speed.py 0.560821946821 > ../output/16Apr2020/speed_output31.txt 
-python3 ../../ichec_run_speed.py 1.85777632204 > ../output/16Apr2020/speed_output32.txt 
-python3 ../../ichec_run_speed.py 6.69910845876 > ../output/16Apr2020/speed_output33.txt 
-python3 ../../ichec_run_speed.py 2.33706258132 > ../output/16Apr2020/speed_output34.txt 
-python3 ../../ichec_run_speed.py 0.63344782312 > ../output/16Apr2020/speed_output35.txt 
-python3 ../../ichec_run_speed.py 2.51050297954 > ../output/16Apr2020/speed_output36.txt 
-python3 ../../ichec_run_speed.py 2.93845386665 > ../output/16Apr2020/speed_output37.txt 
-python3 ../../ichec_run_speed.py 2.29365197955 > ../output/16Apr2020/speed_output38.txt 
-python3 ../../ichec_run_speed.py 1.348570027 > ../output/16Apr2020/speed_output39.txt 
-python3 ../../ichec_run_speed.py 6.59682293478 > ../output/16Apr2020/speed_output40.txt 
-python3 ../../ichec_run_speed.py 0.850560354928 > ../output/16Apr2020/speed_output41.txt 
-python3 ../../ichec_run_speed.py 1.2485282818 > ../output/16Apr2020/speed_output42.txt 
-python3 ../../ichec_run_speed.py 1.73367953431 > ../output/16Apr2020/speed_output43.txt 
-python3 ../../ichec_run_speed.py 2.9259263943 > ../output/16Apr2020/speed_output44.txt 
-python3 ../../ichec_run_speed.py 0.459820859218 > ../output/16Apr2020/speed_output45.txt 
-python3 ../../ichec_run_speed.py 0.761737365694 > ../output/16Apr2020/speed_output46.txt 
-python3 ../../ichec_run_speed.py 1.60235244281 > ../output/16Apr2020/speed_output47.txt 
-python3 ../../ichec_run_speed.py 0.788934753296 > ../output/16Apr2020/speed_output48.txt 
-python3 ../../ichec_run_speed.py 2.53222635001 > ../output/16Apr2020/speed_output49.txt 
-python3 ../../ichec_run_speed.py 0.114660169953 > ../output/16Apr2020/speed_output50.txt 
-python3 ../../ichec_run_speed.py 2.72409626895 > ../output/16Apr2020/speed_output51.txt 
-python3 ../../ichec_run_speed.py 2.08485025193 > ../output/16Apr2020/speed_output52.txt 
-python3 ../../ichec_run_speed.py 2.17988023336 > ../output/16Apr2020/speed_output53.txt 
-python3 ../../ichec_run_speed.py 1.40531945067 > ../output/16Apr2020/speed_output54.txt 
-python3 ../../ichec_run_speed.py 2.49765434586 > ../output/16Apr2020/speed_output55.txt 
-python3 ../../ichec_run_speed.py 0.450276186665 > ../output/16Apr2020/speed_output56.txt 
-python3 ../../ichec_run_speed.py 0.940161710545 > ../output/16Apr2020/speed_output57.txt 
-python3 ../../ichec_run_speed.py 2.69119357973 > ../output/16Apr2020/speed_output58.txt 
-python3 ../../ichec_run_speed.py 1.76303522194 > ../output/16Apr2020/speed_output59.txt 
-python3 ../../ichec_run_speed.py 1.07027727902 > ../output/16Apr2020/speed_output60.txt 
-python3 ../../ichec_run_speed.py 3.04497435455 > ../output/16Apr2020/speed_output61.txt 
-python3 ../../ichec_run_speed.py 0.827123330236 > ../output/16Apr2020/speed_output62.txt 
-python3 ../../ichec_run_speed.py 0.949191383621 > ../output/16Apr2020/speed_output63.txt 
-python3 ../../ichec_run_speed.py 0.882597607088 > ../output/16Apr2020/speed_output64.txt 
-python3 ../../ichec_run_speed.py 0.825966536321 > ../output/16Apr2020/speed_output65.txt 
-python3 ../../ichec_run_speed.py 4.08386250791 > ../output/16Apr2020/speed_output66.txt 
-python3 ../../ichec_run_speed.py 7.00352065029 > ../output/16Apr2020/speed_output67.txt 
-python3 ../../ichec_run_speed.py 0.335225548182 > ../output/16Apr2020/speed_output68.txt 
-python3 ../../ichec_run_speed.py 0.312341076665 > ../output/16Apr2020/speed_output69.txt 
-python3 ../../ichec_run_speed.py 1.20241677344 > ../output/16Apr2020/speed_output70.txt 
-python3 ../../ichec_run_speed.py 2.22368061506 > ../output/16Apr2020/speed_output71.txt 
-python3 ../../ichec_run_speed.py 0.47277301712 > ../output/16Apr2020/speed_output72.txt 
-python3 ../../ichec_run_speed.py 3.99515731203 > ../output/16Apr2020/speed_output73.txt 
-python3 ../../ichec_run_speed.py 1.38565512324 > ../output/16Apr2020/speed_output74.txt 
-python3 ../../ichec_run_speed.py 3.75036483912 > ../output/16Apr2020/speed_output75.txt 
-python3 ../../ichec_run_speed.py 1.16589821659 > ../output/16Apr2020/speed_output76.txt 
-python3 ../../ichec_run_speed.py 2.64990281623 > ../output/16Apr2020/speed_output77.txt 
-python3 ../../ichec_run_speed.py 3.05471866566 > ../output/16Apr2020/speed_output78.txt 
-python3 ../../ichec_run_speed.py 2.2945027612 > ../output/16Apr2020/speed_output79.txt 
-python3 ../../ichec_run_speed.py 1.21887292608 > ../output/16Apr2020/speed_output80.txt 
-python3 ../../ichec_run_speed.py 3.28474273041 > ../output/16Apr2020/speed_output81.txt 
-python3 ../../ichec_run_speed.py 2.7211324037 > ../output/16Apr2020/speed_output82.txt 
-python3 ../../ichec_run_speed.py 3.09504727841 > ../output/16Apr2020/speed_output83.txt 
-python3 ../../ichec_run_speed.py 0.991569672644 > ../output/16Apr2020/speed_output84.txt 
-python3 ../../ichec_run_speed.py 2.37998204285 > ../output/16Apr2020/speed_output85.txt 
-python3 ../../ichec_run_speed.py 0.509629346312 > ../output/16Apr2020/speed_output86.txt 
-python3 ../../ichec_run_speed.py 1.16456349084 > ../output/16Apr2020/speed_output87.txt 
-python3 ../../ichec_run_speed.py 0.148319880464 > ../output/16Apr2020/speed_output88.txt 
-python3 ../../ichec_run_speed.py 2.42734805941 > ../output/16Apr2020/speed_output89.txt 
-python3 ../../ichec_run_speed.py 0.354854535667 > ../output/16Apr2020/speed_output90.txt 
-python3 ../../ichec_run_speed.py 2.25656584897 > ../output/16Apr2020/speed_output91.txt 
-python3 ../../ichec_run_speed.py 0.483348045789 > ../output/16Apr2020/speed_output92.txt 
-python3 ../../ichec_run_speed.py 1.7434608725 > ../output/16Apr2020/speed_output93.txt 
-python3 ../../ichec_run_speed.py 2.47697932554 > ../output/16Apr2020/speed_output94.txt 
-python3 ../../ichec_run_speed.py 0.305153606432 > ../output/16Apr2020/speed_output95.txt 
-python3 ../../ichec_run_speed.py 0.894918488072 > ../output/16Apr2020/speed_output96.txt 
-python3 ../../ichec_run_speed.py 3.12591607538 > ../output/16Apr2020/speed_output97.txt 
-python3 ../../ichec_run_speed.py 0.632550883088 > ../output/16Apr2020/speed_output98.txt 
-python3 ../../ichec_run_speed.py 0.546828424522 > ../output/16Apr2020/speed_output99.txt 
-python3 ../../ichec_run_vision.py 3.021479785 > ../output/16Apr2020/vision_output0.txt 
-python3 ../../ichec_run_vision.py 6.80011194891 > ../output/16Apr2020/vision_output1.txt 
-python3 ../../ichec_run_vision.py 13.6067231097 > ../output/16Apr2020/vision_output2.txt 
-python3 ../../ichec_run_vision.py 6.14793433449 > ../output/16Apr2020/vision_output3.txt 
-python3 ../../ichec_run_vision.py 9.99630366215 > ../output/16Apr2020/vision_output4.txt 
-python3 ../../ichec_run_vision.py 8.17968475581 > ../output/16Apr2020/vision_output5.txt 
-python3 ../../ichec_run_vision.py 18.0227001373 > ../output/16Apr2020/vision_output6.txt 
-python3 ../../ichec_run_vision.py 10.83885695 > ../output/16Apr2020/vision_output7.txt 
-python3 ../../ichec_run_vision.py 6.57526439842 > ../output/16Apr2020/vision_output8.txt 
-python3 ../../ichec_run_vision.py 8.14947209296 > ../output/16Apr2020/vision_output9.txt 
-python3 ../../ichec_run_vision.py 14.2800191039 > ../output/16Apr2020/vision_output10.txt 
-python3 ../../ichec_run_vision.py 8.85944470279 > ../output/16Apr2020/vision_output11.txt 
-python3 ../../ichec_run_vision.py 6.58439200504 > ../output/16Apr2020/vision_output12.txt 
-python3 ../../ichec_run_vision.py 12.3614192713 > ../output/16Apr2020/vision_output13.txt 
-python3 ../../ichec_run_vision.py 6.97117694996 > ../output/16Apr2020/vision_output14.txt 
-python3 ../../ichec_run_vision.py 9.78974068278 > ../output/16Apr2020/vision_output15.txt 
-python3 ../../ichec_run_vision.py 8.22855076439 > ../output/16Apr2020/vision_output16.txt 
-python3 ../../ichec_run_vision.py 7.31921884492 > ../output/16Apr2020/vision_output17.txt 
-python3 ../../ichec_run_vision.py 11.0829999247 > ../output/16Apr2020/vision_output18.txt 
-python3 ../../ichec_run_vision.py 13.049368511 > ../output/16Apr2020/vision_output19.txt 
-python3 ../../ichec_run_vision.py 4.94180905466 > ../output/16Apr2020/vision_output20.txt 
-python3 ../../ichec_run_vision.py 9.11330701496 > ../output/16Apr2020/vision_output21.txt 
-python3 ../../ichec_run_vision.py 9.86496934859 > ../output/16Apr2020/vision_output22.txt 
-python3 ../../ichec_run_vision.py 8.45475666729 > ../output/16Apr2020/vision_output23.txt 
-python3 ../../ichec_run_vision.py 5.03753070475 > ../output/16Apr2020/vision_output24.txt 
-python3 ../../ichec_run_vision.py 10.3494068846 > ../output/16Apr2020/vision_output25.txt 
-python3 ../../ichec_run_vision.py 8.63318952402 > ../output/16Apr2020/vision_output26.txt 
-python3 ../../ichec_run_vision.py 8.81023476017 > ../output/16Apr2020/vision_output27.txt 
-python3 ../../ichec_run_vision.py 9.99900207569 > ../output/16Apr2020/vision_output28.txt 
-python3 ../../ichec_run_vision.py 7.1037226551 > ../output/16Apr2020/vision_output29.txt 
-python3 ../../ichec_run_vision.py 7.83181963805 > ../output/16Apr2020/vision_output30.txt 
-python3 ../../ichec_run_vision.py 11.0706464695 > ../output/16Apr2020/vision_output31.txt 
-python3 ../../ichec_run_vision.py 9.10472910646 > ../output/16Apr2020/vision_output32.txt 
-python3 ../../ichec_run_vision.py 11.7137647891 > ../output/16Apr2020/vision_output33.txt 
-python3 ../../ichec_run_vision.py 9.18145324144 > ../output/16Apr2020/vision_output34.txt 
-python3 ../../ichec_run_vision.py 7.54121064021 > ../output/16Apr2020/vision_output35.txt 
-python3 ../../ichec_run_vision.py 10.1394524782 > ../output/16Apr2020/vision_output36.txt 
-python3 ../../ichec_run_vision.py 11.5222522588 > ../output/16Apr2020/vision_output37.txt 
-python3 ../../ichec_run_vision.py 4.95605472382 > ../output/16Apr2020/vision_output38.txt 
-python3 ../../ichec_run_vision.py 11.3359016775 > ../output/16Apr2020/vision_output39.txt 
-python3 ../../ichec_run_vision.py 7.27734387526 > ../output/16Apr2020/vision_output40.txt 
-python3 ../../ichec_run_vision.py 11.680090563 > ../output/16Apr2020/vision_output41.txt 
-python3 ../../ichec_run_vision.py 13.0035497702 > ../output/16Apr2020/vision_output42.txt 
-python3 ../../ichec_run_vision.py 6.96395329592 > ../output/16Apr2020/vision_output43.txt 
-python3 ../../ichec_run_vision.py 7.6610861302 > ../output/16Apr2020/vision_output44.txt 
-python3 ../../ichec_run_vision.py 9.26064482077 > ../output/16Apr2020/vision_output45.txt 
-python3 ../../ichec_run_vision.py 9.51794678869 > ../output/16Apr2020/vision_output46.txt 
-python3 ../../ichec_run_vision.py 11.6793030185 > ../output/16Apr2020/vision_output47.txt 
-python3 ../../ichec_run_vision.py 10.3006035856 > ../output/16Apr2020/vision_output48.txt 
-python3 ../../ichec_run_vision.py 8.78395936239 > ../output/16Apr2020/vision_output49.txt 
-python3 ../../ichec_run_vision.py 7.03510643392 > ../output/16Apr2020/vision_output50.txt 
-python3 ../../ichec_run_vision.py 6.68462898006 > ../output/16Apr2020/vision_output51.txt 
-python3 ../../ichec_run_vision.py 10.8880220394 > ../output/16Apr2020/vision_output52.txt 
-python3 ../../ichec_run_vision.py 8.72712151624 > ../output/16Apr2020/vision_output53.txt 
-python3 ../../ichec_run_vision.py 8.38824633254 > ../output/16Apr2020/vision_output54.txt 
-python3 ../../ichec_run_vision.py 11.126591921 > ../output/16Apr2020/vision_output55.txt 
-python3 ../../ichec_run_vision.py 8.47694450437 > ../output/16Apr2020/vision_output56.txt 
-python3 ../../ichec_run_vision.py 16.3705934171 > ../output/16Apr2020/vision_output57.txt 
-python3 ../../ichec_run_vision.py 9.17368531497 > ../output/16Apr2020/vision_output58.txt 
-python3 ../../ichec_run_vision.py 9.79862242664 > ../output/16Apr2020/vision_output59.txt 
-python3 ../../ichec_run_vision.py 5.52229666614 > ../output/16Apr2020/vision_output60.txt 
-python3 ../../ichec_run_vision.py 12.7583328343 > ../output/16Apr2020/vision_output61.txt 
-python3 ../../ichec_run_vision.py 8.41249483709 > ../output/16Apr2020/vision_output62.txt 
-python3 ../../ichec_run_vision.py 10.6417841427 > ../output/16Apr2020/vision_output63.txt 
-python3 ../../ichec_run_vision.py 19.733171749 > ../output/16Apr2020/vision_output64.txt 
-python3 ../../ichec_run_vision.py 12.5921528284 > ../output/16Apr2020/vision_output65.txt 
-python3 ../../ichec_run_vision.py 8.57922292069 > ../output/16Apr2020/vision_output66.txt 
-python3 ../../ichec_run_vision.py 9.15791952274 > ../output/16Apr2020/vision_output67.txt 
-python3 ../../ichec_run_vision.py 12.1170900621 > ../output/16Apr2020/vision_output68.txt 
-python3 ../../ichec_run_vision.py 8.68448193214 > ../output/16Apr2020/vision_output69.txt 
-python3 ../../ichec_run_vision.py 7.32180348161 > ../output/16Apr2020/vision_output70.txt 
-python3 ../../ichec_run_vision.py 10.9578584637 > ../output/16Apr2020/vision_output71.txt 
-python3 ../../ichec_run_vision.py 6.3797323939 > ../output/16Apr2020/vision_output72.txt 
-python3 ../../ichec_run_vision.py 9.10791995157 > ../output/16Apr2020/vision_output73.txt 
-python3 ../../ichec_run_vision.py 6.7910754283 > ../output/16Apr2020/vision_output74.txt 
-python3 ../../ichec_run_vision.py 11.887067228 > ../output/16Apr2020/vision_output75.txt 
-python3 ../../ichec_run_vision.py 21.9231845169 > ../output/16Apr2020/vision_output76.txt 
-python3 ../../ichec_run_vision.py 13.9571300406 > ../output/16Apr2020/vision_output77.txt 
-python3 ../../ichec_run_vision.py 13.0807932704 > ../output/16Apr2020/vision_output78.txt 
-python3 ../../ichec_run_vision.py 13.5551355713 > ../output/16Apr2020/vision_output79.txt 
-python3 ../../ichec_run_vision.py 10.7945141187 > ../output/16Apr2020/vision_output80.txt 
-python3 ../../ichec_run_vision.py 13.2715194685 > ../output/16Apr2020/vision_output81.txt 
-python3 ../../ichec_run_vision.py 6.19420666766 > ../output/16Apr2020/vision_output82.txt 
-python3 ../../ichec_run_vision.py 15.659159177 > ../output/16Apr2020/vision_output83.txt 
-python3 ../../ichec_run_vision.py 8.84562588755 > ../output/16Apr2020/vision_output84.txt 
-python3 ../../ichec_run_vision.py 7.10225932278 > ../output/16Apr2020/vision_output85.txt 
-python3 ../../ichec_run_vision.py 12.5577097434 > ../output/16Apr2020/vision_output86.txt 
-python3 ../../ichec_run_vision.py 6.56306109668 > ../output/16Apr2020/vision_output87.txt 
-python3 ../../ichec_run_vision.py 8.57705898082 > ../output/16Apr2020/vision_output88.txt 
-python3 ../../ichec_run_vision.py 10.6760647269 > ../output/16Apr2020/vision_output89.txt 
-python3 ../../ichec_run_vision.py 5.59489757422 > ../output/16Apr2020/vision_output90.txt 
-python3 ../../ichec_run_vision.py 8.00498867432 > ../output/16Apr2020/vision_output91.txt 
-python3 ../../ichec_run_vision.py 8.73230395489 > ../output/16Apr2020/vision_output92.txt 
-python3 ../../ichec_run_vision.py 11.6753015641 > ../output/16Apr2020/vision_output93.txt 
-python3 ../../ichec_run_vision.py 17.0128764456 > ../output/16Apr2020/vision_output94.txt 
-python3 ../../ichec_run_vision.py 9.2827714611 > ../output/16Apr2020/vision_output95.txt 
-python3 ../../ichec_run_vision.py 8.35394738944 > ../output/16Apr2020/vision_output96.txt 
-python3 ../../ichec_run_vision.py 10.1215252099 > ../output/16Apr2020/vision_output97.txt 
-python3 ../../ichec_run_vision.py 6.05438698111 > ../output/16Apr2020/vision_output98.txt 
-python3 ../../ichec_run_vision.py 12.5917416524 > ../output/16Apr2020/vision_output99.txt 
-python3 ../../ichec_run_sep.py 1.83455385931 > ../output/16Apr2020/sep_output0.txt 
-python3 ../../ichec_run_sep.py 2.63647980734 > ../output/16Apr2020/sep_output1.txt 
-python3 ../../ichec_run_sep.py 1.53922141972 > ../output/16Apr2020/sep_output2.txt 
-python3 ../../ichec_run_sep.py 4.75768652569 > ../output/16Apr2020/sep_output3.txt 
-python3 ../../ichec_run_sep.py 1.39609123334 > ../output/16Apr2020/sep_output4.txt 
-python3 ../../ichec_run_sep.py 0.405522807892 > ../output/16Apr2020/sep_output5.txt 
-python3 ../../ichec_run_sep.py 1.33510161509 > ../output/16Apr2020/sep_output6.txt 
-python3 ../../ichec_run_sep.py 1.28848629139 > ../output/16Apr2020/sep_output7.txt 
-python3 ../../ichec_run_sep.py 1.53970820035 > ../output/16Apr2020/sep_output8.txt 
-python3 ../../ichec_run_sep.py 0.907988284897 > ../output/16Apr2020/sep_output9.txt 
-python3 ../../ichec_run_sep.py 2.69718128872 > ../output/16Apr2020/sep_output10.txt 
-python3 ../../ichec_run_sep.py 1.23292640481 > ../output/16Apr2020/sep_output11.txt 
-python3 ../../ichec_run_sep.py 1.6034653083 > ../output/16Apr2020/sep_output12.txt 
-python3 ../../ichec_run_sep.py 0.394674132156 > ../output/16Apr2020/sep_output13.txt 
-python3 ../../ichec_run_sep.py 2.30688729822 > ../output/16Apr2020/sep_output14.txt 
-python3 ../../ichec_run_sep.py 0.946175072254 > ../output/16Apr2020/sep_output15.txt 
-python3 ../../ichec_run_sep.py 3.3011529988 > ../output/16Apr2020/sep_output16.txt 
-python3 ../../ichec_run_sep.py 2.14760989641 > ../output/16Apr2020/sep_output17.txt 
-python3 ../../ichec_run_sep.py 2.04981414382 > ../output/16Apr2020/sep_output18.txt 
-python3 ../../ichec_run_sep.py 2.08477817975 > ../output/16Apr2020/sep_output19.txt 
-python3 ../../ichec_run_sep.py 0.738143645088 > ../output/16Apr2020/sep_output20.txt 
-python3 ../../ichec_run_sep.py 1.78095569416 > ../output/16Apr2020/sep_output21.txt 
-python3 ../../ichec_run_sep.py 0.138460679805 > ../output/16Apr2020/sep_output22.txt 
-python3 ../../ichec_run_sep.py 1.07116969925 > ../output/16Apr2020/sep_output23.txt 
-python3 ../../ichec_run_sep.py 3.3098458908 > ../output/16Apr2020/sep_output24.txt 
-python3 ../../ichec_run_sep.py 1.42330552607 > ../output/16Apr2020/sep_output25.txt 
-python3 ../../ichec_run_sep.py 3.68352687312 > ../output/16Apr2020/sep_output26.txt 
-python3 ../../ichec_run_sep.py 1.52806399884 > ../output/16Apr2020/sep_output27.txt 
-python3 ../../ichec_run_sep.py 1.43131134712 > ../output/16Apr2020/sep_output28.txt 
-python3 ../../ichec_run_sep.py 2.95177404827 > ../output/16Apr2020/sep_output29.txt 
-python3 ../../ichec_run_sep.py 0.790456823791 > ../output/16Apr2020/sep_output30.txt 
-python3 ../../ichec_run_sep.py 4.32551252802 > ../output/16Apr2020/sep_output31.txt 
-python3 ../../ichec_run_sep.py 2.62304669955 > ../output/16Apr2020/sep_output32.txt 
-python3 ../../ichec_run_sep.py 1.29862620918 > ../output/16Apr2020/sep_output33.txt 
-python3 ../../ichec_run_sep.py 0.946383901136 > ../output/16Apr2020/sep_output34.txt 
-python3 ../../ichec_run_sep.py 0.34602198051 > ../output/16Apr2020/sep_output35.txt 
-python3 ../../ichec_run_sep.py 1.64086522333 > ../output/16Apr2020/sep_output36.txt 
-python3 ../../ichec_run_sep.py 1.18444116791 > ../output/16Apr2020/sep_output37.txt 
-python3 ../../ichec_run_sep.py 0.799345407133 > ../output/16Apr2020/sep_output38.txt 
-python3 ../../ichec_run_sep.py 2.15179776045 > ../output/16Apr2020/sep_output39.txt 
-python3 ../../ichec_run_sep.py 4.17691820218 > ../output/16Apr2020/sep_output40.txt 
-python3 ../../ichec_run_sep.py 0.554371058053 > ../output/16Apr2020/sep_output41.txt 
-python3 ../../ichec_run_sep.py 0.432027331503 > ../output/16Apr2020/sep_output42.txt 
-python3 ../../ichec_run_sep.py 0.636783655777 > ../output/16Apr2020/sep_output43.txt 
-python3 ../../ichec_run_sep.py 0.832504233901 > ../output/16Apr2020/sep_output44.txt 
-python3 ../../ichec_run_sep.py 0.655672721056 > ../output/16Apr2020/sep_output45.txt 
-python3 ../../ichec_run_sep.py 0.141891705587 > ../output/16Apr2020/sep_output46.txt 
-python3 ../../ichec_run_sep.py 0.727188935758 > ../output/16Apr2020/sep_output47.txt 
-python3 ../../ichec_run_sep.py 0.894872135228 > ../output/16Apr2020/sep_output48.txt 
-python3 ../../ichec_run_sep.py 2.16591569876 > ../output/16Apr2020/sep_output49.txt 
-python3 ../../ichec_run_sep.py 3.57582726321 > ../output/16Apr2020/sep_output50.txt 
-python3 ../../ichec_run_sep.py 2.68327194148 > ../output/16Apr2020/sep_output51.txt 
-python3 ../../ichec_run_sep.py 1.27126346378 > ../output/16Apr2020/sep_output52.txt 
-python3 ../../ichec_run_sep.py 0.145181071302 > ../output/16Apr2020/sep_output53.txt 
-python3 ../../ichec_run_sep.py 2.95760593819 > ../output/16Apr2020/sep_output54.txt 
-python3 ../../ichec_run_sep.py 1.5399045391 > ../output/16Apr2020/sep_output55.txt 
-python3 ../../ichec_run_sep.py 0.616137778062 > ../output/16Apr2020/sep_output56.txt 
-python3 ../../ichec_run_sep.py 0.84947382014 > ../output/16Apr2020/sep_output57.txt 
-python3 ../../ichec_run_sep.py 1.29386382 > ../output/16Apr2020/sep_output58.txt 
-python3 ../../ichec_run_sep.py 2.84758092842 > ../output/16Apr2020/sep_output59.txt 
-python3 ../../ichec_run_sep.py 1.45403414305 > ../output/16Apr2020/sep_output60.txt 
-python3 ../../ichec_run_sep.py 1.26953782605 > ../output/16Apr2020/sep_output61.txt 
-python3 ../../ichec_run_sep.py 0.956991863016 > ../output/16Apr2020/sep_output62.txt 
-python3 ../../ichec_run_sep.py 3.38035067629 > ../output/16Apr2020/sep_output63.txt 
-python3 ../../ichec_run_sep.py 4.90070229202 > ../output/16Apr2020/sep_output64.txt 
-python3 ../../ichec_run_sep.py 3.72284016417 > ../output/16Apr2020/sep_output65.txt 
-python3 ../../ichec_run_sep.py 3.16125672219 > ../output/16Apr2020/sep_output66.txt 
-python3 ../../ichec_run_sep.py 0.617201901009 > ../output/16Apr2020/sep_output67.txt 
-python3 ../../ichec_run_sep.py 0.332560841507 > ../output/16Apr2020/sep_output68.txt 
-python3 ../../ichec_run_sep.py 1.82451932541 > ../output/16Apr2020/sep_output69.txt 
-python3 ../../ichec_run_sep.py 1.5453115758 > ../output/16Apr2020/sep_output70.txt 
-python3 ../../ichec_run_sep.py 3.74418800717 > ../output/16Apr2020/sep_output71.txt 
-python3 ../../ichec_run_sep.py 1.01522562077 > ../output/16Apr2020/sep_output72.txt 
-python3 ../../ichec_run_sep.py 5.89868318946 > ../output/16Apr2020/sep_output73.txt 
-python3 ../../ichec_run_sep.py 1.80684698722 > ../output/16Apr2020/sep_output74.txt 
-python3 ../../ichec_run_sep.py 7.74215957461 > ../output/16Apr2020/sep_output75.txt 
-python3 ../../ichec_run_sep.py 0.438854090217 > ../output/16Apr2020/sep_output76.txt 
-python3 ../../ichec_run_sep.py 6.36249465891 > ../output/16Apr2020/sep_output77.txt 
-python3 ../../ichec_run_sep.py 2.95145878601 > ../output/16Apr2020/sep_output78.txt 
-python3 ../../ichec_run_sep.py 0.532098418247 > ../output/16Apr2020/sep_output79.txt 
-python3 ../../ichec_run_sep.py 2.58599483017 > ../output/16Apr2020/sep_output80.txt 
-python3 ../../ichec_run_sep.py 2.42714965575 > ../output/16Apr2020/sep_output81.txt 
-python3 ../../ichec_run_sep.py 1.9001219626 > ../output/16Apr2020/sep_output82.txt 
-python3 ../../ichec_run_sep.py 1.86633826921 > ../output/16Apr2020/sep_output83.txt 
-python3 ../../ichec_run_sep.py 1.46874292665 > ../output/16Apr2020/sep_output84.txt 
-python3 ../../ichec_run_sep.py 1.1584291766 > ../output/16Apr2020/sep_output85.txt 
-python3 ../../ichec_run_sep.py 1.80031455154 > ../output/16Apr2020/sep_output86.txt 
-python3 ../../ichec_run_sep.py 4.05373905786 > ../output/16Apr2020/sep_output87.txt 
-python3 ../../ichec_run_sep.py 1.39279605869 > ../output/16Apr2020/sep_output88.txt 
-python3 ../../ichec_run_sep.py 1.3766279788 > ../output/16Apr2020/sep_output89.txt 
-python3 ../../ichec_run_sep.py 2.64582368573 > ../output/16Apr2020/sep_output90.txt 
-python3 ../../ichec_run_sep.py 3.06503135022 > ../output/16Apr2020/sep_output91.txt 
-python3 ../../ichec_run_sep.py 1.35735999147 > ../output/16Apr2020/sep_output92.txt 
-python3 ../../ichec_run_sep.py 1.61125649757 > ../output/16Apr2020/sep_output93.txt 
-python3 ../../ichec_run_sep.py 1.63553493094 > ../output/16Apr2020/sep_output94.txt 
-python3 ../../ichec_run_sep.py 4.80514229587 > ../output/16Apr2020/sep_output95.txt 
-python3 ../../ichec_run_sep.py 2.31918575193 > ../output/16Apr2020/sep_output96.txt 
-python3 ../../ichec_run_sep.py 1.62496437831 > ../output/16Apr2020/sep_output97.txt 
-python3 ../../ichec_run_sep.py 5.96029125607 > ../output/16Apr2020/sep_output98.txt 
-python3 ../../ichec_run_sep.py 1.34239496812 > ../output/16Apr2020/sep_output99.txt 
+python3 ../../ichec_run.py 1.13506014724 11.52051983 4.10307342309 > ../output/17Apr2020/sep_output0.txt 
+python3 ../../ichec_run.py 4.34439782524 13.0581882213 3.19908478698 > ../output/17Apr2020/sep_output1.txt 
+python3 ../../ichec_run.py 1.52383727923 11.0618784543 1.52067794065 > ../output/17Apr2020/sep_output2.txt 
+python3 ../../ichec_run.py 1.01550351009 12.5935751516 3.12419155851 > ../output/17Apr2020/sep_output3.txt 
+python3 ../../ichec_run.py 1.67280542048 6.85647996891 1.71482000363 > ../output/17Apr2020/sep_output4.txt 
+python3 ../../ichec_run.py 0.510880810085 6.93115523597 1.57392050973 > ../output/17Apr2020/sep_output5.txt 
+python3 ../../ichec_run.py 0.620190682673 12.2370702048 4.55907100954 > ../output/17Apr2020/sep_output6.txt 
+python3 ../../ichec_run.py 2.14262744982 7.25365555051 1.96029037577 > ../output/17Apr2020/sep_output7.txt 
+python3 ../../ichec_run.py 1.36377488245 4.4043943452 0.156842947662 > ../output/17Apr2020/sep_output8.txt 
+python3 ../../ichec_run.py 0.731287658315 7.2686647065 1.36835713751 > ../output/17Apr2020/sep_output9.txt 
+python3 ../../ichec_run.py 1.58911688759 8.40284840353 3.47070155645 > ../output/17Apr2020/sep_output10.txt 
+python3 ../../ichec_run.py 1.23998191181 10.5117057246 1.68537849586 > ../output/17Apr2020/sep_output11.txt 
+python3 ../../ichec_run.py 1.04153202003 7.97612723559 7.06308204841 > ../output/17Apr2020/sep_output12.txt 
+python3 ../../ichec_run.py 2.17048237038 8.85808277821 3.87209761247 > ../output/17Apr2020/sep_output13.txt 
+python3 ../../ichec_run.py 0.951148414378 8.93503358688 4.61865666068 > ../output/17Apr2020/sep_output14.txt 
+python3 ../../ichec_run.py 1.12184577497 14.0055889941 0.41944755012 > ../output/17Apr2020/sep_output15.txt 
+python3 ../../ichec_run.py 1.00247362671 11.4641802816 0.898495482073 > ../output/17Apr2020/sep_output16.txt 
+python3 ../../ichec_run.py 3.50515825835 9.43238226641 1.95832084753 > ../output/17Apr2020/sep_output17.txt 
+python3 ../../ichec_run.py 1.29078055965 11.4979498349 5.68559905236 > ../output/17Apr2020/sep_output18.txt 
+python3 ../../ichec_run.py 1.56378569737 10.4131421656 0.507839969847 > ../output/17Apr2020/sep_output19.txt 
+python3 ../../ichec_run.py 2.31607374052 15.0747287085 1.90366725321 > ../output/17Apr2020/sep_output20.txt 
+python3 ../../ichec_run.py 2.49508728458 11.4564054135 2.01544440968 > ../output/17Apr2020/sep_output21.txt 
+python3 ../../ichec_run.py 1.44582289814 9.20697466828 1.75248471484 > ../output/17Apr2020/sep_output22.txt 
+python3 ../../ichec_run.py 2.29733524762 11.0214752653 0.923778102293 > ../output/17Apr2020/sep_output23.txt 
+python3 ../../ichec_run.py 0.827163222801 14.3007397652 2.71558661095 > ../output/17Apr2020/sep_output24.txt 
+python3 ../../ichec_run.py 1.20139228998 7.56596584737 0.779398491639 > ../output/17Apr2020/sep_output25.txt 
+python3 ../../ichec_run.py 0.867253586149 14.0447661651 0.849998816727 > ../output/17Apr2020/sep_output26.txt 
+python3 ../../ichec_run.py 0.784659069354 8.96719420119 3.46485619808 > ../output/17Apr2020/sep_output27.txt 
+python3 ../../ichec_run.py 0.578749856722 10.73387473 0.915284991084 > ../output/17Apr2020/sep_output28.txt 
+python3 ../../ichec_run.py 3.93630559528 8.44989613685 1.80058634052 > ../output/17Apr2020/sep_output29.txt 
+python3 ../../ichec_run.py 2.28814446608 7.6867917009 2.73912281683 > ../output/17Apr2020/sep_output30.txt 
+python3 ../../ichec_run.py 2.68266370172 6.7527151214 2.17593211158 > ../output/17Apr2020/sep_output31.txt 
+python3 ../../ichec_run.py 2.22805346691 6.40788605652 1.26892717291 > ../output/17Apr2020/sep_output32.txt 
+python3 ../../ichec_run.py 4.61094678585 15.010380093 1.95778660206 > ../output/17Apr2020/sep_output33.txt 
+python3 ../../ichec_run.py 1.95730377823 11.4252474602 0.22997166231 > ../output/17Apr2020/sep_output34.txt 
+python3 ../../ichec_run.py 5.95422099158 6.62570006545 2.29171729262 > ../output/17Apr2020/sep_output35.txt 
+python3 ../../ichec_run.py 1.17591274733 7.17952622893 0.0572364819357 > ../output/17Apr2020/sep_output36.txt 
+python3 ../../ichec_run.py 2.20370620668 16.9882711375 1.24343419405 > ../output/17Apr2020/sep_output37.txt 
+python3 ../../ichec_run.py 2.43953054546 9.39924406998 2.12176329056 > ../output/17Apr2020/sep_output38.txt 
+python3 ../../ichec_run.py 2.46161643791 8.95901231539 0.737978808254 > ../output/17Apr2020/sep_output39.txt 
+python3 ../../ichec_run.py 0.308573357656 4.59761887142 0.910714178702 > ../output/17Apr2020/sep_output40.txt 
+python3 ../../ichec_run.py 0.629511453539 6.88826146245 2.58679091952 > ../output/17Apr2020/sep_output41.txt 
+python3 ../../ichec_run.py 1.37047914973 17.7508501038 3.14076177814 > ../output/17Apr2020/sep_output42.txt 
+python3 ../../ichec_run.py 3.46828241467 14.4824473861 4.16997511838 > ../output/17Apr2020/sep_output43.txt 
+python3 ../../ichec_run.py 1.06435830467 11.9871911445 1.29942343619 > ../output/17Apr2020/sep_output44.txt 
+python3 ../../ichec_run.py 3.06482173118 11.7380506101 7.25324352739 > ../output/17Apr2020/sep_output45.txt 
+python3 ../../ichec_run.py 0.765672625733 6.40753522038 2.82763096683 > ../output/17Apr2020/sep_output46.txt 
+python3 ../../ichec_run.py 1.90631154103 9.74214439337 2.97300568406 > ../output/17Apr2020/sep_output47.txt 
+python3 ../../ichec_run.py 1.7714002754 9.20994888878 5.29982707595 > ../output/17Apr2020/sep_output48.txt 
+python3 ../../ichec_run.py 2.22178894277 11.5357246501 3.43570413208 > ../output/17Apr2020/sep_output49.txt 
+python3 ../../ichec_run.py 2.88018503839 16.8916498246 4.61103482611 > ../output/17Apr2020/sep_output50.txt 
+python3 ../../ichec_run.py 0.592671146083 10.3371126674 1.07763307714 > ../output/17Apr2020/sep_output51.txt 
+python3 ../../ichec_run.py 0.940275946883 12.2556509548 2.0623649902 > ../output/17Apr2020/sep_output52.txt 
+python3 ../../ichec_run.py 3.52506177971 11.5659104008 1.10810081521 > ../output/17Apr2020/sep_output53.txt 
+python3 ../../ichec_run.py 0.887138749771 9.64820873861 1.19127488608 > ../output/17Apr2020/sep_output54.txt 
+python3 ../../ichec_run.py 1.77661946011 10.4475249412 2.62652388654 > ../output/17Apr2020/sep_output55.txt 
+python3 ../../ichec_run.py 2.75287559216 7.8925764066 1.69601427459 > ../output/17Apr2020/sep_output56.txt 
+python3 ../../ichec_run.py 0.307724437694 16.6977521813 0.441874974324 > ../output/17Apr2020/sep_output57.txt 
+python3 ../../ichec_run.py 0.914941046131 7.27241353543 2.18185422 > ../output/17Apr2020/sep_output58.txt 
+python3 ../../ichec_run.py 2.28753147271 9.95632119116 1.07441154242 > ../output/17Apr2020/sep_output59.txt 
+python3 ../../ichec_run.py 1.32249035303 10.7530816916 0.979237199853 > ../output/17Apr2020/sep_output60.txt 
+python3 ../../ichec_run.py 4.75246133696 9.51276442344 0.910934555007 > ../output/17Apr2020/sep_output61.txt 
+python3 ../../ichec_run.py 0.956445552503 11.1735039296 3.58904077041 > ../output/17Apr2020/sep_output62.txt 
+python3 ../../ichec_run.py 0.669037746653 5.13435391435 1.93894384199 > ../output/17Apr2020/sep_output63.txt 
+python3 ../../ichec_run.py 0.890223614663 10.674951122 3.26142694802 > ../output/17Apr2020/sep_output64.txt 
+python3 ../../ichec_run.py 3.15982139845 15.8857936518 1.2175235811 > ../output/17Apr2020/sep_output65.txt 
+python3 ../../ichec_run.py 6.58075476725 11.0069741132 0.200634358624 > ../output/17Apr2020/sep_output66.txt 
+python3 ../../ichec_run.py 0.549965259881 12.3186078523 0.426921130682 > ../output/17Apr2020/sep_output67.txt 
+python3 ../../ichec_run.py 2.26565213692 11.649223913 5.04878987984 > ../output/17Apr2020/sep_output68.txt 
+python3 ../../ichec_run.py 1.02064093423 22.2031819118 0.746170007841 > ../output/17Apr2020/sep_output69.txt 
+python3 ../../ichec_run.py 4.01240790196 7.30249156182 3.26513463635 > ../output/17Apr2020/sep_output70.txt 
+python3 ../../ichec_run.py 2.56063831163 10.5140133764 0.123672600281 > ../output/17Apr2020/sep_output71.txt 
+python3 ../../ichec_run.py 1.23706976973 12.8533198445 2.3360301319 > ../output/17Apr2020/sep_output72.txt 
+python3 ../../ichec_run.py 0.569002111998 13.831215368 1.57294038724 > ../output/17Apr2020/sep_output73.txt 
+python3 ../../ichec_run.py 1.98428156483 5.64958499555 2.64665669577 > ../output/17Apr2020/sep_output74.txt 
+python3 ../../ichec_run.py 4.1230739279 8.25462610463 3.52558950538 > ../output/17Apr2020/sep_output75.txt 
+python3 ../../ichec_run.py 2.28590627796 7.50396760226 1.73809064083 > ../output/17Apr2020/sep_output76.txt 
+python3 ../../ichec_run.py 1.101931764 13.0851497518 1.07024492398 > ../output/17Apr2020/sep_output77.txt 
+python3 ../../ichec_run.py 1.87863767694 10.4936584092 1.90059385911 > ../output/17Apr2020/sep_output78.txt 
+python3 ../../ichec_run.py 1.34172098086 10.1337187016 0.305539973025 > ../output/17Apr2020/sep_output79.txt 
+python3 ../../ichec_run.py 1.00212815059 7.29971074034 0.97721426286 > ../output/17Apr2020/sep_output80.txt 
+python3 ../../ichec_run.py 3.03985790217 14.554064553 0.948729024074 > ../output/17Apr2020/sep_output81.txt 
+python3 ../../ichec_run.py 2.18716851957 11.5224720831 1.80156573891 > ../output/17Apr2020/sep_output82.txt 
+python3 ../../ichec_run.py 1.6827493467 9.03975859 3.12596738936 > ../output/17Apr2020/sep_output83.txt 
+python3 ../../ichec_run.py 0.444592142924 7.28786332593 1.13553948788 > ../output/17Apr2020/sep_output84.txt 
+python3 ../../ichec_run.py 3.40136599438 12.1508006422 3.80729121036 > ../output/17Apr2020/sep_output85.txt 
+python3 ../../ichec_run.py 1.2515944593 8.34044888694 0.824399228888 > ../output/17Apr2020/sep_output86.txt 
+python3 ../../ichec_run.py 2.18227401442 18.3954285194 1.47056496017 > ../output/17Apr2020/sep_output87.txt 
+python3 ../../ichec_run.py 0.863455391885 10.2640303466 3.0871845898 > ../output/17Apr2020/sep_output88.txt 
+python3 ../../ichec_run.py 1.59204718265 8.96841492694 2.85035872394 > ../output/17Apr2020/sep_output89.txt 
+python3 ../../ichec_run.py 5.39570568317 11.4154524055 2.58543580539 > ../output/17Apr2020/sep_output90.txt 
+python3 ../../ichec_run.py 1.79105494628 11.2412308885 1.73858753275 > ../output/17Apr2020/sep_output91.txt 
+python3 ../../ichec_run.py 3.07164725599 16.156542113 2.77960679611 > ../output/17Apr2020/sep_output92.txt 
+python3 ../../ichec_run.py 1.69743816312 3.69001212297 0.934908283535 > ../output/17Apr2020/sep_output93.txt 
+python3 ../../ichec_run.py 0.84286141057 11.2411244966 3.82006441529 > ../output/17Apr2020/sep_output94.txt 
+python3 ../../ichec_run.py 3.93013991492 11.9935075491 1.26869133682 > ../output/17Apr2020/sep_output95.txt 
+python3 ../../ichec_run.py 1.79138685795 12.3067402405 1.81042234924 > ../output/17Apr2020/sep_output96.txt 
+python3 ../../ichec_run.py 1.19622303128 10.2247957475 0.894957971776 > ../output/17Apr2020/sep_output97.txt 
+python3 ../../ichec_run.py 2.64181584212 12.1565721006 2.27709315534 > ../output/17Apr2020/sep_output98.txt 
+python3 ../../ichec_run.py 0.123522921976 11.3277370356 3.03325912498 > ../output/17Apr2020/sep_output99.txt 
+python3 ../../ichec_run.py 2.56423531066 8.66042348049 1.81571049211 > ../output/17Apr2020/sep_output100.txt 
+python3 ../../ichec_run.py 5.19763499592 11.3189320776 3.45249452479 > ../output/17Apr2020/sep_output101.txt 
+python3 ../../ichec_run.py 5.36058609907 13.0966595626 1.76651006036 > ../output/17Apr2020/sep_output102.txt 
+python3 ../../ichec_run.py 0.604412221549 14.3826520517 1.26363916814 > ../output/17Apr2020/sep_output103.txt 
+python3 ../../ichec_run.py 1.00805304555 12.2060240647 1.26778930042 > ../output/17Apr2020/sep_output104.txt 
+python3 ../../ichec_run.py 3.14465253454 9.60125687303 1.57665151673 > ../output/17Apr2020/sep_output105.txt 
+python3 ../../ichec_run.py 0.512444415103 13.8295958481 2.49100497605 > ../output/17Apr2020/sep_output106.txt 
+python3 ../../ichec_run.py 1.66808336997 11.2650806511 2.15130328404 > ../output/17Apr2020/sep_output107.txt 
+python3 ../../ichec_run.py 5.96957565665 9.81469771524 2.30912496285 > ../output/17Apr2020/sep_output108.txt 
+python3 ../../ichec_run.py 1.76490059552 15.6928057308 2.50418924829 > ../output/17Apr2020/sep_output109.txt 
+python3 ../../ichec_run.py 2.75220295455 11.3273989059 2.34542102216 > ../output/17Apr2020/sep_output110.txt 
+python3 ../../ichec_run.py 0.503389255765 9.16925167365 0.586598670372 > ../output/17Apr2020/sep_output111.txt 
+python3 ../../ichec_run.py 2.33687551778 6.1505132368 1.3769833257 > ../output/17Apr2020/sep_output112.txt 
+python3 ../../ichec_run.py 1.87797282391 15.59238742 1.4224750305 > ../output/17Apr2020/sep_output113.txt 
+python3 ../../ichec_run.py 1.97603224397 10.786676885 2.2025551312 > ../output/17Apr2020/sep_output114.txt 
+python3 ../../ichec_run.py 4.46270877552 6.96678181251 5.3476876952 > ../output/17Apr2020/sep_output115.txt 
+python3 ../../ichec_run.py 0.999572416805 10.925777755 1.63731767669 > ../output/17Apr2020/sep_output116.txt 
+python3 ../../ichec_run.py 0.810830785781 7.89407846829 2.42729367007 > ../output/17Apr2020/sep_output117.txt 
+python3 ../../ichec_run.py 1.65452909124 9.39861472747 2.2072427531 > ../output/17Apr2020/sep_output118.txt 
+python3 ../../ichec_run.py 0.712490546837 9.0032688336 1.7436647914 > ../output/17Apr2020/sep_output119.txt 
+python3 ../../ichec_run.py 7.33537166677 10.2433008769 0.474383264786 > ../output/17Apr2020/sep_output120.txt 
+python3 ../../ichec_run.py 0.707124250153 11.2221532949 4.92411178854 > ../output/17Apr2020/sep_output121.txt 
+python3 ../../ichec_run.py 1.47003341451 8.23431606149 2.51596458056 > ../output/17Apr2020/sep_output122.txt 
+python3 ../../ichec_run.py 5.02274354585 9.64912257307 0.525349486426 > ../output/17Apr2020/sep_output123.txt 
+python3 ../../ichec_run.py 2.03777428031 17.7758305204 0.938535248866 > ../output/17Apr2020/sep_output124.txt 
+python3 ../../ichec_run.py 0.823208419409 7.74958648439 4.83458842252 > ../output/17Apr2020/sep_output125.txt 
+python3 ../../ichec_run.py 1.83128471136 9.23691723075 2.77842877885 > ../output/17Apr2020/sep_output126.txt 
+python3 ../../ichec_run.py 1.75650270374 7.36920361086 3.85339755855 > ../output/17Apr2020/sep_output127.txt 
+python3 ../../ichec_run.py 1.62702273513 8.57514737906 5.45199895596 > ../output/17Apr2020/sep_output128.txt 
+python3 ../../ichec_run.py 5.62281277361 8.97785423525 0.657952226006 > ../output/17Apr2020/sep_output129.txt 
+python3 ../../ichec_run.py 1.11032650555 14.4059483271 0.892951107531 > ../output/17Apr2020/sep_output130.txt 
+python3 ../../ichec_run.py 0.144429324713 8.1993397177 1.08354790215 > ../output/17Apr2020/sep_output131.txt 
+python3 ../../ichec_run.py 1.88680711815 4.7707148673 3.79723439927 > ../output/17Apr2020/sep_output132.txt 
+python3 ../../ichec_run.py 0.619640393455 9.24041156188 4.31101980806 > ../output/17Apr2020/sep_output133.txt 
+python3 ../../ichec_run.py 1.78480425621 10.6191730632 1.49814624944 > ../output/17Apr2020/sep_output134.txt 
+python3 ../../ichec_run.py 0.929688076369 14.8682996166 2.83320951522 > ../output/17Apr2020/sep_output135.txt 
+python3 ../../ichec_run.py 2.19032881961 11.6206472025 0.357838349821 > ../output/17Apr2020/sep_output136.txt 
+python3 ../../ichec_run.py 1.06437663037 12.3210424512 1.14010213415 > ../output/17Apr2020/sep_output137.txt 
+python3 ../../ichec_run.py 1.18157569631 9.02363505675 1.00810177484 > ../output/17Apr2020/sep_output138.txt 
+python3 ../../ichec_run.py 1.1024104987 10.090081642 0.977350692281 > ../output/17Apr2020/sep_output139.txt 
+python3 ../../ichec_run.py 2.04393400571 11.0853546832 2.26398444002 > ../output/17Apr2020/sep_output140.txt 
+python3 ../../ichec_run.py 0.260564015317 13.5885352722 1.49370630441 > ../output/17Apr2020/sep_output141.txt 
+python3 ../../ichec_run.py 1.47556627059 6.13431727296 2.37496869435 > ../output/17Apr2020/sep_output142.txt 
+python3 ../../ichec_run.py 0.57873376546 16.4696892772 2.55573866271 > ../output/17Apr2020/sep_output143.txt 
+python3 ../../ichec_run.py 0.834712715275 10.6795821772 1.12188063239 > ../output/17Apr2020/sep_output144.txt 
+python3 ../../ichec_run.py 2.02348873405 14.3285570212 1.26433005727 > ../output/17Apr2020/sep_output145.txt 
+python3 ../../ichec_run.py 2.43483048956 5.76298622699 0.489898073936 > ../output/17Apr2020/sep_output146.txt 
+python3 ../../ichec_run.py 0.236735217645 5.23126154573 4.5947454579 > ../output/17Apr2020/sep_output147.txt 
+python3 ../../ichec_run.py 1.94923485411 11.9446331957 2.1748033376 > ../output/17Apr2020/sep_output148.txt 
+python3 ../../ichec_run.py 1.76765003535 16.8553019788 0.517710020488 > ../output/17Apr2020/sep_output149.txt 
+python3 ../../ichec_run.py 1.51793156067 7.89433607998 2.38687567372 > ../output/17Apr2020/sep_output150.txt 
+python3 ../../ichec_run.py 3.66020116849 9.36749783599 2.34683468393 > ../output/17Apr2020/sep_output151.txt 
+python3 ../../ichec_run.py 1.63436430314 8.30300805848 1.14034851803 > ../output/17Apr2020/sep_output152.txt 
+python3 ../../ichec_run.py 2.04724650395 8.20437554769 1.88232508024 > ../output/17Apr2020/sep_output153.txt 
+python3 ../../ichec_run.py 2.33578857263 11.0425474592 1.56787261156 > ../output/17Apr2020/sep_output154.txt 
+python3 ../../ichec_run.py 2.48123285415 7.64022056761 2.70625748369 > ../output/17Apr2020/sep_output155.txt 
+python3 ../../ichec_run.py 1.0038686736 8.75091995077 2.13113034851 > ../output/17Apr2020/sep_output156.txt 
+python3 ../../ichec_run.py 3.67527558285 9.55226231402 1.28825235355 > ../output/17Apr2020/sep_output157.txt 
+python3 ../../ichec_run.py 0.853547653999 9.75784484705 3.96314070885 > ../output/17Apr2020/sep_output158.txt 
+python3 ../../ichec_run.py 0.28501358212 7.46338365123 2.27568447759 > ../output/17Apr2020/sep_output159.txt 
+python3 ../../ichec_run.py 1.70709196055 12.0359875273 2.93428799756 > ../output/17Apr2020/sep_output160.txt 
+python3 ../../ichec_run.py 0.453258280189 18.9643460406 2.5679109651 > ../output/17Apr2020/sep_output161.txt 
+python3 ../../ichec_run.py 1.23170192537 18.9025406928 1.1475477838 > ../output/17Apr2020/sep_output162.txt 
+python3 ../../ichec_run.py 3.45425746141 6.62396313146 3.44345590145 > ../output/17Apr2020/sep_output163.txt 
+python3 ../../ichec_run.py 0.668859791451 9.79114282657 0.629717739644 > ../output/17Apr2020/sep_output164.txt 
+python3 ../../ichec_run.py 3.44102291882 10.9232448338 4.0945491939 > ../output/17Apr2020/sep_output165.txt 
+python3 ../../ichec_run.py 0.643580581789 12.4300150417 1.70641195159 > ../output/17Apr2020/sep_output166.txt 
+python3 ../../ichec_run.py 0.567552560007 8.45229881606 5.34887456617 > ../output/17Apr2020/sep_output167.txt 
+python3 ../../ichec_run.py 0.807061104987 10.8507095784 1.52344128335 > ../output/17Apr2020/sep_output168.txt 
+python3 ../../ichec_run.py 1.52896134387 6.94276822664 1.84064379036 > ../output/17Apr2020/sep_output169.txt 
+python3 ../../ichec_run.py 1.19223087626 10.5628909621 3.56513438643 > ../output/17Apr2020/sep_output170.txt 
+python3 ../../ichec_run.py 3.06408830898 9.86435687522 1.45371691546 > ../output/17Apr2020/sep_output171.txt 
+python3 ../../ichec_run.py 2.91605131777 14.8207804639 3.13330320069 > ../output/17Apr2020/sep_output172.txt 
+python3 ../../ichec_run.py 1.8580564584 11.3406430993 2.32642555662 > ../output/17Apr2020/sep_output173.txt 
+python3 ../../ichec_run.py 1.31119657091 9.8298959305 0.857285457947 > ../output/17Apr2020/sep_output174.txt 
+python3 ../../ichec_run.py 0.932536126421 13.578573681 3.20257050301 > ../output/17Apr2020/sep_output175.txt 
+python3 ../../ichec_run.py 2.74177425798 9.6716748547 0.399380648568 > ../output/17Apr2020/sep_output176.txt 
+python3 ../../ichec_run.py 2.37498844431 8.41939178301 0.895486803442 > ../output/17Apr2020/sep_output177.txt 
+python3 ../../ichec_run.py 1.42850357593 13.7271840066 1.60187958643 > ../output/17Apr2020/sep_output178.txt 
+python3 ../../ichec_run.py 1.69240427439 7.53817141447 2.19312926746 > ../output/17Apr2020/sep_output179.txt 
+python3 ../../ichec_run.py 1.06398265699 11.2587165203 1.99131750088 > ../output/17Apr2020/sep_output180.txt 
+python3 ../../ichec_run.py 3.12778646468 11.1424746805 1.22178095926 > ../output/17Apr2020/sep_output181.txt 
+python3 ../../ichec_run.py 0.530275994153 16.3189584504 0.506037400522 > ../output/17Apr2020/sep_output182.txt 
+python3 ../../ichec_run.py 2.51729885887 9.86164476095 3.75904045532 > ../output/17Apr2020/sep_output183.txt 
+python3 ../../ichec_run.py 2.65764619602 6.06678813434 0.835589523232 > ../output/17Apr2020/sep_output184.txt 
+python3 ../../ichec_run.py 0.643281908229 10.7045052132 3.48165913736 > ../output/17Apr2020/sep_output185.txt 
+python3 ../../ichec_run.py 0.20365881421 8.50319664695 1.16387371929 > ../output/17Apr2020/sep_output186.txt 
+python3 ../../ichec_run.py 0.922692070728 6.41051610047 0.963829018222 > ../output/17Apr2020/sep_output187.txt 
+python3 ../../ichec_run.py 1.5225102338 10.2864878365 2.21210849571 > ../output/17Apr2020/sep_output188.txt 
+python3 ../../ichec_run.py 2.93307496425 9.22053085525 1.89739669836 > ../output/17Apr2020/sep_output189.txt 
+python3 ../../ichec_run.py 1.74650258159 10.5143179028 1.62576715098 > ../output/17Apr2020/sep_output190.txt 
+python3 ../../ichec_run.py 2.35759756479 8.58143189224 0.81556799518 > ../output/17Apr2020/sep_output191.txt 
+python3 ../../ichec_run.py 3.07868910669 14.3398152213 5.14842731417 > ../output/17Apr2020/sep_output192.txt 
+python3 ../../ichec_run.py 3.55607088044 6.35541458209 3.25546991226 > ../output/17Apr2020/sep_output193.txt 
+python3 ../../ichec_run.py 1.68592272907 8.07684009327 1.99132818137 > ../output/17Apr2020/sep_output194.txt 
+python3 ../../ichec_run.py 0.904969572192 14.5352688783 3.34548988574 > ../output/17Apr2020/sep_output195.txt 
+python3 ../../ichec_run.py 1.53524694203 15.2977416978 0.96829455022 > ../output/17Apr2020/sep_output196.txt 
+python3 ../../ichec_run.py 2.17906966038 12.5585035068 3.14683654166 > ../output/17Apr2020/sep_output197.txt 
+python3 ../../ichec_run.py 2.64269470812 6.41583077513 0.762832691871 > ../output/17Apr2020/sep_output198.txt 
+python3 ../../ichec_run.py 0.677787104216 7.3060731 0.629296245302 > ../output/17Apr2020/sep_output199.txt 
+python3 ../../ichec_run.py 1.14637449179 11.0157575387 1.0400371502 > ../output/17Apr2020/sep_output200.txt 
+python3 ../../ichec_run.py 0.327340096864 11.9703687596 1.08486447073 > ../output/17Apr2020/sep_output201.txt 
+python3 ../../ichec_run.py 1.45257975398 5.8378274197 3.74480384372 > ../output/17Apr2020/sep_output202.txt 
+python3 ../../ichec_run.py 1.14724793317 12.0573561555 3.22238021673 > ../output/17Apr2020/sep_output203.txt 
+python3 ../../ichec_run.py 2.89532940345 7.95160633279 3.3555687053 > ../output/17Apr2020/sep_output204.txt 
+python3 ../../ichec_run.py 2.82716453347 12.0824223588 2.43317194297 > ../output/17Apr2020/sep_output205.txt 
+python3 ../../ichec_run.py 1.98232366756 13.3030125142 1.08979183049 > ../output/17Apr2020/sep_output206.txt 
+python3 ../../ichec_run.py 3.20557867379 7.22129931202 1.1107569751 > ../output/17Apr2020/sep_output207.txt 
+python3 ../../ichec_run.py 1.72922463703 8.66866451026 3.30449772577 > ../output/17Apr2020/sep_output208.txt 
+python3 ../../ichec_run.py 5.91188655615 6.28251908945 1.47782591659 > ../output/17Apr2020/sep_output209.txt 
+python3 ../../ichec_run.py 0.806999418666 7.77128548511 1.36509576607 > ../output/17Apr2020/sep_output210.txt 
+python3 ../../ichec_run.py 3.93881658172 8.47758428613 3.23809420162 > ../output/17Apr2020/sep_output211.txt 
+python3 ../../ichec_run.py 3.22085440898 11.0541841663 0.492765705562 > ../output/17Apr2020/sep_output212.txt 
+python3 ../../ichec_run.py 1.09262239798 6.35387020972 0.975159294445 > ../output/17Apr2020/sep_output213.txt 
+python3 ../../ichec_run.py 2.61461978129 8.06727524897 0.561971922186 > ../output/17Apr2020/sep_output214.txt 
+python3 ../../ichec_run.py 0.509576210756 12.5246072146 3.95664802011 > ../output/17Apr2020/sep_output215.txt 
+python3 ../../ichec_run.py 1.5090359763 11.7581984268 3.72106904823 > ../output/17Apr2020/sep_output216.txt 
+python3 ../../ichec_run.py 1.73249306943 10.8952545447 0.966285271206 > ../output/17Apr2020/sep_output217.txt 
+python3 ../../ichec_run.py 0.945161560468 10.4334060068 3.06722009559 > ../output/17Apr2020/sep_output218.txt 
+python3 ../../ichec_run.py 0.879001322947 5.92893216904 3.37740425185 > ../output/17Apr2020/sep_output219.txt 
+python3 ../../ichec_run.py 1.7264641271 8.60336739067 1.40636891002 > ../output/17Apr2020/sep_output220.txt 
+python3 ../../ichec_run.py 0.723794800184 9.80357036302 2.14683225572 > ../output/17Apr2020/sep_output221.txt 
+python3 ../../ichec_run.py 1.68001674073 5.4218941148 2.92955067452 > ../output/17Apr2020/sep_output222.txt 
+python3 ../../ichec_run.py 2.84145979348 14.5845254184 1.46066508144 > ../output/17Apr2020/sep_output223.txt 
+python3 ../../ichec_run.py 1.88452022394 6.3658303897 0.41684120321 > ../output/17Apr2020/sep_output224.txt 
+python3 ../../ichec_run.py 1.18326110657 14.4312274409 1.86236868688 > ../output/17Apr2020/sep_output225.txt 
+python3 ../../ichec_run.py 2.17317629834 12.411224677 0.476408906179 > ../output/17Apr2020/sep_output226.txt 
+python3 ../../ichec_run.py 3.75174051535 10.2724087196 3.01723107752 > ../output/17Apr2020/sep_output227.txt 
+python3 ../../ichec_run.py 1.11069282955 12.6394479026 2.41355979648 > ../output/17Apr2020/sep_output228.txt 
+python3 ../../ichec_run.py 5.40999420337 7.04049501692 2.45446829166 > ../output/17Apr2020/sep_output229.txt 
+python3 ../../ichec_run.py 1.04203532456 13.6497263529 4.46860258684 > ../output/17Apr2020/sep_output230.txt 
+python3 ../../ichec_run.py 0.264225556236 15.1370120299 2.38032586222 > ../output/17Apr2020/sep_output231.txt 
+python3 ../../ichec_run.py 3.3940160734 6.39325025676 0.566885614146 > ../output/17Apr2020/sep_output232.txt 
+python3 ../../ichec_run.py 1.42643919196 8.27713990917 4.16899358082 > ../output/17Apr2020/sep_output233.txt 
+python3 ../../ichec_run.py 0.770123652853 11.1722667586 2.59459332246 > ../output/17Apr2020/sep_output234.txt 
+python3 ../../ichec_run.py 0.493424018837 15.566740571 3.94197490964 > ../output/17Apr2020/sep_output235.txt 
+python3 ../../ichec_run.py 1.72450057169 15.9521352153 4.80057857296 > ../output/17Apr2020/sep_output236.txt 
+python3 ../../ichec_run.py 1.13809156041 9.01031825175 3.58627671876 > ../output/17Apr2020/sep_output237.txt 
+python3 ../../ichec_run.py 2.77673272511 12.4909970904 1.5328435822 > ../output/17Apr2020/sep_output238.txt 
+python3 ../../ichec_run.py 3.88836219227 14.0419953033 5.6509682196 > ../output/17Apr2020/sep_output239.txt 
+python3 ../../ichec_run.py 3.44791661383 7.49821204209 2.70462677338 > ../output/17Apr2020/sep_output240.txt 
+python3 ../../ichec_run.py 6.37101257418 8.69394414608 0.409993847623 > ../output/17Apr2020/sep_output241.txt 
+python3 ../../ichec_run.py 1.77517987573 8.57733762752 2.27683532998 > ../output/17Apr2020/sep_output242.txt 
+python3 ../../ichec_run.py 1.21762246714 11.3606085244 1.85202925448 > ../output/17Apr2020/sep_output243.txt 
+python3 ../../ichec_run.py 0.48082431922 12.351985055 3.97013830707 > ../output/17Apr2020/sep_output244.txt 
+python3 ../../ichec_run.py 2.41377869384 11.1380267385 0.32047499457 > ../output/17Apr2020/sep_output245.txt 
+python3 ../../ichec_run.py 2.33912310273 8.24834901123 1.96142266144 > ../output/17Apr2020/sep_output246.txt 
+python3 ../../ichec_run.py 2.93412844511 11.1089517011 3.63844088582 > ../output/17Apr2020/sep_output247.txt 
+python3 ../../ichec_run.py 2.31243841559 5.1886806233 0.833235721789 > ../output/17Apr2020/sep_output248.txt 
+python3 ../../ichec_run.py 1.03861860888 14.85049587 0.45413127323 > ../output/17Apr2020/sep_output249.txt 
+python3 ../../ichec_run.py 0.927157033091 6.56827492483 2.13545634492 > ../output/17Apr2020/sep_output250.txt 
+python3 ../../ichec_run.py 2.32271417968 19.4763743711 3.0078217482 > ../output/17Apr2020/sep_output251.txt 
+python3 ../../ichec_run.py 1.25683642052 12.4734173368 0.999124738159 > ../output/17Apr2020/sep_output252.txt 
+python3 ../../ichec_run.py 1.33018795119 7.98162878653 3.5347004873 > ../output/17Apr2020/sep_output253.txt 
+python3 ../../ichec_run.py 5.77536937592 8.24882953374 1.66994409668 > ../output/17Apr2020/sep_output254.txt 
+python3 ../../ichec_run.py 2.8918194647 9.2067532546 0.901157846074 > ../output/17Apr2020/sep_output255.txt 
+python3 ../../ichec_run.py 3.36724596578 9.16352998222 1.49983926406 > ../output/17Apr2020/sep_output256.txt 
+python3 ../../ichec_run.py 0.842877444797 10.3907271319 1.61455150418 > ../output/17Apr2020/sep_output257.txt 
+python3 ../../ichec_run.py 6.10979971006 18.9835414264 0.872682173142 > ../output/17Apr2020/sep_output258.txt 
+python3 ../../ichec_run.py 0.512159425612 9.97048631524 1.65586171947 > ../output/17Apr2020/sep_output259.txt 
+python3 ../../ichec_run.py 0.794476572363 5.80751535908 1.64125911141 > ../output/17Apr2020/sep_output260.txt 
+python3 ../../ichec_run.py 1.9567893625 9.93786070661 2.47173643466 > ../output/17Apr2020/sep_output261.txt 
+python3 ../../ichec_run.py 1.14342371469 6.55418301527 1.4168344398 > ../output/17Apr2020/sep_output262.txt 
+python3 ../../ichec_run.py 3.26052454212 7.09247329006 0.744037394877 > ../output/17Apr2020/sep_output263.txt 
+python3 ../../ichec_run.py 0.459097180325 5.80593135703 1.27151678029 > ../output/17Apr2020/sep_output264.txt 
+python3 ../../ichec_run.py 1.94380957574 9.02734765824 2.80550024174 > ../output/17Apr2020/sep_output265.txt 
+python3 ../../ichec_run.py 1.02266378482 10.6889271987 5.63423494277 > ../output/17Apr2020/sep_output266.txt 
+python3 ../../ichec_run.py 2.34630003578 9.59244467342 0.979440203825 > ../output/17Apr2020/sep_output267.txt 
+python3 ../../ichec_run.py 1.04019917513 15.6098194372 1.81191497814 > ../output/17Apr2020/sep_output268.txt 
+python3 ../../ichec_run.py 0.316720817302 4.81194966621 3.10555887117 > ../output/17Apr2020/sep_output269.txt 
+python3 ../../ichec_run.py 3.42054176792 6.3211111548 2.86881606734 > ../output/17Apr2020/sep_output270.txt 
+python3 ../../ichec_run.py 1.55016379192 8.19783150493 1.96359785788 > ../output/17Apr2020/sep_output271.txt 
+python3 ../../ichec_run.py 3.93465078904 6.95648132265 1.24859801979 > ../output/17Apr2020/sep_output272.txt 
+python3 ../../ichec_run.py 4.18341275324 7.71084749988 1.94611798795 > ../output/17Apr2020/sep_output273.txt 
+python3 ../../ichec_run.py 1.0759242971 9.53803344204 0.977063648127 > ../output/17Apr2020/sep_output274.txt 
+python3 ../../ichec_run.py 5.01347159096 8.83664358133 0.483881615779 > ../output/17Apr2020/sep_output275.txt 
+python3 ../../ichec_run.py 2.50096292447 9.86133814891 1.28502018422 > ../output/17Apr2020/sep_output276.txt 
+python3 ../../ichec_run.py 2.45759187101 6.88359226788 2.91954430817 > ../output/17Apr2020/sep_output277.txt 
+python3 ../../ichec_run.py 3.05473121916 8.48389310667 0.523173661761 > ../output/17Apr2020/sep_output278.txt 
+python3 ../../ichec_run.py 1.30011753987 11.0305736825 2.46167994184 > ../output/17Apr2020/sep_output279.txt 
+python3 ../../ichec_run.py 5.38819563754 9.26647984648 2.06146138769 > ../output/17Apr2020/sep_output280.txt 
+python3 ../../ichec_run.py 1.9048214053 9.42579709991 0.246669532 > ../output/17Apr2020/sep_output281.txt 
+python3 ../../ichec_run.py 0.135838942082 10.9519218774 3.99997689095 > ../output/17Apr2020/sep_output282.txt 
+python3 ../../ichec_run.py 2.36363894669 4.28318084335 1.91543524143 > ../output/17Apr2020/sep_output283.txt 
+python3 ../../ichec_run.py 0.976495094609 7.29197520002 3.1993156596 > ../output/17Apr2020/sep_output284.txt 
+python3 ../../ichec_run.py 1.69083641137 11.093647193 2.26050224199 > ../output/17Apr2020/sep_output285.txt 
+python3 ../../ichec_run.py 1.9690290514 5.65274305092 1.40298127856 > ../output/17Apr2020/sep_output286.txt 
+python3 ../../ichec_run.py 3.91692237645 11.5834196075 0.977657803807 > ../output/17Apr2020/sep_output287.txt 
+python3 ../../ichec_run.py 2.5389158759 10.2464161963 2.72483531658 > ../output/17Apr2020/sep_output288.txt 
+python3 ../../ichec_run.py 2.67803862181 21.4103532174 1.10658809946 > ../output/17Apr2020/sep_output289.txt 
+python3 ../../ichec_run.py 4.02723878825 8.72285250693 2.25875928676 > ../output/17Apr2020/sep_output290.txt 
+python3 ../../ichec_run.py 1.73029466947 9.96073579954 5.50111912078 > ../output/17Apr2020/sep_output291.txt 
+python3 ../../ichec_run.py 0.565422868836 9.91484452308 3.64424643076 > ../output/17Apr2020/sep_output292.txt 
+python3 ../../ichec_run.py 0.603611011501 4.31513990367 0.290646085737 > ../output/17Apr2020/sep_output293.txt 
+python3 ../../ichec_run.py 0.687123987458 11.2313217446 1.21853929278 > ../output/17Apr2020/sep_output294.txt 
+python3 ../../ichec_run.py 0.835273522017 8.60799399819 2.62325186875 > ../output/17Apr2020/sep_output295.txt 
+python3 ../../ichec_run.py 2.89780386012 8.89659577703 2.39187056535 > ../output/17Apr2020/sep_output296.txt 
+python3 ../../ichec_run.py 3.55930082836 8.11266892075 0.919238502428 > ../output/17Apr2020/sep_output297.txt 
+python3 ../../ichec_run.py 1.52284543664 11.3828312951 1.40643783662 > ../output/17Apr2020/sep_output298.txt 
+python3 ../../ichec_run.py 2.5494836226 10.947369126 1.68931941073 > ../output/17Apr2020/sep_output299.txt 
+python3 ../../ichec_run.py 1.93825980711 6.58165251257 1.88586807783 > ../output/17Apr2020/sep_output300.txt 
+python3 ../../ichec_run.py 1.16489426719 11.1282225708 2.08159377552 > ../output/17Apr2020/sep_output301.txt 
+python3 ../../ichec_run.py 1.58604780499 20.6260334544 0.14418168106 > ../output/17Apr2020/sep_output302.txt 
+python3 ../../ichec_run.py 2.90344085682 12.3950883851 0.448724847819 > ../output/17Apr2020/sep_output303.txt 
+python3 ../../ichec_run.py 2.06487316715 8.64750563114 4.19449566344 > ../output/17Apr2020/sep_output304.txt 
+python3 ../../ichec_run.py 1.3478376421 19.0320837077 1.56315760914 > ../output/17Apr2020/sep_output305.txt 
+python3 ../../ichec_run.py 5.04259006939 8.73836709258 3.69136068086 > ../output/17Apr2020/sep_output306.txt 
+python3 ../../ichec_run.py 2.3193997405 12.0858459261 1.79018335244 > ../output/17Apr2020/sep_output307.txt 
+python3 ../../ichec_run.py 3.18887673668 8.67016774532 2.27772687815 > ../output/17Apr2020/sep_output308.txt 
+python3 ../../ichec_run.py 1.59547655724 13.6643948926 4.50057597537 > ../output/17Apr2020/sep_output309.txt 
+python3 ../../ichec_run.py 0.583347536491 6.55055445943 1.13185289338 > ../output/17Apr2020/sep_output310.txt 
+python3 ../../ichec_run.py 0.157181670001 11.1757149285 1.68155260783 > ../output/17Apr2020/sep_output311.txt 
+python3 ../../ichec_run.py 1.93072732498 11.2956683073 4.35999833289 > ../output/17Apr2020/sep_output312.txt 
+python3 ../../ichec_run.py 2.29665247087 9.76374572521 2.04070556102 > ../output/17Apr2020/sep_output313.txt 
+python3 ../../ichec_run.py 1.52208766678 9.35761014889 3.43634916365 > ../output/17Apr2020/sep_output314.txt 
+python3 ../../ichec_run.py 2.54935757203 10.477516722 2.53211952058 > ../output/17Apr2020/sep_output315.txt 
+python3 ../../ichec_run.py 1.9298464511 15.6968970229 5.62778344441 > ../output/17Apr2020/sep_output316.txt 
+python3 ../../ichec_run.py 1.44919056959 5.80968237513 0.745285655638 > ../output/17Apr2020/sep_output317.txt 
+python3 ../../ichec_run.py 3.08900243897 12.1128847089 1.26969234855 > ../output/17Apr2020/sep_output318.txt 
+python3 ../../ichec_run.py 1.86851527236 16.8712025471 4.04942301692 > ../output/17Apr2020/sep_output319.txt 
+python3 ../../ichec_run.py 4.63739177264 9.34599921179 0.582014003425 > ../output/17Apr2020/sep_output320.txt 
+python3 ../../ichec_run.py 0.689979337162 10.0385839026 1.24645641256 > ../output/17Apr2020/sep_output321.txt 
+python3 ../../ichec_run.py 2.8803956921 6.98770882514 1.82318137263 > ../output/17Apr2020/sep_output322.txt 
+python3 ../../ichec_run.py 1.54836011467 11.104395138 4.39424908767 > ../output/17Apr2020/sep_output323.txt 
+python3 ../../ichec_run.py 1.33132262054 8.84857070455 0.205994151106 > ../output/17Apr2020/sep_output324.txt 
+python3 ../../ichec_run.py 1.2828350712 14.6234130078 0.901931595954 > ../output/17Apr2020/sep_output325.txt 
+python3 ../../ichec_run.py 0.408901086901 14.1966858759 0.443024590618 > ../output/17Apr2020/sep_output326.txt 
+python3 ../../ichec_run.py 0.327545992038 9.64914482955 1.81251089383 > ../output/17Apr2020/sep_output327.txt 
+python3 ../../ichec_run.py 3.65148644975 13.7571658913 0.956155317994 > ../output/17Apr2020/sep_output328.txt 
+python3 ../../ichec_run.py 1.24881515063 6.15837872416 3.22618205902 > ../output/17Apr2020/sep_output329.txt 
+python3 ../../ichec_run.py 3.62190324662 14.4518281089 2.75407240975 > ../output/17Apr2020/sep_output330.txt 
+python3 ../../ichec_run.py 1.43229906936 17.2391910309 2.61377724027 > ../output/17Apr2020/sep_output331.txt 
+python3 ../../ichec_run.py 0.697626527012 10.3311574083 1.15386095506 > ../output/17Apr2020/sep_output332.txt 
+python3 ../../ichec_run.py 1.09481459399 10.3603721627 1.97716385144 > ../output/17Apr2020/sep_output333.txt 
+python3 ../../ichec_run.py 0.957182440029 10.3271217076 1.58922426063 > ../output/17Apr2020/sep_output334.txt 
+python3 ../../ichec_run.py 1.66788486604 12.4702941442 2.42422750008 > ../output/17Apr2020/sep_output335.txt 
+python3 ../../ichec_run.py 10.8525721432 6.23836758401 4.0325701234 > ../output/17Apr2020/sep_output336.txt 
+python3 ../../ichec_run.py 3.38174762901 6.37561438645 3.00158087567 > ../output/17Apr2020/sep_output337.txt 
+python3 ../../ichec_run.py 2.20130734145 16.8657802712 4.3474546957 > ../output/17Apr2020/sep_output338.txt 
+python3 ../../ichec_run.py 2.36305420764 11.7718508974 2.13070991831 > ../output/17Apr2020/sep_output339.txt 
+python3 ../../ichec_run.py 0.329157298357 8.62213866137 1.34976333341 > ../output/17Apr2020/sep_output340.txt 
+python3 ../../ichec_run.py 2.36320373016 9.51070936716 0.982686116434 > ../output/17Apr2020/sep_output341.txt 
+python3 ../../ichec_run.py 6.16025646327 12.4569725706 1.66257165267 > ../output/17Apr2020/sep_output342.txt 
+python3 ../../ichec_run.py 1.18181189589 7.61728957046 0.64209447046 > ../output/17Apr2020/sep_output343.txt 
+python3 ../../ichec_run.py 4.71902168137 15.1627633744 3.25868315969 > ../output/17Apr2020/sep_output344.txt 
+python3 ../../ichec_run.py 0.45222474304 11.3611253012 1.90537144095 > ../output/17Apr2020/sep_output345.txt 
+python3 ../../ichec_run.py 1.47667327017 7.22085835275 0.4540825829 > ../output/17Apr2020/sep_output346.txt 
+python3 ../../ichec_run.py 0.803888597444 7.49949721659 3.01144687896 > ../output/17Apr2020/sep_output347.txt 
+python3 ../../ichec_run.py 4.19498638067 13.4227724832 1.74014839255 > ../output/17Apr2020/sep_output348.txt 
+python3 ../../ichec_run.py 2.7271755393 11.0989103677 3.61554173 > ../output/17Apr2020/sep_output349.txt 
+python3 ../../ichec_run.py 0.762113364184 10.1683286247 0.99659327196 > ../output/17Apr2020/sep_output350.txt 
+python3 ../../ichec_run.py 1.34829939171 7.8106171396 0.474753709844 > ../output/17Apr2020/sep_output351.txt 
+python3 ../../ichec_run.py 2.5319507458 13.5331558615 0.7679523502 > ../output/17Apr2020/sep_output352.txt 
+python3 ../../ichec_run.py 1.44230636524 6.74521667416 1.9756705349 > ../output/17Apr2020/sep_output353.txt 
+python3 ../../ichec_run.py 2.86408229569 16.6232251977 2.30554367826 > ../output/17Apr2020/sep_output354.txt 
+python3 ../../ichec_run.py 3.45146811859 7.23839626464 0.338585079402 > ../output/17Apr2020/sep_output355.txt 
+python3 ../../ichec_run.py 1.11921220247 6.80905225087 0.63051618616 > ../output/17Apr2020/sep_output356.txt 
+python3 ../../ichec_run.py 2.90917917861 9.96217677181 1.53053555419 > ../output/17Apr2020/sep_output357.txt 
+python3 ../../ichec_run.py 1.43383439707 11.3188467712 3.58354530207 > ../output/17Apr2020/sep_output358.txt 
+python3 ../../ichec_run.py 1.6893437958 12.9155230092 2.62262488424 > ../output/17Apr2020/sep_output359.txt 
+python3 ../../ichec_run.py 1.20575279882 11.2428431752 1.29952651929 > ../output/17Apr2020/sep_output360.txt 
+python3 ../../ichec_run.py 1.79435680942 8.6897463844 2.14172581822 > ../output/17Apr2020/sep_output361.txt 
+python3 ../../ichec_run.py 1.73493385189 9.50887559385 0.646306880052 > ../output/17Apr2020/sep_output362.txt 
+python3 ../../ichec_run.py 0.138163871536 8.91308786208 0.486265504764 > ../output/17Apr2020/sep_output363.txt 
+python3 ../../ichec_run.py 0.771936855431 9.45448401092 3.68609533011 > ../output/17Apr2020/sep_output364.txt 
+python3 ../../ichec_run.py 1.63326081391 18.8947528587 2.49917274599 > ../output/17Apr2020/sep_output365.txt 
+python3 ../../ichec_run.py 5.68842494635 6.1836265171 1.83996205413 > ../output/17Apr2020/sep_output366.txt 
+python3 ../../ichec_run.py 0.264636082481 11.0736091414 0.889706421804 > ../output/17Apr2020/sep_output367.txt 
+python3 ../../ichec_run.py 1.15513468145 4.30055801659 2.97264617348 > ../output/17Apr2020/sep_output368.txt 
+python3 ../../ichec_run.py 1.51514735764 5.81195344868 3.86450811405 > ../output/17Apr2020/sep_output369.txt 
+python3 ../../ichec_run.py 1.13793119862 8.14321386732 2.06145281579 > ../output/17Apr2020/sep_output370.txt 
+python3 ../../ichec_run.py 3.62044435561 12.1413736026 1.80540229445 > ../output/17Apr2020/sep_output371.txt 
+python3 ../../ichec_run.py 1.31129042674 11.8811801378 3.02461928178 > ../output/17Apr2020/sep_output372.txt 
+python3 ../../ichec_run.py 5.34569407115 11.1653129897 1.51082509074 > ../output/17Apr2020/sep_output373.txt 
+python3 ../../ichec_run.py 0.835431855193 5.29108414412 1.88422357314 > ../output/17Apr2020/sep_output374.txt 
+python3 ../../ichec_run.py 0.558695101524 14.4814003706 1.07330909162 > ../output/17Apr2020/sep_output375.txt 
+python3 ../../ichec_run.py 1.2824026023 7.61948190672 0.456660971916 > ../output/17Apr2020/sep_output376.txt 
+python3 ../../ichec_run.py 4.63184514803 5.19888207765 2.69271573862 > ../output/17Apr2020/sep_output377.txt 
+python3 ../../ichec_run.py 0.55025829479 11.4800933714 1.43381014626 > ../output/17Apr2020/sep_output378.txt 
+python3 ../../ichec_run.py 0.989277478978 7.16542654908 2.61895920501 > ../output/17Apr2020/sep_output379.txt 
+python3 ../../ichec_run.py 3.00723975614 11.1042153969 4.17918716425 > ../output/17Apr2020/sep_output380.txt 
+python3 ../../ichec_run.py 1.11837784068 11.6306668195 4.70426747894 > ../output/17Apr2020/sep_output381.txt 
+python3 ../../ichec_run.py 3.42168201503 8.60064066994 4.68192657408 > ../output/17Apr2020/sep_output382.txt 
+python3 ../../ichec_run.py 0.311137261225 21.5359948972 0.264485463152 > ../output/17Apr2020/sep_output383.txt 
+python3 ../../ichec_run.py 1.19382976644 10.0256322363 3.8160380835 > ../output/17Apr2020/sep_output384.txt 
+python3 ../../ichec_run.py 1.0266878265 8.67750020095 2.56933429613 > ../output/17Apr2020/sep_output385.txt 
+python3 ../../ichec_run.py 0.547297351469 10.5278304139 4.47304605785 > ../output/17Apr2020/sep_output386.txt 
+python3 ../../ichec_run.py 0.423093730318 7.33968891617 0.310426368431 > ../output/17Apr2020/sep_output387.txt 
+python3 ../../ichec_run.py 0.434234454436 9.04092703622 0.266746506317 > ../output/17Apr2020/sep_output388.txt 
+python3 ../../ichec_run.py 1.44258304482 12.1916602325 3.52046853554 > ../output/17Apr2020/sep_output389.txt 
+python3 ../../ichec_run.py 2.54519818441 9.81597548849 1.04149641688 > ../output/17Apr2020/sep_output390.txt 
+python3 ../../ichec_run.py 1.37597244062 11.8533591216 2.13416242409 > ../output/17Apr2020/sep_output391.txt 
+python3 ../../ichec_run.py 6.53660304195 7.3211977902 0.420448041972 > ../output/17Apr2020/sep_output392.txt 
+python3 ../../ichec_run.py 1.24003314034 15.3643904949 2.31437038888 > ../output/17Apr2020/sep_output393.txt 
+python3 ../../ichec_run.py 1.49053215862 14.2512241162 2.46009904693 > ../output/17Apr2020/sep_output394.txt 
+python3 ../../ichec_run.py 3.36084876093 8.95532304393 0.892867442922 > ../output/17Apr2020/sep_output395.txt 
+python3 ../../ichec_run.py 1.37229717475 10.8358242771 1.6178336208 > ../output/17Apr2020/sep_output396.txt 
+python3 ../../ichec_run.py 0.158442022763 8.04378269155 2.52517268444 > ../output/17Apr2020/sep_output397.txt 
+python3 ../../ichec_run.py 3.26309044907 8.42531815235 2.18987084124 > ../output/17Apr2020/sep_output398.txt 
+python3 ../../ichec_run.py 1.31028413729 10.349566152 3.1372308765 > ../output/17Apr2020/sep_output399.txt 
+python3 ../../ichec_run.py 2.78155526623 6.44028641698 3.1271211934 > ../output/17Apr2020/sep_output400.txt 
+python3 ../../ichec_run.py 4.66404304345 8.68704222339 1.34848107095 > ../output/17Apr2020/sep_output401.txt 
+python3 ../../ichec_run.py 3.67669153244 14.9924990872 2.74750742323 > ../output/17Apr2020/sep_output402.txt 
+python3 ../../ichec_run.py 1.81765625286 7.8887852893 2.41779585635 > ../output/17Apr2020/sep_output403.txt 
+python3 ../../ichec_run.py 1.84329524359 11.6524191112 4.1101008436 > ../output/17Apr2020/sep_output404.txt 
+python3 ../../ichec_run.py 2.64467265167 5.21735163363 0.611667166856 > ../output/17Apr2020/sep_output405.txt 
+python3 ../../ichec_run.py 1.81095409879 6.8582825116 2.21202615506 > ../output/17Apr2020/sep_output406.txt 
+python3 ../../ichec_run.py 2.58043598063 7.92642713634 1.35385409101 > ../output/17Apr2020/sep_output407.txt 
+python3 ../../ichec_run.py 0.742165943784 7.41731104135 3.43872301788 > ../output/17Apr2020/sep_output408.txt 
+python3 ../../ichec_run.py 0.587535411474 9.83580739136 2.54213191854 > ../output/17Apr2020/sep_output409.txt 
+python3 ../../ichec_run.py 1.33666892091 10.8041023044 0.858598238766 > ../output/17Apr2020/sep_output410.txt 
+python3 ../../ichec_run.py 2.54810927947 9.30429584979 1.69015801938 > ../output/17Apr2020/sep_output411.txt 
+python3 ../../ichec_run.py 2.32991296575 11.7051266568 1.04171886501 > ../output/17Apr2020/sep_output412.txt 
+python3 ../../ichec_run.py 2.78098737498 6.30308282836 2.17355987972 > ../output/17Apr2020/sep_output413.txt 
+python3 ../../ichec_run.py 1.14337520737 8.69971499665 0.37818953942 > ../output/17Apr2020/sep_output414.txt 
+python3 ../../ichec_run.py 1.90274995473 10.1711699759 1.12566300164 > ../output/17Apr2020/sep_output415.txt 
+python3 ../../ichec_run.py 1.4395861224 4.35960612659 2.80023058915 > ../output/17Apr2020/sep_output416.txt 
+python3 ../../ichec_run.py 1.89713930026 11.4745579593 1.00226363281 > ../output/17Apr2020/sep_output417.txt 
+python3 ../../ichec_run.py 2.5359467854 14.3120384552 4.19934300972 > ../output/17Apr2020/sep_output418.txt 
+python3 ../../ichec_run.py 3.46555729849 10.8269589597 1.84469535229 > ../output/17Apr2020/sep_output419.txt 
+python3 ../../ichec_run.py 0.604633250437 8.93063843289 1.32340626225 > ../output/17Apr2020/sep_output420.txt 
+python3 ../../ichec_run.py 3.3869069334 6.03821738737 4.83623958625 > ../output/17Apr2020/sep_output421.txt 
+python3 ../../ichec_run.py 2.37433827849 7.66931059381 2.96333568481 > ../output/17Apr2020/sep_output422.txt 
+python3 ../../ichec_run.py 0.45916777165 5.99235405928 1.50774452504 > ../output/17Apr2020/sep_output423.txt 
+python3 ../../ichec_run.py 3.14854472736 5.94619965153 0.958656788393 > ../output/17Apr2020/sep_output424.txt 
+python3 ../../ichec_run.py 0.719370668661 4.27658516863 0.714737302387 > ../output/17Apr2020/sep_output425.txt 
+python3 ../../ichec_run.py 2.40537790078 16.96855713 0.0801479548316 > ../output/17Apr2020/sep_output426.txt 
+python3 ../../ichec_run.py 3.27872696463 8.44766421707 7.92302632994 > ../output/17Apr2020/sep_output427.txt 
+python3 ../../ichec_run.py 0.680315248766 10.3599917319 0.757390742925 > ../output/17Apr2020/sep_output428.txt 
+python3 ../../ichec_run.py 2.70716623401 10.4784543216 0.66325878717 > ../output/17Apr2020/sep_output429.txt 
+python3 ../../ichec_run.py 0.70711520837 8.8083623222 0.465880724258 > ../output/17Apr2020/sep_output430.txt 
+python3 ../../ichec_run.py 0.9940220241 9.99157275164 3.30529882173 > ../output/17Apr2020/sep_output431.txt 
+python3 ../../ichec_run.py 1.01847335889 5.75191794068 1.09744867763 > ../output/17Apr2020/sep_output432.txt 
+python3 ../../ichec_run.py 0.797952512395 9.55959545894 2.86924009414 > ../output/17Apr2020/sep_output433.txt 
+python3 ../../ichec_run.py 5.21556436883 9.3628012418 0.692410437558 > ../output/17Apr2020/sep_output434.txt 
+python3 ../../ichec_run.py 0.772566417206 7.70099740003 0.560959541684 > ../output/17Apr2020/sep_output435.txt 
+python3 ../../ichec_run.py 1.29360897923 10.493618664 1.57958722907 > ../output/17Apr2020/sep_output436.txt 
+python3 ../../ichec_run.py 4.07205880549 9.58584599383 2.16394544436 > ../output/17Apr2020/sep_output437.txt 
+python3 ../../ichec_run.py 4.60963360714 12.0868958157 5.90804331145 > ../output/17Apr2020/sep_output438.txt 
+python3 ../../ichec_run.py 1.63374738139 7.66670695578 1.0333592187 > ../output/17Apr2020/sep_output439.txt 
+python3 ../../ichec_run.py 0.762371143828 18.0057190335 4.45776445441 > ../output/17Apr2020/sep_output440.txt 
+python3 ../../ichec_run.py 1.95811910763 11.1886345347 1.88978384455 > ../output/17Apr2020/sep_output441.txt 
+python3 ../../ichec_run.py 1.62304450134 9.22380441061 3.1564881268 > ../output/17Apr2020/sep_output442.txt 
+python3 ../../ichec_run.py 1.52504129043 6.27227128534 1.81626678327 > ../output/17Apr2020/sep_output443.txt 
+python3 ../../ichec_run.py 4.22978679768 9.30555368016 1.12685931503 > ../output/17Apr2020/sep_output444.txt 
+python3 ../../ichec_run.py 5.40083507979 11.0732437371 1.97659075867 > ../output/17Apr2020/sep_output445.txt 
+python3 ../../ichec_run.py 2.32034910183 5.30508255665 2.80184465656 > ../output/17Apr2020/sep_output446.txt 
+python3 ../../ichec_run.py 4.43948857133 9.57003222002 2.33683007155 > ../output/17Apr2020/sep_output447.txt 
+python3 ../../ichec_run.py 1.85511198616 9.42212083156 2.17173540851 > ../output/17Apr2020/sep_output448.txt 
+python3 ../../ichec_run.py 3.02516713746 7.18367798506 1.76748269316 > ../output/17Apr2020/sep_output449.txt 
+python3 ../../ichec_run.py 2.39642627892 8.25884028292 1.56571028223 > ../output/17Apr2020/sep_output450.txt 
+python3 ../../ichec_run.py 2.03662546666 9.75761847088 0.918392161904 > ../output/17Apr2020/sep_output451.txt 
+python3 ../../ichec_run.py 1.40222276952 10.8824453919 0.825915202952 > ../output/17Apr2020/sep_output452.txt 
+python3 ../../ichec_run.py 1.87621412255 10.0725823158 1.70556001684 > ../output/17Apr2020/sep_output453.txt 
+python3 ../../ichec_run.py 4.52826728028 13.6814308965 1.70461937328 > ../output/17Apr2020/sep_output454.txt 
+python3 ../../ichec_run.py 0.981938750386 16.6210359588 1.45697180896 > ../output/17Apr2020/sep_output455.txt 
+python3 ../../ichec_run.py 4.22477079612 10.4801069379 1.43450830057 > ../output/17Apr2020/sep_output456.txt 
+python3 ../../ichec_run.py 6.25994718932 6.42612334376 1.53055070972 > ../output/17Apr2020/sep_output457.txt 
+python3 ../../ichec_run.py 0.867685290283 4.69287620424 0.611745221541 > ../output/17Apr2020/sep_output458.txt 
+python3 ../../ichec_run.py 1.44247304866 4.03968456849 1.95054848554 > ../output/17Apr2020/sep_output459.txt 
+python3 ../../ichec_run.py 0.810880207526 7.84722403143 1.0526986922 > ../output/17Apr2020/sep_output460.txt 
+python3 ../../ichec_run.py 0.489973324009 13.6293409398 4.86521746453 > ../output/17Apr2020/sep_output461.txt 
+python3 ../../ichec_run.py 1.16857732817 14.9435894089 0.989176583648 > ../output/17Apr2020/sep_output462.txt 
+python3 ../../ichec_run.py 2.28939718517 6.2451923462 1.86313873471 > ../output/17Apr2020/sep_output463.txt 
+python3 ../../ichec_run.py 1.56259655164 9.10022631271 1.48269096859 > ../output/17Apr2020/sep_output464.txt 
+python3 ../../ichec_run.py 5.02857866437 14.3770062974 1.6416780496 > ../output/17Apr2020/sep_output465.txt 
+python3 ../../ichec_run.py 1.24566241411 10.0188837979 0.67097547032 > ../output/17Apr2020/sep_output466.txt 
+python3 ../../ichec_run.py 4.44530132248 18.7131163191 1.17236983369 > ../output/17Apr2020/sep_output467.txt 
+python3 ../../ichec_run.py 0.713623449013 5.41711113217 1.21220928971 > ../output/17Apr2020/sep_output468.txt 
+python3 ../../ichec_run.py 0.771529099826 5.22783584253 4.31556861898 > ../output/17Apr2020/sep_output469.txt 
+python3 ../../ichec_run.py 2.06811706563 13.651450701 1.30457493706 > ../output/17Apr2020/sep_output470.txt 
+python3 ../../ichec_run.py 1.84372459375 11.3882608571 0.81267270515 > ../output/17Apr2020/sep_output471.txt 
+python3 ../../ichec_run.py 2.65483985044 7.79162854024 0.980452084292 > ../output/17Apr2020/sep_output472.txt 
+python3 ../../ichec_run.py 2.84739164574 9.10989135266 0.637567199498 > ../output/17Apr2020/sep_output473.txt 
+python3 ../../ichec_run.py 2.29807087147 9.38719319519 2.80051524428 > ../output/17Apr2020/sep_output474.txt 
+python3 ../../ichec_run.py 0.292360189879 10.8040062312 0.467237458995 > ../output/17Apr2020/sep_output475.txt 
+python3 ../../ichec_run.py 1.13825116061 8.93293725294 0.55664769489 > ../output/17Apr2020/sep_output476.txt 
+python3 ../../ichec_run.py 0.345485892771 7.56398194317 0.695314361534 > ../output/17Apr2020/sep_output477.txt 
+python3 ../../ichec_run.py 0.810495378475 11.5784223192 3.42395353263 > ../output/17Apr2020/sep_output478.txt 
+python3 ../../ichec_run.py 2.09554750951 9.13567754257 3.68598970642 > ../output/17Apr2020/sep_output479.txt 
+python3 ../../ichec_run.py 1.49350231205 14.4023416949 4.17381648907 > ../output/17Apr2020/sep_output480.txt 
+python3 ../../ichec_run.py 7.36565093152 11.2964888358 4.04805373291 > ../output/17Apr2020/sep_output481.txt 
+python3 ../../ichec_run.py 2.28360723337 13.4735882742 2.67186586407 > ../output/17Apr2020/sep_output482.txt 
+python3 ../../ichec_run.py 1.32147124215 14.2419790097 2.19162903374 > ../output/17Apr2020/sep_output483.txt 
+python3 ../../ichec_run.py 1.57400997607 6.12070744221 2.56176475842 > ../output/17Apr2020/sep_output484.txt 
+python3 ../../ichec_run.py 1.004447703 14.4435238219 0.435483801958 > ../output/17Apr2020/sep_output485.txt 
+python3 ../../ichec_run.py 1.84408740176 10.8804410905 4.82065915505 > ../output/17Apr2020/sep_output486.txt 
+python3 ../../ichec_run.py 0.303690316793 10.2454598321 2.78640838106 > ../output/17Apr2020/sep_output487.txt 
+python3 ../../ichec_run.py 1.59419682501 4.75383527597 0.616884352343 > ../output/17Apr2020/sep_output488.txt 
+python3 ../../ichec_run.py 1.86800287399 7.71362918653 2.3775919498 > ../output/17Apr2020/sep_output489.txt 
+python3 ../../ichec_run.py 1.30453165278 10.987367898 3.4793378922 > ../output/17Apr2020/sep_output490.txt 
+python3 ../../ichec_run.py 0.360072545217 7.71343546545 1.48935899387 > ../output/17Apr2020/sep_output491.txt 
+python3 ../../ichec_run.py 3.30848490459 9.57766649661 0.929038587875 > ../output/17Apr2020/sep_output492.txt 
+python3 ../../ichec_run.py 2.52820788816 9.80389710189 2.1764763996 > ../output/17Apr2020/sep_output493.txt 
+python3 ../../ichec_run.py 1.61077699082 10.5854189879 2.36840949292 > ../output/17Apr2020/sep_output494.txt 
+python3 ../../ichec_run.py 5.59986496057 14.5056501685 1.60742241344 > ../output/17Apr2020/sep_output495.txt 
+python3 ../../ichec_run.py 3.51845612517 14.6710705554 0.444110229567 > ../output/17Apr2020/sep_output496.txt 
+python3 ../../ichec_run.py 1.89103843532 9.06654540084 0.973124958274 > ../output/17Apr2020/sep_output497.txt 
+python3 ../../ichec_run.py 9.99857913836 5.26711358249 3.45790105221 > ../output/17Apr2020/sep_output498.txt 
+python3 ../../ichec_run.py 1.46411199223 12.0112543614 1.50393846422 > ../output/17Apr2020/sep_output499.txt 
