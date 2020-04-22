@@ -43,7 +43,7 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #             + ".txt \n") for i, j in zip(sep_dist, names)]
 
 [file.write("python3 ../../ichec_run.py " + str(speed) + " " + str(vis) + " " + str(sep)
-            + " > ../output/17Apr2020/output" + str(i)  # TODO: make sure date is correct
+            + " > ../output/22Apr2020/output" + str(i)  # TODO: make sure date is correct
             + ".txt \n") for speed, vis, sep, i in zip(speed_dist, vision_dist, sep_dist, names)]
 
 file.close()
