@@ -3,6 +3,12 @@ Script for generating the task list to run the taskfarm on the ICHEC cluster.
 The tasks are run based on a .txt file where each run is a task that passes in
 a unique value for the the prior that is varying in that script (speed, vision
 or separation) and has its own data output.
+
+The distribution I'm using is a Gamma distribution because it needs to be non-
+negative. I'm playing around with the parameters, but "a" is what the
+distribution is centered around, "loc" is the bottom end of the distribution
+(this is set to the default - 0), and "scale" is how far the distribution is
+spread.
 """
 
 from scipy.stats import gamma
@@ -12,9 +18,9 @@ import os
 runs = 10000  # TODO: Change for number of runs of the model
 
 # Prior distributions - Gamma
-speed_dist = gamma.rvs(size=runs, a=2)
-vision_dist = gamma.rvs(size=runs, a=10)
-sep_dist = gamma.rvs(size=runs, a=2)
+speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=0.5)
+vision_dist = gamma.rvs(size=runs, a=10, loc=0, scale=0.5)
+sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=0.5)
 
 # # Prior distributions - Lognormal
 # speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
