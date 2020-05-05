@@ -9,9 +9,9 @@ import numpy as np
 # vision_dist = np.random.lognormal(mean=10, sigma=1, size=10000)
 # sep_dist = np.random.lognormal(mean=2, sigma=1, size=10000)
 
-speed_dist = gamma.rvs(size=10000, a=2, loc=0, scale=0.5)
-vision_dist = gamma.rvs(size=10000, a=10, loc=0, scale=0.5)
-sep_dist = gamma.rvs(size=10000, a=2, loc=0, scale=0.5)
+speed_dist = gamma.rvs(size=10000, a=2, loc=0, scale=2)
+vision_dist = gamma.rvs(size=10000, a=5, loc=0, scale=2)
+sep_dist = gamma.rvs(size=10000, a=2, loc=0, scale=2)
 
 
 # Graph distributions
