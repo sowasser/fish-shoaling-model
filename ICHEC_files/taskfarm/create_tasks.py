@@ -18,9 +18,9 @@ import os
 runs = 10000  # TODO: Change for number of runs of the model
 
 # Prior distributions - Gamma
-speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=2)
-vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=2)
-sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=2)
+speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=10)
+vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=10)
+sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=10)
 
 # # Prior distributions - Lognormal
 # speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
@@ -53,7 +53,7 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 
 # For varying all parameters --------------------------------------------------
 [file.write("python3 ../../ichec_run.py " + str(speed) + " " + str(vis) + " " + str(sep)
-            + " > ../output/05May2020/output" + str(i)
+            + " > ../output/13May2020/output" + str(i)
             + ".txt \n") for speed, vis, sep, i in zip(speed_dist, vision_dist, sep_dist, names)]
 
 file.close()
