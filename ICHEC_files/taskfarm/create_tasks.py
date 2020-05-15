@@ -18,9 +18,9 @@ import os
 runs = 10000  # TODO: Change for number of runs of the model
 
 # Prior distributions - Gamma
-speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=3)
-vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=3)
-sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=3)
+speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=2)
+vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=2)
+sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=2)
 
 # # Prior distributions - Lognormal
 # speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
