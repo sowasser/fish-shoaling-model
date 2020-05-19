@@ -19,7 +19,7 @@ def run_model(speed_prior, vision_prior, sep_prior):
     values for that run, including the varying & fixed parameters so all
     dataframes can be stacked together.
     """
-    model = ShoalModel(n_fish=50,
+    model = ShoalModel(n_fish=200,
                        width=50,
                        height=50,
                        speed=speed_prior,
