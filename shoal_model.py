@@ -218,9 +218,9 @@ class ShoalModel(Model):
                  speed=2,
                  vision=10,
                  separation=2,
-                 cohere=0.025,
-                 separate=0.25,
-                 match=0.04):
+                 cohere=0.25,
+                 separate=0.025,
+                 match=0.3):
 
         self.n_fish = n_fish
         self.vision = vision
