@@ -44,14 +44,14 @@ def run_model(cohere_prior, separate_prior, match_prior):
 
 
 # Run model with test values
-model_data = run_model(40, 100, 40)
+model_data = run_model(0.25, 0.025, 0.4)
 
 # Re-name columns so all data will print & index with unique values for R.
 model_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",
                       "cent_max", "nnd_max", "polar_max", "area_max",
                       "cent_mean", "nnd_mean", "polar_mean", "area_mean",
                       "cent_std", "nnd_std", "polar_std", "area_std",
-                      "speed", "vision", "sep"]
+                      "cohere", "separate", "match"]
 
 pd.set_option("display.max_columns", None)  # display all columns
 pd.set_option("display.width", 1000)  # stop print from splitting columns on to new lines

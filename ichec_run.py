@@ -28,10 +28,10 @@ def run_model(cohere_prior, separate_prior, match_prior):
                        cohere=cohere_prior,
                        separate=separate_prior,
                        match=match_prior)
-    for step in range(50):  # number of steps to run the model for
+    for step in range(300):  # number of steps to run the model for
         model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
-    data_trim = data.iloc[10:, ]  # remove some # of early runs
+    data_trim = data.iloc[100:, ]  # remove some # of early runs
     # Condense data collectors into summary stats
     min = data_trim.min(axis=0)
     max = data_trim.max(axis=0)
@@ -52,7 +52,7 @@ model_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",
                       "cent_max", "nnd_max", "polar_max", "area_max",
                       "cent_mean", "nnd_mean", "polar_mean", "area_mean",
                       "cent_std", "nnd_std", "polar_std", "area_std",
-                      "speed", "vision", "sep"]
+                      "cohere", "separate", "match"]
 
 pd.set_option("display.max_columns", None)  # display all columns
 pd.set_option("display.width", 1000)  # stop print from splitting columns on to new lines

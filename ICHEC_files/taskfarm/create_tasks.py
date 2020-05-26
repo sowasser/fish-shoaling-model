@@ -18,9 +18,9 @@ import os
 runs = 1000  # TODO: Change for number of runs of the model
 
 # Prior distributions - Gamma
-cohere_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
-separate_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
-match_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
+cohere_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=runs) if i > 0]
+separate_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=runs) if i > 0]
+match_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=runs) if i > 0]
 
 # # Prior distributions - Lognormal
 # speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
