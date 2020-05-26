@@ -9,9 +9,9 @@ import numpy as np
 # vision_dist = np.random.lognormal(mean=10, sigma=1, size=10000)
 # sep_dist = np.random.lognormal(mean=2, sigma=1, size=10000)
 
-speed_dist = gamma.rvs(size=10000, a=2, loc=0, scale=5)
-vision_dist = gamma.rvs(size=10000, a=5, loc=0, scale=5)
-sep_dist = gamma.rvs(size=10000, a=2, loc=0, scale=5)
+cohere_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
+separate_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
+match_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
 
 
 # Graph distributions
@@ -19,17 +19,17 @@ plt.style.use("dark_background")
 fig = plt.figure(figsize=(6, 9))
 
 ax1 = fig.add_subplot(3, 1, 1)
-plt.title("speed")
+plt.title("cohere")
 #
 ax2 = fig.add_subplot(3, 1, 2)
-plt.title("vision")
+plt.title("separate")
 
 ax3 = fig.add_subplot(3, 1, 3)
-plt.title("separation")
+plt.title("match")
 
-ax1.hist(speed_dist, bins=50)
-ax2.hist(vision_dist, bins=50)
-ax3.hist(sep_dist, bins=50)
+ax1.hist(cohere_dist, bins=50)
+ax2.hist(separate_dist, bins=50)
+ax3.hist(match_dist, bins=50)
 
 plt.show()
 

@@ -15,12 +15,12 @@ from scipy.stats import gamma
 import numpy as np
 import os
 
-runs = 10000  # TODO: Change for number of runs of the model
+runs = 1000  # TODO: Change for number of runs of the model
 
 # Prior distributions - Gamma
-speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
-vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=1)
-sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
+cohere_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
+separate_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
+match_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
 
 # # Prior distributions - Lognormal
 # speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
@@ -51,8 +51,8 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #             + ".txt \n") for i, j in zip(sep_dist, names)]
 
 # For varying all parameters --------------------------------------------------
-[file.write("python3 ../../ichec_run.py " + str(speed) + " " + str(vis) + " " + str(sep)
-            + " > ../output/25May2020/output" + str(i)  # TODO: make sure date is correct
-            + ".txt \n") for speed, vis, sep, i in zip(speed_dist, vision_dist, sep_dist, names)]
+[file.write("python3 ../../ichec_run.py " + str(c) + " " + str(s) + " " + str(m)
+            + " > ../output/26May2020/output" + str(n)  # TODO: make sure date is correct
+            + ".txt \n") for c, s, m, n in zip(cohere_dist, separate_dist, match_dist, names)]
 
 file.close()
