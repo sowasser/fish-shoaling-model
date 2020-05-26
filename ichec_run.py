@@ -11,7 +11,7 @@ import pandas as pd
 import sys
 
 
-def run_model(speed_prior, vision_prior, sep_prior):
+def run_model(cohere_prior, separate_prior, match_prior):
     """
     Runs the shoal model for a certain number of steps with all of the
     parameters are fixed. Returns a dataframe with the average per run of all
@@ -22,22 +22,25 @@ def run_model(speed_prior, vision_prior, sep_prior):
     model = ShoalModel(n_fish=20,
                        width=50,
                        height=50,
-                       speed=speed_prior,
-                       vision=vision_prior,
-                       separation=sep_prior)
-    for step in range(300):  # number of steps to run the model for
+                       speed=2,
+                       vision=10,
+                       separation=2,
+                       cohere=cohere_prior,
+                       separate=separate_prior,
+                       match=match_prior)
+    for step in range(50):  # number of steps to run the model for
         model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
-    data_trim = data.iloc[100:, ]  # remove some # of early runs
+    data_trim = data.iloc[10:, ]  # remove some # of early runs
     # Condense data collectors into summary stats
     min = data_trim.min(axis=0)
     max = data_trim.max(axis=0)
     mean = data_trim.mean(axis=0)
     std = data_trim.std(axis=0)
     all_data = pd.concat([min, max, mean, std], axis=0)
-    all_data["speed"] = speed_prior  # add speed value column
-    all_data["vision"] = vision_prior  # add vision columnm
-    all_data["separation"] = sep_prior  # add separation column
+    all_data["cohere"] = cohere_prior  # add speed value column
+    all_data["separate"] = separate_prior  # add vision columnm
+    all_data["match"] = match_prior  # add separation column
     return pd.DataFrame(all_data).T
 
 
