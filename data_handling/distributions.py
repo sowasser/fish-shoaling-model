@@ -13,9 +13,9 @@ import numpy as np
 # separate_dist = [i for i in np.random.normal(loc=0.1, scale=0.2, size=1000) if i > 0]
 # match_dist = [i for i in np.random.normal(loc=0.4, scale=0.2, size=1000) if i > 0]
 
-cohere_dist = gamma.rvs(size=1000, a=0.2, scale=1)
-separate_dist = gamma.rvs(size=1000, a=0.02, scale=1)
-match_dist = gamma.rvs(size=1000, a=0.4, scale=1)
+cohere_dist = gamma.rvs(size=1000, a=0.2, scale=.1)
+separate_dist = gamma.rvs(size=1000, a=0.02, scale=.1)
+match_dist = gamma.rvs(size=1000, a=0.4, scale=.1)
 
 # Graph distributions
 plt.style.use("dark_background")

@@ -18,9 +18,9 @@ import os
 runs = 1000  # TODO: Change for number of runs of the model
 
 # Prior distributions - Gamma
-cohere_dist = gamma.rvs(size=1000, a=0.2, scale=1)
-separate_dist = gamma.rvs(size=1000, a=0.02, scale=1)
-match_dist = gamma.rvs(size=1000, a=0.4, scale=1)
+cohere_dist = gamma.rvs(size=runs, a=0.2, scale=.1)
+separate_dist = gamma.rvs(size=runs, a=0.02, scale=.1)
+match_dist = gamma.rvs(size=runs, a=0.4, scale=.1)
 
 # # Prior distributions - Lognormal
 # speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
