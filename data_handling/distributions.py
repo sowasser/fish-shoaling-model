@@ -9,10 +9,13 @@ import numpy as np
 # vision_dist = np.random.lognormal(mean=10, sigma=1, size=10000)
 # sep_dist = np.random.lognormal(mean=2, sigma=1, size=10000)
 
-cohere_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
-separate_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
-match_dist = [i for i in np.random.normal(loc=0.3, scale=0.1, size=1000) if i > 0]
+# cohere_dist = [i for i in np.random.normal(loc=0.2, scale=0.2, size=1000) if i > 0]
+# separate_dist = [i for i in np.random.normal(loc=0.1, scale=0.2, size=1000) if i > 0]
+# match_dist = [i for i in np.random.normal(loc=0.4, scale=0.2, size=1000) if i > 0]
 
+cohere_dist = gamma.rvs(size=1000, a=0.2, scale=1)
+separate_dist = gamma.rvs(size=1000, a=0.02, scale=1)
+match_dist = gamma.rvs(size=1000, a=0.4, scale=1)
 
 # Graph distributions
 plt.style.use("dark_background")
