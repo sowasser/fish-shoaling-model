@@ -13,9 +13,13 @@ import numpy as np
 # separate_dist = [i for i in np.random.normal(loc=0.1, scale=0.2, size=1000) if i > 0]
 # match_dist = [i for i in np.random.normal(loc=0.4, scale=0.2, size=1000) if i > 0]
 
-cohere_dist = gamma.rvs(size=1000, a=0.2, scale=.1)
-separate_dist = gamma.rvs(size=1000, a=0.02, scale=.1)
-match_dist = gamma.rvs(size=1000, a=0.4, scale=.1)
+# cohere_dist = gamma.rvs(size=100, a=0.2, scale=.1)
+# separate_dist = gamma.rvs(size=100, a=0.02, scale=.1)
+# match_dist = gamma.rvs(size=100, a=0.4, scale=.1)
+
+cohere_dist = np.random.uniform(0, 1, 100)
+separate_dist = np.random.uniform(0, 1, 100)
+match_dist = np.random.uniform(0, 1, 100)
 
 # Graph distributions
 plt.style.use("dark_background")
@@ -30,9 +34,9 @@ plt.title("separate")
 ax3 = fig.add_subplot(3, 1, 3)
 plt.title("match")
 
-ax1.hist(cohere_dist, bins=50)
-ax2.hist(separate_dist, bins=50)
-ax3.hist(match_dist, bins=50)
+ax1.hist(cohere_dist, bins=100)
+ax2.hist(separate_dist, bins=100)
+ax3.hist(match_dist, bins=100)
 
 plt.show()
 
