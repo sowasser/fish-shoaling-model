@@ -20,8 +20,8 @@ def run_model(cohere_prior, separate_prior, match_prior):
     dataframes can be stacked together.
     """
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=10,
+                       height=10,
                        speed=2,
                        vision=10,
                        separation=2,

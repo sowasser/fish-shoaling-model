@@ -18,8 +18,8 @@ import os
 runs = 1000  # TODO: Change for number of runs of the model
 
 # Prior distributions - Gamma
-cohere_dist = np.random.uniform(low=0, high=1, size=runs)
-separate_dist = np.random.uniform(low=0, high=1, size=runs)
+cohere_dist = np.random.uniform(low=0, high=0.5, size=runs)
+separate_dist = np.random.uniform(low=0, high=0.5, size=runs)
 match_dist = np.random.uniform(low=0, high=1, size=runs)
 
 # # Prior distributions - Lognormal
@@ -52,7 +52,7 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 
 # For varying all parameters --------------------------------------------------
 [file.write("python3 ../../ichec_run.py " + str(c) + " " + str(s) + " " + str(m)
-            + " > ../output/28May2020/output" + str(n)  # TODO: make sure date is correct
+            + " > ../output/29May2020/output" + str(n)  # TODO: make sure date is correct
             + ".txt \n") for c, s, m, n in zip(cohere_dist, separate_dist, match_dist, names)]
 
 file.close()
