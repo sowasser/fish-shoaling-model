@@ -27,9 +27,9 @@ match_dist = np.random.uniform(low=0, high=1, size=runs)
 # vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=1)
 # sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
 
-speed_dist = np.random.uniform(low=0, high=50, size=runs)
+speed_dist = np.random.uniform(low=0, high=10, size=runs)
 vision_dist = np.random.uniform(low=0, high=50, size=runs)
-sep_dist = np.random.uniform(low=0, high=50, size=runs)
+sep_dist = np.random.uniform(low=0, high=10, size=runs)
 
 # Same length as priors; for unique names for the output files
 names = range(runs)
