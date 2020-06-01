@@ -22,10 +22,10 @@ speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
 vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=1)
 sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
 
-# # Prior distributions - Lognormal
-# speed_dist = np.random.lognormal(mean=0.2, sigma=1, size=1000)
-# vision_dist = np.random.lognormal(mean=1, sigma=1, size=1000)
-# sep_dist = np.random.lognormal(mean=2, sigma=1, size=1000)
+# Prior distributions - uniform
+cohere_dist = np.random.uniform(low=0, high=0.5, size=runs)
+separate_dist = np.random.uniform(low=0, high=0.5, size=runs)
+match_dist = np.random.uniform(low=0, high=1, size=runs)
 
 # Same length as priors; for unique names for the output files
 names = range(runs)
@@ -50,8 +50,14 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #             + " > ../output/16Apr2020/sep_output" + str(j)
 #             + ".txt \n") for i, j in zip(sep_dist, names)]
 
-# For varying all parameters --------------------------------------------------
-[file.write("python3 ../../ichec_run.py " + str(speed) + " " + str(vis) + " " + str(sep)
+# TODO: Choose which set of parameters to vary
+# 1. For varying cohere, separate, dist ---------------------------------------
+[file.write("python3 ../../ichec_run_boidfactors.py " + str(c) + " " + str(s) + " " + str(m)
+            + " > ../output/29May2020/output" + str(n)  # TODO: make sure date is correct
+            + ".txt \n") for c, s, m, n in zip(cohere_dist, separate_dist, match_dist, names)]
+
+# 2. For varying speed, vision, separation ------------------------------------
+[file.write("python3 ../../ichec_run_otherfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
             + " > ../output/25May2020/output" + str(i)  # TODO: make sure date is correct
             + ".txt \n") for speed, vis, sep, i in zip(speed_dist, vision_dist, sep_dist, names)]
 

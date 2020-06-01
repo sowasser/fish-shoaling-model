@@ -2,6 +2,9 @@
 Basic script for running the model on the Irish High End Computing Cluster
 (ICHEC). On the cluster, the print data is saved in a .txt file for each job
 (a set of runs) completed. Many of these are created.
+
+In this file, the cohere, separate, and match values that control how the
+agents group together are varied.
 """
 # Todo: figure out how to divide model runs for the different tasks
 # Todo: figure out how to combine data afterwards
@@ -11,7 +14,7 @@ import pandas as pd
 import sys
 
 
-def run_model(speed_prior, vision_prior, sep_prior):
+def run_model(cohere_prior, separate_prior, match_prior):
     """
     Runs the shoal model for a certain number of steps with all of the
     parameters are fixed. Returns a dataframe with the average per run of all
@@ -20,11 +23,14 @@ def run_model(speed_prior, vision_prior, sep_prior):
     dataframes can be stacked together.
     """
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
-                       speed=speed_prior,
-                       vision=vision_prior,
-                       separation=sep_prior)
+                       width=10,
+                       height=10,
+                       speed=2,
+                       vision=10,
+                       separation=2,
+                       cohere=cohere_prior,
+                       separate=separate_prior,
+                       match=match_prior)
     for step in range(300):  # number of steps to run the model for
         model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
@@ -35,9 +41,9 @@ def run_model(speed_prior, vision_prior, sep_prior):
     mean = data_trim.mean(axis=0)
     std = data_trim.std(axis=0)
     all_data = pd.concat([min, max, mean, std], axis=0)
-    all_data["speed"] = speed_prior  # add speed value column
-    all_data["vision"] = vision_prior  # add vision columnm
-    all_data["separation"] = sep_prior  # add separation column
+    all_data["cohere"] = cohere_prior  # add speed value column
+    all_data["separate"] = separate_prior  # add vision columnm
+    all_data["match"] = match_prior  # add separation column
     return pd.DataFrame(all_data).T
 
 
@@ -49,7 +55,7 @@ model_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",
                       "cent_max", "nnd_max", "polar_max", "area_max",
                       "cent_mean", "nnd_mean", "polar_mean", "area_mean",
                       "cent_std", "nnd_std", "polar_std", "area_std",
-                      "speed", "vision", "sep"]
+                      "cohere", "separate", "match"]
 
 pd.set_option("display.max_columns", None)  # display all columns
 pd.set_option("display.width", 1000)  # stop print from splitting columns on to new lines
