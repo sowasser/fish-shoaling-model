@@ -50,8 +50,8 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #             + " > ../output/16Apr2020/sep_output" + str(j)
 #             + ".txt \n") for i, j in zip(sep_dist, names)]
 
-# For varying all parameters --------------------------------------------------
-[file.write("python3 ../../ichec_run.py " + str(c) + " " + str(s) + " " + str(m)
+# For varying cohere, separate, dist --------------------------------------------------
+[file.write("python3 ../../ichec_run_boidfactors.py " + str(c) + " " + str(s) + " " + str(m)
             + " > ../output/29May2020/output" + str(n)  # TODO: make sure date is correct
             + ".txt \n") for c, s, m, n in zip(cohere_dist, separate_dist, match_dist, names)]
 
