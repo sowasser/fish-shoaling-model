@@ -3,8 +3,8 @@ Basic script for running the model on the Irish High End Computing Cluster
 (ICHEC). On the cluster, the print data is saved in a .txt file for each job
 (a set of runs) completed. Many of these are created.
 
-In this file, the cohere, separate, and match values that control how the
-agents group together are varied.
+In this file, all factors (speed, vision, separation, cohere, separate, match)
+are varied
 """
 # Todo: figure out how to divide model runs for the different tasks
 # Todo: figure out how to combine data afterwards
@@ -14,7 +14,8 @@ import pandas as pd
 import sys
 
 
-def run_model(cohere_prior, separate_prior, match_prior):
+def run_model(speed_prior, vision_prior, separation_prior,
+              cohere_prior, separate_prior, match_prior):
     """
     Runs the shoal model for a certain number of steps with all of the
     parameters are fixed. Returns a dataframe with the average per run of all
@@ -25,9 +26,9 @@ def run_model(cohere_prior, separate_prior, match_prior):
     model = ShoalModel(n_fish=20,
                        width=10,
                        height=10,
-                       speed=2,
-                       vision=10,
-                       separation=2,
+                       speed=speed_prior,
+                       vision=vision_prior,
+                       separation=separation_prior,
                        cohere=cohere_prior,
                        separate=separate_prior,
                        match=match_prior)
@@ -41,6 +42,9 @@ def run_model(cohere_prior, separate_prior, match_prior):
     mean = data_trim.mean(axis=0)
     std = data_trim.std(axis=0)
     all_data = pd.concat([min, max, mean, std], axis=0)
+    all_data["speed"] = speed_prior  # add speed value column
+    all_data["vision"] = vision_prior  # add vision columnm
+    all_data["separation"] = separation_prior  # add separation column
     all_data["cohere"] = cohere_prior  # add speed value column
     all_data["separate"] = separate_prior  # add vision columnm
     all_data["match"] = match_prior  # add separation column
@@ -48,7 +52,8 @@ def run_model(cohere_prior, separate_prior, match_prior):
 
 
 # Run model with prior called in create_tasks.py, as a float
-model_data = run_model(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]))
+model_data = run_model(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]),
+                       float(sys.argv[4]), float(sys.argv[5]), float(sys.argv[6]))
 
 # Re-name columns so all data will print & index with unique values for R.
 model_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",

@@ -45,7 +45,7 @@ def run_model(speed_prior, vision_prior, sep_prior):
 
 
 # Run model with prior called in create_tasks.py, as a float
-model_data = run_model(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[1]))
+model_data = run_model(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]))
 
 # Re-name columns so all data will print & index with unique values for R.
 model_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",

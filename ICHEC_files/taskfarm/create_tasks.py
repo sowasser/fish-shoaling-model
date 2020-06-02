@@ -61,8 +61,15 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #             + ".txt \n") for c, s, m, n in zip(cohere_dist, separate_dist, match_dist, names)]
 
 # 2. For varying speed, vision, separation ------------------------------------
-[file.write("python3 ../../ichec_run_otherfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
-            + " > ../output/01Jun2020/output" + str(i)  # TODO: make sure date is correct
-            + ".txt \n") for speed, vis, sep, i in zip(speed_dist, vision_dist, sep_dist, names)]
+# [file.write("python3 ../../ichec_run_otherfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
+#             + " > ../output/01Jun2020/output" + str(n)  # TODO: make sure date is correct
+#             + ".txt \n") for speed, vis, sep, n in zip(speed_dist, vision_dist, sep_dist, names)]
+
+# 3. For varying all parameters -----------------------------------------------
+[file.write("python3 ../../ichec_run_allfactors.py " + str(c) + " " + str(s) + " " + str(m)
+            + str(speed) + " " + str(vis) + " " + str(sep)
+            + " > ../output/02Jun2020/output" + str(n)  # TODO: make sure date is correct
+            + ".txt \n") for c, s, m, speed, vis, sep, n in zip(cohere_dist, separate_dist, match_dist,
+                                                                speed_dist, vision_dist, sep_dist, names)]
 
 file.close()
