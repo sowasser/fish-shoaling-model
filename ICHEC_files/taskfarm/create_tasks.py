@@ -67,7 +67,7 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 
 # 3. For varying all parameters -----------------------------------------------
 [file.write("python3 ../../ichec_run_allfactors.py " + str(c) + " " + str(s) + " " + str(m)
-            + str(speed) + " " + str(vis) + " " + str(sep)
+            + " " + str(speed) + " " + str(vis) + " " + str(sep)
             + " > ../output/02Jun2020/output" + str(n)  # TODO: make sure date is correct
             + ".txt \n") for c, s, m, speed, vis, sep, n in zip(cohere_dist, separate_dist, match_dist,
                                                                 speed_dist, vision_dist, sep_dist, names)]
