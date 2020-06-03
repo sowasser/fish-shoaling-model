@@ -60,6 +60,7 @@ model_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",
                       "cent_max", "nnd_max", "polar_max", "area_max",
                       "cent_mean", "nnd_mean", "polar_mean", "area_mean",
                       "cent_std", "nnd_std", "polar_std", "area_std",
+                      "speed", "vision", "separation",
                       "cohere", "separate", "match"]
 
 pd.set_option("display.max_columns", None)  # display all columns
