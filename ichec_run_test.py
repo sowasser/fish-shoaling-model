@@ -10,7 +10,8 @@ from shoal_model import *
 import pandas as pd
 
 
-def run_model(speed_prior, vision_prior, sep_prior):
+def run_model(speed_prior, vision_prior, separation_prior,
+              cohere_prior, separate_prior, match_prior):
     """
     Runs the shoal model for a certain number of steps with all of the
     parameters are fixed. Returns a dataframe with the average per run of all
@@ -19,12 +20,15 @@ def run_model(speed_prior, vision_prior, sep_prior):
     dataframes can be stacked together.
     """
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=10,
+                       height=10,
                        speed=speed_prior,
                        vision=vision_prior,
-                       separation=sep_prior)
-    for step in range(50):  # number of steps to run the model for
+                       separation=separation_prior,
+                       cohere=cohere_prior,
+                       separate=separate_prior,
+                       match=match_prior)
+    for step in range(30):  # number of steps to run the model for
         model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
     data_trim = data.iloc[10:, ]  # remove some # of early runs
@@ -36,19 +40,23 @@ def run_model(speed_prior, vision_prior, sep_prior):
     all_data = pd.concat([min, max, mean, std], axis=0)
     all_data["speed"] = speed_prior  # add speed value column
     all_data["vision"] = vision_prior  # add vision columnm
-    all_data["separation"] = sep_prior  # add separation column
+    all_data["separation"] = separation_prior  # add separation column
+    all_data["cohere"] = cohere_prior  # add speed value column
+    all_data["separate"] = separate_prior  # add vision columnm
+    all_data["match"] = match_prior  # add separation column
     return pd.DataFrame(all_data).T
 
 
-# Run model with test values
-model_data = run_model(40, 100, 40)
+# Run model with prior called in create_tasks.py, as a float
+model_data = run_model(2, 5, 2, 0.25, 0.25, 0.5)
 
 # Re-name columns so all data will print & index with unique values for R.
 model_data.columns = ["cent_min", "nnd_min", "polar_min", "area_min",
                       "cent_max", "nnd_max", "polar_max", "area_max",
                       "cent_mean", "nnd_mean", "polar_mean", "area_mean",
                       "cent_std", "nnd_std", "polar_std", "area_std",
-                      "speed", "vision", "sep"]
+                      "speed", "vision", "separation",
+                      "cohere", "separate", "match"]
 
 pd.set_option("display.max_columns", None)  # display all columns
 pd.set_option("display.width", 1000)  # stop print from splitting columns on to new lines

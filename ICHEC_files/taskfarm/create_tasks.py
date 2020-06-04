@@ -17,19 +17,20 @@ import os
 
 runs = 10000  # TODO: Change for number of runs of the model
 
-# Prior distributions - boid factors
-cohere_dist = np.random.uniform(low=0, high=0.5, size=runs)
-separate_dist = np.random.uniform(low=0, high=0.5, size=runs)
-match_dist = np.random.uniform(low=0, high=1, size=runs)
-
 # Prior distributions - other factors
 # speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
 # vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=1)
 # sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
 
 speed_dist = np.random.uniform(low=0, high=10, size=runs)
-vision_dist = np.random.uniform(low=0, high=20, size=runs)
+vision_dist = np.random.uniform(low=0, high=10, size=runs)
 sep_dist = np.random.uniform(low=0, high=10, size=runs)
+
+# Prior distributions - boid factors
+cohere_dist = np.random.uniform(low=0, high=1, size=runs)
+separate_dist = np.random.uniform(low=0, high=1, size=runs)
+match_dist = np.random.uniform(low=0, high=1, size=runs)
+
 
 # Same length as priors; for unique names for the output files
 names = range(runs)
