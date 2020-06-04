@@ -15,16 +15,16 @@ from scipy.stats import gamma
 import numpy as np
 import os
 
-runs = 10000  # TODO: Change for number of runs of the model
+runs = 1000  # TODO: Change for number of runs of the model
 
 # Prior distributions - other factors
-# speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
-# vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=1)
-# sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
-
-speed_dist = np.random.uniform(low=0, high=10, size=runs)
-vision_dist = np.random.uniform(low=0, high=10, size=runs)
-sep_dist = np.random.uniform(low=0, high=10, size=runs)
+speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
+vision_dist = gamma.rvs(size=runs, a=5, loc=0, scale=1)
+sep_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
+#
+# speed_dist = np.random.uniform(low=0, high=10, size=runs)
+# vision_dist = np.random.uniform(low=0, high=10, size=runs)
+# sep_dist = np.random.uniform(low=0, high=10, size=runs)
 
 # Prior distributions - boid factors
 cohere_dist = np.random.uniform(low=0, high=1, size=runs)
