@@ -30,14 +30,10 @@ speed_dist = np.random.uniform(low=0, high=10, size=runs)
 vision_dist = np.random.uniform(low=0, high=10, size=runs)
 sep_dist = np.random.uniform(low=0, high=10, size=runs)
 
-boids_dist = np.random.uniform(low=0, high=10, size=runs)
-
 # Prior distributions - boid factors
 cohere_dist = np.random.uniform(low=0, high=1, size=runs)
 separate_dist = np.random.uniform(low=0, high=1, size=runs)
 match_dist = np.random.uniform(low=0, high=1, size=runs)
-
-other_dist = np.random.uniform(low=0, high=1, size=runs)
 
 # cohere_dist = [0.2] * runs
 # separate_dist = [0.2] * runs
@@ -79,8 +75,10 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #             + ".txt \n") for speed, vis, sep, n in zip(speed_dist, vision_dist, sep_dist, names)]
 
 # 3. For varying all parameters -----------------------------------------------
-[file.write("python3 ../../ichec_run_allfactors.py " + str(boids) + " " + str(other)
-            + " > ../output/05Jun2020/output" + str(n)  # TODO: make sure date is correct
-            + ".txt \n") for boids, other, n in zip(boids_dist, other_dist, names)]
+[file.write("python3 ../../ichec_run_allfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
+            + " " + str(c) + " " + str(s) + " " + str(m)
+            + " > ../output/02Jun2020/output" + str(n)  # TODO: make sure date is correct
+            + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
+                                                                cohere_dist, separate_dist, match_dist, names)]
 
 file.close()
