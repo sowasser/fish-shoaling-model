@@ -221,7 +221,7 @@ class ShoalModel(Model):
                  cohere=0.25,
                  separate=0.025,
                  match=0.3):
-
+        assert speed < width and speed < height, "speed can't be greater than model area dimensions"
         self.n_fish = n_fish
         self.vision = vision
         self.speed = speed
