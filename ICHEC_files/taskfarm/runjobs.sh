@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH -p ProdQ
 #SBATCH -N 1
-#SBATCH -t 1:00:00
+#SBATCH -t 20:00:00
 # Charge job to myaccount
 #SBATCH -A ngear014c
 # Write stdout+stderr to file

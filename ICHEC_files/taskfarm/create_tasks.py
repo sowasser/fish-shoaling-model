@@ -15,7 +15,7 @@ from scipy.stats import gamma
 import numpy as np
 import os
 
-runs = 100  # TODO: Change for number of runs of the model
+runs = 1000000  # TODO: Change for number of runs of the model
 
 # Prior distributions - other factors
 # speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
@@ -75,17 +75,17 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 #             + ".txt \n") for speed, vis, sep, n in zip(speed_dist, vision_dist, sep_dist, names)]
 
 # 3. For varying all parameters -----------------------------------------------
-# [file.write("python3 ../../ichec_run_allfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
-#             + " " + str(c) + " " + str(s) + " " + str(m)
-#             + " > ../output/02Jun2020/output" + str(n)  # TODO: make sure date is correct
-#             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
-#                                                                 cohere_dist, separate_dist, match_dist, names)]
-
-# 4. For printing all of the data for each step in each run -------------------
-[file.write("python3 ../../ichec_run_alldata.py " + str(speed) + " " + str(vis) + " " + str(sep)
+[file.write("python3 ../../ichec_run_allfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
             + " " + str(c) + " " + str(s) + " " + str(m)
-            + " > ../output/08Jun2020_alldata/output" + str(n)  # TODO: make sure name is correct
+            + " > ../output/02Jun2020/output" + str(n)  # TODO: make sure date is correct
             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
                                                                 cohere_dist, separate_dist, match_dist, names)]
+
+# 4. For printing all of the data for each step in each run -------------------
+# [file.write("python3 ../../ichec_run_alldata.py " + str(speed) + " " + str(vis) + " " + str(sep)
+#             + " " + str(c) + " " + str(s) + " " + str(m)
+#             + " > ../output/08Jun2020_alldata/output" + str(n)  # TODO: make sure name is correct
+#             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
+#                                                                 cohere_dist, separate_dist, match_dist, names)]
 
 file.close()
