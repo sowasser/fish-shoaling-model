@@ -50,6 +50,7 @@ model_data.columns = ["polar", "nnd", "area", "cent",
                       "cohere", "separate", "match"]
 
 pd.set_option("display.max_columns", None)  # display all columns
+pd.set_option("display.max_rows", None)
 pd.set_option("display.width", 1000)  # stop print from splitting columns on to new lines
 
 print(model_data)  # printing makes the data accessible from the cluster.
