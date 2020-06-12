@@ -15,7 +15,7 @@ from scipy.stats import gamma
 import numpy as np
 import os
 
-runs = 1000000  # TODO: Change for number of runs of the model
+runs = 100000  # TODO: Change for number of runs of the model
 
 # Prior distributions - other factors
 # speed_dist = gamma.rvs(size=runs, a=2, loc=0, scale=1)
@@ -77,7 +77,7 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 # 3. For varying all parameters -----------------------------------------------
 [file.write("python3 ../../ichec_run_allfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
             + " " + str(c) + " " + str(s) + " " + str(m)
-            + " > ../output/02Jun2020/output" + str(n)  # TODO: make sure date is correct
+            + " > ../output/12Jun2020/output" + str(n)  # TODO: make sure date is correct
             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
                                                                 cohere_dist, separate_dist, match_dist, names)]
 
