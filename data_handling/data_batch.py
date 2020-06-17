@@ -25,13 +25,16 @@ Data are collected in the data_collectors.py script and are:
 
 from shoal_model import *
 import pandas as pd
+import multiprocessing
+import time
 import os
 
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
-# path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
+path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-s = 200  # number of steps to run the model for each time
+s = 300  # number of steps to run the model for each time
 runs = range(100)  # number of runs/iterations of the model for finding the mean
+burn_in = 100  # number of steps to exclude at the beginning as collective behaviour emerges
 
 
 def run_model(steps):
@@ -39,29 +42,41 @@ def run_model(steps):
     Runs the shoal model for a certain number of steps, returning a dataframe
     with all of the data collectors.
     """
-    model = ShoalModel(n_fish=50,
+    model = ShoalModel(n_fish=20,
                        width=50,
                        height=50,
-                       speed=2,
-                       vision=10,
-                       separation=2)
+                       speed=1,
+                       vision=4.6,
+                       separation=3.2,
+                       cohere=0.47,
+                       separate=0.31,
+                       match=0.65)
     for step in range(steps):
         model.step()  # run the model for certain number of steps
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
-    return data.T  # data transposed to make means calculation easier
+    data_trim = data.iloc[burn_in:, ]  # remove early runs
+    return data_trim.T  # data transposed to make means calculation easier
 
 
 # RUN MODELS MANY TIMES, FIND MEAN FOR EACH STEP, EXPORT ----------------------
+# Runs the model for as many times as defined above in "runs", using multiple
+# cores. Number of processes is set to 10, but can be reduced if other work
+# needs to be done on the computer that requires CPU space.
+# Also prints how long it took, for reference.
 
-polar = pd.concat([run_model(s).iloc[0:1, ] for r in runs])
-nnd = pd.concat([run_model(s).iloc[1:2, ] for r in runs])
-area = pd.concat([run_model(s).iloc[2:3, ] for r in runs])
-cent = pd.concat([run_model(s).iloc[3:4, ] for r in runs])
+if __name__ == '__main__':
+    start = time.time()
+    p = multiprocessing.Pool(processes=10)  # 10 processes seems to be a sweet spot
+    polar = pd.concat([run_model(s).iloc[0:1, ] for r in runs])
+    nnd = pd.concat([run_model(s).iloc[1:2, ] for r in runs])
+    area = pd.concat([run_model(s).iloc[2:3, ] for r in runs])
+    cent = pd.concat([run_model(s).iloc[3:4, ] for r in runs])
+    step_means = pd.concat([polar.mean(axis=0),
+                            nnd.mean(axis=0),
+                            area.mean(axis=0),
+                            cent.mean(axis=0)], axis=1)
+    step_means.columns = ["polar", "nnd", "area", "centroid"]
+    print("Time taken = {} minutes".format((time.time() - start) / 60))  # print how long it took
 
-step_means = pd.concat([polar.mean(axis=0),
-                        nnd.mean(axis=0),
-                        area.mean(axis=0),
-                        cent.mean(axis=0)], axis=1)
-step_means.columns = ["polar", "nnd", "area", "centroid"]
-
-step_means.to_csv(os.path.join(path, "step_means.csv"))
+# Export data
+step_means.to_csv(os.path.join(path, "step_means_17July.csv"))
