@@ -88,11 +88,6 @@ def run_speed_model(speed):
         speed_parameter.append(speed)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
     data["speed"] = speed_parameter  # add parameter value column
-    data["vision"] = vision_fixed  # add vision column
-    data["separation"] = sep_fixed  # add separation column
-    data["cohere"] = cohere_fixed  # add cohere column
-    data["separate"] = separate_fixed  # add separate column
-    data["match"] = match_fixed  # add match column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
     return pd.DataFrame(data_trim.mean(axis=0)).T
 
@@ -123,12 +118,7 @@ def run_vision_model(vision):
         model.step()  # run the model for certain number of steps
         vision_parameter.append(vision)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
-    data["speed"] = speed_fixed  # add parameter value column
     data["vision"] = vision_parameter  # add vision column
-    data["separation"] = sep_fixed  # add separation column
-    data["cohere"] = cohere_fixed  # add cohere column
-    data["separate"] = separate_fixed  # add separate column
-    data["match"] = match_fixed  # add match column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
     return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
@@ -159,12 +149,7 @@ def run_sep_model(separation):
         model.step()  # run the model for certain number of steps
         sep_parameter.append(separation)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe() # retrieve data from model
-    data["speed"] = speed_fixed  # add parameter value column
-    data["vision"] = vision_fixed  # add vision column
     data["separation"] = sep_parameter  # add separation column
-    data["cohere"] = cohere_fixed  # add cohere column
-    data["separate"] = separate_fixed  # add separate column
-    data["match"] = match_fixed  # add match column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
     return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
@@ -194,12 +179,7 @@ def run_cohere_model(cohere):
         model.step()  # run the model for certain number of steps
         cohere_parameter.append(cohere)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe() # retrieve data from model
-    data["speed"] = speed_fixed  # add parameter value column
-    data["vision"] = vision_fixed  # add vision column
-    data["separation"] = sep_fixed  # add separation column
     data["cohere"] = cohere_parameter  # add cohere column
-    data["separate"] = separate_fixed  # add separate column
-    data["match"] = match_fixed  # add match column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
     return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
@@ -226,12 +206,7 @@ def run_separate_model(separate):
         model.step()  # run the model for certain number of steps
         separate_parameter.append(separate)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe() # retrieve data from model
-    data["speed"] = speed_fixed  # add parameter value column
-    data["vision"] = vision_fixed  # add vision column
-    data["separation"] = sep_fixed  # add separation column
-    data["cohere"] = cohere_fixed  # add cohere column
     data["separate"] = separate_parameter  # add separate column
-    data["match"] = match_fixed  # add match column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
     return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
@@ -258,12 +233,7 @@ def run_match_model(match):
         model.step()  # run the model for certain number of steps
         match_parameter.append(match)  # create list of parameter values tested
     data = model.datacollector.get_model_vars_dataframe() # retrieve data from model
-    data["speed"] = speed_fixed  # add parameter value column
-    data["vision"] = vision_fixed  # add vision column
-    data["separation"] = sep_fixed  # add separation column
-    data["cohere"] = cohere_fixed  # add cohere column
-    data["separate"] = separate_fixed  # add separate column
-    data["match"] = match  # add match column
+    data["match"] = match_parameter  # add match column
     data_trim = data.iloc[burn_in:, ]  # remove early runs
     return pd.DataFrame(data_trim.mean(axis=0)).T  # return means of all columns & transposed
 
