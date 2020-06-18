@@ -25,8 +25,8 @@ path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for 
 
 # Collect the data from a single run with x number of steps into a dataframe
 model = ShoalModel(n_fish=20,
-                   width=50,
-                   height=50,
+                   width=100,
+                   height=100,
                    speed=1,
                    vision=4.6,
                    separation=3.2,
