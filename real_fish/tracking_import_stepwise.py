@@ -36,8 +36,8 @@ from statsmodels.robust.scale import mad
 import matplotlib.pyplot as plt
 
 
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
-# path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
+path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 # Todo: CHANGE NAME OF FILE
 track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"stepwise.csv"),
@@ -59,6 +59,11 @@ track.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
 steps = [np.asarray(track[track.columns[start:(start + 2)]].dropna(axis=0))
          for start in list(range(0, (s*2)-1, 2))]
 
+# # Find the min and max position of the fish
+# maximum = max([np.amax(s) for s in steps])
+# minimum = min([np.amin(s) for s in steps])
+# print(maximum)
+# print(minimum)
 
 # Mean Distance from Centroid
 def centroid_dist(df):
