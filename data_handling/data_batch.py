@@ -75,8 +75,8 @@ if __name__ == '__main__':
                             nnd.mean(axis=0),
                             area.mean(axis=0),
                             cent.mean(axis=0)], axis=1)
-    step_means.columns = ["polar", "nnd", "area", "centroid"]
+    step_means.columns = ["cent", "nnd", "polar", "area"]
     print("Time taken = {} minutes".format((time.time() - start) / 60))  # print how long it took
 
 # Export data
-step_means.to_csv(os.path.join(path, "step_means_17July.csv"))
+step_means.to_csv(os.path.join(path, "step_means_17June.csv"))

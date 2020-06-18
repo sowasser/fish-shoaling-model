@@ -19,18 +19,26 @@ from shoal_model import *
 import os
 import matplotlib.pyplot as plt
 
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
-# path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
+path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel()
-for i in range(10):
+model = ShoalModel(n_fish=20,
+                   width=50,
+                   height=50,
+                   speed=1,
+                   vision=4.6,
+                   separation=3.2,
+                   cohere=0.47,
+                   separate=0.31,
+                   match=0.65)
+for i in range(200):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
-# data.columns = ["polar", "nnd", "area", "centroid", "mass"]
+data.columns = ["cent", "nnd", "polar", "area"]
 
-# data.to_csv(os.path.join(path, r"single_run.csv"))  # save data to use in R
+data.to_csv(os.path.join(path, r"single_run.csv"))  # save data to use in R
 
 
 # DATA COLLECTOR PLOTS --------------------------------------------------------
