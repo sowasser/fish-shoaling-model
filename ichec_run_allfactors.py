@@ -24,8 +24,8 @@ def run_model(speed_prior, vision_prior, separation_prior,
     dataframes can be stacked together.
     """
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=100,
+                       height=100,
                        speed=speed_prior,
                        vision=vision_prior,
                        separation=separation_prior,
