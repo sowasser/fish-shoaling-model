@@ -40,9 +40,9 @@ path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for 
 runs = 100
 
 # Fixed values for non-tested parameters
-speed_fixed = 5
-vision_fixed = 5
-sep_fixed = 5
+speed_fixed = 10
+vision_fixed = 10
+sep_fixed = 10
 cohere_fixed = 0.5
 separate_fixed = 0.5
 match_fixed = 0.5
@@ -51,9 +51,9 @@ match_fixed = 0.5
 # Defines the distribution as a range of values. Size is # of variables (and
 # therefore runs of the model), a is the number that the distribution is based
 # around.
-speed_dist = np.random.uniform(low=0, high=10, size=runs)
-vision_dist = np.random.uniform(low=0, high=10, size=runs)
-sep_dist = np.random.uniform(low=0, high=10, size=runs)
+speed_dist = np.random.uniform(low=0, high=20, size=runs)
+vision_dist = np.random.uniform(low=0, high=20, size=runs)
+sep_dist = np.random.uniform(low=0, high=20, size=runs)
 cohere_dist = np.random.uniform(low=0, high=1, size=runs)
 separate_dist = np.random.uniform(low=0, high=1, size=runs)
 match_dist = np.random.uniform(low=0, high=1, size=runs)
@@ -75,8 +75,8 @@ def run_speed_model(speed):
     """
     speed_parameter = []
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=100,
+                       height=100,
                        speed=speed,
                        vision=vision_fixed,
                        separation=sep_fixed,
@@ -106,8 +106,8 @@ def run_vision_model(vision):
     """
     vision_parameter = []
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=100,
+                       height=100,
                        speed=speed_fixed,
                        vision=vision,
                        separation=sep_fixed,
@@ -137,8 +137,8 @@ def run_sep_model(separation):
     """
     sep_parameter = []
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=100,
+                       height=100,
                        speed=speed_fixed,
                        vision=vision_fixed,
                        separation=separation,
@@ -167,8 +167,8 @@ def run_cohere_model(cohere):
     """
     cohere_parameter = []
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=100,
+                       height=100,
                        speed=speed_fixed,
                        vision=vision_fixed,
                        separation=sep_fixed,
@@ -194,8 +194,8 @@ def run_separate_model(separate):
     """
     separate_parameter = []
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=100,
+                       height=100,
                        speed=speed_fixed,
                        vision=vision_fixed,
                        separation=sep_fixed,
@@ -221,8 +221,8 @@ def run_match_model(match):
     """
     match_parameter = []
     model = ShoalModel(n_fish=20,
-                       width=50,
-                       height=50,
+                       width=100,
+                       height=100,
                        speed=speed_fixed,
                        vision=vision_fixed,
                        separation=sep_fixed,
@@ -264,9 +264,9 @@ if __name__ == '__main__':
 
 # EXPORT DATA -----------------------------------------------------------------
 
-speed_data.to_csv(os.path.join(path, r"var-speed.csv"), index=False)
-vision_data.to_csv(os.path.join(path, r"var-vision.csv"), index=False)
-sep_data.to_csv(os.path.join(path, r"var-sep.csv"), index=False)
-cohere_data.to_csv(os.path.join(path, r"var-cohere.csv"), index=False)
-separate_data.to_csv(os.path.join(path, r"var-separate.csv"), index=False)
-match_data.to_csv(os.path.join(path, r"var-match.csv"), index=False)
+speed_data.to_csv(os.path.join(path, r"var-speed100.csv"), index=False)
+vision_data.to_csv(os.path.join(path, r"var-vision100.csv"), index=False)
+sep_data.to_csv(os.path.join(path, r"var-sep100.csv"), index=False)
+cohere_data.to_csv(os.path.join(path, r"var-cohere100.csv"), index=False)
+separate_data.to_csv(os.path.join(path, r"var-separate100.csv"), index=False)
+match_data.to_csv(os.path.join(path, r"var-match100.csv"), index=False)
