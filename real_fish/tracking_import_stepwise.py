@@ -36,8 +36,8 @@ from statsmodels.robust.scale import mad
 import matplotlib.pyplot as plt
 
 
-path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
-# path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
+path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 # Todo: CHANGE NAME OF FILE
 track = pd.read_csv(filepath_or_buffer=os.path.join(path, r"stepwise.csv"),
@@ -59,6 +59,9 @@ track.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
 steps = [np.asarray(track[track.columns[start:(start + 2)]].dropna(axis=0))
          for start in list(range(0, (s*2)-1, 2))]
 
+# Scale data down to match 100x100 grid for the model
+scaled = [i/7 for i in steps]
+
 
 # Mean Distance from Centroid
 def centroid_dist(df):
@@ -79,7 +82,7 @@ def centroid_dist(df):
     return np.mean(cent_dist)
 
 
-centroid_distance = pd.DataFrame([centroid_dist(s) for s in steps])
+centroid_distance = pd.DataFrame([centroid_dist(s) for s in scaled])
 # centroid_distance.to_csv(os.path.join(path, r"step1_cent_dist.csv"))  # save data to use in R
 
 
@@ -101,7 +104,7 @@ def nnd(df):
     return sum(means) / len(means)
 
 
-nn_distance = pd.DataFrame([nnd(s) for s in steps])
+nn_distance = pd.DataFrame([nnd(s) for s in scaled])
 # nn_distance.to_csv(os.path.join(path, r"step1_nnd.csv"))  # save data to use in R
 
 
@@ -116,7 +119,7 @@ def area(df):
     return ConvexHull(position).area
 
 
-shoal_area = pd.DataFrame([area(s) for s in steps])
+shoal_area = pd.DataFrame([area(s) for s in scaled])
 # shoal_area.to_csv(os.path.join(path, r"step1_shoal_area.csv"))  # save data to use in R
 
 
@@ -140,14 +143,14 @@ def polar(df):
     return mad(np.asarray(angles), center=np.median)
 
 
-polarization = pd.DataFrame([polar(s) for s in steps])
+polarization = pd.DataFrame([polar(s) for s in scaled])
 # polarization.to_csv(os.path.join(path, r"step1_polar.csv"))  # save data to use in R
 
 
 # Combine data into one dataframe
 stepwise_data = pd.concat([centroid_distance, nn_distance, shoal_area, polarization], axis=1)
-stepwise_data.columns = ["centroid", "nnd", "area", "polar"]
-stepwise_data.to_csv(os.path.join(path, r"stepwise_data.csv"))
+stepwise_data.columns = ["cent", "nnd", "area", "polar"]
+stepwise_data.to_csv(os.path.join(path, r"stepwise_data_scaled.csv"))
 
 # Plotting --------------------------------------------------------------------
 
