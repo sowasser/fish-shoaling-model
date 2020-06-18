@@ -26,9 +26,9 @@ runs = 100000  # TODO: Change for number of runs of the model
 # vision_dist = [5] * runs
 # sep_dist = [2] * runs
 
-speed_dist = np.random.uniform(low=0, high=10, size=runs)
-vision_dist = np.random.uniform(low=0, high=10, size=runs)
-sep_dist = np.random.uniform(low=0, high=10, size=runs)
+speed_dist = np.random.uniform(low=0, high=20, size=runs)
+vision_dist = np.random.uniform(low=0, high=20, size=runs)
+sep_dist = np.random.uniform(low=0, high=20, size=runs)
 
 # Prior distributions - boid factors
 cohere_dist = np.random.uniform(low=0, high=1, size=runs)
@@ -46,9 +46,9 @@ names = range(runs)
 # path = "/Users/user/Desktop/Local/Mackerel/fish-shoaling-model/ICHEC_files/taskfarm"  # desktop
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/fish-shoaling-model/ICHEC_files/taskfarm"  # laptop
 
-
 # Write files with values from distributions above & unique output names
-file = open(os.path.join(path, r"modelruns.txt"), "w")
+# file = open(os.path.join(path, r"modelruns.txt"), "w")
+file = open("modelruns.txt", "w")  # for cluster
 
 # For when only one parameter varies at a time --------------------------------
 # [file.write("python3 ../../ichec_run_speed.py " + str(i)
@@ -77,7 +77,7 @@ file = open(os.path.join(path, r"modelruns.txt"), "w")
 # 3. For varying all parameters -----------------------------------------------
 [file.write("python3 ../../ichec_run_allfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
             + " " + str(c) + " " + str(s) + " " + str(m)
-            + " > ../output/12Jun2020/output" + str(n)  # TODO: make sure date is correct
+            + " > ../output/18Jun2020/output" + str(n)  # TODO: make sure date is correct
             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
                                                                 cohere_dist, separate_dist, match_dist, names)]
 
