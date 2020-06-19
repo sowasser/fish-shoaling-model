@@ -27,12 +27,12 @@ path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for 
 model = ShoalModel(n_fish=20,
                    width=100,
                    height=100,
-                   speed=1,
-                   vision=4.6,
-                   separation=3.2,
-                   cohere=0.47,
-                   separate=0.31,
-                   match=0.65)
+                   speed=2.7,
+                   vision=10.8,
+                   separation=7.3,
+                   cohere=0.26,
+                   separate=0.26,
+                   match=0.59)
 for i in range(200):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
