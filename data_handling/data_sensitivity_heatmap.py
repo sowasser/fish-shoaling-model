@@ -9,20 +9,25 @@ create more simple outputs
 # https://www.kaggle.com/jaeyoonpark/heatmap-animation-us-drought-map/code
 # https://www.programcreek.com/python/example/102329/matplotlib.pyplot.pcolormesh
 
-from shoal_model import *
+from shoal_model_pos import *
 import pandas as pd
+import os
 import matplotlib.pyplot as plt
 from matplotlib import animation
 
+# path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
+path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(initial_fish=50,
-                   initial_obstruct=4000,
+model = ShoalModel(n_fish=20,
                    width=100,
                    height=100,
-                   speed=1,
-                   vision=10,
-                   separation=10)
+                   speed=2.7,
+                   vision=10.8,
+                   separation=7.3,
+                   cohere=0.26,
+                   separate=0.26,
+                   match=0.59)
 for i in range(10):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
@@ -31,23 +36,34 @@ data = model.datacollector.get_model_vars_dataframe()
 np_data = np.asarray(data)
 
 # Flatten Positions so it is more accessible & add column names
-p = np_data[:, 4].flatten()  # remove one set of brackets & make a dataframe
+p = np_data.flatten()  # remove one set of brackets & make a dataframe
 pos_df = pd.DataFrame(p.flatten())  # remove one set of brackets & make a dataframe
 pos_df = pos_df[0].apply(pd.Series)  # remove another set of brackets
 pos_df[0].apply(pd.Series)  # remove last set of brackets
 pos = np.asarray(pos_df)  # back to numpy array
 
-nums = range(1, 51)  # list same length as # of agents (end value is num + 1)
+nums = range(1, 21)  # list same length as # of agents (end value is num + 1)
 list_x = ["x" + str(i) for i in nums]  # creates x1, x2, etc.
 list_y = ["y" + str(j) for j in nums]  # same for y
 
 # iterate between lists and assign as column names
 pos_df.columns = [item for sublist in zip(list_x, list_y) for item in sublist]
 
-# isolate position data for first step
-x1 = pos[0, 0::2].tolist()
-y1 = pos[0, 1::2].tolist()
-step1 = [x1, y1]
+# Separate x and y columns into different dataframes
+x = pos_df.iloc[:, ::2]
+y = pos_df.iloc[:, 1::2]
+
+# Export to .csv for import into R
+x.to_csv(os.path.join(path, r"heatmap_x.csv"))
+y.to_csv(os.path.join(path, r"heatmap_y.csv"))
+
+# # isolate position data for first step
+# x1 = pos[0, 0::2].tolist()
+# y1 = pos[0, 1::2].tolist()
+# agent = [1] * 20
+# step = [1] * 20
+# step1 = pd.DataFrame(list(zip(x1, y1, agent, step)),
+#                      columns=["x", "y", "agent", "step"])
 
 
 # # Flatten Mean Position so it is more accessible & add column names
