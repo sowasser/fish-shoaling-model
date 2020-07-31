@@ -16,9 +16,6 @@ tracked = pd.read_csv(filepath_or_buffer=os.path.join(path, r"timeseries_tracked
                       sep=",")
 tracked = tracked.drop(tracked.columns[0], axis=1)  # drop first column
 
-test1 = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-test2 = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
-
 
 # Find percentage overlap
 def find_overlap(list1, list2):
@@ -29,12 +26,14 @@ def find_overlap(list1, list2):
     """
     value = []
     for i in list1:
-        if i in np.arange(min(list2), max(list2), 0.1):
+        if min(list2) <= i <= max(list2):
             value.append(i)
-    percentage = len(value) / len(list1)
+    percentage = (len(value) / len(list1)) * 100
     return percentage
 
 
-test = find_overlap(test1, test2)
-
-# polar_percentage = find_overlap(modelled["polar"], tracked["polar"])
+cent_percent = find_overlap(modelled["cent"], tracked["cent"])  # 85.9%
+nnd_percent = find_overlap(modelled["nnd"], tracked["nnd"])  # 0
+nnd_only_percent = find_overlap(modelled["nnd_only"], tracked["nnd"])  # 23.2%
+polar_percent = find_overlap(modelled["polar"], tracked["polar"])  # 74.7%
+area_percent = find_overlap(modelled["area"], tracked["area"])  # 0
