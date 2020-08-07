@@ -28,7 +28,7 @@ model = ShoalModel(n_fish=100,
                    cohere=0.26,
                    separate=0.26,
                    match=0.59)
-for i in range(10):
+for i in range(200):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
