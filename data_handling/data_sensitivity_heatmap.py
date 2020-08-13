@@ -18,8 +18,10 @@ from matplotlib import animation
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
+n = 200  # number of fish
+
 # Collect the data from a single run with x number of steps into a dataframe
-model = ShoalModel(n_fish=100,
+model = ShoalModel(n_fish=n,
                    width=100,
                    height=100,
                    speed=2.7,
@@ -28,7 +30,7 @@ model = ShoalModel(n_fish=100,
                    cohere=0.26,
                    separate=0.26,
                    match=0.59)
-for i in range(200):
+for i in range(400):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
 
@@ -43,7 +45,7 @@ pos_df[0].apply(pd.Series)  # remove last set of brackets
 pos = np.asarray(pos_df)  # back to numpy array
 
 # Create unique names for each fish
-list_fish = ["fish" + str(i) for i in range(1, 101)]
+list_fish = ["fish" + str(i) for i in range(1, (n + 1))]
 
 # Separate x and y columns into different dataframes & rename columns
 x = pos_df.iloc[:, ::2]
