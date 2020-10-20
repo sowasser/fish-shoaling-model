@@ -114,15 +114,15 @@ class Fish(Agent):
         new_position = self.pos + self.velocity * self.speed
         new_x, new_y = new_position
 
-        # If the new position is out of bounds (min & max) on the X-axis
-        if (new_x < self.model.space.x_min) or (new_x >= self.model.space.x_max):
-            self.velocity[0] = -self.velocity[0]  # Bounce off the wall on X axis
-            new_position = self.pos + self.velocity * self.speed
-
-        # If the new position is out of bounds on the Y-axis
-        # if (new_y < self.model.space.y_min) or (new_y >= self.model.space.y_max):
-        #     self.velocity[1] = -self.velocity[1]  # Bounce off the wall on Y axis
+        # If the new position is out of bounds (min & max) on the X-axis (sides)
+        # if (new_x < self.model.space.x_min) or (new_x >= self.model.space.x_max):
+        #     self.velocity[0] = -self.velocity[0]  # Bounce off the wall on X axis
         #     new_position = self.pos + self.velocity * self.speed
+
+        # If the new position is out of bounds on the Y-axis (top & bottom)
+        if (new_y < self.model.space.y_min) or (new_y >= self.model.space.y_max):
+            self.velocity[1] = -self.velocity[1]  # Bounce off the wall on Y axis
+            new_position = self.pos + self.velocity * self.speed
 
         return new_position
 
