@@ -18,18 +18,18 @@ from matplotlib import animation
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-n = 200  # number of fish
+n = 100  # number of fish
 
 # Collect the data from a single run with x number of steps into a dataframe
 model = ShoalModel(n_fish=n,
-                   width=100,
-                   height=100,
-                   speed=2.7,
-                   vision=10.8,
-                   separation=7.3,
-                   cohere=0.26,
-                   separate=0.26,
-                   match=0.59)
+                   width=50,
+                   height=50,
+                   speed=1,
+                   vision=10,
+                   separation=2,
+                   cohere=0.25,
+                   separate=0.25,
+                   match=0.3)
 for i in range(400):
     model.step()
 data = model.datacollector.get_model_vars_dataframe()
