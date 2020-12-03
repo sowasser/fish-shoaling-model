@@ -18,14 +18,14 @@ from matplotlib import animation
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-n = 100  # number of fish
+n = 200  # number of fish
 
 # Collect the data from a single run with x number of steps into a dataframe
 model = ShoalModel(n_fish=n,
                    width=50,
                    height=50,
                    speed=1,
-                   vision=10,
+                   vision=50,
                    separation=2,
                    cohere=0.25,
                    separate=0.25,
