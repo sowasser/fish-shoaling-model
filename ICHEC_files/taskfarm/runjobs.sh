@@ -14,5 +14,5 @@
 cd $SLURM_SUBMIT_DIR
 
 module load taskfarm
-export TASKFARM_GROUP=100
+export TASKFARM_GROUP=200
 taskfarm modelruns.txt
