@@ -35,7 +35,7 @@ def run_model(speed_prior, vision_prior, separation_prior,
     for step in range(300):  # number of steps to run the model for
         model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
-    data_trim = data.iloc[100:, ]  # remove some # of early runs
+    data_trim = data.iloc[200:, ]  # remove some # of early runs
     # Condense data collectors into summary stats
     min = data_trim.min(axis=0)
     max = data_trim.max(axis=0)
