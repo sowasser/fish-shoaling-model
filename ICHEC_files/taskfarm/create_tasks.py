@@ -91,7 +91,7 @@ file = open("modelruns.txt", "w")  # for cluster
 # # 5. For running the model with only NND collected ----------------------------
 [file.write("python3 ../../ichec_run_nnd.py " + str(speed) + " " + str(vis) + " " + str(sep)
             + " " + str(c) + " " + str(s) + " " + str(m)
-            + " > ../output/07Dec2020_nnd/output" + str(n)  # TODO: make sure date is correct
+            + " > ../output/08Dec2020_nnd/output" + str(n)  # TODO: make sure date is correct
             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
                                                                 cohere_dist, separate_dist, match_dist, names)]
 
