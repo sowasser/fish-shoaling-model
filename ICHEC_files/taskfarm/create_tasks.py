@@ -75,11 +75,11 @@ file = open("modelruns.txt", "w")  # for cluster
 #             + ".txt \n") for speed, vis, sep, n in zip(speed_dist, vision_dist, sep_dist, names)]
 
 # 3. For varying all parameters -----------------------------------------------
-# [file.write("python3 ../../ichec_run_allfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
-#             + " " + str(c) + " " + str(s) + " " + str(m)
-#             + " > ../output/07Dec2020/output" + str(n)  # TODO: make sure date is correct
-#             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
-#                                                                 cohere_dist, separate_dist, match_dist, names)]
+[file.write("python3 ../../ichec_run_allfactors.py " + str(speed) + " " + str(vis) + " " + str(sep)
+            + " " + str(c) + " " + str(s) + " " + str(m)
+            + " > ../output/11Dec2020/output" + str(n)  # TODO: make sure date is correct
+            + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
+                                                                cohere_dist, separate_dist, match_dist, names)]
 
 # 4. For printing all of the data for each step in each run -------------------
 # [file.write("python3 ../../ichec_run_alldata.py " + str(speed) + " " + str(vis) + " " + str(sep)
@@ -89,10 +89,10 @@ file = open("modelruns.txt", "w")  # for cluster
 #                                                                 cohere_dist, separate_dist, match_dist, names)]
 
 # # 5. For running the model with only NND collected ----------------------------
-[file.write("python3 ../../ichec_run_nnd.py " + str(speed) + " " + str(vis) + " " + str(sep)
-            + " " + str(c) + " " + str(s) + " " + str(m)
-            + " > ../output/08Dec2020_nnd/output" + str(n)  # TODO: make sure date is correct
-            + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
-                                                                cohere_dist, separate_dist, match_dist, names)]
+# [file.write("python3 ../../ichec_run_nnd.py " + str(speed) + " " + str(vis) + " " + str(sep)
+#             + " " + str(c) + " " + str(s) + " " + str(m)
+#             + " > ../output/08Dec2020_nnd/output" + str(n)  # TODO: make sure date is correct
+#             + ".txt \n") for speed, vis, sep, c, s, m, n in zip(speed_dist, vision_dist, sep_dist,
+#                                                                 cohere_dist, separate_dist, match_dist, names)]
 
 file.close()
