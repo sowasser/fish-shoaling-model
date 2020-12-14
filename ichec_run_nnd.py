@@ -23,15 +23,15 @@ def run_model(speed_prior, vision_prior, separation_prior,
     values for that run, including the varying & fixed parameters so all
     dataframes can be stacked together.
     """
-    model = ShoalModel(n_fish=20,
-                       width=100,
-                       height=100,
-                       speed=speed_prior,
-                       vision=vision_prior,
-                       separation=separation_prior,
-                       cohere=cohere_prior,
-                       separate=separate_prior,
-                       match=match_prior)
+    model = ShoalModel_nnd(n_fish=20,
+                           width=100,
+                           height=100,
+                           speed=speed_prior,
+                           vision=vision_prior,
+                           separation=separation_prior,
+                           cohere=cohere_prior,
+                           separate=separate_prior,
+                           match=match_prior)
     for step in range(300):  # number of steps to run the model for
         model.step()
     data = model.datacollector.get_model_vars_dataframe()  # retrieve data from model
