@@ -14,40 +14,47 @@ path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/general 
 path_nnd = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data/NND runs"  # for laptop
 
 
-def single_run(n):
-    # Collect the data from a single run with x number of steps into a dataframe
+def single_run(sd, vs, sp, co, sep, mt, n):
+    """
+    Run shoal model n times with fixed parameters values, collect data, and
+    save output as a .csv file with a unique name.
+    """
     model = ShoalModel(n_fish=20,
                        width=100,
                        height=100,
-                       speed=9.5,
-                       vision=17.7,
-                       separation=3.9,
-                       cohere=0.59,
-                       separate=0.42,
-                       match=0.50)
-    for i in range(300):
+                       speed=sd,
+                       vision=vs,
+                       separation=sp,
+                       cohere=co,
+                       separate=sep,
+                       match=mt)
+    for i in range(300):  # number of steps
         model.step()
     data = model.datacollector.get_model_vars_dataframe()
     data.columns = ["cent", "nnd", "polar", "area"]
     data.to_csv(os.path.join(path, r"single_run_"+str(n)+".csv"))
 
 
-# Run model n times with all of the same parameters
-for n in range(2):
-    single_run(n)
+# Run model n times with parameter values determined from the general ABC
+for n in range(100):
+    single_run(2.8, 9.7, 8.1, 0.53, 0.28, 0.54, n)
 
 
-def single_run_nnd(n):
-    # Collect the data from a single run with x number of steps into a dataframe
+def single_run_nnd(sd, vs, sp, co, sep, mt, n):
+    """
+    Run shoal model with just NND as the summary statistic n times with fixed
+    parameters values, collect data, and save output as a .csv file with a
+    unique name.
+    """
     model = ShoalModel_nnd(n_fish=20,
                            width=100,
                            height=100,
-                           speed=9.5,
-                           vision=17.7,
-                           separation=3.9,
-                           cohere=0.59,
-                           separate=0.42,
-                           match=0.50)
+                           speed=sd,
+                           vision=vs,
+                           separation=sp,
+                           cohere=co,
+                           separate=sep,
+                           match=mt)
     for i in range(300):
         model.step()
     data = model.datacollector.get_model_vars_dataframe()
@@ -55,9 +62,6 @@ def single_run_nnd(n):
     data.to_csv(os.path.join(path_nnd, r"single_run_nnd_"+str(n)+".csv"))
 
 
-# Run model n times with all of the same parameters
-for n in range(2):
-    single_run_nnd(n)
-
-# save data with NND-only ABC determined parameters
-# data.to_csv(os.path.join(path, r"single_run_nnd.csv"))
+# Run model n times with parameter values determined from the NND-only ABC
+for n in range(100):
+    single_run_nnd(9.5, 17.7, 3.9, 0.59, 0.42, 0.50, n)
