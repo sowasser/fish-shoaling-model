@@ -190,7 +190,7 @@ sep_slider = UserSettableParameter(param_type='slider', name='Separation Distanc
                                    value=2, min_value=0, max_value=10, step=1)
 
 
-class ShoalModel(Model):
+class ShoalModel_nnd(Model):
     """
     Shoal model class. Handles agent creation, placement and scheduling.
     Parameters are interactive, using the user-settable parameters defined
