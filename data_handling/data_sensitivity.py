@@ -60,7 +60,7 @@ match_dist = np.random.uniform(low=0, high=1, size=runs)
 
 steps = 300  # number of steps to run the model for each time
 
-burn_in = 100  # number of steps to exclude at the beginning as collective behaviour emerges
+burn_in = 200  # number of steps to exclude at the beginning as collective behaviour emerges
 
 
 # RUN MODELS & COLLECT DATA ---------------------------------------------------
