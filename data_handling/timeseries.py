@@ -8,32 +8,36 @@ import numpy as np
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"  # for desktop
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-modelled = pd.read_csv(filepath_or_buffer=os.path.join(path, r"timeseries_modelled.csv"),
-                       sep=",")
-modelled = modelled.drop(modelled.columns[0], axis=1)  # drop first column
+# Read in data generated from timeseries.R
+g_nnd = pd.read_csv(filepath_or_buffer=os.path.join(path, r"ts_general_NND.csv"))
+g_cent = pd.read_csv(filepath_or_buffer=os.path.join(path, r"ts_general_cent.csv"))
+g_polar = pd.read_csv(filepath_or_buffer=os.path.join(path, r"ts_general_polar.csv"))
+g_area = pd.read_csv(filepath_or_buffer=os.path.join(path, r"ts_general_area.csv"))
+
+nnd_only = pd.read_csv(filepath_or_buffer=os.path.join(path, r"ts_nnd_NND.csv"))
 
 tracked = pd.read_csv(filepath_or_buffer=os.path.join(path, r"timeseries_tracked.csv"),
                       sep=",")
-tracked = tracked.drop(tracked.columns[0], axis=1)  # drop first column
 
 
 # Find percentage overlap
-def find_overlap(list1, list2):
+def find_overlap(min_ls, max_ls, check_ls):
     """
     Determine the percentage overlap between to datasets (list1 and list2). For
     every value of df1 that is within the range of df2, add to an initial value
     and then find what percentage that value is of the original (list1)
     """
     value = []
-    for i in list1:
-        if min(list2) <= i <= max(list2):
+    for i in check_ls:
+        if min(min_ls) <= i <= max(max_ls):
             value.append(i)
-    percentage = (len(value) / len(list1)) * 100
+    percentage = (len(value) / len(check_ls)) * 100
     return percentage
 
 
-cent_percent = find_overlap(modelled["cent"], tracked["cent"])  # 85.9%
-nnd_percent = find_overlap(modelled["nnd"], tracked["nnd"])  # 0
-nnd_only_percent = find_overlap(modelled["nnd_only"], tracked["nnd"])  # 23.2%
-polar_percent = find_overlap(modelled["polar"], tracked["polar"])  # 74.7%
-area_percent = find_overlap(modelled["area"], tracked["area"])  # 0
+nnd_percent = find_overlap(g_nnd["min"], g_nnd["max"], tracked["nnd"])  # 0
+cent_percent = find_overlap(g_cent["min"], g_cent["max"], tracked["cent"])  # 69.697%
+polar_percent = find_overlap(g_polar["min"], g_polar["max"], tracked["polar"])  # 27.273%
+area_percent = find_overlap(g_area["min"], g_area["max"], tracked["area"])  # 0
+
+nnd_only_percent = find_overlap(nnd_only["min"], nnd_only["max"], tracked["nnd"])  # 94.945%
