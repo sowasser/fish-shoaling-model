@@ -237,7 +237,7 @@ class ShoalModel(Model):
         """
         for i in range(self.n_fish):
             x = random.randrange(2, (self.space.x_max - 1))
-            y = random.randrange(2, (self.space.y_max - 1))
+            y = random.randrange(26, 49)
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1  # [-1.0 .. 1.0, -1.0 .. 1.0]
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
