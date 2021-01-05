@@ -29,7 +29,6 @@ A visualization of the model in an HTML object is in shoal_model_viz.py. For
 the visualization, the parameters in the ShoalModel class can be changed to run
 based on interactive, user-settable sliders.
 """
-# Todo: figure out how to turn off the torus feature for actual bounded space.
 
 
 import random
@@ -210,7 +209,7 @@ class ShoalModel(Model):
     def __init__(self,
                  n_fish=100,
                  width=50,
-                 height=50,
+                 height=25,
                  speed=10,
                  vision=50,
                  separation=2,
@@ -225,7 +224,7 @@ class ShoalModel(Model):
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
-        self.make_obstructions()  # Todo: un-comment this line to include obstructions
+        # self.make_obstructions()  # Todo: un-comment this line to include obstructions
         self.make_fish()
         self.running = True
 
