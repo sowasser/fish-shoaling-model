@@ -225,7 +225,7 @@ class ShoalModel(Model):
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
-        # self.make_obstructions()  # Todo: un-comment this line to include obstructions
+        self.make_obstructions()  # Todo: un-comment this line to include obstructions
         self.make_fish()
         self.running = True
 
@@ -249,7 +249,6 @@ class ShoalModel(Model):
             # model_reporters={"test": test})
             model_reporters={"positions": positions})
 
-
     def make_obstructions(self):
         """
         Create N "Obstruct" agents, with set positions & no movement. Borders
@@ -257,15 +256,13 @@ class ShoalModel(Model):
         of the width/height of the obstruction. These ranges are drawn from the
         model space limits, with a slight buffer.
 
-        The obstruction agents are then generated for every point along the
-        defined borders.
+        In this case, the obstructions form a line to represent an environmental
+        variable such as a thermo- or halocline.
         """
-        # if the space is square (i.e. y_max and x_max are the same):
         max_lim = self.space.x_max - 1
         min_lim = self.space.x_min + 1
         line = range(min_lim, max_lim)
-        borders = np.asarray([(min_lim, n) for n in line] + [(n, max_lim) for n in line] +
-                             [(max_lim, n) for n in line] + [(n, min_lim) for n in line])
+        borders = np.asarray([(n, 25) for n in line])
         x_points = np.ndarray.tolist(borders[:, 0])
         y_points = np.ndarray.tolist(borders[:, 1])
         points = list(zip(x_points, y_points))
