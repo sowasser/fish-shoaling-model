@@ -209,9 +209,9 @@ class ShoalModel(Model):
     def __init__(self,
                  n_fish=100,
                  width=50,
-                 height=25,
+                 height=50,
                  speed=10,
-                 vision=50,
+                 vision=10,
                  separation=2,
                  cohere=0.25,
                  separate=0.025,
@@ -235,8 +235,8 @@ class ShoalModel(Model):
         Call data collectors for fish collective behaviour
         """
         for i in range(self.n_fish):
-            x = random.randrange(2, (self.space.x_max - 1))
-            y = random.randrange(26, 49)
+            x = random.randrange(2, (self.space.x_max - 2))
+            y = random.randrange(2, (self.space.y_max - 2))
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1  # [-1.0 .. 1.0, -1.0 .. 1.0]
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
