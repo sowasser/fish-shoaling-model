@@ -55,5 +55,5 @@ y = pos_df.iloc[:, 1::2]
 y.columns = list_fish
 
 # Export to .csv for import into R
-x.to_csv(os.path.join(path, r"heatmap_x_cline.csv"))
-y.to_csv(os.path.join(path, r"heatmap_y_cline.csv"))
+x.to_csv(os.path.join(path, r"heatmap_x_slope.csv"))
+y.to_csv(os.path.join(path, r"heatmap_y_slope.csv"))

@@ -235,8 +235,9 @@ class ShoalModel(Model):
         Call data collectors for fish collective behaviour
         """
         for i in range(self.n_fish):
+            # Todo: change these ranges to move agents around obstructions
             x = random.randrange(2, (self.space.x_max - 2))
-            y = random.randrange(27, 48)
+            y = random.randrange(self.space.x_min + 1, 28)
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1  # [-1.0 .. 1.0, -1.0 .. 1.0]
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
@@ -254,13 +255,19 @@ class ShoalModel(Model):
         case, the obstructions form a line to represent an environmental
         variable such as a thermo- or halocline.
         """
+        # Todo: select type of line desired & change starting agent positions
         max_lim = self.space.x_max - 1
         min_lim = self.space.x_min + 1
-        line = np.linspace(start=min_lim, stop=max_lim, num=1000)  # specify num of points
-        borders = np.asarray([(n, 25) for n in line])
-        x_points = np.ndarray.tolist(borders[:, 0])
-        y_points = np.ndarray.tolist(borders[:, 1])
-        points = list(zip(x_points, y_points))
+        # Create a horizontal line with a set number of points
+        thermocline = np.linspace(start=min_lim, stop=max_lim, num=10000)
+        # border = np.asarray([(n, 25) for n in thermocline])
+        # x_points = np.ndarray.tolist(border[:, 0])
+        # y_points = np.ndarray.tolist(border[:, 1])
+        # points = list(zip(x_points, y_points))
+
+        # Create a diagonal line with a set number of points
+        lift = np.linspace(start=max_lim, stop=30, num=10000)
+        points = list(zip(thermocline, lift))
 
         for i in points:  # create obstruction agent for all points along the borders
             pos = np.array(i)
