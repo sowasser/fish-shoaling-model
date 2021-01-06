@@ -18,7 +18,7 @@ from matplotlib import animation
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
 
-n = 100  # number of fish
+n = 300  # number of fish
 
 # Collect the data from a single run with x number of steps into a dataframe
 model = ShoalModel(n_fish=n,
@@ -55,5 +55,5 @@ y = pos_df.iloc[:, 1::2]
 y.columns = list_fish
 
 # Export to .csv for import into R
-x.to_csv(os.path.join(path, r"heatmap_x_slope.csv"))
-y.to_csv(os.path.join(path, r"heatmap_y_slope.csv"))
+x.to_csv(os.path.join(path, r"heatmap_x_cline300.csv"))
+y.to_csv(os.path.join(path, r"heatmap_y_cline300.csv"))

@@ -260,14 +260,14 @@ class ShoalModel(Model):
         min_lim = self.space.x_min + 1
         # Create a horizontal line with a set number of points
         thermocline = np.linspace(start=min_lim, stop=max_lim, num=10000)
-        # border = np.asarray([(n, 25) for n in thermocline])
-        # x_points = np.ndarray.tolist(border[:, 0])
-        # y_points = np.ndarray.tolist(border[:, 1])
-        # points = list(zip(x_points, y_points))
+        border = np.asarray([(n, 25) for n in thermocline])
+        x_points = np.ndarray.tolist(border[:, 0])
+        y_points = np.ndarray.tolist(border[:, 1])
+        points = list(zip(x_points, y_points))
 
         # Create a diagonal line with a set number of points
-        lift = np.linspace(start=max_lim, stop=30, num=10000)
-        points = list(zip(thermocline, lift))
+        # lift = np.linspace(start=max_lim, stop=30, num=10000)
+        # points = list(zip(thermocline, lift))
 
         for i in points:  # create obstruction agent for all points along the borders
             pos = np.array(i)
