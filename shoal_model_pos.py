@@ -237,7 +237,7 @@ class ShoalModel(Model):
         for i in range(self.n_fish):
             # Todo: change these ranges to move agents around obstructions
             x = random.randrange(2, (self.space.x_max - 2))
-            y = random.randrange(self.space.x_min + 1, 28)
+            y = random.randrange(28, (self.space.x_max - 2))
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1  # [-1.0 .. 1.0, -1.0 .. 1.0]
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
