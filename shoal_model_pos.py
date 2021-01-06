@@ -224,7 +224,7 @@ class ShoalModel(Model):
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, torus=True)
         self.factors = dict(cohere=cohere, separate=separate, match=match)
-        # self.make_obstructions()  # Todo: un-comment this line to include obstructions
+        self.make_obstructions()  # Todo: un-comment this line to include obstructions
         self.make_fish()
         self.running = True
 
@@ -236,7 +236,7 @@ class ShoalModel(Model):
         """
         for i in range(self.n_fish):
             x = random.randrange(2, (self.space.x_max - 2))
-            y = random.randrange(2, (self.space.y_max - 2))
+            y = random.randrange(27, 48)
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1  # [-1.0 .. 1.0, -1.0 .. 1.0]
             fish = Fish(i, self, pos, self.speed, velocity, self.vision,
@@ -250,17 +250,13 @@ class ShoalModel(Model):
 
     def make_obstructions(self):
         """
-        Create N "Obstruct" agents, with set positions & no movement. Borders
-        are defined as coordinate points between the maximum and minimum extent
-        of the width/height of the obstruction. These ranges are drawn from the
-        model space limits, with a slight buffer.
-
-        In this case, the obstructions form a line to represent an environmental
+        Create N "Obstruct" agents, with set positions & no movement.  In this
+        case, the obstructions form a line to represent an environmental
         variable such as a thermo- or halocline.
         """
         max_lim = self.space.x_max - 1
         min_lim = self.space.x_min + 1
-        line = range(min_lim, max_lim)
+        line = np.linspace(start=min_lim, stop=max_lim, num=1000)  # specify num of points
         borders = np.asarray([(n, 25) for n in line])
         x_points = np.ndarray.tolist(borders[:, 0])
         y_points = np.ndarray.tolist(borders[:, 1])
