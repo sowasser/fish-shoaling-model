@@ -138,12 +138,13 @@ def positions(model):
 def heading(model):
     """
     Extracts heading of each agent tagged as "fish". Heading is determined from
-    velocity in the agent creation, even though there's no movement element.
+    velocity in the agent creation, even though there's no movement element The
+    velocity is a tuple - (x, y), here transformed into radians here..
     """
     head = [agent.velocity for agent in model.schedule.agents
             if agent.tag == "fish"]
-    head = list(itertools.chain(*head))
-    return head
+    degrees = [math.atan2(x, y) for (x, y) in head]  # from x,y to radians
+    return degrees
 
 
 def center_mass(model):
