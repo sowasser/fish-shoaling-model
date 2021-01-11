@@ -21,9 +21,10 @@ The model is based on an toroidal (unbounded & wrapping), 2D area. Later
 versions will be 3D, with environmental gradients, and agents with goal-,
 food-, or safety-seeking behaviour.
 
-The only data collected from the data_collectors.py script is position, for
-creating a heatmap as a representation of shoal density for better comparisons
-with acoustic data.
+The only data collected from the data_collectors.py script are position and
+heading. Position is for creating a heatmap as a representation of shoal
+density for better comparisons with acoustic data. Heading is to represent
+tilt ange in acoustic data.
 
 A visualization of the model in an HTML object is in shoal_model_viz.py. For
 the visualization, the parameters in the ShoalModel class can be changed to run
@@ -232,7 +233,8 @@ class ShoalModel(Model):
         """
         Create N "Fish" agents. A random position and starting velocity is
         assigned for each fish.
-        Call data collectors for fish collective behaviour
+
+        Call data collectors for position and heading of each fish at each data step.
         """
         for i in range(self.n_fish):
             x = random.randrange(2, (self.space.x_max - 2))
@@ -246,7 +248,7 @@ class ShoalModel(Model):
 
         self.datacollector = DataCollector(
             # model_reporters={"test": test})
-            model_reporters={"positions": positions})
+            model_reporters={"positions": positions, "heading": heading})
 
     def make_obstructions(self):
         """

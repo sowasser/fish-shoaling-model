@@ -37,15 +37,20 @@ data = model.datacollector.get_model_vars_dataframe()
 # Separate data from data collectors into numpy arrays so they can be accessed more easily
 np_data = np.asarray(data)
 
-# Flatten Positions so it is more accessible & add column names
-p = np_data.flatten()  # remove one set of brackets & make a dataframe
+# Separate position & heading data
+positions = np_data[:, 1]
+headings = np_data[:, 0]
+
+# Create unique names for each fish
+list_fish = ["fish" + str(i) for i in range(1, (n + 1))]
+
+# Manage position data --------------------------------------------------------
+# Flatten positions so it is more accessible & add column names
+p = positions.flatten()  # remove one set of brackets & make a dataframe
 pos_df = pd.DataFrame(p.flatten())  # remove one set of brackets & make a dataframe
 pos_df = pos_df[0].apply(pd.Series)  # remove another set of brackets
 pos_df[0].apply(pd.Series)  # remove last set of brackets
 pos = np.asarray(pos_df)  # back to numpy array
-
-# Create unique names for each fish
-list_fish = ["fish" + str(i) for i in range(1, (n + 1))]
 
 # Separate x and y columns into different dataframes & rename columns
 x = pos_df.iloc[:, ::2]
@@ -54,6 +59,18 @@ x.columns = list_fish
 y = pos_df.iloc[:, 1::2]
 y.columns = list_fish
 
-# Export to .csv for import into R
-x.to_csv(os.path.join(path, r"heatmap_x_300_speed5.csv"))
-y.to_csv(os.path.join(path, r"heatmap_y_300_speed5.csv"))
+# Manage heading data ---------------------------------------------------------
+# Flatten headings so it is more accessible & add column names
+h = headings.flatten()  # remove one set of brackets & make a dataframe
+head_df = pd.DataFrame(h.flatten())  # remove one set of brackets & make a dataframe
+head_df = head_df[0].apply(pd.Series)  # remove another set of brackets
+head_df[0].apply(pd.Series)  # remove last set of brackets
+
+# Separate x and y columns into different dataframes & rename columns
+head_df.columns = list_fish
+
+# Export to .csv for import into R --------------------------------------------
+head_df.to_csv(os.path.join(path, r"headings_300.csv"))  # heading data
+
+x.to_csv(os.path.join(path, r"heatmap_x_300_3.csv"))  # x position
+y.to_csv(os.path.join(path, r"heatmap_y_300_3.csv"))  # y position
