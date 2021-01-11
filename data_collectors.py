@@ -135,6 +135,17 @@ def positions(model):
     return pos
 
 
+def heading(model):
+    """
+    Extracts heading of each agent tagged as "fish". Heading is determined from
+    velocity in the agent creation, even though there's no movement element.
+    """
+    head = [agent.velocity for agent in model.schedule.agents
+            if agent.tag == "fish"]
+    head = list(itertools.chain(*head))
+    return head
+
+
 def center_mass(model):
     """
     Calculates the center of mass of the shoal. Same as the centroid when the
