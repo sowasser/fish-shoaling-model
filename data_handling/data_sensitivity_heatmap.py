@@ -70,7 +70,7 @@ head_df[0].apply(pd.Series)  # remove last set of brackets
 head_df.columns = list_fish
 
 # Export to .csv for import into R --------------------------------------------
-head_df.to_csv(os.path.join(path, r"headings_300.csv"))  # heading data
+head_df.to_csv(os.path.join(path, r"headings_300_4.csv"))  # heading data
 
-x.to_csv(os.path.join(path, r"heatmap_x_300_3.csv"))  # x position
-y.to_csv(os.path.join(path, r"heatmap_y_300_3.csv"))  # y position
+x.to_csv(os.path.join(path, r"heatmap_x_300_4.csv"))  # x position
+y.to_csv(os.path.join(path, r"heatmap_y_300_4.csv"))  # y position

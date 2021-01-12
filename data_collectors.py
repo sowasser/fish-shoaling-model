@@ -129,7 +129,7 @@ def centroid_dist(model):
 
 def positions(model):
     """ Extracts xy coordinates for each agent tagged as "fish"."""
-    pos = [(agent.pos[0], agent.pos[1]) for agent in model.schedule.agents
+    pos = [(agent.pos[0], 50-agent.pos[1]) for agent in model.schedule.agents
            if agent.tag == "fish"]
     pos = list(itertools.chain(*pos))  # creates lists of positions, rather than tuples
     return pos
@@ -143,7 +143,7 @@ def heading(model):
     """
     head = [agent.velocity for agent in model.schedule.agents
             if agent.tag == "fish"]
-    degrees = [math.atan2(x, y) for (x, y) in head]  # from x,y to radians
+    degrees = [math.atan2(x, -y) for (x, y) in head]  # from x,y to radians with y inverted
     return degrees
 
 
