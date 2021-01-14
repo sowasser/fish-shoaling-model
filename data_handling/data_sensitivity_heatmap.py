@@ -5,15 +5,12 @@ outlined in data_collectors.py. Here, they are separated and manipulated to
 create more simple outputs
 """
 
-# Todo: try to create animated heatmaps (or, rather, pcolormesh) for density:
-# https://www.kaggle.com/jaeyoonpark/heatmap-animation-us-drought-map/code
-# https://www.programcreek.com/python/example/102329/matplotlib.pyplot.pcolormesh
+# Todo: select model type to match & make sure to select the correct .csv output
+# from shoal_model_pos import *
+from shoal_model_obstruct import *
 
-from shoal_model_pos import *
 import pandas as pd
 import os
-import matplotlib.pyplot as plt
-from matplotlib import animation
 
 # path = "/Users/user/Desktop/Local/Mackerel/Mackerel Data"
 path = "/Users/Sophie/Desktop/DO NOT ERASE/1NUIG/Mackerel/Mackerel Data"  # for laptop
@@ -69,8 +66,27 @@ head_df[0].apply(pd.Series)  # remove last set of brackets
 # Separate x and y columns into different dataframes & rename columns
 head_df.columns = list_fish
 
-# Export to .csv for import into R --------------------------------------------
+# Todo: select data output to match the version of the model run
+# Export normal run to .csv for import into R ---------------------------------
+# Todo: increase number to save a new version of the data
 head_df.to_csv(os.path.join(path, r"headings_300_4.csv"))  # heading data
 
 x.to_csv(os.path.join(path, r"heatmap_x_300_4.csv"))  # x position
 y.to_csv(os.path.join(path, r"heatmap_y_300_4.csv"))  # y position
+
+# Export thermocline run to .csv for import into R ----------------------------
+# Todo: increase number to save a new version of the data
+head_df.to_csv(os.path.join(path, r"headings_cline.csv"))  # heading data
+
+x.to_csv(os.path.join(path, r"heatmap_x_cline.csv"))  # x position
+y.to_csv(os.path.join(path, r"heatmap_y_cline.csv"))  # y position
+
+# Export thermocline run to .csv for import into R ----------------------------
+# Todo: increase number to save a new version of the data
+head_df.to_csv(os.path.join(path, r"headings_slope.csv"))  # heading data
+
+x.to_csv(os.path.join(path, r"heatmap_x_slope.csv"))  # x position
+y.to_csv(os.path.join(path, r"heatmap_y_slope.csv"))  # y position
+
+
+
