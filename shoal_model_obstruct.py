@@ -215,12 +215,12 @@ class ShoalModel(Model):
         for i in range(self.n_fish):
             # Todo: change these ranges to move agents around obstructions
             # Move agents below thermocline
-            x = random.randrange(2, (self.space.x_max - 2))
-            y = random.randrange(28, (self.space.x_max - 2))
+            # x = random.randrange(2, (self.space.x_max - 2))
+            # y = random.randrange(28, (self.space.x_max - 2))
 
             # Move agents above slope
-            # x =
-            # y =
+            x = random.randrange(2, (self.space.x_max - 2))
+            y = random.randrange(2, 28)
 
             pos = np.array((x, y))
             velocity = np.random.random(2) * 2 - 1  # [-1.0 .. 1.0, -1.0 .. 1.0]
@@ -242,16 +242,17 @@ class ShoalModel(Model):
         # Todo: select type of line desired & change starting agent positions
         max_lim = self.space.x_max - 1
         min_lim = self.space.x_min + 1
+        horizontal = np.linspace(start=min_lim, stop=max_lim, num=100000)
+
         # Create a horizontal line with a set number of points - thermocline
-        thermocline = np.linspace(start=min_lim, stop=max_lim, num=10000)
-        border = np.asarray([(n, 25) for n in thermocline])
-        x_points = np.ndarray.tolist(border[:, 0])
-        y_points = np.ndarray.tolist(border[:, 1])
-        points = list(zip(x_points, y_points))
+        # border = np.asarray([(n, 25) for n in horizontal])
+        # x_points = np.ndarray.tolist(border[:, 0])
+        # y_points = np.ndarray.tolist(border[:, 1])
+        # points = list(zip(x_points, y_points))
 
         # Create a diagonal line with a set number of points - slope
-        # lift = np.linspace(start=max_lim, stop=30, num=10000)
-        # points = list(zip(thermocline, lift))
+        lift = np.linspace(start=max_lim, stop=30, num=100000)
+        points = list(zip(horizontal, lift))
 
         for i in points:  # create obstruction agent for all points along the borders
             pos = np.array(i)

@@ -69,17 +69,17 @@ head_df.columns = list_fish
 # Todo: select data output to match the version of the model run
 # Export normal run to .csv for import into R ---------------------------------
 # Todo: increase number to save a new version of the data
-head_df.to_csv(os.path.join(path, r"headings_300_4.csv"))  # heading data
-
-x.to_csv(os.path.join(path, r"heatmap_x_300_4.csv"))  # x position
-y.to_csv(os.path.join(path, r"heatmap_y_300_4.csv"))  # y position
+# head_df.to_csv(os.path.join(path, r"headings_300_4.csv"))  # heading data
+#
+# x.to_csv(os.path.join(path, r"heatmap_x_300_4.csv"))  # x position
+# y.to_csv(os.path.join(path, r"heatmap_y_300_4.csv"))  # y position
 
 # Export thermocline run to .csv for import into R ----------------------------
 # Todo: increase number to save a new version of the data
-head_df.to_csv(os.path.join(path, r"headings_cline.csv"))  # heading data
-
-x.to_csv(os.path.join(path, r"heatmap_x_cline.csv"))  # x position
-y.to_csv(os.path.join(path, r"heatmap_y_cline.csv"))  # y position
+# head_df.to_csv(os.path.join(path, r"headings_cline.csv"))  # heading data
+#
+# x.to_csv(os.path.join(path, r"heatmap_x_cline.csv"))  # x position
+# y.to_csv(os.path.join(path, r"heatmap_y_cline.csv"))  # y position
 
 # Export thermocline run to .csv for import into R ----------------------------
 # Todo: increase number to save a new version of the data
