@@ -242,7 +242,7 @@ class ShoalModel(Model):
         # Todo: select type of line desired & change starting agent positions
         max_lim = self.space.x_max - 1
         min_lim = self.space.x_min + 1
-        horizontal = np.linspace(start=min_lim, stop=max_lim, num=100000)
+        horizontal = np.linspace(start=min_lim, stop=max_lim, num=20000)
 
         # Create a horizontal line with a set number of points - thermocline
         # border = np.asarray([(n, 25) for n in horizontal])
@@ -251,9 +251,9 @@ class ShoalModel(Model):
         # points = list(zip(x_points, y_points))
 
         # Create a diagonal line with a set number of points - slope
-        lift = np.linspace(start=max_lim, stop=30, num=100000)
-        points = list(zip(horizontal, lift))
-
+        lift = np.linspace(start=max_lim, stop=30, num=20000)
+        points = np.asarray(list(zip(horizontal, lift)) +
+                            [(max_lim, n) for n in np.linspace(start=30, stop=49, num=10000)])
         for i in points:  # create obstruction agent for all points along the borders
             pos = np.array(i)
             obstruct = Obstruct(i, self, pos)
