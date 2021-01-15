@@ -219,7 +219,7 @@ class ShoalModel(Model):
             # y = random.randrange(28, (self.space.x_max - 2))
 
             # Move agents above slope
-            x = random.randrange(2, (self.space.x_max - 2))
+            x = random.randrange(2, (self.space.x_max - 10))
             y = random.randrange(2, 28)
 
             pos = np.array((x, y))
