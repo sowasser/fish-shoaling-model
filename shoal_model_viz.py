@@ -23,9 +23,9 @@ The visualization also includes sliders for model variables, such as:
 """
 
 # Todo: select version of the shoaling model to run
-# from shoal_model import *
-# from shoal_model_pos import *
-from shoal_model_obstruct import *
+from shoal_model import *  # Normal
+# from shoal_model_pos import *  # With positions visible
+# from shoal_model_obstruct import *  # With obstructions
 
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.ModularVisualization import VisualizationElement
